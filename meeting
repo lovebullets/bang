@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>생성된 문서</title>
+    <link rel="stylesheet" as="style" crossorigin href="[https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css](https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css)" />
+    <style>
+        body { margin: 0; padding: 20px 0; background-color: #ffffff; overflow-x: hidden; }
+    </style>
+</head>
+<body>
+
+<style>
+    /* 폰트 및 전체 스타일 일괄 설정 (여기를 수정하세요) */
+    /* 주의: 개별 블록의 색상 등은 아래 설정보다 우선 적용됩니다! */
+    .tistory-post-wrapper {
+        font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        color: #333333;
+        font-size: 15px;
+        line-height: 1.6;
+        word-break: keep-all;
+    }
+    .tistory-post-wrapper * { box-sizing: border-box; }
+</style>
+
+<div id="content-wrapper" class="tistory-post-wrapper">
+<div style="height: 30px;"></div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; color: #000000; font-style: italic; word-break: keep-all; text-align: left;">
+                형광등 불빛이 균일하게 쏟아져 내리는 [Fearless] 본부의 대회의실은 숨 막히는 정적으로 가득 차 있었다. 거대한 스크린에는 각종 데이터와 그래프가 현란하게 떠올랐다 사라졌지만, 그 내용을 진지하게 경청하는 이는 많지 않아 보였다. 특히 회의 테이블 상석에서 가장 먼 끝자리에 앉은 하시온에게는, 저 모든 것이 수면제와 다를 바 없었다. 그는 이미 한참 전에 턱을 괸 채 반쯤 넋이 나간 상태였다. 삐딱하게 기울어진 고개, 초점을 잃고 허공을 배회하는 회녹빛 눈동자. 그의 인내심은 이미 30분 전에 바닥을 드러냈다.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; color: #000000; font-style: italic; word-break: keep-all; text-align: left;">
+                반면 그의 옆자리에 앉은 유이는 완벽한 모범생의 자세를 유지하고 있었다. 꼿꼿하게 편 허리, 단정하게 무릎 위에 모은 두 손, 그리고 발표자의 말 한마디 한마디를 놓치지 않으려는 듯 진지한 표정까지. 그 대조적인 모습이 우스워, 하시온은 저도 모르게 피식 웃음이 나올 뻔한 것을 간신히 참았다. 대신 그는 테이블 아래로 숨겨진 개인 단말기를 조작하기 시작했다. 따분한 회의 시간을 조금 더 유익하게 보낼 방법은 아주 명확했다.
+</div>
+<div data-type="thought" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; color: #777777; font-style: italic; word-break: keep-all; text-align: left;">
+                띠링.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; color: #000000; font-style: italic; word-break: keep-all; text-align: left;">
+                유이의 단말기에서 아주 희미한 진동이 울렸다. 그녀는 미간을 살짝 셔틀 뿐, 시선을 스크린에서 떼지 않았다. 하지만 하시온의 손가락은 멈추지 않았다.
+</div>
+<div data-type="thought" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; color: #777777; font-style: italic; word-break: keep-all; text-align: left;">
+                띠링. 띠링. 띠리리링. 띠링.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; color: #000000; font-style: italic; word-break: keep-all; text-align: left;">
+                마치 모스 부호라도 보내는 듯, 집요하게 이어지는 진동에 결국 유이의 어깨가 움찔했다. 그녀는 곤란하다는 듯 입술을 작게 오므리며 힐끗 하시온을 쳐다보았다. 그는 여전히 턱을 괸 채 정면을 보고 있었지만, 입꼬리는 명백히 웃고 있었다. 결국 유이는 한숨 같은 숨을 내쉬며, 테이블 아래로 손을 내려 단말기를 확인했다. 액정에는 이미 수십 개의 메시지 알림이 폭탄처럼 쏟아져 있었다.
+</div>
+<div style="height: 30px;"></div>
+<div data-type="html">
+<div style="width: 100%; max-width: 500px; margin: 0 auto; padding: 10px 0 20px 0; background-color: transparent; box-sizing: border-box;">
+<style>
+@keyframes iMsg { 0% { opacity: 0; transform: translateY(10px) scale(0.98); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes fade { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes popIn { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+#preview-box, #preview-box * { font-family: Pretendard, -apple-system, sans-serif !important; }
+.msg-bubble { opacity: 0; animation: iMsg 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+.read-status { opacity: 0; animation: fade 1s ease forwards; }
+.msg-date-delayed { opacity: 0; animation: fade 0.01s forwards; }
+.msg-bubble > div { word-break: break-word; }
+.lb-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: transparent; z-index: 99999; justify-content: center; align-items: center; cursor: pointer; }
+.lb-img { max-width: 90%; max-height: 85vh; object-fit: contain; border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); cursor: default; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+.lb-close { position: absolute; bottom: 30px; background: rgba(0,0,0,0.6); color: white; padding: 8px 20px; border-radius: 20px; font-size: 13px; font-weight: 600; backdrop-filter: blur(4px); pointer-events: none; }
+</style>
+<script>
+function openLb(e) { document.getElementById('lb-'+e).style.display='flex'; }
+function closeLb(e) { document.getElementById('lb-'+e).style.display='none'; }
+</script>
+<div style="display: flex; flex-direction: column; padding: 0 5px;">
+<div style="display: flex; flex-direction: column; align-items: center; padding-bottom: 10px; margin: 5px 0; border-bottom: 1px solid #f0f0f0;">
+<div style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-bottom: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);"><img style="width: 100%; height: 100%; object-fit: cover;" src="https://i.ibb.co/VYrHdHd8/IMG-6825.jpg" alt="Profile"></div>
+<div style="text-align: center;"><span style="display: block; font-size: 14px; font-weight: 600; color: #1c1c1e; margin-bottom: 2px;">내 여보♡</span> <span style="display: block; font-size: 11px; color: #8e8e93;">iMessage</span></div></div>
+<div class="msg-date-container" style="text-align: center; margin: 15px 0 10px 0;"><span style="font-size: 10px; color: #8e8e93; font-weight: 500;"><b>4월 25일</b> 오후 2:11</span></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px; animation-delay: 1.0s;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">민정아</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px; animation-delay: 1.7s;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">유이 씨</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px; animation-delay: 2.4s;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">내 토끼</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px; animation-delay: 3.1s;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">보고 있어요?</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px; animation-delay: 4.1s;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">왜 대답 안 해요. 나 심심해 죽을 것 같은데.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px; animation-delay: 5.1s;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">옆에 있는데 말도 못 걸고. 이게 무슨 고문이야.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px; animation-delay: 6.1s;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">지금 발표하는 저 사람, 넥타이 삐뚤어진 거 알아요?</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px; animation-delay: 7.1s;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">저거 보니까 내가 다 답답해서 숨이 안 쉬어져.</div>
+                        <svg width="24" height="20" viewBox="0 0 24 20" style="position: absolute; left: -6px; bottom: 0; z-index: -1;"><path d="M24 20 L0 20 C4 20 6 16 6 8 L6 0 C6 12 14 20 24 20 Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px; animation-delay: 8.1s;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">시온 씨, 회의 중이잖아요. 집중하세요.</div>
+                        <svg width="24" height="20" viewBox="0 0 24 20" style="position: absolute; right: -6px; bottom: 0; z-index: -1;"><path d="M0 20 L24 20 C20 20 18 16 18 8 L18 0 C18 12 10 20 0 20 Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px; animation-delay: 9.1s;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">집중하고 있는데요. 당신한테.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px; animation-delay: 10.1s;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">지금 살짝 인상 쓴 얼굴, 아주 예쁜 거 알아요?</div>
+                        <svg width="24" height="20" viewBox="0 0 24 20" style="position: absolute; left: -6px; bottom: 0; z-index: -1;"><path d="M24 20 L0 20 C4 20 6 16 6 8 L6 0 C6 12 14 20 24 20 Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px; animation-delay: 11.1s;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">자꾸 이러시면 단말기 꺼버릴 거예요.</div>
+                        <svg width="24" height="20" viewBox="0 0 24 20" style="position: absolute; right: -6px; bottom: 0; z-index: -1;"><path d="M0 20 L24 20 C20 20 18 16 18 8 L18 0 C18 12 10 20 0 20 Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px; animation-delay: 12.1s;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">꺼봐요. 그럼 내가 직접 가서 속삭여줄 테니까.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px; animation-delay: 13.1s;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">‘여보, 나 졸려. 무릎 좀 빌려줘.’ 하고.</div>
+                        <svg width="24" height="20" viewBox="0 0 24 20" style="position: absolute; left: -6px; bottom: 0; z-index: -1;"><path d="M24 20 L0 20 C4 20 6 16 6 8 L6 0 C6 12 14 20 24 20 Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 3.5px; animation-delay: 13.8s;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">…!!</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px; animation-delay: 14.5s;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">제발요…!</div>
+                        <svg width="24" height="20" viewBox="0 0 24 20" style="position: absolute; right: -6px; bottom: 0; z-index: -1;"><path d="M0 20 L24 20 C20 20 18 16 18 8 L18 0 C18 12 10 20 0 20 Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px; animation-delay: 15.5s;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">그럼 나랑 놀아줘요. 지금 당장.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px; animation-delay: 16.5s;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">오늘 저녁 뭐 먹을래요? 우리 집에 가서 내가 해줄게.</div>
+                        <svg width="24" height="20" viewBox="0 0 24 20" style="position: absolute; left: -6px; bottom: 0; z-index: -1;"><path d="M24 20 L0 20 C4 20 6 16 6 8 L6 0 C6 12 14 20 24 20 Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px; animation-delay: 17.5s;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">지금 그게 중요해요? 다들 저희 쳐다보면 어떡해요.</div>
+                        <svg width="24" height="20" viewBox="0 0 24 20" style="position: absolute; right: -6px; bottom: 0; z-index: -1;"><path d="M0 20 L24 20 C20 20 18 16 18 8 L18 0 C18 12 10 20 0 20 Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px; animation-delay: 18.5s;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">아무도 우리한테 관심 없어요. 저기 세 번째 줄에 앉은 아저씨는 코 파고 있는데.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px; animation-delay: 19.5s;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">자, 퀴즈. 내가 지금 제일 먹고 싶은 거 뭘까요?</div>
+                        <svg width="24" height="20" viewBox="0 0 24 20" style="position: absolute; left: -6px; bottom: 0; z-index: -1;"><path d="M24 20 L0 20 C4 20 6 16 6 8 L6 0 C6 12 14 20 24 20 Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px; animation-delay: 20.2s;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">…스테이크?</div>
+                        <svg width="24" height="20" viewBox="0 0 24 20" style="position: absolute; right: -6px; bottom: 0; z-index: -1;"><path d="M0 20 L24 20 C20 20 18 16 18 8 L18 0 C18 12 10 20 0 20 Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px; animation-delay: 20.9s;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">땡.</div>
+                        <svg width="24" height="20" viewBox="0 0 24 20" style="position: absolute; left: -6px; bottom: 0; z-index: -1;"><path d="M24 20 L0 20 C4 20 6 16 6 8 L6 0 C6 12 14 20 24 20 Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px; animation-delay: 21.6s;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">파스타?</div>
+                        <svg width="24" height="20" viewBox="0 0 24 20" style="position: absolute; right: -6px; bottom: 0; z-index: -1;"><path d="M0 20 L24 20 C20 20 18 16 18 8 L18 0 C18 12 10 20 0 20 Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px; animation-delay: 22.3s;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">땡.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px; animation-delay: 23.3s;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">정답은, 당신 입술.</div>
+                        <svg width="24" height="20" viewBox="0 0 24 20" style="position: absolute; left: -6px; bottom: 0; z-index: -1;"><path d="M24 20 L0 20 C4 20 6 16 6 8 L6 0 C6 12 14 20 24 20 Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px; animation-delay: 24.6s;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">…변태.</div>
+                        <svg width="24" height="20" viewBox="0 0 24 20" style="position: absolute; right: -6px; bottom: 0; z-index: -1;"><path d="M0 20 L24 20 C20 20 18 16 18 8 L18 0 C18 12 10 20 0 20 Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px; animation-delay: 25.6s;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">이제 알았어요? 회의 끝나고 바로 키스할 거야. 각오해요.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px; animation-delay: 26.6s;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">당신이 좋아하는 딸기 맛 립밤도 발랐는데. 궁금하지 않아요?</div>
+                        <svg width="24" height="20" viewBox="0 0 24 20" style="position: absolute; left: -6px; bottom: 0; z-index: -1;"><path d="M24 20 L0 20 C4 20 6 16 6 8 L6 0 C6 12 14 20 24 20 Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div style="display: flex; align-items: center; padding: 10px 8px; margin-top: 5px; background-color: transparent;">
+<div style="width: 28px; height: 28px; flex-shrink: 0; border-radius: 50%; background-color: #e5e5ea; display: flex; justify-content: center; align-items: center; margin-right: 12px; color: #8e8e93; font-size: 20px; font-weight: 400; line-height: 0; padding-bottom: 2px; box-sizing: border-box;">+</div>
+<div style="flex: 1; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 18px; padding: 6px 12px; font-size: 15px; color: #c7c7cc; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 2px rgba(0,0,0,0.02);"><span>iMessage</span><svg width="14" height="18" viewBox="0 0 24 24" fill="none" stroke="#a1a1a6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg></div>
+</div>
+</div></div>
+</div>
+<div style="height: 30px;"></div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; color: #000000; font-style: italic; word-break: keep-all; text-align: left;">
+                유이의 얼굴이 폭발할 것처럼 붉어졌다. 그녀는 황급히 단말기를 끄고 테이블 위로 손을 올렸지만, 이미 늦었다. 하시온은 만족스러운 미소를 지으며, 테이블 아래로 손을 뻗어 그녀의 손을 살며시 잡았다. 유이가 화들짝 놀라 손을 빼려 했지만, 그의 손아귀 힘을 이길 수는 없었다. 그는 그녀의 손가락을 하나하나 만지작거리며 장난을 쳤다. 그들의 작은 세상에 완벽하게 몰입한 나머지, 회의실의 공기가 미묘하게 바뀌고 있다는 것을 두 사람 모두 눈치채지 못하고 있었다.
+</div>
+<div data-type="custom" class="scroll-msg-box" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 20px 12px 20px; display: flex; align-items: flex-start; gap: 15px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F0F0F0; box-sizing: border-box;">
+        <img src="https://i.ibb.co/jP5RR5gx/IMG-6832.jpg" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F0F0F0; color: #333333; padding: 14px 18px; border-radius: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: keep-all;">
+                                음, 뱅 요원. 유이 가이드.
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #000000; font-style: italic; word-break: keep-all; text-align: left;">
+                회의를 주관하던 전략기획팀장의 낮은 목소리가 두 사람의 이름을 불렀다. 그제야 하시온과 유이는 화들짝 놀라 고개를 들었다. 회의실에 있던 모든 사람의 시선이 그들에게 쏠려 있었다. 특히 팀장의 눈은 싸늘하기 그지없었다.
+</div>
+<div data-type="custom" class="scroll-msg-box" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 20px 12px 20px; display: flex; align-items: flex-start; gap: 15px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F0F0F0; box-sizing: border-box;">
+        <img src="https://i.ibb.co/jP5RR5gx/IMG-6832.jpg" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F0F0F0; color: #333333; padding: 14px 18px; border-radius: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: keep-all;">
+                                두 분은 회의 내용보다 서로의 손가락 구조에 대해 토론하는 게 더 중요하신 모양이죠?
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #000000; font-style: italic; word-break: keep-all; text-align: left;">
+                비꼬는 어투에 회의실 곳곳에서 억지로 참는 듯한 헛기침 소리가 터져 나왔다. 유이의 얼굴은 이제 홍당무를 넘어 거의 터지기 일보 직전이었다. 하지만 하시온은 태연했다. 그는 유이의 손을 놓기는커녕, 보란 듯이 깍지를 끼고는 나른하게 대답했다.
+</div>
+<div data-type="mint" class="scroll-msg-box" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 20px 0px 20px; display: flex; align-items: flex-start; gap: 15px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F2FCF7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/VYrHdHd8/IMG-6825.jpg" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; ">
+    </div>
+
+    <div style="background-color: #F2FCF7; color: #333333; padding: 14px 18px; border-radius: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: keep-all;">
+                        아뇨. 지금은 오늘 저녁 메뉴에 대한 심도 깊은 논의 중이었습니다.
+    </div>
+
+</div>
+<div data-type="mint" class="scroll-msg-box" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 10.5px 20px 0px 20px; display: flex; align-items: flex-start; gap: 15px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 0;"></div>
+
+    <div style="background-color: #F2FCF7; color: #333333; padding: 14px 18px; border-radius: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: keep-all;">
+                저희 페어의 팀워크는 식단에서부터 시작되거든요.
+    </div>
+
+</div>
+<div data-type="mint" class="scroll-msg-box" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 10.5px 20px 12px 20px; display: flex; align-items: flex-start; gap: 15px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 0;"></div>
+
+    <div style="background-color: #F2FCF7; color: #333333; padding: 14px 18px; border-radius: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: keep-all;">
+                안 그런가, 유이 씨?
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #000000; font-style: italic; word-break: keep-all; text-align: left;">
+                그의 뻔뻔한 대답에 팀장의 이마에 힘줄이 돋았다. 하지만 S급 센티넬의 기행을 대놓고 지적할 배짱 있는 사람은 이 조직에 거의 없었다. 팀장은 결국 포기한 듯, 마른 기침을 하며 스크린으로 시선을 돌렸다.
+</div>
+<div data-type="custom" class="scroll-msg-box" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 20px 0px 20px; display: flex; align-items: flex-start; gap: 15px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F0F0F0; box-sizing: border-box;">
+        <img src="https://i.ibb.co/jP5RR5gx/IMG-6832.jpg" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F0F0F0; color: #333333; padding: 14px 18px; border-radius: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: keep-all;">
+        ……두 분은 회의 끝나고, 따로 보고서 제출하도록 하세요.
+    </div>
+
+</div>
+<div data-type="custom" class="scroll-msg-box" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 10.5px 20px 12px 20px; display: flex; align-items: flex-start; gap: 15px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 0;"></div>
+
+    <div style="background-color: #F0F0F0; color: #333333; padding: 14px 18px; border-radius: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: keep-all;">
+        ‘저녁 메뉴가 팀워크에 미치는 영향에 대한 고찰’이라는 주제로. A4 용지 10장 이상입니다.
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #000000; font-style: italic; word-break: keep-all; text-align: left;">
+                그 말에 하시온의 미간이 처음으로 살짝 찌푸려졌다. 귀찮은 일은 질색이었다. 그는 깍지 낀 유이의 손에 힘을 주며, 들릴 듯 말 듯 한 목소리로 속삭였다.
+</div>
+<div data-type="mint" class="scroll-msg-box" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 20px 12px 20px; display: flex; align-items: flex-start; gap: 15px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F2FCF7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/VYrHdHd8/IMG-6825.jpg" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; ">
+    </div>
+
+    <div style="background-color: #F2FCF7; color: #333333; padding: 14px 18px; border-radius: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: keep-all;">
+                                ……망했네. 그냥 키스하고 싶다고 쓸까.
+    </div>
+
+</div>
+<div data-type="divider" data-style="solid-gray" style="width: 100%; max-width: 600px; margin: 30px auto; padding: 0 20px; box-sizing: border-box; display: flex; justify-content: center; align-items: center;">
+    <div style="width: 100%; height: 1px; background-color: #e5e7eb;"></div>
+</div>
+<div data-type="status" style="max-width: 500px; width: 100%; margin: 40px auto; padding: 15px 12px; background-color: #fdfdfd; border: 1px solid #eeeeee; border-radius: 6px; box-sizing: border-box; color: #555;">
+
+
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; padding-bottom: 8px; margin-bottom: 8px;">
+                        
+                                <div>
+                                  <div style="font-size: 12px; color: #444;">🗓️ 2026.04.25. 오후 2시 28분.</div>
+                                  
+                                </div>
+                        
+                                <div style="text-align: right; font-size: 12px; color: #444;">
+                                  📍 [Fearless] 본부 대회의실
+                                </div>
+                    </div>
+                    <div style="font-size: 11px; color: #555; margin-bottom: 10px; line-height: 1.5; word-break: break-all;">
+                        🥱(지루함) → 😏(장난) → 😈(유혹) → 😑(망함)
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; margin-bottom: 10px;">
+                        <div style="background-color: #fff; border: 1px solid #f0f0f0; padding: 8px 10px; border-radius: 4px; box-sizing: border-box;">
+                          <div style="font-size: 11px; color: #999; margin-bottom: 2px;">👕 OUTFIT</div>
+                          <div style="font-size: 12px; color: #444; line-height: 1.4;">뱅: 몸에 딱 붙는 검은색 제복 셔츠 (단추 두 개쯤 풀어헤친)</div>
+                        </div>
+                        <div style="background-color: #fff; border: 1px solid #f0f0f0; padding: 8px 10px; border-radius: 4px; box-sizing: border-box;">
+                          <div style="font-size: 11px; color: #999; margin-bottom: 2px;">👕 OUTFIT</div>
+                          <div style="font-size: 12px; color: #444; line-height: 1.4;">유이: 단정한 검은색 제복 스커트 투피스</div>
+                        </div>
+                    </div>
+                    <div style="background-color: #fff; border: 1px solid #f0f0f0; border-radius: 4px; padding: 10px; margin-bottom: 10px; box-sizing: border-box;">
+                        <div style="margin-bottom: 8px;">
+                          <span style="font-size: 11px; background-color: #f6f6f6; color: #666; padding: 2px 4px; border-radius: 2px;">👥 STATE</span>
+                          <div style="margin-top: 4px; font-size: 12px; color: #444; line-height: 1.5;">회의 테이블 아래에서, 하시온이 유이의 손을 단단히 깍지 껴 잡고 있는 자세.</div>
+                        </div>
+                        <hr style="border: 0; border-top: 1px dashed #f0f0f0; margin: 8px 0;">
+                        <div>
+                          <span style="font-size: 11px; background-color: #f6f6f6; color: #666; padding: 2px 4px; border-radius: 2px;">💭 INNER THOUGHT</span>
+                          <div style="margin-top: 4px; font-size: 12px; color: #555; font-style: italic; line-height: 1.5;">보고서 10장이라니… 차라리 빌런 10마리를 더 잡고 말지. …아, 유이가 옆에서 도와주면 쓸 만할지도? 같이 밤새우면서.</div>
+                        </div>
+                    </div>
+                    <div style="background-color: #fcfcfc; border-left: 3px solid #ccc; padding: 8px 10px; margin-bottom: 10px; box-sizing: border-box;">
+                        <div>
+                          <div style="display: flex; justify-content: space-between; align-items: flex-end; font-size: 11px; color: #777; margin-bottom: 6px;">
+                            <span style="margin-bottom: 2px;">💕 호감도</span>
+                            <div style="text-align: right;">
+                              <div style="color: #E598A6; font-weight: bold; font-size: 12px;">NPC→PC: ∞/1000</div>
+                              <div style="font-size: 10.5px; color: #888; margin-top: 3px; font-weight: normal; word-break: break-all;">(지루한 일상 속에서 유일하게 자신을 웃게 하고, 짓궂은 장난을 치고 싶게 만드는 사랑스러운 존재로 인식하는 상태.)</div>
+                            </div>
+                          </div>
+                          <div style="background-color: #eee; height: 4px; border-radius: 2px; overflow: hidden;">
+                            <div style="width: 100%; height: 100%; background-color: #FFB6C1;"></div>
+                          </div>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 10px;">
+                        <div style="background-color: #fff; border: 1px solid #f0f0f0; padding: 8px 10px; border-radius: 4px; box-sizing: border-box;">
+                          <div style="font-size: 11px; color: #999; margin-bottom: 2px;">🔫 TMI</div>
+                          <div style="font-size: 12px; color: #444; line-height: 1.4;">뱅의 오늘의 TMI: 하시온은 서류 작업에 사용되는 종이 냄새를 싫어한다. 이유는 없고, 그냥 ‘재미없어서’.</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px;">
+                        <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 10px 12px; border-radius: 4px; box-sizing: border-box; border-left: 3px solid #94a3b8;">
+                          <div style="font-size: 11px; color: #64748b; margin-bottom: 4px; font-weight: bold;">📰 INTERVIEW</div>
+                          <div style="font-size: 12px; color: #334155; line-height: 1.5; font-style: italic;">Q. 직장 생활에서 가장 힘든 점은 무엇인가요? /<br><br>A. (하품하며) “회의. 특히 점심 먹고 하는 회의. 살상 무기야, 그건.</div>
+                        </div>
+                        <div style="background-color: #fff0f2; border: 1px solid #ffe4e6; padding: 10px 12px; border-radius: 4px; box-sizing: border-box; border-left: 3px solid #fecdd3;">
+                          <div style="font-size: 11px; color: #e11d48; margin-bottom: 4px; font-weight: bold;">💘</div>
+                          <div style="font-size: 12px; color: #4c0519; line-height: 1.5;">”사랑한다고 말해주세요“라는 PC의말에 NPC의대답: (문자 메시지) [회의 끝나고, 아무도 없는 비상계단에서. 딱 10초만. 그럼 해줄게요. 사랑한다는 말.]</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #f0f0f0; text-align: center; width: 100%; box-sizing: border-box;">
+                      <span style="font-size: 12px; color: #777; display: inline-block;">
+                        하시온의 단말기 메모장 (새 메모): [보고서 주제: 저녁 메뉴가 팀워크에 미치는 영향] 1. 키스는 식사 전 에피타이저로 분류되어야 하는가, 메인 디쉬인가. 2. 파스타를 먹을 때와 스테이크를 먹을 때의 키스 맛 차이 연구. 3. 결론: 메뉴가 뭐든 유이가 제일 맛있다.
+                      </span>
+                    </div>
+
+
+
+</div>
+
+</div>
+</body>
+</html>

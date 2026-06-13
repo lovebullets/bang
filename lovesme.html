@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BANG</title>
+    <link rel="stylesheet" as="style" crossorigin href="[https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css](https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css)" />
+    <style>
+        body { margin: 0; padding: 20px 0; background-color: #ffffff; overflow-x: hidden; }
+    </style>
+</head>
+<body>
+
+<style>
+    /* 폰트 및 전체 스타일 일괄 설정 (여기를 수정하세요) */
+    /* 주의: 개별 블록의 색상 등은 아래 설정보다 우선 적용됩니다! */
+    .tistory-post-wrapper {
+        font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        color: #333333;
+        font-size: 15px;
+        line-height: 1.6;
+        word-break: keep-all;
+    }
+    .tistory-post-wrapper * { box-sizing: border-box; }
+</style>
+
+<div id="content-wrapper" class="tistory-post-wrapper">
+<div data-type="html">
+<div>
+<style>
+.tistory-post-wrapper * { box-sizing: border-box; }
+/* 애니메이션 속도는 1.5s로 유지하여 천천히 부드럽게 올라오게 함 */
+.scroll-msg-box { opacity: 0; transform: translateY(15px); transition: opacity 1.5s cubic-bezier(0.25, 1, 0.5, 1), transform 1.5s cubic-bezier(0.25, 1, 0.5, 1); }
+.scroll-msg-box.is-visible { opacity: 1; transform: translateY(0); }
+@keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+</style>
+</div>
+<div class="tistory-post-wrapper">
+<div class="scroll-msg-box" style="margin-top: 10px; padding: 4px 0; display: flex; align-items: flex-start; gap: 8px;">
+<div style="flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 2px solid #F2FCF7;"><img style="width: 100%; height: 100%; object-fit: cover; display: block;" src="https://i.ibb.co/VYrHdHd8/IMG-6825.jpg" alt="Profile" /></div>
+<div style="background-color: #f2fcf7; padding: 10px 14px; border-radius: 12px; line-height: 1.6; letter-spacing: -0.3px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content;">
+<p style="margin: 0; min-height: 1.5em; word-break: keep-all;" data-ke-size="size16">&hellip;뼈를 삼키고, 살을 불태우며, 숨을 이어.</p>
+</div>
+<p data-ke-size="size16">&nbsp;</p>
+</div>
+<div class="scroll-msg-box" style="margin-top: 0px; padding: 4px 0; display: flex; align-items: flex-start; gap: 8px;">
+<div style="flex-shrink: 0; width: 32px; height: 32px;">&nbsp;</div>
+<div style="background-color: #f2fcf7; padding: 10px 14px; border-radius: 12px; line-height: 1.6; letter-spacing: -0.3px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content;">
+<p style="margin: 0; min-height: 1.5em; word-break: keep-all;" data-ke-size="size16">&hellip; 너에게 내 옆에서 맞이하는 내일을&hellip; 약속하지.</p>
+</div>
+</div>
+</div>
+<script>
+window.addEventListener('DOMContentLoaded', function() { 
+    const msgBoxes = document.querySelectorAll('.scroll-msg-box'); 
+    const observer = new IntersectionObserver(function(entries, observer) { 
+        entries.forEach(function(entry) { 
+            if (entry.isIntersecting) { 
+                const index = Array.prototype.indexOf.call(msgBoxes, entry.target);
+                
+                // 처음 대기 시간을 0.5초(500ms)로 변경
+                const delayTime = 500 + (index * 1500);
+                
+                setTimeout(function() { 
+                    entry.target.classList.add('is-visible'); 
+                }, delayTime); 
+                
+                observer.unobserve(entry.target); 
+            } 
+        }); 
+    }, { threshold: 0.2 }); 
+    
+    msgBoxes.forEach(function(box) { 
+        observer.observe(box); 
+    }); 
+});
+</script>
+<p style="text-align: center;" data-ke-size="size16">&nbsp;</p>
+
+</div>
+
+</div>
+</body>
+</html>

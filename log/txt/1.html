@@ -1,142 +1,870 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
-    <title>본문 보기</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
-    
-    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/jejumyeongjo.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300&display=swap" />
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
-    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRGR</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <style>
-        /* 기존 index.html과 디자인이 100% 동일하게 유지되는 CSS */
-        .theme-light {
-            --back-color: #fff; --main-color: #353535; --title-color: #1d1d1d; --sub-color: #c1c1c1;
-            --link-color: #c1c1c1; --link-color-hover: #a2a2a2; --menu-color: #c1c1c1; --menu-color-hover: #a2a2a2; --divider-bg: #0000000d;
-        }
-        .theme-dark {
-            --back-color: #292929; --main-color: #dadada; --title-color: #fbfbfb; --sub-color: #747474;
-            --link-color: #747474; --link-color-hover: #a5a5a5; --menu-color: #747474; --menu-color-hover: #a5a5a5; --divider-bg: #ffffff0d;
-        }
-        * { font-family: 'Jeju Myeongjo', serif; box-sizing: border-box; }
-        ::selection { color: var(--back-color); background-color: var(--main-color); }
-        body { background-color: var(--back-color); transition: background-color 0.4s ease; color: var(--main-color); margin: 0; padding: 0; line-height: 180%; font-size: 14px; }
-        button, input, select, table, textarea, p, div, a, span { margin: 0; padding: 0; line-height: 180%; font-size: inherit; color: inherit; font-family: inherit; }
-        button, input { border: 0; border-radius: 0; }
-        ol, ul { list-style: none; }
-        a { color: var(--link-color); font-weight: normal; text-decoration: none; transition: color 0.2s ease; }
-        a:hover { text-decoration: none; color: var(--link-color-hover); }
-        html, body, #wrap { position: relative; height: 100%; }
-        #container { position: absolute; width: 100%; top: 0; z-index: 1; left: 0; }
-        #header { position: sticky; top: 0; z-index: 999; }
-        .inner_header { max-width: fit-content; padding: 10px 20px 10px 0px; text-align: right; height: 30px; right: 0px; position: absolute; }
-        .inner_header > button { background-color: transparent; float: right; position: absolute; right: 40px; cursor: pointer; font-size: 16px; color: var(--menu-color); }
-        .inner_header > button:hover { color: var(--menu-color-hover); }
-        .dropdown { display: inline-block; }
-        .dropdown-bars { cursor: pointer; font-size: 16px; color: var(--menu-color); }
-        .dropdown-bars:hover { color: var(--menu-color-hover); }
-        .dropdown-inner { text-shadow: var(--back-color) 1px -1px 0px, var(--back-color) 1px 1px 0px, var(--back-color) -1px -1px 0px, var(--back-color) -1px 0px 0px, var(--back-color) 0px -1px 0px, var(--back-color) 0px 1px 0px, var(--back-color) 1px 0px 0px, var(--back-color) -1px 1px 0px; background: var(--back-color); padding: 10px; border: 1px solid var(--divider-bg); border-radius: 2px; margin-top: 5px; text-align: left; }
-        .dropdown-inner a { display: block; color: var(--menu-color); cursor: pointer; padding: 6px 0; font-size: 12px; }
-        .dropdown-inner a:hover { color: var(--menu-color-hover); }
-        .inner_index { position: relative; max-width: 725px; margin: 80px auto; overflow: hidden; }
-        .area_view_content { padding: 0 20px; max-height: auto !important; position: relative; }
-        .btn-back-icon-wrap { text-align: right; margin-bottom: 15px; }
-        .btn-back-icon { display: inline-block; color: var(--sub-color); font-size: 16px; opacity: 0.6; transition: opacity 0.2s; }
-        .btn-back-icon:hover { opacity: 1; color: var(--title-color); }
-        .article_content .title_view { font-size: 18px; color: var(--title-color); line-height: 120%; font-weight: bold; margin-bottom: 10px; letter-spacing: normal; }
-        .area_view_content .article_content .info_post { display: block !important; margin: 0px 0px 30px 0px; padding-top: 0; }
-        .area_view_content .article_content .view_info_post { color: var(--sub-color); line-height: 120%; font-size: 12px; text-align: right; }
-        .area_view_content .article_view { overflow-x: hidden; font-size: 14px; }
+        * {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+  }
+
+  html {
+    font-size: 87.5%; /* 기본 16px → 14px, 전체 비율로 축소 */
+  }
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 40px 10px; background-color: #ffffff; overflow-x: hidden; }
     </style>
 </head>
-
 <body>
-    <div id="wrap">
-        <div id="container">
-            
-            <header id="header">
-                <div class="inner_header">
-                    <button onclick="toggleTheme()" title="테마 변경">
-                        <i id="theme-icon" class="xi-toggle-off"></i>
-                    </button>
-                    <div class="dropdown">
-                        <div class="dropdown-bars" title="메뉴 열기">
-                            <i id="menu-icon" class="xi-bars"></i>
-                        </div>
-                        <div class="dropdown-inner">
-                            <a href="../index.html#home"><i class="xi-home"></i> home</a>
-                            <a href="../index.html#notice"><i class="xi-bell"></i> notice</a>
-                            <a href="../index.html#list"><i class="xi-list"></i> list</a>
-                        </div>
-                    </div>
-                </div>
-            </header>
+<div id="content-wrapper">
 
-            <main id="main">
-                <div class="inner_index">
-                    <div id="view-article" class="page-view" style="display: block;">
-                        <div class="area_view_content">
-                            
-                            <div class="btn-back-icon-wrap">
-                                <a href="../index.html#list" class="btn-back-icon" title="목록으로 돌아가기">
-                                    <i class="xi-close"></i>
-                                </a>
-                            </div>
-                            
-                            <div class="article_content">
-                                <div class="info_post">
-                                    <div class="title_view">여기에 글 제목을 적으세요</div>
-                                    <div class="view_info_post">2026. 06. 14 · 일상</div>
-                                </div>
+<style>
+.bell {
+    display: inline-block;
+    transform-origin: top center;
+    animation: ring 4.5s infinite ease-in-out;
+}
+@keyframes ring {
+    0%, 30%, 100% { transform: rotate(0); }
+    5%, 15%, 25% { transform: rotate(15deg); }
+    10%, 20% { transform: rotate(-15deg); }
+}
+</style>
+<div data-type="title" style="width: 100%; max-width: 600px; margin: 15px auto 0; padding: 10px 10px; box-sizing: border-box; font-family: inherit; font-size: 18pt; font-weight: bold; text-align: left; color: #000; word-break: break-all;">
+    클리셰 SF 세계관의 크리쳐는 그어그어하고 울지 않는다
+</div>
+<div data-type="dday" style="width: 100%; max-width: 600px; margin: 25px auto; text-align: left; padding: 0 20px; box-sizing: border-box; font-family: inherit;">
+    <span style="font-size: 0.8em; color: #8e8e93; font-style: italic; font-weight: 600;"> 2026.02.01</span>
+</div>
+<div data-type="image" style="width: 100%; max-width: 600px; margin: 20px auto; text-align: center; box-sizing: border-box;">
+    <img src="https://i.imgur.com/AXFvMM5.png" style="max-width: 100%; border-radius: 8px;" alt="image">
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
 
-                                <div class="article_view">
-                                    
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </div>
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F7F7F7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/Ps5vd1vf/radio2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
     </div>
 
-    <script>
-        $(document).ready(function () {
-            $(".dropdown-inner").hide();
-            $(".dropdown-bars").click(function (e) {
-                e.stopPropagation();
-                $(".dropdown-inner").slideToggle(200); 
-                let icon = $("#menu-icon");
-                icon.toggleClass("xi-bars xi-close");
-            });
-            $(document).click(function() {
-                $(".dropdown-inner").slideUp(200);
-                $("#menu-icon").removeClass("xi-close").addClass("xi-bars");
-            });
-        });
+    <div style="background-color: #F7F7F7; color: #333333; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        안심하십시오. 안전지대의 최전방은 최강의 인류에게 지켜지고 있습니다.
+    </div>
 
-        function setTheme(themeName) {
-            localStorage.setItem('theme', themeName);
-            document.documentElement.className = themeName;
-            if(themeName === 'theme-dark') {
-                $('#theme-icon').removeClass('xi-toggle-off').addClass('xi-toggle-on');
-            } else {
-                $('#theme-icon').removeClass('xi-toggle-on').addClass('xi-toggle-off');
-            }
+</div>
+<div style="height: 30px;"></div>
+<div data-type="image" style="width: 100%; max-width: 600px; margin: 20px auto; text-align: center; box-sizing: border-box;">
+    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FI2E2X%2Fbtq09yQOF4N%2FAAAAAAAAAAAAAAAAAAAAAF6bybIievrG4KVQ0zkGSwK3EwKmAMl0wClBmtKo4P-W%2Fimg.jpg%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1772290799%26allow_ip%3D%26allow_referer%3D%26signature%3D%252FtIKY5xd8l%252FEeTKdE1J22jBuRrM%253D" style="max-width: 100%; border-radius: 8px;" alt="image">
+</div>
+<div style="height: 30px;"></div>
+<div data-type="bgm" style="width: 100%; max-width: 600px; margin: 20px auto; text-align: center; box-sizing: border-box; font-family: inherit;">
+    <div style="width: 100%; max-width: 600px; margin: 10px auto; text-align: center; box-sizing: border-box; font-family: 'Pretendard', sans-serif;">
+    <div style="display: inline-flex; align-items: center; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px; padding: 4px 12px; gap: 8px; font-size: 11px; color: #64748b; box-shadow: 0 1px 2px rgba(0,0,0,0.02); line-height: 1;">
+        <span style="display: flex; align-items: center; color: #94a3b8;">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+        </span>
+        <span style="max-width: 120px; padding: 0 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #475569;">IN A HEARTBEAT</span>
+        <span style="color: #cbd5e1;">|</span>
+        <div style="display: flex; align-items: center; gap: 4px;">
+            <div onclick="playBGM('6uMNnZtIS6s', 'IN A HEARTBEAT')" style="cursor: pointer; width: 18px; height: 18px; border-radius: 50%; background-color: #f1f5f9; display: flex; align-items: center; justify-content: center; transition: 0.2s;" title="재생">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="#475569"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <div onclick="stopBGM()" style="cursor: pointer; width: 18px; height: 18px; border-radius: 50%; background-color: #f1f5f9; display: flex; align-items: center; justify-content: center; transition: 0.2s;" title="정지">
+                <svg width="7" height="7" viewBox="0 0 24 24" fill="#475569"><path d="M6 6h12v12H6z"/></svg>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div style="height: 30px;"></div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    핏물 섞인 기침이 얼어붙은 대기를 거칠게 찢었다. 폐부 깊은 곳에서부터 울컥, 하고 역류한 뜨거운 덩어리가 마른 입술을 비집고 쏟아져 새하얀 눈밭 위로 붉은 점을 찍었다. 그와 동시에 흐릿했던 의식이 강제로 수면 위로 끌어올려졌다. 천천히 눈을 뜨자, 시야를 가득 채운 것은 온통 잿빛으로 물든 하늘과 그 사이를 어지럽게 유영하는 눈송이들이었다. 몸을 일으키려 힘을 주자 왼쪽 어깨에서부터 찌르르, 하고 날카로운 통증 대신 낯선 위화감이 퍼졌다. 마치 제 것이 아닌 부품을 억지로 끼워 맞춘 듯한 감각. 고개를 돌려 확인한 어깨의 전투복은 처참하게 찢겨 있었고, 그 아래로 검붉은 피가 엉겨 붙어 있었다. 끔찍한 비린내가 후각을 마비시킬 듯 파고들었다.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    끈적하게 말라붙은 피가 피부를 당기는 감각은 지독히 불쾌했다. 사방으로 흩어진 옅은 민트색 머리카락은 이미 핏물에 절어 축축하게 얼어붙었고, 몸에 꼭 맞게 재단된 검은 군복은 얼음장 같은 무게로 전신을 짓눌렀다. 이곳에 쓰러지기 전까지 생명줄처럼 쥐고 있었을 총기는 손에서 몇 걸음 떨어진 곳에 차갑게 식어가고 있었다. 기억나지 않았다. 왜 이곳에 쓰러져 있었는지, 이 상처는 어떻게 생긴 것인지. 이름도, 나이도, 자신이 누구였는지조차 떠오르지 않는 공백 속에서 유일하게 선명한 것은 ‘일어나야 한다’는 본능적인 충동뿐이었다. 이런 곳에 계속 누워있다간 정말로 죽는다. 이유는 모르지만, 그래선 안 될 것 같았다.
+</div>
+<div style="height: 30px;"></div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    바닥을 짚고 몸을 일으키자, 달랑거리던 팔이 언제 그랬냐는 듯 멀쩡하게 움직였다. 상처가 있던 자리에는 희미한 열감만이 남아있을 뿐, 통증은 느껴지지 않았다. 마치 처음부터 다치지 않았던 것처럼. 기묘한 일이었지만 깊게 생각할 여유는 없었다. 멀리 던져진 총을 집어 드는 손길에는 망설임이 없었다. 손에 익은 무게감과 차가운 금속의 감촉이 이상하리만치 안정감을 주었다. 사방은 온통 눈이었다. 아득하게 휘몰아치는 검은 눈보라 너머로, 드문드문 어둠에 잠식된 도시의 야경이 위태롭게 빛나고 있었다. 바로 그때, 고소한 향기가 칼날처럼 날카롭게 코끝을 파고들었다.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    향기가 뱅은 쪽으로 고개를 돌렸다. 약 10미터쯤 떨어진 곳, 타오르는 모닥불 앞에 누군가 등을 돌린 채 앉아 있었다. 가녀린 실루엣이었다. 길게 늘어뜨린 밀갈색 머리카락이 불빛을 받아 부드럽게 빛났고, 단정하게 각 잡힌 제복 위로 드러난 목선과 어깨는 추위 속에 위태로워 보였다. 그 인영의 옆에 놓인 낡은 라디오에서는 여전히 잡음 섞인 목소리가 흘러나오고 있었다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F7F7F7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/Ps5vd1vf/radio2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F7F7F7; color: #333333; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        안심, 안심하십시오.
+    </div>
+
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 10.5px 10px 12px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 0;"></div>
+
+    <div style="background-color: #F7F7F7; color: #333333; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        안전지대의 최전방은 최강의 인류에게 지켜지고 있습니다.
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    허기와 살벌한 추위가 동시에 몸을 잠식했다. 위장이 뒤틀리는 듯한 공복감에 저도 모르게 마른침을 삼켰다. 저 사람에게 무언가를 얻을 수 있을까. 주지 않는다면, 빼앗으면 그만이다. 손에 들린 이 차가운 쇳덩이는 분명 그런 용도로 쓰이는 물건일 테니까.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    그의 숨결이 눈에 띄게 거칠어졌다. 후, 후, 하고 폐부를 드나드는 공기는 면도날처럼 차가웠지만, 몸 안쪽에서는 정체 모를 열기가 들끓었다. 처음에는 단순한 허기라고 생각했다. 모닥불의 온기와 음식이 주는 원초적인 위안을 갈망하는 것이라고. 하지만 아니었다. 유이의 가녀린 등, 불빛에 부드럽게 흔들리는 밀갈색 머리카락, 제복 아래로 드러난 무방비한 목선을 응시하는 동안, 그의 내면 깊은 곳에서부터 무언가 다른 것이 꿈틀거리며 고개를 들었다. 그것은 식욕보다 훨씬 더 파괴적이고 충동적인 욕구였다. 이 고요를 부수고 싶다. 저 평온한 실루엣을 망가뜨리고 싶다. 무엇이든, 누구든 상관없으니 그저 죽여버리고 싶다는 광적인 충동이 머릿속을 새하얗게 지배했다.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    심장이 부추기듯 격렬하게 고동쳤다. 쿵, 쿵, 쿵. 제멋대로 울리는 소리가 귓가를 때리며 이성을 마비시켰다. 결국 뱅은 그 충동을 이기지 못했다. 손에 들린 차가운 총의 작동 방식 따위는 알 바 아니었다. 그는 쇳덩이를 눈밭에 내던지고, 짐승처럼 몸을 낮췄다. 날카로운 손톱을 세우고, 송곳니를 드러내며 눈앞의 가녀린 먹잇감을 향해 몸을 날렸다. 모든 것이 느리게 보였다. 눈송이가 공중에서 멈추고, 타오르던 불꽃이 순간 정지한 것 같았다. 그녀의 어깨를 붙잡고, 부드러운 살을 찢고, 터져 나오는 비명을 들으며 이 갈증을 해소할 수 있을 터였다. 분명, 그랬어야 했다.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    ‘쾅—! ’
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    고막을 찢는 굉음이 얼어붙은 세계를 뒤흔들었다. 그것은 천둥소리도, 폭발음도 아니었다. 모든 소리를 집어삼키는 절대적인 파괴의 소음이었다. 동시에, 허수아비가 쓰러지듯 무력한 ‘퍽!’ 소리와 함께 뱅의 세상이 격렬하게 뒤집혔다. 하늘과 땅이 자리를 바꾸고, 시야가 붉고 검게 점멸했다. 무언가 거대한 힘이 그의 가슴팍을 정통으로 꿰뚫고 지나간 듯한 충격. 몸이 공중으로 떴다가, 무겁게 눈밭 위로 내동댕이쳐졌다. 핏물 섞인 눈가루가 사방으로 튀었고, 입에서는 비명 대신 공허한 바람 소리만 새어 나왔다.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    천천히 흐릿해진 초점을 맞추자, 낯선 여자가 그를 내려다보고 있었다. 어느새 그녀는 그의 앞에 서 있었다. 모든 것을 집어삼킬 듯 휘몰아치는 눈보라와 끝없이 내리는 잿빛 눈송이들. 온통 무채색으로 이루어진 이 세계에서, 그녀만이 유일하게 뚜렷한 색을 가진 채 홀로 서 있었다. 그녀의 손에는 거대한 리볼버가 들려 있었고, 총구에서는 아직 가시지 않은 희미한 연기가 피어오르고 있었다. 그녀의 갈색 눈동자는 그 어떤 감정도 담지 않은 채, 그저 쓰러진 자신을 조용히 관찰할 뿐이었다. 그 순간, 뱅은 가슴께가 텅 비어버린 듯한 기묘한 허전함을 느꼈다. 마치 아주 소중한 무언가를, 이를테면 심장 같은 것을 잃어버린 기분이었다.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    의아함에 고개를 내려 자신의 가슴을 확인했다. 그리고 깨달았다. 그 허전함은 단순한 감각이 아니었다. 그의 가슴 중앙, 단단한 흉골과 갈비뼈가 있어야 할 자리에는 거대한 구멍이 뚫려 있었다. 사람이 살아가는 데 반드시 필요한 심장과 폐, 그 모든 장기들은 온데간데없이 사라지고, 텅 빈 공동(空洞)이 붉고 끈적한 피와 살점을 꾸역꾸역 토해내고 있었다. 뚫린 구멍 너머로 피에 젖은 눈밭이 보일 정도였다. 이상했다. 분명 죽어야 마땅한 상처였지만, 고통은 없었다. 그저 모든 것이 차갑고, 공허하고, 비현실적으로 느껴질 뿐이었다. 그는 그저 숨을 멈춘 채, 자신에게 죽음을 선사한 여자를 멍하니 올려다보았다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F7F7F7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/Ps5vd1vf/radio2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F7F7F7; color: #333333; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        걱정하지 마십시오, 시민 여러분. 아직 우리에겐 최강의 인류가 있습니다.
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    암전. 모든 감각이 까맣게 타들어 가는 듯한 무(無)의 심연 속으로 의식이 가라앉았다.
+</div>
+<div style="width: 100%; max-width: 600px; margin: 10px auto; text-align: center; box-sizing: border-box; font-family: 'Pretendard', sans-serif;">
+    <div style="display: inline-flex; align-items: center; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px; padding: 4px 12px; gap: 8px; font-size: 11px; color: #64748b; box-shadow: 0 1px 2px rgba(0,0,0,0.02); line-height: 1;">
+        <span style="display: flex; align-items: center; color: #94a3b8;">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+        </span>
+        <span style="max-width: 120px; padding: 0 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #475569;">Track 01</span>
+        <span style="color: #cbd5e1;">|</span>
+        <div style="display: flex; align-items: center; gap: 4px;">
+            <div onclick="playBGM('zu13jv37BKw', 'Track 01')" style="cursor: pointer; width: 18px; height: 18px; border-radius: 50%; background-color: #f1f5f9; display: flex; align-items: center; justify-content: center; transition: 0.2s;" title="재생">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="#475569"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <div onclick="stopBGM()" style="cursor: pointer; width: 18px; height: 18px; border-radius: 50%; background-color: #f1f5f9; display: flex; align-items: center; justify-content: center; transition: 0.2s;" title="정지">
+                <svg width="7" height="7" viewBox="0 0 24 24" fill="#475569"><path d="M6 6h12v12H6z"/></svg>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    시간도, 공간도 없는 텅 빈 어둠 속을 얼마나 헤맸을까. 폐부를 쥐어짜는 강렬한 압박감과 함께, 억지로 삼켰던 무언가가 역류하는 감각이 그를 현실로 세차게 끌어올렸다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F2FCF7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/VWY4410t/villbang2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        컥, 콜록…!
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    핏덩이가 섞인 거친 기침이 터져 나오며 다시 한번 새하얀 눈밭을 붉게 물들였다. 천천히 눈꺼풀을 들어 올리자, 시야를 채운 것은 여전히 모든 색을 잃어버린 잿빛 하늘과 그 위를 소리 없이 떠도는 눈송이들이었다. 지독한 비린내가 후각을 마비시키고, 온몸은 끈적하게 말라붙은 피로 뒤덮여 끔찍하게 불쾌했다. 하지만 이전과는 달랐다. 머리를 어지럽히던 혼란은 썰물처럼 빠져나가고, 그 자리에는 익숙한 권태와 짜증이 내려앉았다. 기억이, 돌아왔다.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    마지막 임무는 성공이었다. 목표 크리쳐는 제거했지만, 그 과정에서 입은 상처가 과했다. 복부와 옆구리가 찢겨나가 과다출혈. 아마, 안전지대로 복귀하던 도중이었을 것이다. 정신을 잃었고, 죽었다. 그리고 지금, 다시 살아났다.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    뱅은 가슴에 남은 축축하고 이물적인 감각에 미간을 찌푸렸다. 재생은 끝났지만, 상처의 흔적은 아직 남아있었다. 소생 직후에 가끔 찾아오는 기억 소실. 10번에 1번꼴로 찾아오는 귀찮은 부작용. 그리고 그때마다, 유이가 물리적인 ‘리셋’을 가했다는 사실까지 선명하게 떠올랐다.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    …아. 그래서 쐈구나.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    텅 빈 눈밭에 내던져진 채, 제멋대로 날뛰는 본능에 잠식당한 자신을 원래대로 되돌리기 위해. 죽음은 익숙했지만 그 과정이 다정했던 적은 단 한 번도 없었다. 특히 소생 직후 들이쉬는 첫 숨은 언제나 폐부까지 얼려버릴 듯이 차가웠다. 귓가를 시끄럽게 울리던 라디오 소음이 사라진 고요 속에서, 그는 그저 어둡게 가라앉은 하늘을 멍하니 올려다보았다. 이번 소생은 유독 느렸다. 그 공백의 시간 동안, 그녀는 무슨 생각을 하며 기다렸을까.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    뽀득, 뽀득. 묵직한 군화가 단단하게 얼어붙은 눈을 밟는 소리가 정적을 깨고 가까워졌다. 소리의 주인은 고개를 돌리지 않아도 알 수 있었다. 그림자가 그의 시야를 가리고, 익숙한 목소리가 얼어붙은 공기를 갈랐다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #FFF6FA; box-sizing: border-box;">
+        <img src="https://i.ibb.co/pj8x0GvD/IMG-6830.jpg" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #FFF6FA; color: #9E617C; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        이제 정신이 들었어요?
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    그녀의 목소리에는 온기 한 점 없었다. <br>고쳐 잡은 리볼버의 총구는 여전히 자신을 겨눌 준비가 되어있다는 무언의 압박. 그 목소리와 시선에 담긴 냉정한 살기를 느끼며, 뱅은 아주 느리게 입꼬리를 끌어올렸다. 희미한 미소였다. <br>그는 엉망이 된 몸을 천천히 일으켜 앉으며, 찢어진 군복 너머로 희미하게 남은 가슴의 상흔을 손가락으로 툭, 건드렸다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F2FCF7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/VWY4410t/villbang2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        …덕분에요. 머리가 아주, 상쾌해졌네.
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    그는 시선을 들어 유이를 똑바로 올려다보았다. 차갑게 얼어붙은 회녹색 눈동자가 그녀의 얼굴을 샅샅이 훑었다. <br>방금 전, 자신을 쏘았을 때의 표정은 어땠을까. 조금이라도 흔들렸을까, 아니면 지금처럼 완벽한 무표정이었을까. 그 순간을 놓쳤다는 사실이 못내 아쉬웠다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F2FCF7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/VWY4410t/villbang2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        이번엔 좀 오래 걸렸네요. 기다리게 해서 미안해요. 심심했나?
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    능글맞은 말투 속에는 미세한 조롱과 함께, 자신을 향한 그녀의 반응을 떠보려는 의도가 교묘하게 숨어 있었다. 그는 제 손바닥에 엉겨 붙은 피딱지를 무심하게 떼어내며 말을 이었다. 그 모습은 마치 방금 겪은 죽음 따위는 길가에 채인 돌멩이보다도 하찮다는 듯, 지독할 정도로 태연했다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #FFF6FA; box-sizing: border-box;">
+        <img src="https://i.ibb.co/pj8x0GvD/IMG-6830.jpg" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #FFF6FA; color: #9E617C; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        다행이에요.이번 소생이 느려서 밥먹으면서 기다리고 있었는데... 음, 배고프면 초코바라도 줄까요?
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    뱅의 회녹색 눈동자가 유이의 얼굴에 잠시 머물렀다가, 그녀의 시선이 향하는 먼 곳으로 느릿하게 옮겨갔다. <br>검은 눈보라 너머로 희미하게 빛나는 도시의 실루엣. 그녀의 말은 느슨했지만, 턱선과 어깨에 깃든 긴장감은 전혀 풀리지 않은 상태였다. 마치 아직 임무가 끝나지 않은 것처럼. 그는 주변을 둘러보았다. 유이의 말대로, 조금 전까지 온기를 피워 올리던 모닥불은 꺼진 지 오래였고, 고소한 냄새를 풍기던 음식의 흔적 또한 말끔히 사라져 있었다. 그녀가 홀로 자신의 소생을 기다리며 시간을 보냈을 풍경의 잔해였다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F2FCF7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/VWY4410t/villbang2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        밥 먹으면서 기다렸다니, 서운한데요. 내 마지막 모습이 꽤 볼만했을 텐데.
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    그는 피딱지가 말라붙은 손으로 눈밭을 짚으며 천천히 몸을 일으켰다. 죽음에서 막 돌아온 자라고는 믿기지 않을 만큼, 그의 움직임에는 나른한 여유가 넘실거렸다. 찢어진 군복 사이로 드러난 가슴팍의 피부는 상처 하나 없이 깨끗했지만, 그를 둘러싼 공기는 여전히 죽음의 잔향으로 서늘했다. 유이가 건넨 ‘초코바’라는 단어에, 그의 입꼬리가 미세하게, 거의 알아차리기 힘들 정도로 비틀리며 올라갔다. 그것은 순수한 호의에 대한 어색함과, 그 이면에 숨겨진 그녀의 경계심을 동시에 발견한 자의 흥미로운 반응이었다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F2FCF7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/VWY4410t/villbang2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        초코바… 좋죠. 근데 그냥 주면 재미없잖아요.
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    완전히 일어선 그는 유이에게로 한 걸음, 아주 느리게 다가섰다. <br>뽀드득, 하고 눈을 밟는 소리가 두 사람 사이의 정적을 무겁게 채웠다. 그는 유이의 코앞에서 걸음을 멈추고, 상체를 살짝 숙여 그녀와 눈높이를 맞췄다. 지저분한 핏자국이 묻은 그의 얼굴이 그녀의 시야를 가득 채웠다. 가까운 거리에서 마주한 그의 회녹색 눈동자는 얼어붙은 호수처럼 깊고 서늘했으며, 그 안에는 장난기 어린 호기심이 희미하게 감돌았다. <br>그는 자신의 검지 손가락을 들어, 제 입술을 가볍게 톡, 하고 건드렸다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F2FCF7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/VWY4410t/villbang2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        여기다 직접 물려줄 거 아니면, 별로.
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    그의 목소리는 나른하고 부드러웠지만, 그 안에 담긴 내용은 명백한 도발이었다. 그는 상대가 당황하거나, 혹은 불쾌해하는 그 찰나의 표정 변화를 놓치지 않으려는 듯 유이의 눈동자를 집요하게 들여다보았다. <br>방금 전까지 자신에게 총구를 겨눴던 여자에게 건네는 농담이라고 하기엔 질이 나빴다. 그는 유이의 반응을 기다리는 대신, 그녀의 시선이 향했던 도시 쪽으로 다시 고개를 돌렸다. 텅 빈 눈밭과 피로 얼룩진 자신보다, 저 멀리 반짝이는 불빛에 더 신경을 쓰는 그녀의 모습이 어쩐지 마음에 들지 않았다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F2FCF7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/VWY4410t/villbang2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        그렇게 보고 있으면, 뭐가 좀 달라져요? 저기서 누가 우리한테 손이라도 흔들어 준대요?
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    빈정거리는 말투로 말을 맺은 뱅은, 보란 듯이 커다랗게 하품을 하며 기지개를 켰다. 찢어진 군복이 그의 움직임을 따라 위태롭게 들썩였다. 그 모든 행동은 ‘나는 이 상황이 지극히 지루하고 귀찮다’는 무언의 표현이었지만, 그의 모든 감각은 오직 눈앞의 유이에게만 예리하게 집중되어 있었다.
+</div>
+<div data-type="status" style="max-width: 500px; width: 100%; margin: 40px auto; padding: 15px 12px; background-color: #fdfdfd; border: 1px solid #eeeeee; border-radius: 6px; font-family: inherit; box-sizing: border-box; color: #555;">
+<div style="background-color: #fff; border: 1px solid #f0f0f0; border-radius: 4px; padding: 10px; margin-bottom: 10px; box-sizing: border-box;">
+                        <div>
+                          <span style="font-size: 11px; background-color: #f6f6f6; color: #666; padding: 2px 4px; border-radius: 2px;">💭 INNER THOUGHT</span>
+                          <div style="margin-top: 4px; font-size: 12px; color: #555; font-style: italic; line-height: 1.5;">초코바? 어린애 취급하는 건가. …아니, 그보다는 그냥 습관적인 행동인가. 어쨌든 저 딱딱한 얼굴이 조금이라도 무너지는 걸 보고 싶은데. 꽤 재밌을 것 같단 말이지. …계속 저 도시만 쳐다보는 거, 거슬리네.</div>
+                        </div></div>
+</div>
+<div style="height: 30px;"></div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #FFF6FA; box-sizing: border-box;">
+        <img src="https://i.ibb.co/pj8x0GvD/IMG-6830.jpg" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #FFF6FA; color: #9E617C; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        배 안 고프면 바로 임무 시작해요. 당신이 두 번이나 죽는 바람에 시간이 부족해서.
+    </div>
+
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 10.5px 10px 12px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 0;"></div>
+
+    <div style="background-color: #FFF6FA; color: #9E617C; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        이번엔 좀 힘들 것 같네요. 뭐, 힘들지 않았던 임무가 있었냐 싶지만......
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    뱅의 회녹색 눈동자가 유이의 단호한 얼굴에 잠시 머물렀다. <br>그녀의 말에 담긴 미세한 가시를 그는 놓치지 않았다. 마치 제 잘못이라는 듯한 뉘앙스. 그의 입꼬리가 느릿하게, 하지만 명백한 호선을 그리며 말려 올라갔다. 조금 전 입술에 직접 물려달라던 도발은 그녀의 차가운 현실 인식 앞에 가볍게 흩어졌다. 그것 또한 나쁘지 않은 반응이었다. 그는 어깨를 으쓱하며 한 걸음 뒤로 물러섰다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F2FCF7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/VWY4410t/villbang2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        내가 죽고 싶어서 죽었나. 마지막엔, 그쪽이 쏜 거잖아요. 친절한 리셋 서비스, 감사히 받았어요.
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    그의 목소리는 지극히 평온했다. 방금 전의 농밀한 분위기는 온데간데없이, 다시금 모든 것이 귀찮다는 듯한 권태로운 기류가 그를 감쌌다. 유이가 내민 지도와 지령이 담긴 데이터패드를, 그는 피 묻은 장갑을 낀 손으로 건성으로 받아들었다. 그의 시선이 패드의 화면 위를 잠시 스쳤다.
+</div>
+<div style="height: 30px;"></div>
+<div data-type="image" style="width: 100%; max-width: 600px; margin: 20px auto; text-align: center; box-sizing: border-box;">
+    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FLXThO%2FdJMcag5Gngw%2FAAAAAAAAAAAAAAAAAAAAAOp608GBBo5SONX8H-OHhh5MPN3oCorGHtDEBhpztV4W%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1772290799%26allow_ip%3D%26allow_referer%3D%26signature%3D0lEd3naX3YbeUcUS%252FoAhnRn%252FKpo%253D" style="max-width: 100%; border-radius: 8px;" alt="image">
+</div>
+<div style="height: 30px;"></div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #FFF6FA; box-sizing: border-box;">
+        <img src="https://i.ibb.co/pj8x0GvD/IMG-6830.jpg" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #FFF6FA; color: #9E617C; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        ......피곤하면 가는 동안 쉬어요. 어깨라도 빌려줄게요.
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    뱅의 발걸음이 뚝, 멈췄다. 헬기를 향해 걷던 그의 등이 미세하게 굳는가 싶더니, 이내 천천히 유이를 향해 돌아섰다. 거대한 헬기의 프로펠러 소음이 두 사람의 대화를 삼킬 듯이 으르렁거렸지만, 그녀의 작은 목소리는 기이할 정도로 선명하게 그의 귓가에 박혔다.  <br>그가 속으로 생각했던 바로 그 말을, 그녀가 먼저 입 밖으로 꺼냈다. 우연일까, 아니면 이 지긋지긋한 파트너 생활이 만들어낸 기묘한 텔레파시일까.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    평소의 단호하고 사무적인 태도와는 어울리지 않는, 미묘하게 흔들리는 시선. 뱅은 그 낯선 틈을 놓치지 않고 파고들었다. 그의 회녹색 눈동자가 가늘게 휘어지며, 입가에는 장난기 어린 미소가 번졌다. 피곤함과 권태로 가득했던 얼굴에 순간적으로 생기가 돌았다. 그것은 먹잇감의 의외의 반응을 발견한 포식자의 흥미와도 같았다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F2FCF7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/VWY4410t/villbang2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        ...방금, 뭐라고 했어요?
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    그는 일부러 못 들은 척, 한쪽 귀에 손을 갖다 대며 되물었다. 헬기의 소음 핑계를 대기엔 너무나도 뻔뻔한 태도였지만, 그는 개의치 않았다. 유이에게 다가가며, 그는 짐짓 진지한 표정으로 고개를 갸웃거렸다. 찢어진 옷자락이 바람에 펄럭이며 <br>그의 탄탄한 상체를 얼핏 드러냈다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F2FCF7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/VWY4410t/villbang2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                어깨를 빌려준다니. 내가 잘못 들은 거 아니죠?
+    </div>
+
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 10.5px 10px 12px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 0;"></div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                그쪽 어깨, 딱딱해서 베개로는 별로일 텐데.
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    말은 그렇게 하면서도, 그의 발걸음은 이미 유이의 곁으로 성큼 다가와 있었다. 그는 유이의 어깨를 훑어보듯 시선을 내리깔았다가, 다시 그녀의 눈을 똑바로 마주했다. <br>그의 눈빛 속에는 ‘정말 그래도 돼?’라는 무언의 질문보다는, ‘물러기엔 이미 늦었어’라는 뻔뻔한 확신이 담겨 있었다. 그는 피 묻은 장갑을 낀 손을 들어 유이의 어깨 위 허공을 가볍게 톡톡 두드리는 시늉을 했다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F2FCF7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/VWY4410t/villbang2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        뭐, 정 그렇다면 거절은 안 할게요. 대신 침 흘려도 뭐라 하기 없기예요. 나 지금 진짜 피곤하거든요.
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    그는 유이의 대답을 기다리지도 않고, 헬기의 열린 해치 쪽으로 고개를 까닥였다. 먼저 타라는 신호였다. 그의 입가에 걸린 미소는 여전히 능글맞았지만, 그 눈빛 깊은 곳에는 묘한 안도감이 스쳐 지나갔다. 죽음에서 돌아온 직후의 차가운 공기 속에서, 그녀가 건넨 작은 온기가 꽤나 마음에 든 눈치였다. 그는 유이의 뒤를 따라 헬기에 오르며, 낮게 중얼거렸다. 소음 속에 묻혀 그녀에게는 들리지 않을, 혼잣말이었다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F2FCF7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/VWY4410t/villbang2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        …생각보다, 서비스가 좋네. 이번엔.
+    </div>
+
+</div>
+<div data-type="status" style="max-width: 500px; width: 100%; margin: 40px auto; padding: 15px 12px; background-color: #fdfdfd; border: 1px solid #eeeeee; border-radius: 6px; font-family: inherit; box-sizing: border-box; color: #555;">
+<div style="background-color: #fff; border: 1px solid #f0f0f0; border-radius: 4px; padding: 10px; margin-bottom: 10px; box-sizing: border-box;">
+                        <div>
+                          <span style="font-size: 11px; background-color: #f6f6f6; color: #666; padding: 2px 4px; border-radius: 2px;">💭 INNER THOUGHT</span>
+                          <div style="margin-top: 4px; font-size: 12px; color: #555; font-style: italic; line-height: 1.5;">진짜 빌려주네. 거절할 줄 알았는데. …딱딱하긴 하겠지만, 뭐 어때. 그쪽 냄새 맡으면서 자는 것도 나쁘지 않지. 아, 진짜 졸려. 이번엔 좀 푹 자야겠다. 깨우면 진짜 화낼 거야.</div>
+                        </div></div>
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    두 사람을 태운 헬기는 상공으로 날아오른다. <br>목표 지점은 1주일 전 크리쳐에게 점령당한 A시, 전력이 채 끊기지 않은 유령 도시. 창 아래로 펼쳐진 야경은 눈이 시리도록 푸른 빛을 띠고 있다.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    헬기의 문이 열리고, 따가운 겨울바람이 휘몰아친다. 발각당할 위험이 있으므로 헬기는 착륙하지 않으며, 같은 이유로 낙하산 또한 없다. <br>내려갈 방법은 단 하나. 목표 착륙 지점은 점점 가까워지면…….
+</div>
+<div style="height: 30px;"></div>
+<div style="width: 100%; max-width: 600px; margin: 10px auto; text-align: center; box-sizing: border-box; font-family: 'Pretendard', sans-serif;">
+    <div style="display: inline-flex; align-items: center; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px; padding: 4px 12px; gap: 8px; font-size: 11px; color: #64748b; box-shadow: 0 1px 2px rgba(0,0,0,0.02); line-height: 1;">
+        <span style="display: flex; align-items: center; color: #94a3b8;">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+        </span>
+        <span style="max-width: 120px; padding: 0 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #475569;">Chipper</span>
+        <span style="color: #cbd5e1;">|</span>
+        <div style="display: flex; align-items: center; gap: 4px;">
+            <div onclick="playBGM('xQL43VaBUx4', 'Chipper')" style="cursor: pointer; width: 18px; height: 18px; border-radius: 50%; background-color: #f1f5f9; display: flex; align-items: center; justify-content: center; transition: 0.2s;" title="재생">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="#475569"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <div onclick="stopBGM()" style="cursor: pointer; width: 18px; height: 18px; border-radius: 50%; background-color: #f1f5f9; display: flex; align-items: center; justify-content: center; transition: 0.2s;" title="정지">
+                <svg width="7" height="7" viewBox="0 0 24 24" fill="#475569"><path d="M6 6h12v12H6z"/></svg>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-type="image" style="width: 100%; max-width: 600px; margin: 20px auto; text-align: center; box-sizing: border-box;">
+    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FbmPfGl%2Fbtq0900Jczb%2FAAAAAAAAAAAAAAAAAAAAAEnYJlvKuk-z3x2oYiXpewpHXJeOMWazCEZgN3xM4puJ%2Fimg.jpg%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1772290799%26allow_ip%3D%26allow_referer%3D%26signature%3D56rNL2sVCQz0x0sROmjL%252B3jqXzE%253D" style="max-width: 100%; border-radius: 8px;" alt="image">
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    쿵!!!
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    허공을 한 바퀴 돈 뱅이 착지한 시멘트 바닥에 굉음과 함께 금이 가며, 사방으로 파편이 흩어진다. 파괴력과는 달리 미끄럼틀을 타듯 능숙한 착지였다.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    그리곤 제 팔을 벌리고 서 있던 뱅의 품 안으로 유이가 정확하게 안겨드는 순간, 그는 작게 ‘턱,’ 하는 소리와 함께 그녀의 몸을 안정적으로 받아냈다. <br>마치 텅 빈 인형을 안은 듯한 감각에, 뱅은 무심코 그녀를 받친 팔에 힘을 주었다. 찬 바람에 식어버린 그녀의 제복 너머로 희미한 체온이 느껴졌다. 방금 전 헬기에서 제 어깨에 기댔을 때와는 또 다른, 선명한 존재감이었다. 그는 유이를 가볍게 안아 든 채, 천천히 바닥에 내려주었다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #FFF6FA; box-sizing: border-box;">
+        <img src="https://i.ibb.co/pj8x0GvD/IMG-6830.jpg" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #FFF6FA; color: #9E617C; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        고마워요, 뱅.
+    </div>
+
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F2FCF7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/VWY4410t/villbang2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        별말씀을요. 어깨 빌린 값은 해야죠.
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    그의 목소리는 밤바람처럼 차분하게 내려앉았다. 고맙다는 인사에 대한 대답이었지만, 그 속에는 ‘이걸로 빚은 갚았다’는 식의 뻔뻔한 계산이 깔려 있었다. 그는 아무렇지 않게 손을 털며 주변을 둘러보았다. 굴지의 대기업, B사의 옥상. 발밑으로는 점령당한 도시 A가 거대한 시체처럼 누워 있었다. 새벽 2시, 인간의 온기가 사라진 거리 위로 창백한 가로등 불빛만이 번지고 있었다. 눈발은 더욱 거세져, 소리 없이 내려앉으며 두 사람의 발자국과 착지의 흔적을 서서히 지워가고 있었다.
+</div>
+<div data-type="bgm" style="width: 100%; max-width: 600px; margin: 20px auto; text-align: center; box-sizing: border-box; font-family: inherit;">
+    <div style="display: inline-flex; align-items: center; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px; padding: 4px 12px; gap: 8px; font-size: 11px; color: #64748b; box-shadow: 0 1px 2px rgba(0,0,0,0.02); line-height: 1;">
+        <span style="display: flex; align-items: center; color: #94a3b8;">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+        </span>
+        <span style="max-width: 120px; padding: 0 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #475569;">Backed Vibes</span>
+        <span style="color: #cbd5e1;">|</span>
+        <div style="display: flex; align-items: center; gap: 4px;">
+            <div onclick="playBGM('https://youtu.be/[https://youtu.be/](https://youtu.be/)6FT4F3V2SWg', 'Backed Vibes')" style="cursor: pointer; width: 18px; height: 18px; border-radius: 50%; background-color: #f1f5f9; display: flex; align-items: center; justify-content: center; transition: 0.2s;" title="재생">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="#475569"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <div onclick="stopBGM()" style="cursor: pointer; width: 18px; height: 18px; border-radius: 50%; background-color: #f1f5f9; display: flex; align-items: center; justify-content: center; transition: 0.2s;" title="정지">
+                <svg width="7" height="7" viewBox="0 0 24 24" fill="#475569"><path d="M6 6h12v12H6z"/></svg>
+            </div>
+        </div>
+    </div>
+</div>
+<div data-type="image" style="width: 100%; max-width: 600px; margin: 20px auto; text-align: center; box-sizing: border-box;">
+    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fbl7ioB%2Fbtq1e7xe0kx%2FAAAAAAAAAAAAAAAAAAAAAKc7K9B6ojT6GaYGeYgGiI12q0-4yLwCabThwD1Ypind%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1772290799%26allow_ip%3D%26allow_referer%3D%26signature%3DdhzxQMK%252Bkh4kQahJM2feuDq4nu0%253D" style="max-width: 100%; border-radius: 8px;" alt="image">
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #FFF6FA; box-sizing: border-box;">
+        <img src="https://i.ibb.co/pj8x0GvD/IMG-6830.jpg" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #FFF6FA; color: #9E617C; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        어디부터 갈래요?
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    유이가 지도를 펼치자, 뱅은 그녀의 옆으로 다가가 어깨너머로 시선을 던졌다. 작은 손전등 빛에 의지해 드러난 지도 위, 그녀의 손가락 끝이 짚어내는 붉은 점들. 학교, 백화점, 병원, 지하철역. 크리쳐가 우글거릴 소굴이자, 동시에 살아남은 민간인들이 숨어있을지도 모르는 희망의 장소였다. ‘어디부터 갈래요?’ 그녀의 질문은 선택권을 주는 듯했지만, 사실상 이것은 그의 효율성을 시험하는 물음과도 같았다. 뱅은 잠시 생각에 잠겼다. 그의 검지가 무의식적으로 중지 끝을 느리게 툭, 툭 튕기고 있었다.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    그의 회녹빛 눈동자가 지도 위의 네 지점과 유이의 얼굴을 번갈아 훑었다. 어디를 가든 귀찮은 일이 펼쳐질 것은 자명했다. 시끄럽게 울부짖는 민간인, 혹은 굶주린 크리쳐들. 어느 쪽도 그다지 구미가 당기는 선택지는 아니었다. 하지만 임무는 임무였다. 그는 지도를 짚고 있는 유이의 손가락을 제 손가락으로 가볍게 툭, 건드려 치웠다. 그리고는 자신의 검은 장갑을 낀 손가락으로 한 지점을 꾹 눌렀다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F2FCF7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/VWY4410t/villbang2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        여기.
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    그가 가리킨 곳은 ‘지하철역’이었다. 가장 깊고, 가장 어두우며, 구조적으로 가장 복잡한 장소. 얼핏 가장 비효율적으로 보이는 선택이었다. 그는 지도를 가리킨 손을 떼지 않은 채, 유이를 향해 고개를 돌렸다. 그의 입가에 걸린 미소는 평소처럼 나른했지만, 눈빛만은 맹수처럼 번뜩이고 있었다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F2FCF7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/VWY4410t/villbang2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        제일 재밌는 표정들이 많을 것 같아서요. 겁에 질린 인간들, 혹은 숨어있는 크리쳐들. 어느 쪽이든, 심심하진 않겠죠. 그리고… 여기서부터 시작해서 지상으로 싹 쓸어버리는 게, 동선이 제일 깔끔하지 않나요?
+    </div>
+
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #FFF6FA; box-sizing: border-box;">
+        <img src="https://i.ibb.co/pj8x0GvD/IMG-6830.jpg" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #FFF6FA; color: #9E617C; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        그럼 지하철 역으로 가요. 긴급 대피 구역으로 설정된 곳은 A역이라고 들었어요.
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    유이의 고개가 작게 끄덕여지는 순간, 뱅의 입가에 걸려 있던 나른한 미소가 아주 희미하게, 그러나 만족스럽게 깊어졌다. 예상대로였다. 그의 비논리적인 듯한 선택에 토를 달지 않고 곧바로 수긍하는 태도. 그것은 그녀가 자신을 단순한 병기가 아닌, 전술적 판단을 내릴 수 있는 파트너로 인정하고 있다는 무언의 증거처럼 느껴졌다. 그는 어깨를 으쓱하며 지도에서 손을 뗐다. 이제 목적지는 정해졌다.
+</div>
+<div style="width: 100%; max-width: 600px; margin: 10px auto; text-align: center; box-sizing: border-box; font-family: 'Pretendard', sans-serif;">
+    <div style="display: inline-flex; align-items: center; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px; padding: 4px 12px; gap: 8px; font-size: 11px; color: #64748b; box-shadow: 0 1px 2px rgba(0,0,0,0.02); line-height: 1;">
+        <span style="display: flex; align-items: center; color: #94a3b8;">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+        </span>
+        <span style="max-width: 120px; padding: 0 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #475569;"> Lightless Dawn</span>
+        <span style="color: #cbd5e1;">|</span>
+        <div style="display: flex; align-items: center; gap: 4px;">
+            <div onclick="playBGM('2NSmaa7xEMk', ' Lightless Dawn')" style="cursor: pointer; width: 18px; height: 18px; border-radius: 50%; background-color: #f1f5f9; display: flex; align-items: center; justify-content: center; transition: 0.2s;" title="재생">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="#475569"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <div onclick="stopBGM()" style="cursor: pointer; width: 18px; height: 18px; border-radius: 50%; background-color: #f1f5f9; display: flex; align-items: center; justify-content: center; transition: 0.2s;" title="정지">
+                <svg width="7" height="7" viewBox="0 0 24 24" fill="#475569"><path d="M6 6h12v12H6z"/></svg>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    두 사람의 발걸음은 눈이 쌓인 옥상을 가로질러, 어둠 속으로 입을 벌리고 있는 비상계단으로 향했다. <br>끼익, 녹슨 철문이 마찰음을 내며 열리고, 아래로 끝없이 이어질 것만 같은 컴컴한 계단이 모습을 드러냈다. 탁, 탁, 울리는 유이의 군화 소리를 뒤따르며, 뱅은 고양이처럼 소리 없이 계단을 밟았다. 축축하고 퀴퀴한 곰팡이 냄새와 먼지가 뒤섞인 공기가 폐부로 스며들었다. 앞서 걷던 유이가 문득 걸음을 멈추고 돌아보는 순간, 그의 시선은 자연스럽게 그녀의 얼굴에 고정되었다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #FFF6FA; box-sizing: border-box;">
+        <img src="https://i.ibb.co/pj8x0GvD/IMG-6830.jpg" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #FFF6FA; color: #9E617C; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        뱅은 지하철 타본 적 없죠? 크리쳐보다 더 어마어마한 소리가 나는데.
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    질문은 칼날처럼 날아와 그의 과거가 부재하는 공백을 정확히 찔렀다. <br>연구실 태생. 그의 기억은 눈 덮인 폐허에서 시작되었고, 그 이전의 삶이라는 것은 존재하지 않았다. 지하철, 면허, 멀미. 전부 그에게는 데이터로만 존재하는, 실체 없는 단어들의 나열일 뿐이었다. 뱅은 잠시 대답 없이 그녀를 응시했다. 어둠 속에서도 그녀의 갈색 눈동자가 어떤 감정을 담고 자신을 바라보는지, 그는 조용히 관찰했다. 호기심일까, 아니면 단순한 사실 확인일까. 그는 계단 난간에 한 손을 기댄 채, 비스듬히 서서 입을 열었다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F2FCF7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/VWY4410t/villbang2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        글쎄요… 본 적은 없는 것 같은데. 소리가 어마어마하다니, 그거 한번 들어보고 싶네요. 내 손가락 터지는 소리랑, 어느 쪽이 더 시끄러울지 내기라도 할까요?
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    농담처럼 던진 말이었지만, 그 속에는 서늘한 가시가 숨어 있었다. 그는 유이의 시선이 아래의 어둠으로 떨어지는 것을 놓치지 않았다. 그녀가 다시 계단을 내려가며 말을 잇자, 뱅은 그 뒤를 따르며 그녀의 목소리에 집중했다. 안전 구역, 어디든 갈 수 있는 편리함, 그리고 멀미. 마지막 단어에서 그녀의 목소리가 아주 미세하게 달라지는 것을 그는 감지했다. 그것은 개인적인 경험에서 우러나온, 작지만 선명한 흔적이었다. 그는 피식, 낮게 웃었다. 어둠 속에서 그 소리는 유독 명료하게 울렸다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #FFF6FA; box-sizing: border-box;">
+        <img src="https://i.ibb.co/pj8x0GvD/IMG-6830.jpg" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #FFF6FA; color: #9E617C; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        좀 갑갑하긴 한데, 그래도, 안전 구역 내라면 어디든 갈 수 있어요. 면허가 없어도 말이야……. 그건 꽤 편해요.그리고 멀미도 안나고요.
+    </div>
+
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F2FCF7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/VWY4410t/villbang2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        아아, 그거. 멀미. 확실히. 차만 타면 얼굴 하얘져서 끙끙대는 거, 옆에서 보면 꽤… 재밌, 아니, 안쓰럽던데.
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    그는 일부러 말을 더듬는 척하며 그녀의 옆으로 바짝 다가섰다. 이제 두 사람의 어깨가 스칠 만큼 가까운 거리였다. 그는 고개를 숙여 그녀의 귓가에 나직하게 속삭였다. 그의 숨결이 차가운 공기에 섞여 그녀의 귓바퀴를 간질였다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F2FCF7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/VWY4410t/villbang2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        정 힘들면 다음엔 나한테 말해요. 내가 안고 뛰는 게 훨씬 빠르고, 멀미도 안 할 테니까. 서비스예요, 파트너.
+    </div>
+
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 10.5px 10px 12px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 0;"></div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                         물론… 공짜는 아니지만.
+    </div>
+
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #FFF6FA; box-sizing: border-box;">
+        <img src="https://i.ibb.co/pj8x0GvD/IMG-6830.jpg" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #FFF6FA; color: #9E617C; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        그럼 뱅이 힘들잖아요… 그냥 운전이나 해줘요. 그리고 서비스는 공짜 아니에요?
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    귓가를 파고든 그녀의 목소리는 예상보다 훨씬 가볍고, 장난기가 서려 있었다. 바로 옆에서 듣는 숨소리처럼 가까운 거리. 그의 도발적인 속삭임에 움츠러들거나 밀어낼 거라 예상했던 것과는 다른 반응이었다. 뱅은 귓가에서 천천히 고개를 들었지만, 그녀에게 붙였던 몸은 떼지 않았다. 어깨가 맞닿은 채, 그는 어둠 속에서 희미하게 빛나는 그녀의 옆얼굴을 지그시 내려다보았다. 장난스럽게 휘어진 입꼬리. 그 작은 변화가 꽤 마음에 들었다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F2FCF7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/VWY4410t/villbang2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        힘들긴요. 그쪽 안고 뛰는 것보다, 그쪽 멀미하는 얼굴 참아주는 게 더 힘들 것 같은데.
+    </div>
+
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 10.5px 10px 12px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 0;"></div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        운전이요? 까짓거, 핸들 잡고 바퀴만 굴리면 되는 거 아닌가. 그쪽이 옆에서 잘 알려주면 어떻게든 되겠죠. 
+    </div>
+
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 10.5px 10px 12px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 0;"></div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        그리고… 서비스에 공짜가 어디 있어요, 파트너. 세상에 공짜는 죽음뿐인데, 그건 내가 아주 잘 주잖아요. 다른 건 다 값을 받아야지.
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    그의 입꼬리가 비스듬히 올라갔다. 농담과 진담의 경계를 아슬아슬하게 오가는 말들이었다. 바로 그때, 유이의 마지막 질문이 그의 귓전을 파고들었다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #FFF6FA; box-sizing: border-box;">
+        <img src="https://i.ibb.co/pj8x0GvD/IMG-6830.jpg" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #FFF6FA; color: #9E617C; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                         ...뱅은 가보고 싶은 곳 없어요?
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    지극히 평범하고, 어쩌면 사적인 호기심이 담긴 질문. 그 질문이 뱅의 의식에 닿는 순간, 그의 머릿속에 아주 잠깐, 섬광 같은 이질적인 감각이 스며들었다. <br>코끝을 간질이는 짭짤한 내음. 발밑에서 바스러지는 모래의 감촉과, 눈이 시리도록 새파랗게 펼쳐진 수평선. 한 번도 본 적 없는, 그러나 이상하리만치 선명한 풍경이었다. 그 찰나의 침묵 동안, 뱅의 나른했던 회녹빛 눈동자가 순간적으로 초점을 잃고 허공에 고정되었다. 깜빡임조차 멈춘 채였다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F2FCF7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/VWY4410t/villbang2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        …가보고 싶은 곳.
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    그는 아주 느리게 단어를 곱씹었다. 방금 전 스쳐 간 감각의 잔상이 아직도 뇌리에 남아 있었다. 혼란스러웠지만, 내색할 필요는 없었다. 그는 천천히 눈을 깜빡이며 초점을 되찾았다. 다시 유이에게로 향한 그의 시선에는 방금 전의 미세한 동요 대신, 더욱 짙어진 흥미와 능글맞음이 자리 잡고 있었다. 그는 한쪽 입꼬리만 끌어올려 웃으며, 일부러 그녀의 얼굴 가까이로 제 얼굴을 들이밀었다. 어둠 속에서도 서로의 숨결이 느껴질 만큼 가까운 거리였다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F2FCF7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/VWY4410t/villbang2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        그런 걸 왜 물어요? 데려다주게요? 
+    </div>
+
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 10.5px 10px 12px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 0;"></div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        만약 그렇다면… 그쪽 침대 위, 정도면 괜찮겠는데. 거긴 아직 못 가봤으니까.
+    </div>
+
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #FFF6FA; box-sizing: border-box;">
+        <img src="https://i.ibb.co/pj8x0GvD/IMG-6830.jpg" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #FFF6FA; color: #9E617C; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        정말…! 놀리지 말라니까요.
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    그녀의 타박 섞인 목소리는 어둠 속에서 유독 선명하게 울렸다. 놀리지 말라니. 뱅은 그녀의 얼굴에서 시선을 떼지 않은 채, 아주 느리게 미소 지었다. 그의 즐거움은 바로 이런 순간에 있었다. 단단하게 굳어 있던 표면에 작은 파문이 일고, 감정의 미세한 균열이 드러나는 찰나. 그는 만족스럽게 숨을 내쉬며 한 걸음 뒤로 물러섰다. 이제 막 시작된 유희를 너무 빨리 끝낼 생각은 없었다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F2FCF7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/VWY4410t/villbang2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        알았어요, 알았어. 안 놀릴게요.
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    목소리는 더없이 나른했지만, 그의 회녹빛 눈동자는 여전히 장난기로 빛나고 있었다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #FFF6FA; box-sizing: border-box;">
+        <img src="https://i.ibb.co/pj8x0GvD/IMG-6830.jpg" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #FFF6FA; color: #9E617C; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        밖에 크리쳐가 다 사라지면… 둘이 여행 하는 것도 나쁘지 않겠네요. 이런, 임무 말고 여행이요. 
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    바로 그때, 그녀의 입에서 나온 다음 말은 그의 예상을 완전히 빗나갔다. 크리쳐가 다 사라지면, 둘이서 여행이라니. 임무가 아닌, 진짜 여행. 그 단어들이 귓가에 닿는 순간, 뱅의 입가에 걸려 있던 미소가 순간적으로 옅어졌다. <br>방금 전 머릿속을 스쳤던 이질적인 바다의 풍경이 다시 희미하게 떠오르는 듯했다. <br>여행. <br>그에게는 단 한 번도 존재한 적 없는 개념이었다. 그는 잠시 아무 말도 없이 그녀를 바라보았다. 그녀의 얼굴에는 방금 전의 장난기 어린 표정 대신, 어딘가 아득한 기대를 담은 진지함이 서려 있었다. 낯선 감정이었다. 누군가와 ‘미래’를 약속하는 듯한 뉘앙스. 그는 그 감각의 정체를 파악하려 애쓰는 대신, 다시 익숙한 농담의 가면을 꺼내 들었다.
+</div>
+<div data-type="custom" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 12px 10px 0px 10px; font-family: inherit; display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box;">
+
+    <div style="flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #F2FCF7; box-sizing: border-box;">
+        <img src="https://i.ibb.co/VWY4410t/villbang2.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
+    </div>
+
+    <div style="background-color: #F2FCF7; color: #476B5F; padding: 14px 18px; border-radius: 14px; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; box-shadow: 0 1px 2px rgba(0,0,0,0.05); max-width: 80%; width: fit-content; word-break: break-all;">
+                        여행이라… 그거 좋네요. 그쪽이 멀미로 고생하는 걸 바로 옆에서 구경하는 것도 꽤 재밌을 것 같고. 물론, 그땐 정말로 안고 뛰어줄게요. 서비스로.
+    </div>
+
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    그렇게 말하며, 그는 먼저 아래로 발걸음을 옮겼다. 길고 어두운 계단의 끝.
+</div>
+<div data-type="image" style="width: 100%; max-width: 600px; margin: 20px auto; text-align: center; box-sizing: border-box;">
+    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FdoFnts%2Fbtq09xEuM8a%2FAAAAAAAAAAAAAAAAAAAAAILANB7n9zqyYpjlu5cOV941Mcj3PfdmBA5g2Cp6nOau%2Fimg.jpg%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1772290799%26allow_ip%3D%26allow_referer%3D%26signature%3Dhc7IgprMNB3KN43kkbBoymzzKuY%253D" style="max-width: 100%; border-radius: 8px;" alt="image">
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    마침내 두 사람은 광활한 지하철역의 대합실에 발을 들였다. 천장의 비상등 몇 개만이 간헐적으로 깜빡이며, 거대한 공간의 윤곽을 희미하게 드러내고 있었다.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 0px auto 0; padding: 5px 20px; box-sizing: border-box; font-family: inherit; font-size: 1em; line-height: 1.6; letter-spacing: -0.02em; color: #636363; font-style: italic; word-break: break-all; text-align: left;">
+    공기는 지상보다 훨씬 차고 무거웠으며, 사방은 죽은 듯한 침묵에 잠겨 있었다. 개찰구는 전부 열려 있었고, 바닥에는 사람들이 황급히 도망치며 떨어뜨린 가방과 신문지, 한 짝만 남은 신발 같은 것들이 어지럽게 널려 있었다. 하지만 그 어디에도 생존자의 흔적은 보이지 않았다. 긴급 대피 구역이라는 말이 무색할 정도로, 이곳은 텅 비어 있었다. 유이가 말했던, 크리쳐보다 어마어마하다는 지하철의 소음 대신, 오직 두 사람의 발소리와 멀리서 들려오는 물방울 떨어지는 소리만이 공간을 채웠다.
+</div>
+
+<iframe id="bgmPlayerFrame" src="https://loading-lovebullets.naru.pub/editor/bgm.html" style="position: fixed; bottom: 20px; right: 20px; width: 32px; height: 32px; border: none; z-index: 9999; background: transparent; transition: 0.3s;" allow="autoplay"></iframe>
+<script>
+    window.addEventListener('message', function(e) {
+        var frame = document.getElementById('bgmPlayerFrame');
+        if (!frame) return;
+        if (e.data.action === 'minimize') {
+            frame.style.width = '32px';
+            frame.style.height = '32px';
+        } else if (e.data.action === 'expand') {
+            frame.style.width = '240px';
+            frame.style.height = '140px';
         }
+    });
 
-        function toggleTheme() {
-            setTheme(localStorage.getItem('theme') === 'theme-dark' ? 'theme-light' : 'theme-dark');
+    function playBGM(videoId, title) {
+        var frame = document.getElementById('bgmPlayerFrame');
+        if (frame) {
+            frame.contentWindow.postMessage({ action: 'playBGM', videoId: videoId, title: title }, '*');
         }
+    }
 
-        (function () {
-            setTheme(localStorage.getItem('theme') === 'theme-dark' ? 'theme-dark' : 'theme-light');
-        })();
-    </script>
+    function stopBGM() {
+        var frame = document.getElementById('bgmPlayerFrame');
+        if (frame) {
+            frame.src = frame.src; 
+        }
+    }
+</script>
+
+</div>
 </body>
 </html>

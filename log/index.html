@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/jejumyeongjo.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300&display=swap" />
     
-    <!----- CSS 및 폰트 라이브러리 ----->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
     
@@ -69,11 +68,12 @@
             background-color: var(--back-color);
             transition: background-color 0.4s ease; 
         }
+        /* ★ 웹사이트 전체의 베이스 폰트 사이즈를 14px로 일괄 상향 적용했습니다 */
         body, button, input, select, table, textarea, p, div, a, span {
             margin: 0;
             padding: 0;
             line-height: 180%;
-            font-size: 12px;
+            font-size: 14px; 
             color: var(--main-color);
         }
         button, input {
@@ -121,14 +121,14 @@
             position: absolute;
             right: 40px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 16px; /* 아이콘 크기 살짝 상향 */
             color: var(--menu-color);
         }
         .inner_header > button:hover { color: var(--menu-color-hover); }
         .dropdown { display: inline-block; }
         .dropdown-bars {
             cursor: pointer;
-            font-size: 14px;
+            font-size: 16px; /* 아이콘 크기 살짝 상향 */
             color: var(--menu-color);
         }
         .dropdown-bars:hover { color: var(--menu-color-hover); }
@@ -144,7 +144,7 @@
             display: block;
             color: var(--menu-color);
             cursor: pointer;
-            padding: 4px 0;
+            padding: 6px 0; /* 메뉴 간격 약간 여유 있게 */
         }
         .dropdown-inner a:hover { color: var(--menu-color-hover); }
         .inner_index {
@@ -173,13 +173,13 @@
             width: 100%;
         }
         .box_contents .link_title .title_post {
-            font-size: 13px;
+            font-size: 14px; /* 리스트 제목도 기본 14px로 통일 */
             color: var(--title-color);
             line-height: 120%;
             font-weight: normal; 
         }
         .article_content .title_view {
-            font-size: 16px;
+            font-size: 18px; /* 전체 비율에 맞춰 본문 제목 18px로 상향 */
             color: var(--title-color);
             line-height: 120%;
             font-weight: bold; 
@@ -188,7 +188,7 @@
         }
         .box_contents .info_post {
             line-height: 100%;
-            font-size: 10px;
+            font-size: 12px; /* 리스트 날짜 12px로 상향 */
             color: var(--sub-color);
             white-space: nowrap;
             margin-left: 20px;
@@ -209,7 +209,7 @@
         .btn-back-icon {
             display: inline-block;
             color: var(--sub-color);
-            font-size: 14px;
+            font-size: 16px; /* 닫기 아이콘 크기 약간 상향 */
             opacity: 0.6;
             transition: opacity 0.2s;
         }
@@ -226,12 +226,12 @@
         .area_view_content .article_content .view_info_post {
             color: var(--sub-color);
             line-height: 120%;
-            font-size: 10px;
+            font-size: 12px; /* 본문 날짜/카테고리 12px로 상향 */
             text-align: right; 
         }
         .area_view_content .article_view {
             overflow-x: hidden;
-            font-size: 14px; /* 유지: 본문 14px */
+            font-size: 14px; /* 본문 기본 14px */
         }
         .article_view p {
             margin: 0 0 20px;
@@ -241,7 +241,7 @@
         /* 카테고리 탭 스타일 */
         .category-menu {
             margin: 0px 0px 30px 0px;
-            font-size: 11px;
+            font-size: 14px; /* 카테고리 메뉴 14px로 상향 통일 */
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
@@ -260,7 +260,7 @@
         .page-view { display: none; }
         
         /* TRPG 서식 */
-        .message { font-family: 'Jeju Myeongjo', serif !important; line-height: 120%; font-size: 11px !important; padding: 5px; margin: 2px 0; }
+        .message { font-family: 'Jeju Myeongjo', serif !important; line-height: 120%; font-size: 13px !important; padding: 5px; margin: 2px 0; }
         .message.general { background-color: var(--general1-bg) !important; color: var(--general1-txt) !important; }
         .message.emote { background-color: var(--em-bg) !important; color: var(--em-txt) !important; }
         .message.desc { background-color: var(--desc-bg) !important; color: var(--desc-txt) !important; }
@@ -271,7 +271,6 @@
     <div id="wrap">
         <div id="container">
             
-            <!----- 헤더 영역 ----->
             <header id="header">
                 <div class="inner_header">
                     <button onclick="toggleTheme()" title="테마 변경">
@@ -296,16 +295,13 @@
                 </div>
             </header>
 
-            <!---- 메인 콘텐츠 ---->
             <main id="main">
                 <div class="inner_index">
 
-                    <!-- [1] HOME 화면 (외부 파일 로드 영역) -->
                     <div id="view-home" class="page-view">
                         <div id="home-content"></div>
                     </div>
 
-                    <!-- [2] 공지사항 화면 (외부 파일 로드 영역) -->
                     <div id="view-notice" class="page-view">
                         <div class="area_view_content">
                             <div class="article_content">
@@ -317,13 +313,11 @@
                         </div>
                     </div>
 
-                    <!-- [3] 목록 리스트 화면 -->
                     <div id="view-list" class="page-view">
                         <div class="category-menu" id="category-menu-container"></div>
                         <div id="list-container"></div>
                     </div>
 
-                    <!-- [4] 본문 보기 화면 (외부 파일 로드 영역) -->
                     <div id="view-article" class="page-view">
                         <div class="area_view_content">
                             <div class="btn-back-icon-wrap">
@@ -346,7 +340,6 @@
         </div>
     </div>
 
-    <!-- 데이터 스크립트 영역: 이제 본문 내용은 빼고, 파일명(id)만 관리합니다. -->
     <script>
         const CONFIG_CATEGORIES = ["일상", "개발", "TRPG", "비밀글"];
 
@@ -357,7 +350,6 @@
         ];
     </script>
 
-    <!-- 핵심 로직 영역 -->
     <script>
         $(document).ready(function () {
             $(".dropdown-inner").hide();
@@ -393,7 +385,7 @@
             setTheme(localStorage.getItem('theme') === 'theme-dark' ? 'theme-dark' : 'theme-light');
         })();
 
-        // 애니메이션 속도를 늦춰 훨씬 부드럽게 조정 (150/200 -> 300/400)
+        // 애니메이션 속도를 늦춰 훨씬 부드럽게 조정 (300/400)
         function changeView(viewName) {
             const $currentVisible = $('.page-view:visible');
             if ($currentVisible.length > 0) {

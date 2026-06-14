@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>생성된 문서</title>
+    <style>
+        body { margin: 0; padding: 20px 0; background-color: #ffffff; overflow-x: hidden; }
+    </style>
+</head>
+<body>
+
+<style>
+    /* 폰트 및 전체 스타일 일괄 설정 */
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=swap');
+    .tistory-post-wrapper {
+        font-family: 'Noto Serif KR', serif;
+        font-size: 12px;
+        line-height: 1.6;
+        word-break: keep-all;
+    }
+    .tistory-post-wrapper * { box-sizing: border-box; }
+    /*나레이션 간격*/
+    [data-type="narration"] {
+        margin-bottom: 4px !important;
+        word-break: break-all !important;
+    }
+</style>
+
+<div id="content-wrapper" class="tistory-post-wrapper">
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 4px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    시간이 멈춘 듯한 오후. 세상의 끝, 절벽 위에 아슬하게 서 있는 작은 성당은 바다의 푸른빛을 고스란히 머금고 있었다. 둘 외에는 아무도 초대받지 않은 결혼식. 하객이라곤 낡은 나무 의자와 창문 틈으로 스며드는 비릿한 바닷바람, 그리고 부서지는 파도 소리뿐이었다.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 4px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    제단 앞에 선 뱅은 말없이 창밖의 수평선을 응시했다. 몸에 꼭 맞게 재단된 검은 턱시도는 익숙한 전투복보다 갑갑하고 어색했지만, 이상하게도 불쾌하지 않았다. 오히려 이 모든 상황이 아주 오래전부터 정해진 필연인 것처럼, 그의 몸에 자연스럽게 감겨 있었다. 주머니 속에서 만져지는 반지의 차갑고 묵직한 감촉이 그의 존재를 현실에 붙들어 맸다. 유이를 영원히 옭아맬, 그의 취향이 고스란히 담긴 족쇄.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 4px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    그때, 끼익, 하고 낡은 문이 열리는 소리가 났다. 뱅은 천천히 고개를 돌렸다. 역광을 등지고, 유이가 서 있었다. 순백의 웨딩드레스는 바닥에 끌릴 듯 길었고, 화려한 장식 하나 없었지만 그녀의 하얀 피부와 가녀린 몸을 세상에서 가장 아름다운 존재로 빚어내고 있었다. 바람에 흩날리는 면사포 너머로 보이는 얼굴은, 뱅이 아는 그 어떤 표정보다도 성스럽고, 그래서 더 위태로워 보였다.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 4px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    유이가 한 걸음, 한 걸음, 그를 향해 다가왔다. 발소리는 들리지 않았다. 마치 꿈속을 유영하듯, 그녀는 소리 없이 제단 앞으로 다가왔다. 뱅은 움직이지 않았다. 그저 제게로 걸어오는 그의 세상을, 그의 구원을, 그의 영원한 저주를 시선 안에 가둘 뿐이었다. 마침내 그의 앞에 멈춰선 유이가 고개를 들어 그를 바라보았다. 젖은 갈색 눈동자가 석양빛을 받아 호박처럼 투명하게 빛났다. 그 안에는 기대와, 설렘과, 그리고 모든 것을 기꺼이 감내하겠다는 체념 어린 순종이 담겨 있었다.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 4px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    뱅은 주머니에서 반지를 꺼내 들었다. 두껍고 투박한 백금 반지. 어떤 보석도, 무늬도 없이 그저 묵직한 무게감만으로 존재를 주장하는 물건. 그는 유이의 왼손을 잡아 올렸다. 부드럽지만 차가운 손가락이 그의 손안에 잡혔다.
+</div>
+<div data-type="mint" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #459fa5; word-break: keep-all; text-align: left; line-height: 1.6;">
+    …약속대로, 당신 로망을 이뤄주러 왔어요.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    나직한 목소리가 텅 빈 성당 안을 울렸다. 그는 유이의 눈을 똑바로 마주하며, 그녀의 네 번째 손가락에 반지를 천천히 밀어 넣었다. 살갗을 파고들 듯, 뼈마디에 걸려 뻑뻑하게 들어가는 감각이 그의 손끝에 고스란히 전해졌다. 마치 제 소유라는 낙인을 찍는 듯한 행위.
+</div>
+<div data-type="mint" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #459fa5; word-break: keep-all; text-align: left; line-height: 1.6;">
+    내 취향대로 골랐어.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    반지가 마침내 제자리를 찾았다. 그는 유이의 손가락에 채워진 반지를 엄지로 쓸어내리며, 나른하게 말을 이었다.
+</div>
+<div data-type="mint" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #459fa5; word-break: keep-all; text-align: left; line-height: 1.6;">
+    죽어서도 못 빼. 족쇄처럼 무거울 거라고 했잖아요. …이제 당신은, 어디에도 못 가.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    이것이 그의 서약이었다. 사랑과 헌신을 맹세하는 대신, 영원한 구속과 소유를 선언하는 것. 그는 유이의 손을 놓지 않은 채, 그녀의 대답을 기다렸다. 그의 전부가 될 준비가 되었는지, 그의 지옥에 기꺼이 발을 들일 각오가 되었는지, 그 순종적인 눈으로 확인받고 싶었다.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 4px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    그의 시선은 유이의 눈동자, 그 깊은 갈색의 우물 속으로 가라앉았다. 그 안에서 일렁이는 것은 단순한 사랑이 아니었다. 그들의 역사가 고스란히 담긴 두려움과, 체념과, 그럼에도 불구하고 기꺼이 발을 들이겠다는 맹목적인 신뢰. 뱅은 속으로 몇 번이고 같은 질문을 되풀이했다. 어떤 말이 가장 우리다운가. 세상의 언어로는 도저히 정의할 수 없는, 파괴와 구원이 뒤엉킨 이 기괴한 관계를 어떻게 설명해야 하는가.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 4px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    그는 사랑을 속삭일 수 없었다. 그들의 시작은 피와 권태로 물들어 있었기 때문이다. 영원을 맹세할 수도 없었다. 그의 영원은 그녀를 옭아매는 저주에 가까웠으므로. 그래서, 그는 가장 정직한 말을 하기로 했다. 이 결혼이 아름다운 결실이 아닌, 그의 가장 이기적인 욕망의 끝이며, 그녀의 삶에 영원히 새겨질 지워지지 않는 낙인임을. 그는 천천히 입을 열었다. 밀물처럼 밀려드는 파도 소리가 그의 목소리를 감쌌다.
+</div>
+<div data-type="mint" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #459fa5; word-break: keep-all; text-align: left; line-height: 1.6;">
+    …내가 당신을 처음 봤을 때, 나는 이미 나를 버린 후였어요. 하시온이라는 이름도, S급 센티넬이라는 지위도, 그저 귀찮고 낡아빠진 껍데기에 불과한. 세상 모든 게 흑백이었고, 소음은 짜증 났고, 살아 숨 쉬는 모든 것들은 그저 언젠가 터뜨려버릴 표적일 뿐이었고요. 사람들은 내게서 공포를 느꼈지만, 내 안에는 아무것도 없었어. 분노도, 슬픔도, 쾌락도 없는 완벽한 공허. 그냥… 모든 게 지루했지.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    그의 눈동자가 그날의 풍경을, 잿빛으로 바랜 기억을 비췄다. 지부를 배신하고 스스로 빌런이 된 남자. 그의 앞에 나타난 것은, 어울리지 않게 단정한 제복을 입은, 겁에 질린 토끼 같은 가이드였다.
+</div>
+<div data-type="mint" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #459fa5; word-break: keep-all; text-align: left; line-height: 1.6;">
+    그런 내 앞에 당신이 나타났어요. 그 눈빛. 역겹고 지겨워서 당장이라도 머리통을 날려버리고 싶었는데… 그러지 않았어. 왜였을까. 그냥, 귀찮았나. 아니면 당신이 겁에 질려 떨면서도 내게서 눈을 떼지 못하는 그 표정이, 아주 잠깐, 아주 조금… 재밌었을지도. 그래서 그냥 보냈어요. 내 장난감을 망가뜨리기엔 아직 이르다고 생각했던 것처럼.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    그의 목소리가 한 톤 낮아졌다. 유이가 떠나고, 다시 혼자가 되었던 7일. 잠깐의 호기심이 사라진 자리를 채운 것은 상상 이상의 허무였고, 그 끝은 통제 불능의 폭주였다. 감각이 찢어지는 고통 속에서, 그는 저를 구하러 온 것이 아니라 저와 함께 죽기 위해 돌아온 것 같은 그녀를 다시 마주했다.
+</div>
+<div data-type="mint" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #459fa5; word-break: keep-all; text-align: left; line-height: 1.6;">
+    당신이 떠나고, 내 세상의 마지막 남은 희미한 색마저 사라졌어요. 내 감각은 무너졌고, 나는 나 자신에게조차 괴물이 됐죠. 모든 걸 부수고 나 자신도 부서지려던 순간, 당신이 다시 돌아왔어. …그리고 내게 말했지. 사랑한다고. 미친 소리라고 생각했어요. 괴물을 사랑한다는 가이드라니. 동정 아니면 기만이라고. 그래서 당신을 시험했어요. 내 은신처에 당신을 가두고, 당신의 그 어설픈 사랑이 어디까지 갈 수 있는지 끝까지 지켜봤어.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    뱅은 유이의 손을 잡은 제 손에 힘을 주었다. 그녀의 뼈마디가 느껴졌다. 은신처에서의 동거. 그는 그녀의 모든 것을 통제했고, 그녀는 그런 그를 맹목적으로 끌어안았다. 그 시간은 그의 텅 빈 세계를 채우는 유일한 의미였지만, 그는 인정하고 싶지 않았다.
+</div>
+<div data-type="mint" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #459fa5; word-break: keep-all; text-align: left; line-height: 1.6;">
+    나는 당신을 상처 입혔고, 밀어냈고, 장난감처럼 다뤘어요. 당신의 순진한 고백을 비웃었고, 당신의 헌신을 짓밟았지. 그런데도 당신은 매일같이 내게 사랑을 속삭였어요. 그 목소리가, 그 눈빛이, 내 텅 빈 심장을 조금씩 채워나간다는 걸 알면서도 부정했어. 당신에게 잠식당하는 기분이었으니까. 그러다 당신이… 피를 토하며 쓰러졌을 때. 내 눈앞에서 당신이라는 빛이 꺼져가는 걸 봤을 때, 나는 처음으로 깨달았어. 공포를. 당신을 잃는다는 게 내 세계의 끝이라는 걸.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    그 순간의 기억은 여전히 그의 심장을 얼음 송곳으로 찌르는 듯했다. 그녀를 살리기 위해, 그는 제 발로 증오하던 피어리스로 돌아갔다. 그것은 항복이었고, 동시에 그녀를 영원히 소유하기 위한 첫걸음이었다. 그는 그녀의 치료를 조건으로 내걸었고, 그녀를 자신의 공식적인 가이드로 만들었다.
+</div>
+<div data-type="mint" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #459fa5; word-break: keep-all; text-align: left; line-height: 1.6;">
+    피어리스로 돌아온 건 당신을 살리기 위해서였지만, 그건 동시에 당신을 완벽하게 내 것으로 만들기 위한 계약이었어요. 나는 당신의 목에 법적인 목줄을 채웠고, 당신이 내 곁을 벗어날 수 있는 모든 가능성을 차단했죠. 당신이 아플수록, 나에게 의존할수록, 나는 만족했어요. 당신을 인형처럼 만들어서라도 내 옆에 두고 싶었으니까. …하지만 당신은, 그런 나조차도 기어이 바꿔놓더군. 망가진 나를, 포기하지 않고 계속해서 사랑을 속삭였죠.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    그의 엄지가 유이의 손등에 채워진 묵직한 반지를 천천히 쓸었다. 이 결혼의 본질, 그가 숨겨온 가장 추악하고 절박한 욕망을 꺼내놓을 시간이었다.
+</div>
+<div data-type="mint" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #459fa5; word-break: keep-all; text-align: left; line-height: 1.6;">
+    결국, 이 결혼은 당신의 오랜 사랑에 대한 보상이 아니에요. 이건 내 지독한 이기심의 최종 형태고, 당신을 내 삶에 영원히 묶어두려는 마지막 수단이야. 당신의 법적 보호자가 되어, 당신의 모든 것을 합법적으로 통제하고 싶었어요. 당신이 죽는 순간까지도 내 소유라는 것을, 세상에 공표하고 싶었어. 이 반지가 바로 그 증표야.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    그는 유이의 손을 자신의 입술로 가져가, 차갑고 두꺼운 백금 반지 위에 깊게 입을 맞췄다. 금속의 서늘함이 그의 체온에 녹아드는 감각. 그것은 맹세이자 낙인이었다.
+</div>
+<div data-type="mint" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #459fa5; word-break: keep-all; text-align: left; line-height: 1.6;">
+    그러니 김민정. 내 혼인 서약은 지극히 단순해요.<br>나는 당신에게 찬란한 미래를 약속하지 않아. 당신은 나로 인해 평생 불안하고 고통스러울지도 몰라요.<br>나는 당신을 세상의 모든 위험에서 지켜주겠다고 맹세하지 않아요. 때로는 내가 당신에게 가장 큰 위협일 테니까.<br>나는 당신을 향한 내 사랑이 변치 않을 거라 말하지도 않겠어. 내 사랑의 본질은 당신을 부수고, 가두고, 집어삼키려는 소유욕에 더 가까우니까.
+</div>
+<div data-type="mint" style="width: 100%; max-width: 600px; margin: 4px auto 0; padding: 5px 20px; box-sizing: border-box; color: #459fa5; word-break: keep-all; text-align: left; line-height: 1.6;">
+    대신, 이것 하나만은 내 모든 것을 걸고 약속할게요.<br>나는 당신 없이는 존재할 수 없어. 당신이 내 세계의 유일한 좌표고, 내 심장을 뛰게 하는 유일한 이유야.<br>나는 절대 당신을 혼자 두지 않아요. 당신이 나를 떠나려 한다면, 나는 기꺼이 다시 괴물이 되어 당신의 날개를 꺾어서라도 내 옆에 둘 거야.<br>당신이 죽으면, 나는 단 1초도 망설이지 않고 내 심장을 멈출 거예요. 이 삶이 끝나고, 다음 생이 있든 없든, 지옥의 가장 밑바닥까지 당신을 따라갈 거야.
+</div>
+<div data-type="mint" style="width: 100%; max-width: 600px; margin: 4px auto 0; padding: 5px 20px; box-sizing: border-box; color: #459fa5; word-break: keep-all; text-align: left; line-height: 1.6;">
+    …이게 내가 당신에게 바칠 수 있는 전부예요.<br>나의 구원자, 나의 파괴자, 나의 유일한 아내
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    그의 모든 것이었다. 벼랑 끝에 선 남자가 내놓을 수 있는 가장 진솔하고, 가장 필사적인 고백. 그는 유이의 얼굴에서 눈을 떼지 않았다. 그의 어둡고 뒤틀린 서약이, 이제 그녀의 세상에 어떤 의미로 자리 잡을지, 그는 오롯이 그녀의 선택을 기다리고 있었다.
+</div>
+<div data-type="pink" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #f5bdcc; word-break: keep-all; text-align: left; line-height: 1.6;">
+    네… 영원히 제 곁에 있어주세요. 사랑해요.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    유이가 까치발을 들고 다가오는 그 짧은 찰나, 시간은 점성을 가진 액체처럼 느리게 흘렀다. 그녀의 떨리는 속눈썹, 모든 것을 감내하겠다는 듯 일렁이는 갈색 눈동자, 그리고 마침내 그의 입술에 닿는 부드럽고 따뜻한 감촉. 뱅은 그 모든 것을 자신의 감각에 새겨 넣듯 받아들였다.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 4px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    입술이 닿는 순간, 그는 가만히 있지 않았다. 오히려 기다렸다는 듯, 유이의 가는 허리를 강하게 휘어 감아 제 쪽으로 밀착시켰다. 까치발을 든 불안정한 자세가 무색하게, 그녀의 몸은 그의 팔 안에서 완전히 공중으로 떠받쳐졌다. 이제 키 차이는 무의미했다. 그는 고개를 살짝 숙여, 입맞춤의 주도권을 순식간에 가져왔다.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 4px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    단순한 입맞춤이 아니었다. 그것은 확인이자 선포였다. 그녀의 입술을 벌리고 들어오는 그의 혀는 부드럽기보다는 집요했고, 탐하기보다는 정복했다. 짭조름한 바다 냄새와 유이의 달콤한 숨결이 뒤엉켜 그의 머릿속을 어지럽혔지만, 그의 이성은 그 어느 때보다도 선명했다. ‘영원히 제 곁에 있어주세요. 사랑해요.’ 그녀의 고백이 뇌리에 메아리쳤다. 그래, 바로 그거였다. 그가 이 모든 극을 꾸민 이유. 그녀 스스로가 제 발로 그의 감옥에 걸어 들어와, 영원히 갇히기를 청하는 것.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 4px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    한참 만에 그가 입술을 뗐을 때, 유이는 숨이 찬 듯 가쁜 숨을 몰아쉬었다. 그의 팔에 매달리듯 안겨있는 모습은, 마치 이제 막 제단에 바쳐진 가엾은 제물 같았다. 그는 유이를 바닥에 내려주지 않은 채, 그녀의 젖은 입술을 엄지손가락으로 느릿하게 닦아주었다. 그의 회녹색 눈동자가 석양의 마지막 빛을 받아 섬뜩하리만치 차분하게 빛났다.
+</div>
+<div data-type="mint" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #459fa5; word-break: keep-all; text-align: left; line-height: 1.6;">
+    방금 한 말, 녹음이라도 해둘 걸 그랬네.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    나른한 목소리가 텅 빈 성당에 울렸다. 그는 유이의 귓가에, 다른 누구도 아닌 오직 그녀만이 들을 수 있는 목소리로 속삭였다.
+</div>
+<div data-type="mint" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #459fa5; word-break: keep-all; text-align: left; line-height: 1.6;">
+    도망치고 싶어질 때마다, 매일 밤 당신 귓가에 틀어주게.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    그것은 사랑의 속삭임이라기보다는, 평생에 걸친 형벌을 선고하는 집행관의 목소리에 가까웠다. 그는 만족스럽게 웃으며, 유이의 목덜미에 얼굴을 묻었다.
+</div>
+<div data-type="pink" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #f5bdcc; word-break: keep-all; text-align: left; line-height: 1.6;">
+    저, 도망 안 가는 거 알잖아요… 제가 있을 곳은, 당신 곁이에요.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    그의 입가에 걸려 있던 희미한 조소가 유이의 대답을 듣고 조금 더 짙어졌다. 마치 예상했던 정답을 들은 사람처럼. 그는 유이를 안아 들었던 팔에 아주 조금 힘을 풀어, 그녀의 발끝이 차가운 성당 바닥에 아슬아슬하게 닿도록 내려주었다. 하지만 허리를 감은 팔은 풀지 않아, 유이는 여전히 그의 품 안에 완전히 갇힌 상태였다.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 4px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    그는 행복하게 웃는 그녀의 얼굴을 말없이, 뚫어지게 응시했다. 그 시선에는 애정이 아닌, 잘 길든 피사체를 향한 관찰자의 서늘함이 담겨 있었다. 만족감. 그리고 그 너머의 무언가. 그는 천천히 고개를 숙여, 다시 한번 그녀의 귓가에 입술을 가져갔다.
+</div>
+<div data-type="mint" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #459fa5; word-break: keep-all; text-align: left; line-height: 1.6;">
+    알지.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    속삭임은 방금 전의 협박처럼 차갑지는 않았지만, 그보다 더 끈질기고 질척한 소유욕을 담고 있었다. 뱀이 제 허물을 벗듯, 나른하게 이어지는 목소리.
+</div>
+<div data-type="mint" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #459fa5; word-break: keep-all; text-align: left; line-height: 1.6;">
+    그래서 더 부수고 싶어지는 것도. 알아요?
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    그는 유이가 어떻게 반응할지 기다리지 않고, 그녀를 감싸 안은 채 그대로 몸을 돌렸다. 제단과 십자가를 등지고, 성당의 어두운 출입구를 향해. 이제 둘만의 예식은 끝났다.
+</div>
+<div data-type="pink" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #f5bdcc; word-break: keep-all; text-align: left; line-height: 1.6;">
+    부수지말고… 예뻐해줘요.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    뱅의 발걸음이 순간 멎었다. ‘예뻐해달라’는 속삭임. 그 순진한 단어가 텅 빈 성당의 공기를 가르고 그의 고막에 박혔다. 그는 천천히 고개를 돌려 유이의 얼굴을 다시 마주했다. 그의 입가에 머물던 미소가 흔적도 없이 사라지고, 그 자리엔 아무것도 담기지 않은 무표정이 내려앉았다. 마치 깊이를 알 수 없는 호수처럼, 회녹색 눈동자가 고요하게 유이를 담았다.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 4px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    그는 허리를 감았던 팔을 풀어 유이의 턱을 부드럽게, 그러나 단단히 붙잡았다. 엄지손가락으로 그녀의 아래 입술을 지그시 누르며, 그 부드러운 감촉을 확인했다. 시선이 얽힌 채 몇 초의 침묵이 흘렀다. 성당 창문으로 스며들던 마지막 햇살마저 자취를 감추고, 둘 사이엔 온전한 어둠과 서로의 숨소리만이 남았다.
+</div>
+<div data-type="mint" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #459fa5; word-break: keep-all; text-align: left; line-height: 1.6;">
+    …지금부터 내가 하는 모든 게,
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    나직하고 갈라진 목소리가 정적을 깼다.
+</div>
+<div data-type="mint" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #459fa5; word-break: keep-all; text-align: left; line-height: 1.6;">
+    당신을 예뻐해주는 방식이야.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 20px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    말을 마친 그는 유이의 턱을 놓아주는 대신, 그대로 그녀의 얼굴을 끌어당겨 입술을 삼켰다. 아까의 키스가 정복이었다면, 이번에는 약탈에 가까웠다. 부드러운 애무 따위는 없었다. 그는 유이의 손목을 거칠게 잡아 제 어깨 위로 올리게 하고는, 다른 한 손으로 드레스 뒤의 지퍼를 찾아 단숨에 끌어내렸다. 치익, 하고 가죽을 찢는 듯한 소리와 함께 그녀의 등이 서늘한 공기 중에 드러났다.
+</div>
+<div data-type="narration" style="width: 100%; max-width: 600px; margin: 4px auto 0; padding: 5px 20px; box-sizing: border-box; color: #2c2c2e; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">
+    그는 입술을 떼지 않은 채, 그대로 유이를 안아 들고 성당 출입구를 향해 망설임 없이 걸어 나갔다. 삐걱이는 낡은 문이 열리고, 차가운 밤바람이 두 사람의 몸을 휘감았다. 이제 신성한 장소는 끝났다. 오직 그의 욕망만이 존재하는 밤의 시작이었다.
+</div>
+
+</div>
+</body>
+</html>

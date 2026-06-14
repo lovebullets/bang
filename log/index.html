@@ -7,9 +7,10 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2107@1.1/JejuMyeongjo.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/jejumyeongjo.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300&display=swap" />
     
+    <!----- CSS 및 폰트 라이브러리 ----->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
     
@@ -57,7 +58,7 @@
         }
 
         * {
-            font-family: 'Jeju Myeongjo', serif !important;
+            font-family: 'Jeju Myeongjo', serif;
             box-sizing: border-box;
         }
         ::selection {
@@ -68,7 +69,6 @@
             background-color: var(--back-color);
             transition: background-color 0.4s ease; 
         }
-        /* 웹사이트 전체 베이스 폰트 사이즈 14px 유지 */
         body, button, input, select, table, textarea, p, div, a, span {
             margin: 0;
             padding: 0;
@@ -145,6 +145,7 @@
             color: var(--menu-color);
             cursor: pointer;
             padding: 6px 0; 
+            font-size: 12px; /* [요청 반영] 드롭다운 메뉴 폰트만 12px로 고정 */
         }
         .dropdown-inner a:hover { color: var(--menu-color-hover); }
         .inner_index {
@@ -260,10 +261,10 @@
         .page-view { display: none; }
         
         /* TRPG 서식 */
-        .message { font-family: 'Jeju Myeongjo', serif !important; line-height: 120%; font-size: 13px !important; padding: 5px; margin: 2px 0; }
-        .message.general { background-color: var(--general1-bg) !important; color: var(--general1-txt) !important; }
-        .message.emote { background-color: var(--em-bg) !important; color: var(--em-txt) !important; }
-        .message.desc { background-color: var(--desc-bg) !important; color: var(--desc-txt) !important; }
+        .message { font-family: 'Jeju Myeongjo', serif; line-height: 120%; font-size: 13px; padding: 5px; margin: 2px 0; }
+        .message.general { background-color: var(--general1-bg); color: var(--general1-txt); }
+        .message.emote { background-color: var(--em-bg); color: var(--em-txt); }
+        .message.desc { background-color: var(--desc-bg); color: var(--desc-txt); }
     </style>
 </head>
 
@@ -271,6 +272,7 @@
     <div id="wrap">
         <div id="container">
             
+            <!----- 헤더 영역 ----->
             <header id="header">
                 <div class="inner_header">
                     <button onclick="toggleTheme()" title="테마 변경">
@@ -281,27 +283,31 @@
                             <i id="menu-icon" class="xi-bars"></i>
                         </div>
                         <div class="dropdown-inner">
-                            <a href="#" onclick="loadExternalPage('home', 'home.html'); return false;" title="HOME">
-                                <i class="xi-home"></i>
+                            <!-- [요청 반영] 아이콘 + 영문 텍스트 형태로 수정 완료 -->
+                            <a href="#" onclick="loadExternalPage('home', 'home.html'); return false;">
+                                <i class="xi-home"></i> home
                             </a>
-                            <a href="#" onclick="loadExternalPage('notice', 'notice.html'); return false;" title="공지">
-                                <i class="xi-bell"></i>
+                            <a href="#" onclick="loadExternalPage('notice', 'notice.html'); return false;">
+                                <i class="xi-bell"></i> notice
                             </a>
-                            <a href="#" onclick="changeView('list'); return false;" title="목록">
-                                <i class="xi-list"></i>
+                            <a href="#" onclick="changeView('list'); return false;">
+                                <i class="xi-list"></i> list
                             </a>
                         </div>
                     </div>
                 </div>
             </header>
 
+            <!---- 메인 콘텐츠 ---->
             <main id="main">
                 <div class="inner_index">
 
+                    <!-- [1] HOME 화면 (외부 파일 로드 영역) -->
                     <div id="view-home" class="page-view">
                         <div id="home-content"></div>
                     </div>
 
+                    <!-- [2] 공지사항 화면 (외부 파일 로드 영역) -->
                     <div id="view-notice" class="page-view">
                         <div class="area_view_content">
                             <div class="article_content">
@@ -313,11 +319,13 @@
                         </div>
                     </div>
 
+                    <!-- [3] 목록 리스트 화면 -->
                     <div id="view-list" class="page-view">
                         <div class="category-menu" id="category-menu-container"></div>
                         <div id="list-container"></div>
                     </div>
 
+                    <!-- [4] 본문 보기 화면 (외부 파일 로드 영역) -->
                     <div id="view-article" class="page-view">
                         <div class="area_view_content">
                             <div class="btn-back-icon-wrap">
@@ -340,6 +348,7 @@
         </div>
     </div>
 
+    <!-- 데이터 스크립트 영역: 파일명(id) 관리 -->
     <script>
         const CONFIG_CATEGORIES = ["일상", "개발", "TRPG", "비밀글"];
 
@@ -350,6 +359,7 @@
         ];
     </script>
 
+    <!-- 핵심 로직 영역 -->
     <script>
         $(document).ready(function () {
             $(".dropdown-inner").hide();

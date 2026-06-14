@@ -7,8 +7,9 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     
+    <!----- CSS 및 폰트 라이브러리 (아이콘 깨짐 현상 해결을 위해 안정적인 CDN으로 교체) ----->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-    <script src="https://kit.fontawesome.com/a20ea0c104.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300&display=swap');
@@ -59,7 +60,7 @@
             --divider-bg: #ffffff0d;
         }
 
-        /* 2. 오리지널 style.css 스타일 명세 (임의 변경 없음) */
+        /* 2. 오리지널 style.css 스타일 명세 */
         * {
             font-family: 'Jeju Myeongjo', serif;
         }
@@ -141,9 +142,14 @@
             font-size: 10px;
             margin: 0px 1px;
         }
+        
+        /* 아이콘 렌더링 강제 적용 (아이콘 깨짐 방지) */
         .fa-solid.fa-bolt:before {
             content: var(--toggle-onoff) !important;
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
         }
+        
         .dropdown {
             display: inline-block;
         }
@@ -164,7 +170,7 @@
         }
         .inner_index {
             position: relative;
-            max-width: 725px; /* index.xml의 contentWidth 반영 */
+            max-width: 725px;
             margin: 80px auto;
             overflow: hidden;
         }
@@ -281,7 +287,7 @@
             margin-top: 10px;
         }
 
-        /* 3. 새롭게 정의된 카테고리 탭 스타일 (규칙2 적용: 애플 감성의 아주 심플한 텍스트 구조) */
+        /* 카테고리 탭 스타일 */
         .category-menu {
             margin: 0px 10px 30px 10px;
             font-size: 11px;
@@ -319,6 +325,7 @@
     <div id="wrap">
         <div id="container">
             
+            <!----- 헤더 영역 ----->
             <header id="header">
                 <div class="inner_header">
                     <button onclick="toggleTheme()">
@@ -328,6 +335,7 @@
                         <div class="dropdown-bars">
                             <i class="fa-solid fa-bars"></i>
                         </div>
+                        <!-- 요청사항 반영: HOME, 공지, 목록 고정 구성 -->
                         <div class="dropdown-inner">
                             <a href="#" onclick="changeView('home'); return false;">
                                 HOME <i class="fa-solid fa-landmark"></i>
@@ -343,9 +351,11 @@
                 </div>
             </header>
 
+            <!---- 메인 홈 콘텐츠 ---->
             <main id="main">
                 <div class="inner_index">
 
+                    <!-- [1] HOME 화면 (나중에 자유롭게 꾸밀 빈 공간) -->
                     <div id="view-home" class="page-view">
                         <div class="blog-info">
                             <span class="blog-name">MOB-SKIN</span>
@@ -356,6 +366,7 @@
                         </div>
                     </div>
 
+                    <!-- [2] 공지사항 화면 (본문 설정 스타일처럼 1개의 글로 노출) -->
                     <div id="view-notice" class="page-view">
                         <div class="area_view_content">
                             <div class="article_content">
@@ -368,12 +379,16 @@
                         </div>
                     </div>
 
+                    <!-- [3] 목록 리스트 화면 (원본 한 줄 텍스트 리스트 형태 완전 유지) -->
                     <div id="view-list" class="page-view">
+                        <!-- 사용자가 유동적으로 바꿀 수 있는 카테고리 탭 렌더링 공간 -->
                         <div class="category-menu" id="category-menu-container"></div>
                         
+                        <!-- 리스트 동적 추가 컨테이너 -->
                         <div id="list-container"></div>
                     </div>
 
+                    <!-- [4] 목록에서 클릭 시 보여질 단독 본문 보기 화면 -->
                     <div id="view-article" class="page-view">
                         <div class="area_view_content">
                             <div class="article_content">
@@ -385,6 +400,7 @@
                                 </div>
                                 <div class="article_view" id="article-content"></div>
                                 
+                                <!-- 본문 하단 목록으로 가기 장치 추가 -->
                                 <div style="text-align: right; margin-top: 50px;">
                                     <a href="#" onclick="changeView('list'); return false;" style="font-size: 11px; color: var(--sub-color);">[목록으로 돌아가기]</a>
                                 </div>
@@ -397,6 +413,9 @@
         </div>
     </div>
 
+    <!-- ========================================================
+       ★ [핵심 컨트롤 스크립트] : 이 배열 데이터만 편집하면 연동됩니다.
+       ======================================================== -->
     <script>
         // 1. 카테고리 종류 설정 (자유롭게 추가/삭제 가능, 목록 화면 상단 탭에 연동됨)
         const CONFIG_CATEGORIES = ["일상", "개발", "TRPG", "비밀글"];
@@ -445,6 +464,7 @@
         ];
     </script>
 
+    <!----- 오리지널 로직 보존 및 변환 제어 자바스크립트 ----->
     <script>
         // 드롭다운 애니메이션 기본 보존 및 링크 클릭 시 자동 닫힘 확장
         $(document).ready(function () {

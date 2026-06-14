@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     
+    <!----- CSS 및 폰트 라이브러리 ----->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
     
@@ -59,7 +60,6 @@
 
         /* 2. 오리지널 style.css 기반 수정 명세 */
         * {
-            /* 일괄 폰트 적용 (목록 제목 등 폰트 깨짐 방지) */
             font-family: 'Jeju Myeongjo', serif !important;
             box-sizing: border-box;
         }
@@ -170,7 +170,7 @@
         /* ----- 목록 리스트 디자인 (좌우 정렬) ----- */
         .box_contents {
             padding: 12px 0px;
-            border-bottom: 1px solid var(--divider-bg); /* 리스트 구분을 위한 미세한 선 (불필요시 삭제 가능) */
+            border-bottom: 1px solid var(--divider-bg);
             width: 100%;
             transition: opacity 0.2s;
         }
@@ -183,18 +183,25 @@
             align-items: center;
             width: 100%;
         }
-        .box_contents .link_title .title_post,
-        .article_content .title_view {
+        .box_contents .link_title .title_post {
             font-size: 13px;
             color: var(--title-color);
             line-height: 120%;
-            font-weight: bold; /* 가독성을 위해 제목 볼드 처리 */
+            font-weight: normal; /* [수정1] 목록 제목 볼드체 해제 */
+        }
+        .article_content .title_view {
+            font-size: 16px;
+            color: var(--title-color);
+            line-height: 120%;
+            font-weight: bold; /* 본문/공지 제목은 기존대로 볼드 유지 */
+            margin-bottom: 10px;
+            letter-spacing: normal;
         }
         .box_contents .info_post {
             line-height: 100%;
             font-size: 10px;
             color: var(--sub-color);
-            white-space: nowrap; /* 날짜/카테고리 줄바꿈 방지 */
+            white-space: nowrap;
             margin-left: 20px;
             text-align: right;
         }
@@ -205,12 +212,16 @@
             max-height: auto !important;
             position: relative;
         }
-        /* 본문 상단 뒤로가기 (X) 아이콘 */
+        
+        /* [수정2] 본문 상단 뒤로가기(X) 우측 정렬 래퍼 */
+        .btn-back-icon-wrap {
+            text-align: right;
+            margin-bottom: 15px;
+        }
         .btn-back-icon {
             display: inline-block;
             color: var(--sub-color);
-            font-size: 13px;
-            margin-bottom: 15px;
+            font-size: 14px;
             opacity: 0.6;
             transition: opacity 0.2s;
         }
@@ -219,33 +230,25 @@
             color: var(--title-color);
         }
 
-        /* 본문 제목/정보 여백 축소 및 자간 제거 */
         .area_view_content .article_content .info_post {
             display: block !important;
-            margin: 0px 0px 30px 0px; /* 기존 80px에서 30px로 대폭 축소 */
+            margin: 0px 0px 30px 0px;
             padding-top: 0;
-        }
-        .area_view_content .article_content .title_view {
-            color: var(--title-color);
-            margin-bottom: 10px;
-            font-size: 16px; 
-            letter-spacing: normal; /* 과했던 자간 제거 */
         }
         .area_view_content .article_content .view_info_post {
             color: var(--sub-color);
             line-height: 120%;
             font-size: 10px;
-            text-align: left; /* 본문 정보는 제목 바로 아래 좌측 정렬로 통일 */
+            text-align: right; /* [수정2] 날짜, 카테고리 우측 정렬 */
         }
         .area_view_content .article_view {
             overflow-x: hidden;
-            font-size: 12.5px; /* 본문 읽기 편하게 살짝 미세조정 */
+            font-size: 12.5px;
         }
         .article_view p {
             margin: 0 0 20px;
             color: var(--main-color);
-            text-align: justify; /* 책처럼 양쪽 정렬 */
-            word-break: keep-all; /* 단어 끊김 방지 */
+            /* 가독성을 망쳤던 양쪽 정렬(justify) 관련 코드 삭제 완료 */
         }
         
         /* 분리선 오리지널 스타일 정의 */
@@ -303,6 +306,7 @@
     <div id="wrap">
         <div id="container">
             
+            <!----- 헤더 영역 ----->
             <header id="header">
                 <div class="inner_header">
                     <button onclick="toggleTheme()" title="테마 변경">
@@ -327,15 +331,18 @@
                 </div>
             </header>
 
+            <!---- 메인 콘텐츠 ---->
             <main id="main">
                 <div class="inner_index">
 
+                    <!-- [1] HOME 화면 -->
                     <div id="view-home" class="page-view">
                         <div style="text-align: center; padding: 150px 0; color: var(--sub-color); font-size: 11px;">
                             [여유로운 HOME 화면 영역]
                         </div>
                     </div>
 
+                    <!-- [2] 공지사항 화면 -->
                     <div id="view-notice" class="page-view">
                         <div class="area_view_content">
                             <div class="article_content">
@@ -348,16 +355,24 @@
                         </div>
                     </div>
 
+                    <!-- [3] 목록 리스트 화면 -->
                     <div id="view-list" class="page-view">
+                        <!-- 카테고리 탭 -->
                         <div class="category-menu" id="category-menu-container"></div>
+                        <!-- 리스트 영역 -->
                         <div id="list-container"></div>
                     </div>
 
+                    <!-- [4] 본문 보기 화면 -->
                     <div id="view-article" class="page-view">
                         <div class="area_view_content">
-                            <a href="#" onclick="changeView('list'); return false;" class="btn-back-icon" title="목록으로 돌아가기">
-                                <i class="xi-close"></i>
-                            </a>
+                            <!-- [수정2] 우측 정렬 래퍼로 감싼 뒤로가기 아이콘 -->
+                            <div class="btn-back-icon-wrap">
+                                <a href="#" onclick="changeView('list'); return false;" class="btn-back-icon" title="목록으로 돌아가기">
+                                    <i class="xi-close"></i>
+                                </a>
+                            </div>
+                            
                             <div class="article_content">
                                 <div class="info_post">
                                     <div class="title_view" id="article-title"></div>
@@ -373,11 +388,12 @@
         </div>
     </div>
 
+    <!-- 데이터 스크립트 영역 -->
     <script>
         const CONFIG_CATEGORIES = ["일상", "개발", "TRPG", "비밀글"];
 
         const CONFIG_NOTICE = {
-            title: "개인홈 웹사이트 이전 공지", // 공지 제목 볼드체 & 본문 폰트 사이즈 통합
+            title: "개인홈 웹사이트 이전 공지",
             date: "2026. 06. 14",
             content: `
                 <p>텍스트 중심의 정적 웹사이트로 개편되었습니다.</p>
@@ -390,7 +406,7 @@
                 category: "일상",
                 title: "첫 번째 미니멀 텍스트 기록",
                 date: "2026. 06. 14",
-                content: "<p>여기는 첫 번째 게시물의 본문 상세 내용입니다. 과도했던 자간을 정상으로 돌리고 상하 여백을 줄여 글 읽기에 최적화된 책 같은 환경을 구성했습니다.</p>"
+                content: "<p>여기는 첫 번째 게시물의 본문 상세 내용입니다. 가독성을 방해하던 불필요한 양쪽 정렬 코드를 제거하여 원래의 편안한 상태로 되돌렸습니다.</p>"
             },
             {
                 category: "개발",
@@ -413,18 +429,18 @@
                 category: "비밀글",
                 title: "리스트 좌우 정렬 확인용 테스트 긴 제목 제목 제목",
                 date: "2026. 06. 11",
-                content: "<p>목록의 제목은 좌측에, 카테고리와 날짜 정보는 우측에 정렬하여 시선이 깔끔하게 떨어지도록 레이아웃을 교정했습니다.</p>"
+                content: "<p>목록의 제목은 좌측에, 카테고리와 날짜 정보는 우측에 정렬하여 시선이 깔끔하게 떨어지도록 레이아웃을 유지하고 있습니다.</p>"
             }
         ];
     </script>
 
+    <!-- 핵심 로직 영역 -->
     <script>
-        // 드롭다운 메뉴 (XEIcon 맞춤형 토글)
         $(document).ready(function () {
             $(".dropdown-inner").hide();
             $(".dropdown-bars").click(function (e) {
                 e.stopPropagation();
-                $(".dropdown-inner").slideToggle(200); // 속도 약간 올림
+                $(".dropdown-inner").slideToggle(200); 
                 
                 let icon = $("#menu-icon");
                 if (icon.hasClass("xi-bars")) {
@@ -445,7 +461,6 @@
             });
         });
 
-        // 다크모드 제어
         function setTheme(themeName) {
             localStorage.setItem('theme', themeName);
             document.documentElement.className = themeName;
@@ -473,18 +488,15 @@
             }
         })();
 
-        // ★ 애니메이션이 적용된 부드러운 뷰 전환 컨트롤러
         function changeView(viewName) {
             const $currentVisible = $('.page-view:visible');
             
-            // 이미 열려있는 화면이 있다면 페이드아웃 후 새 화면 페이드인
             if ($currentVisible.length > 0) {
                 $currentVisible.fadeOut(150, function() {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                     $(`#view-${viewName}`).fadeIn(200);
                 });
             } else {
-                // 초기 로딩 시
                 $(`#view-${viewName}`).show();
             }
 
@@ -495,7 +507,6 @@
             }
         }
 
-        // 카테고리 탭 빌더
         function initializeWebsite() {
             const menuContainer = $('#category-menu-container');
             menuContainer.empty();
@@ -507,7 +518,6 @@
             buildList('전체');
         }
 
-        // 리스트 동적 생성기 (좌우 분리 플렉스 박스 적용)
         function buildList(targetCategory) {
             const listContainer = $('#list-container');
             listContainer.empty();
@@ -531,7 +541,6 @@
             $('.category-item').removeClass('active');
             $(element).addClass('active');
             
-            // 카테고리 이동 시에도 부드러운 리스트 전환
             $('#list-container').fadeOut(150, function() {
                 buildList(categoryName);
                 $(this).fadeIn(200);

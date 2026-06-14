@@ -139,13 +139,15 @@
             border: 1px solid var(--divider-bg);
             border-radius: 2px;
             margin-top: 5px;
+            /* [요청 반영] 상위 요소의 우측 정렬 속성을 무시하고, 아이콘과 글씨를 완벽하게 왼쪽으로 정렬합니다. */
+            text-align: left; 
         }
         .dropdown-inner a {
             display: block;
             color: var(--menu-color);
             cursor: pointer;
             padding: 6px 0; 
-            font-size: 12px; /* [요청 반영] 드롭다운 메뉴 폰트만 12px로 고정 */
+            font-size: 12px; 
         }
         .dropdown-inner a:hover { color: var(--menu-color-hover); }
         .inner_index {
@@ -283,7 +285,6 @@
                             <i id="menu-icon" class="xi-bars"></i>
                         </div>
                         <div class="dropdown-inner">
-                            <!-- [요청 반영] 아이콘 + 영문 텍스트 형태로 수정 완료 -->
                             <a href="#" onclick="loadExternalPage('home', 'home.html'); return false;">
                                 <i class="xi-home"></i> home
                             </a>

@@ -1,1 +1,567 @@
+<!DOCTYPE html>
+<html lang="ko">
 
+<head>
+    <title>개인홈</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    
+    <!----- CSS 및 폰트 라이브러리 ----->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300&display=swap');
+        @import url('https://fonts.googleapis.com/earlyaccess/jejumyeongjo.css');
+        
+        /* 1. 오리지널 스킨 테마 변수 */
+        .theme-light {
+            --back-color: #fff;
+            --main-color: #353535;
+            --title-color: #1d1d1d;
+            --sub-color: #c1c1c1;
+            --link-color: #c1c1c1;
+            --link-color-hover: #a2a2a2;
+            --menu-color: #c1c1c1;
+            --menu-color-hover: #a2a2a2;
+            
+            --desc-bg: #f7f7f7;
+            --desc-txt: #353535;
+            --em-bg: #4b4b4b;
+            --em-txt: white;
+            --general1-bg: white;
+            --general1-txt: #353535;
+            --general2-bg: white;
+            --general2-txt: #353535;
+            --divider-bg: #0000000d;
+        }
+
+        .theme-dark {
+            --back-color: #292929;
+            --main-color: #dadada;
+            --title-color: #fbfbfb;
+            --sub-color: #747474;
+            --link-color: #747474;
+            --link-color-hover: #a5a5a5;
+            --menu-color: #747474;
+            --menu-color-hover: #a5a5a5;
+            
+            --desc-bg: #202020;
+            --desc-txt: #dadada;
+            --em-bg: black;
+            --em-txt: #fbfbfb;
+            --general1-bg: #292929;
+            --general1-txt: #dadada;
+            --general2-bg: #292929;
+            --general2-txt: #a5a5a5;
+            --divider-bg: #ffffff0d;
+        }
+
+        /* 2. 오리지널 style.css 기반 수정 명세 */
+        * {
+            font-family: 'Jeju Myeongjo', serif !important;
+            box-sizing: border-box;
+        }
+        ::selection {
+            color: var(--back-color);
+            background-color: var(--main-color);
+        }
+        body {
+            background-color: var(--back-color);
+            transition: background-color 0.4s ease; 
+        }
+        body, button, dd, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, select, table, td, textarea, th, ul {
+            margin: 0;
+            padding: 0;
+        }
+        /* 기본 폰트 사이즈 12px 세팅 */
+        body, button, input, select, table, textarea {
+            line-height: 180%;
+            font-size: 12px;
+            color: var(--main-color);
+        }
+        button, input {
+            border: 0;
+            border-radius: 0;
+        }
+        ol, ul {
+            list-style: none;
+        }
+        a {
+            color: var(--link-color);
+            font-weight: normal;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        a:hover {
+            text-decoration: none;
+            color: var(--link-color-hover);
+        }
+        html, body, #wrap {
+            position: relative;
+            height: 100%;
+        }
+        #container {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            z-index: 1;
+            left: 0;
+        }
+        #header {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+        .inner_header, .inner_header > button {
+            color: var(--menu-color);
+        }
+        .inner_header :hover, .inner_header > button:hover {
+            color: var(--menu-color-hover);
+        }
+        .inner_header {
+            max-width: fit-content;
+            padding: 10px 20px 10px 0px;
+            text-align: right;
+            height: 30px;
+            right: 0px;
+            position: absolute;
+        }
+        .inner_header > button {
+            background-color: transparent;
+            float: right;
+            position: absolute;
+            right: 40px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .dropdown {
+            display: inline-block;
+        }
+        .dropdown-bars {
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .dropdown-inner {
+            text-shadow: var(--back-color) 1px -1px 0px, var(--back-color) 1px 1px 0px, var(--back-color) -1px -1px 0px, var(--back-color) -1px 0px 0px, var(--back-color) 0px -1px 0px, var(--back-color) 0px 1px 0px, var(--back-color) 1px 0px 0px, var(--back-color) -1px 1px 0px;
+            background: var(--back-color);
+            padding: 10px;
+            border: 1px solid var(--divider-bg);
+            border-radius: 2px;
+            margin-top: 5px;
+        }
+        a.link_home, a.link_manage, a.link_post, a.link_login, .dropdown-inner a {
+            display: block;
+            color: var(--menu-color);
+            cursor: pointer;
+            padding: 4px 0;
+        }
+        a.link_home:hover, a.link_manage:hover, a.link_post:hover, a.link_login:hover, .dropdown-inner a:hover {
+            color: var(--menu-color-hover);
+        }
+        .inner_index {
+            position: relative;
+            max-width: 725px;
+            margin: 80px auto;
+            overflow: hidden;
+        }
+
+        #view-home, #view-list {
+            padding: 0 20px;
+        }
+
+        /* ----- 목록 리스트 디자인 (좌우 정렬) ----- */
+        .box_contents {
+            padding: 12px 0px;
+            border-bottom: 1px solid var(--divider-bg);
+            width: 100%;
+            transition: opacity 0.2s;
+        }
+        .box_contents:hover {
+            opacity: 0.7;
+        }
+        .box_contents .link_title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        .box_contents .link_title .title_post {
+            font-size: 13px;
+            color: var(--title-color);
+            line-height: 120%;
+            font-weight: normal; 
+        }
+        .article_content .title_view {
+            font-size: 16px;
+            color: var(--title-color);
+            line-height: 120%;
+            font-weight: bold; 
+            margin-bottom: 10px;
+            letter-spacing: normal;
+        }
+        .box_contents .info_post {
+            line-height: 100%;
+            font-size: 10px;
+            color: var(--sub-color);
+            white-space: nowrap;
+            margin-left: 20px;
+            text-align: right;
+        }
+
+        /* ----- 본문/공지 보기 화면 디자인 ----- */
+        .area_view_content {
+            padding: 0 20px;
+            max-height: auto !important;
+            position: relative;
+        }
+        
+        .btn-back-icon-wrap {
+            text-align: right;
+            margin-bottom: 15px;
+        }
+        .btn-back-icon {
+            display: inline-block;
+            color: var(--sub-color);
+            font-size: 14px;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+        .btn-back-icon:hover {
+            opacity: 1;
+            color: var(--title-color);
+        }
+
+        .area_view_content .article_content .info_post {
+            display: block !important;
+            margin: 0px 0px 30px 0px;
+            padding-top: 0;
+        }
+        .area_view_content .article_content .view_info_post {
+            color: var(--sub-color);
+            line-height: 120%;
+            font-size: 10px;
+            text-align: right; 
+        }
+        .area_view_content .article_view {
+            overflow-x: hidden;
+            /* 요청하신 본문 폰트 크기 14px로 변경 */
+            font-size: 14px;
+        }
+        .article_view p {
+            margin: 0 0 20px;
+            color: var(--main-color);
+        }
+        
+        /* 분리선 오리지널 스타일 정의 */
+        .custom-hr {
+            margin: 40px auto;
+            background: none;
+            width: 33px;
+            border: none;
+            height: 0;
+        }
+        .custom-hr:before {
+            color: var(--sub-color);
+            content: "✧ ✧ ✧";
+            font-size: 9px;
+            letter-spacing: 1px;
+            position: absolute;
+            margin-top: 10px;
+        }
+
+        /* 카테고리 탭 스타일 */
+        .category-menu {
+            margin: 0px 0px 30px 0px;
+            font-size: 11px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .category-item {
+            color: var(--sub-color);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .category-item:hover, .category-item.active {
+            color: var(--title-color);
+            font-weight: bold;
+        }
+        .category-item::before {
+            content: "# ";
+        }
+
+        /* 화면 뷰 제어용 기본 클래스 */
+        .page-view {
+            display: none;
+        }
+        
+        /* TRPG 오리지널 서식 매칭 */
+        .message { font-family: 'Jeju Myeongjo', serif !important; line-height: 120%; font-size: 11px !important; padding: 5px; margin: 2px 0; }
+        .message.general { background-color: var(--general1-bg) !important; color: var(--general1-txt) !important; }
+        .message.emote { background-color: var(--em-bg) !important; color: var(--em-txt) !important; }
+        .message.desc { background-color: var(--desc-bg) !important; color: var(--desc-txt) !important; }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <div id="container">
+            
+            <!----- 헤더 영역 ----->
+            <header id="header">
+                <div class="inner_header">
+                    <button onclick="toggleTheme()" title="테마 변경">
+                        <i id="theme-icon" class="xi-toggle-off"></i>
+                    </button>
+                    <div class="dropdown">
+                        <div class="dropdown-bars" title="메뉴 열기">
+                            <i id="menu-icon" class="xi-bars"></i>
+                        </div>
+                        <div class="dropdown-inner">
+                            <a href="#" onclick="changeView('home'); return false;">
+                                HOME <i class="xi-home"></i>
+                            </a>
+                            <a href="#" onclick="changeView('notice'); return false;">
+                                공지 <i class="xi-bell"></i>
+                            </a>
+                            <a href="#" onclick="changeView('list'); return false;">
+                                목록 <i class="xi-list"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!---- 메인 콘텐츠 ---->
+            <main id="main">
+                <div class="inner_index">
+
+                    <!-- [1] HOME 화면 -->
+                    <div id="view-home" class="page-view">
+                        <div style="text-align: center; padding: 150px 0; color: var(--sub-color); font-size: 11px;">
+                            [여유로운 HOME 화면 영역]
+                        </div>
+                    </div>
+
+                    <!-- [2] 공지사항 화면 -->
+                    <div id="view-notice" class="page-view">
+                        <div class="area_view_content">
+                            <div class="article_content">
+                                <div class="info_post">
+                                    <div class="title_view" id="notice-title"></div>
+                                    <div class="view_info_post" id="notice-date"></div>
+                                </div>
+                                <div class="article_view" id="notice-content"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- [3] 목록 리스트 화면 -->
+                    <div id="view-list" class="page-view">
+                        <!-- 카테고리 탭 -->
+                        <div class="category-menu" id="category-menu-container"></div>
+                        <!-- 리스트 영역 -->
+                        <div id="list-container"></div>
+                    </div>
+
+                    <!-- [4] 본문 보기 화면 -->
+                    <div id="view-article" class="page-view">
+                        <div class="area_view_content">
+                            <!-- 우측 정렬 래퍼로 감싼 뒤로가기 아이콘 -->
+                            <div class="btn-back-icon-wrap">
+                                <a href="#" onclick="changeView('list'); return false;" class="btn-back-icon" title="목록으로 돌아가기">
+                                    <i class="xi-close"></i>
+                                </a>
+                            </div>
+                            
+                            <div class="article_content">
+                                <div class="info_post">
+                                    <div class="title_view" id="article-title"></div>
+                                    <div class="view_info_post" id="article-date"></div>
+                                </div>
+                                <div class="article_view" id="article-content"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- 데이터 스크립트 영역 -->
+    <script>
+        const CONFIG_CATEGORIES = ["일상", "개발", "TRPG", "비밀글"];
+
+        const CONFIG_NOTICE = {
+            title: "개인홈 웹사이트 이전 공지",
+            date: "2026. 06. 14",
+            content: `
+                <p>텍스트 중심의 정적 웹사이트로 개편되었습니다.</p>
+                <p>우측 상단의 네비게이션바를 통해 HOME, 공지사항, 목록형 리스트 사이를 매끄럽게 오갈 수 있습니다. 가독성을 최우선으로 하여 줄간격과 여백을 조절했습니다.</p>
+            `
+        };
+
+        const CONFIG_ARTICLES = [
+            {
+                category: "일상",
+                title: "첫 번째 미니멀 텍스트 기록",
+                date: "2026. 06. 14",
+                content: "<p>여기는 첫 번째 게시물의 본문 상세 내용입니다. 가독성을 방해하던 불필요한 양쪽 정렬 코드를 제거하여 원래의 편안한 상태로 되돌렸습니다.</p>"
+            },
+            {
+                category: "개발",
+                title: "부드러운 애니메이션 및 가독성 패치",
+                date: "2026. 06. 13",
+                content: "<p>이제 메뉴를 이동하거나 글을 누를 때 화면이 딱딱하게 끊기지 않고 부드럽게 페이드인/페이드아웃 되는 것을 확인하실 수 있습니다.</p>"
+            },
+            {
+                category: "TRPG",
+                title: "세션 로그 인라인 커스텀 폼 확인",
+                date: "2026. 06. 12",
+                content: `
+                    <p>TRPG 전용 클래스 양식이 완벽하게 호환 작동합니다.</p>
+                    <div class="message general"><span class="by">탐사자 A:</span> 문을 열어보겠습니다.</div>
+                    <div class="message emote">끼이익 소리와 함께 무거운 철문이 열립니다.</div>
+                    <div class="message desc">관찰력 판정이 요구되는 구간입니다.</div>
+                `
+            },
+            {
+                category: "비밀글",
+                title: "리스트 좌우 정렬 확인용 테스트 긴 제목 제목 제목",
+                date: "2026. 06. 11",
+                content: "<p>목록의 제목은 좌측에, 카테고리와 날짜 정보는 우측에 정렬하여 시선이 깔끔하게 떨어지도록 레이아웃을 유지하고 있습니다.</p>"
+            }
+        ];
+    </script>
+
+    <!-- 핵심 로직 영역 -->
+    <script>
+        $(document).ready(function () {
+            $(".dropdown-inner").hide();
+            $(".dropdown-bars").click(function (e) {
+                e.stopPropagation();
+                $(".dropdown-inner").slideToggle(200); 
+                
+                let icon = $("#menu-icon");
+                if (icon.hasClass("xi-bars")) {
+                    icon.removeClass("xi-bars").addClass("xi-close");
+                } else {
+                    icon.removeClass("xi-close").addClass("xi-bars");
+                }
+            });
+            
+            $(".dropdown-inner a").click(function() {
+                $(".dropdown-inner").slideUp(200);
+                $("#menu-icon").removeClass("xi-close").addClass("xi-bars");
+            });
+            
+            $(document).click(function() {
+                $(".dropdown-inner").slideUp(200);
+                $("#menu-icon").removeClass("xi-close").addClass("xi-bars");
+            });
+        });
+
+        function setTheme(themeName) {
+            localStorage.setItem('theme', themeName);
+            document.documentElement.className = themeName;
+            
+            if(themeName === 'theme-dark') {
+                $('#theme-icon').removeClass('xi-toggle-off').addClass('xi-toggle-on');
+            } else {
+                $('#theme-icon').removeClass('xi-toggle-on').addClass('xi-toggle-off');
+            }
+        }
+
+        function toggleTheme() {
+            if (localStorage.getItem('theme') === 'theme-dark') {
+                setTheme('theme-light');
+            } else {
+                setTheme('theme-dark');
+            }
+        }
+
+        (function () {
+            if (localStorage.getItem('theme') === 'theme-dark') {
+                setTheme('theme-dark');
+            } else {
+                setTheme('theme-light');
+            }
+        })();
+
+        function changeView(viewName) {
+            const $currentVisible = $('.page-view:visible');
+            
+            if ($currentVisible.length > 0) {
+                $currentVisible.fadeOut(150, function() {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    $(`#view-${viewName}`).fadeIn(200);
+                });
+            } else {
+                $(`#view-${viewName}`).show();
+            }
+
+            if(viewName === 'notice') {
+                $('#notice-title').text(CONFIG_NOTICE.title);
+                $('#notice-date').text("공지 · " + CONFIG_NOTICE.date);
+                $('#notice-content').html(CONFIG_NOTICE.content);
+            }
+        }
+
+        function initializeWebsite() {
+            const menuContainer = $('#category-menu-container');
+            menuContainer.empty();
+            menuContainer.append(`<span class="category-item active" onclick="filterCategory('전체', this)">전체</span>`);
+            
+            CONFIG_CATEGORIES.forEach(cat => {
+                menuContainer.append(`<span class="category-item" onclick="filterCategory('${cat}', this)">${cat}</span>`);
+            });
+            buildList('전체');
+        }
+
+        function buildList(targetCategory) {
+            const listContainer = $('#list-container');
+            listContainer.empty();
+
+            CONFIG_ARTICLES.forEach((item, index) => {
+                if (targetCategory === '전체' || item.category === targetCategory) {
+                    const html = `
+                        <div class="box_contents">
+                            <a href="#" class="link_title" onclick="openArticle(${index}); return false;">
+                                <div class="title_post">${item.title}</div>
+                                <div class="info_post">${item.date} · ${item.category}</div>
+                            </a>
+                        </div>
+                    `;
+                    listContainer.append(html);
+                }
+            });
+        }
+
+        function filterCategory(categoryName, element) {
+            $('.category-item').removeClass('active');
+            $(element).addClass('active');
+            
+            $('#list-container').fadeOut(150, function() {
+                buildList(categoryName);
+                $(this).fadeIn(200);
+            });
+        }
+
+        function openArticle(index) {
+            const item = CONFIG_ARTICLES[index];
+            $('#article-title').text(item.title);
+            $('#article-date').text(item.category + " · " + item.date);
+            $('#article-content').html(item.content);
+            changeView('article');
+        }
+
+        $(document).ready(function() {
+            initializeWebsite();
+            changeView('home'); 
+        });
+    </script>
+</body>
+</html>

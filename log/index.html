@@ -230,41 +230,6 @@
             position: relative;
         }
         
-        .btn-back-icon-wrap {
-            text-align: right;
-            margin-bottom: 15px;
-        }
-        .btn-back-icon {
-            display: inline-block;
-            color: var(--sub-color);
-            font-size: 16px; 
-            opacity: 0.6;
-            transition: opacity 0.2s;
-        }
-        .btn-back-icon:hover {
-            opacity: 1;
-            color: var(--title-color);
-        }
-
-        .area_view_content .article_content .info_post {
-            display: block !important;
-            margin: 0px 0px 30px 0px;
-            padding-top: 0;
-        }
-        .area_view_content .article_content .view_info_post {
-            color: var(--sub-color);
-            line-height: 120%;
-            font-size: 12px; 
-            text-align: right; 
-        }
-        .area_view_content .article_view {
-            overflow-x: hidden;
-            font-size: 14px; 
-        }
-        .article_view p {
-            margin: 0 0 20px;
-        }
-        
         .category-menu {
             margin: 0px 0px 30px 0px;
             font-size: 14px; 
@@ -306,13 +271,13 @@
                             <i id="menu-icon" class="xi-bars"></i>
                         </div>
                         <div class="dropdown-inner">
-                            <a href="#" onclick="loadExternalPage('home', 'home.html'); return false;">
+                            <a href="#home" onclick="loadExternalPage('home', 'home.html');">
                                 <i class="xi-home"></i> home
                             </a>
-                            <a href="#" onclick="loadExternalPage('notice', 'notice.html'); return false;">
+                            <a href="#notice" onclick="loadExternalPage('notice', 'notice.html');">
                                 <i class="xi-bell"></i> notice
                             </a>
-                            <a href="#" onclick="changeView('list'); return false;">
+                            <a href="#list" onclick="changeView('list');">
                                 <i class="xi-list"></i> list
                             </a>
                         </div>
@@ -345,23 +310,6 @@
                         </div>
                         <div class="category-menu" id="category-menu-container"></div>
                         <div id="list-container"></div>
-                    </div>
-
-                    <div id="view-article" class="page-view">
-                        <div class="area_view_content">
-                            <div class="btn-back-icon-wrap">
-                                <a href="#" onclick="changeView('list'); return false;" class="btn-back-icon" title="목록으로 돌아가기">
-                                    <i class="xi-close"></i>
-                                </a>
-                            </div>
-                            <div class="article_content">
-                                <div class="info_post">
-                                    <div class="title_view" id="article-title"></div>
-                                    <div class="view_info_post" id="article-date"></div>
-                                </div>
-                                <div class="article_view" id="article-content"></div>
-                            </div>
-                        </div>
                     </div>
 
                 </div>
@@ -414,12 +362,19 @@
                     
                     CONFIG_CATEGORIES = Array.from(categoriesSet);
                     initializeWebsite();
-                    loadExternalPage('home', 'home.html');
+                    
+                    // 해시(#) 주소에 따라 첫 화면을 똑똑하게 띄워줌
+                    const hash = window.location.hash.replace('#', '');
+                    if (hash === 'list') {
+                        changeView('list');
+                    } else if (hash === 'notice') {
+                        loadExternalPage('notice', 'notice.html');
+                    } else {
+                        loadExternalPage('home', 'home.html');
+                    }
                 },
                 error: function() {
                     $('#list-container').html('<p style="text-align:center; margin-top:50px; color:var(--sub-color);">list.html 파일을 찾을 수 없거나 불러오기에 실패했습니다.</p>');
-                    initializeWebsite();
-                    loadExternalPage('home', 'home.html');
                 }
             });
         });
@@ -445,9 +400,9 @@
         function changeView(viewName) {
             const $currentVisible = $('.page-view:visible');
             if ($currentVisible.length > 0) {
-                $currentVisible.fadeOut(300, function() {
+                $currentVisible.fadeOut(200, function() {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
-                    $(`#view-${viewName}`).fadeIn(400);
+                    $(`#view-${viewName}`).fadeIn(300);
                 });
             } else {
                 $(`#view-${viewName}`).show();
@@ -460,13 +415,6 @@
                 dataType: 'html',
                 success: function(data) {
                     $(`#${viewName}-content`).html(data);
-                    
-                    // [핵심 최적화 파트 1] 홈, 공지에 들어있는 스크립트도 깨우기
-                    setTimeout(function() {
-                        window.dispatchEvent(new Event('DOMContentLoaded'));
-                        document.dispatchEvent(new Event('DOMContentLoaded'));
-                    }, 50);
-
                     if(viewName !== 'list') changeView(viewName);
                 },
                 error: function() {
@@ -499,7 +447,7 @@
                 if (matchCategory && matchKeyword) {
                     const html = `
                         <div class="box_contents">
-                            <a href="#" class="link_title" onclick="openArticle(${index}); return false;">
+                            <a href="txt/${item.id}.html" class="link_title">
                                 <div class="title_post">${item.title}</div>
                                 <div class="info_post">${item.date} · ${item.category}</div>
                             </a>
@@ -510,30 +458,12 @@
             });
         }
 
-        function openArticle(index) {
-            const item = CONFIG_ARTICLES[index];
-            $('#article-title').text(item.title);
-            $('#article-date').text(item.category + " · " + item.date);
-            
-            $.ajax({
-                url: 'txt/' + item.id + '.html',
-                dataType: 'html',
-                success: function(data) {
-                    $('#article-content').html(data);
-                    
-                    // [핵심 최적화 파트 2] 본문 파일을 불러온 직후 강제로 이벤트를 발생시켜 
-                    // 본문 안의 애니메이션 코드(DOMContentLoaded 대기열)를 즉각 작동시킵니다.
-                    setTimeout(function() {
-                        window.dispatchEvent(new Event('DOMContentLoaded'));
-                        document.dispatchEvent(new Event('DOMContentLoaded'));
-                    }, 50);
-
-                    changeView('article');
-                },
-                error: function() {
-                    $('#article-content').html('<p>글을 불러오는데 실패했습니다. (경로: txt/' + item.id + '.html)</p>');
-                    changeView('article');
-                }
+        function filterCategory(categoryName, element) {
+            $('.category-item').removeClass('active');
+            $(element).addClass('active');
+            $('#list-container').fadeOut(150, function() {
+                buildList(categoryName);
+                $(this).fadeIn(200);
             });
         }
     </script>

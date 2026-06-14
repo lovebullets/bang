@@ -68,7 +68,7 @@
             background-color: var(--back-color);
             transition: background-color 0.4s ease; 
         }
-        /* ★ 웹사이트 전체의 베이스 폰트 사이즈를 14px로 일괄 상향 적용했습니다 */
+        /* 웹사이트 전체 베이스 폰트 사이즈 14px 유지 */
         body, button, input, select, table, textarea, p, div, a, span {
             margin: 0;
             padding: 0;
@@ -121,14 +121,14 @@
             position: absolute;
             right: 40px;
             cursor: pointer;
-            font-size: 16px; /* 아이콘 크기 살짝 상향 */
+            font-size: 16px; 
             color: var(--menu-color);
         }
         .inner_header > button:hover { color: var(--menu-color-hover); }
         .dropdown { display: inline-block; }
         .dropdown-bars {
             cursor: pointer;
-            font-size: 16px; /* 아이콘 크기 살짝 상향 */
+            font-size: 16px; 
             color: var(--menu-color);
         }
         .dropdown-bars:hover { color: var(--menu-color-hover); }
@@ -144,7 +144,7 @@
             display: block;
             color: var(--menu-color);
             cursor: pointer;
-            padding: 6px 0; /* 메뉴 간격 약간 여유 있게 */
+            padding: 6px 0; 
         }
         .dropdown-inner a:hover { color: var(--menu-color-hover); }
         .inner_index {
@@ -173,13 +173,13 @@
             width: 100%;
         }
         .box_contents .link_title .title_post {
-            font-size: 14px; /* 리스트 제목도 기본 14px로 통일 */
+            font-size: 14px; 
             color: var(--title-color);
             line-height: 120%;
             font-weight: normal; 
         }
         .article_content .title_view {
-            font-size: 18px; /* 전체 비율에 맞춰 본문 제목 18px로 상향 */
+            font-size: 18px; 
             color: var(--title-color);
             line-height: 120%;
             font-weight: bold; 
@@ -188,7 +188,7 @@
         }
         .box_contents .info_post {
             line-height: 100%;
-            font-size: 12px; /* 리스트 날짜 12px로 상향 */
+            font-size: 12px; 
             color: var(--sub-color);
             white-space: nowrap;
             margin-left: 20px;
@@ -209,7 +209,7 @@
         .btn-back-icon {
             display: inline-block;
             color: var(--sub-color);
-            font-size: 16px; /* 닫기 아이콘 크기 약간 상향 */
+            font-size: 16px; 
             opacity: 0.6;
             transition: opacity 0.2s;
         }
@@ -226,12 +226,12 @@
         .area_view_content .article_content .view_info_post {
             color: var(--sub-color);
             line-height: 120%;
-            font-size: 12px; /* 본문 날짜/카테고리 12px로 상향 */
+            font-size: 12px; 
             text-align: right; 
         }
         .area_view_content .article_view {
             overflow-x: hidden;
-            font-size: 14px; /* 본문 기본 14px */
+            font-size: 14px; 
         }
         .article_view p {
             margin: 0 0 20px;
@@ -241,7 +241,7 @@
         /* 카테고리 탭 스타일 */
         .category-menu {
             margin: 0px 0px 30px 0px;
-            font-size: 14px; /* 카테고리 메뉴 14px로 상향 통일 */
+            font-size: 14px; 
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
@@ -281,14 +281,14 @@
                             <i id="menu-icon" class="xi-bars"></i>
                         </div>
                         <div class="dropdown-inner">
-                            <a href="#" onclick="loadExternalPage('home', 'home.html'); return false;">
-                                HOME <i class="xi-home"></i>
+                            <a href="#" onclick="loadExternalPage('home', 'home.html'); return false;" title="HOME">
+                                <i class="xi-home"></i>
                             </a>
-                            <a href="#" onclick="loadExternalPage('notice', 'notice.html'); return false;">
-                                공지 <i class="xi-bell"></i>
+                            <a href="#" onclick="loadExternalPage('notice', 'notice.html'); return false;" title="공지">
+                                <i class="xi-bell"></i>
                             </a>
-                            <a href="#" onclick="changeView('list'); return false;">
-                                목록 <i class="xi-list"></i>
+                            <a href="#" onclick="changeView('list'); return false;" title="목록">
+                                <i class="xi-list"></i>
                             </a>
                         </div>
                     </div>
@@ -385,7 +385,6 @@
             setTheme(localStorage.getItem('theme') === 'theme-dark' ? 'theme-dark' : 'theme-light');
         })();
 
-        // 애니메이션 속도를 늦춰 훨씬 부드럽게 조정 (300/400)
         function changeView(viewName) {
             const $currentVisible = $('.page-view:visible');
             if ($currentVisible.length > 0) {
@@ -398,7 +397,6 @@
             }
         }
 
-        // 외부 HTML 파일을 부드럽게 불러오는 AJAX 함수
         function loadExternalPage(viewName, url) {
             $.ajax({
                 url: url,
@@ -451,7 +449,6 @@
             });
         }
 
-        // txt/숫자.html 형식으로 본문 파일을 불러오는 로직
         function openArticle(index) {
             const item = CONFIG_ARTICLES[index];
             $('#article-title').text(item.title);
@@ -473,7 +470,6 @@
 
         $(document).ready(function() {
             initializeWebsite();
-            // 기본 시작화면 호출
             loadExternalPage('home', 'home.html');
         });
     </script>

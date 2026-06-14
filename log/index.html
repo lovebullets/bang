@@ -159,7 +159,6 @@
             padding: 0 20px;
         }
 
-        /* 작고 튀지 않는 검색창 디자인 */
         .search-wrap {
             text-align: right;
             margin-bottom: 20px;
@@ -189,7 +188,6 @@
             border-bottom: 1px solid var(--sub-color);
         }
 
-        /* 목록 리스트 디자인 */
         .box_contents {
             padding: 12px 0px;
             border-bottom: 1px solid var(--divider-bg);
@@ -226,7 +224,6 @@
             text-align: right;
         }
 
-        /* 본문/공지 화면 디자인 */
         .area_view_content {
             padding: 0 20px;
             max-height: auto !important;
@@ -268,7 +265,6 @@
             margin: 0 0 20px;
         }
         
-        /* 카테고리 탭 스타일 */
         .category-menu {
             margin: 0px 0px 30px 0px;
             font-size: 14px; 
@@ -289,7 +285,6 @@
 
         .page-view { display: none; }
         
-        /* TRPG 서식 */
         .message { font-family: 'Jeju Myeongjo', serif; line-height: 120%; font-size: 13px; padding: 5px; margin: 2px 0; }
         .message.general { background-color: var(--general1-bg); color: var(--general1-txt); }
         .message.emote { background-color: var(--em-bg); color: var(--em-txt); }
@@ -381,7 +376,6 @@
 
     <script>
         $(document).ready(function () {
-            // 메뉴 토글
             $(".dropdown-inner").hide();
             $(".dropdown-bars").click(function (e) {
                 e.stopPropagation();
@@ -396,13 +390,11 @@
             });
             $('.dropdown-inner').click(function(e) { e.stopPropagation(); });
 
-            // 검색어 이벤트
             $('#search-input').on('input', function() {
                 const activeCategory = $('.category-item.active').text() || '전체';
                 buildList(activeCategory);
             });
 
-            // [추가됨] list.html 파일을 비동기로 불러와서 데이터를 추출하는 최우선 로직
             $.ajax({
                 url: 'list.html',
                 dataType: 'html',
@@ -420,10 +412,7 @@
                         if(category) categoriesSet.add(category);
                     });
                     
-                    // 추출한 태그(카테고리)들을 기반으로 탭 생성 준비
                     CONFIG_CATEGORIES = Array.from(categoriesSet);
-
-                    // 데이터 로드가 끝난 후 화면 렌더링 시작
                     initializeWebsite();
                     loadExternalPage('home', 'home.html');
                 },
@@ -471,7 +460,13 @@
                 dataType: 'html',
                 success: function(data) {
                     $(`#${viewName}-content`).html(data);
-                    // home이나 notice 로드 시에만 뷰 전환 실행 (list.html 로드시에는 전환 방지)
+                    
+                    // [핵심 최적화 파트 1] 홈, 공지에 들어있는 스크립트도 깨우기
+                    setTimeout(function() {
+                        window.dispatchEvent(new Event('DOMContentLoaded'));
+                        document.dispatchEvent(new Event('DOMContentLoaded'));
+                    }, 50);
+
                     if(viewName !== 'list') changeView(viewName);
                 },
                 error: function() {
@@ -515,15 +510,6 @@
             });
         }
 
-        function filterCategory(categoryName, element) {
-            $('.category-item').removeClass('active');
-            $(element).addClass('active');
-            $('#list-container').fadeOut(250, function() {
-                buildList(categoryName);
-                $(this).fadeIn(350);
-            });
-        }
-
         function openArticle(index) {
             const item = CONFIG_ARTICLES[index];
             $('#article-title').text(item.title);
@@ -534,6 +520,14 @@
                 dataType: 'html',
                 success: function(data) {
                     $('#article-content').html(data);
+                    
+                    // [핵심 최적화 파트 2] 본문 파일을 불러온 직후 강제로 이벤트를 발생시켜 
+                    // 본문 안의 애니메이션 코드(DOMContentLoaded 대기열)를 즉각 작동시킵니다.
+                    setTimeout(function() {
+                        window.dispatchEvent(new Event('DOMContentLoaded'));
+                        document.dispatchEvent(new Event('DOMContentLoaded'));
+                    }, 50);
+
                     changeView('article');
                 },
                 error: function() {

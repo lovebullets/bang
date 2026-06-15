@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <title>개인홈</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/jejumyeongjo.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300&display=swap" />
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    
+    <style>
+        .theme-light {
+            --back-color: #fff;
+            --main-color: #353535;
+            --title-color: #1d1d1d;
+            --sub-color: #c1c1c1;
+            --link-color: #c1c1c1;
+            --link-color-hover: #a2a2a2;
+            --menu-color: #c1c1c1;
+            --menu-color-hover: #a2a2a2;
+            --divider-bg: #0000000d;
+            
+            --desc-bg: #f7f7f7;
+            --desc-txt: #353535;
+            --em-bg: #4b4b4b;
+            --em-txt: white;
+            --general1-bg: white;
+            --general1-txt: #353535;
+            --general2-bg: white;
+            --general2-txt: #353535;
+        }
+
+        .theme-dark {
+            --back-color: #292929;
+            --main-color: #dadada;
+            --title-color: #fbfbfb;
+            --sub-color: #747474;
+            --link-color: #747474;
+            --link-color-hover: #a5a5a5;
+            --menu-color: #747474;
+            --menu-color-hover: #a5a5a5;
+            --divider-bg: #ffffff0d;
+            
+            --desc-bg: #202020;
+            --desc-txt: #dadada;
+            --em-bg: black;
+            --em-txt: #fbfbfb;
+            --general1-bg: #292929;
+            --general1-txt: #dadada;
+            --general2-bg: #292929;
+            --general2-txt: #a5a5a5;
+        }
+
+        * {
+            font-family: 'Jeju Myeongjo', serif;
+            box-sizing: border-box;
+        }
+        ::selection {
+            color: var(--back-color);
+            background-color: var(--main-color);
+        }
+        body {
+            background-color: var(--back-color);
+            transition: background-color 0.4s ease; 
+            color: var(--main-color);
+        }
+        body, button, input, select, table, textarea, p, div, a, span {
+            margin: 0;
+            padding: 0;
+            line-height: 180%;
+            font-size: 14px; 
+        }
+        button, input {
+            border: 0;
+            border-radius: 0;
+        }
+        ol, ul { list-style: none; }
+        a {
+            color: var(--link-color);
+            font-weight: normal;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        a:hover {
+            text-decoration: none;
+            color: var(--link-color-hover);
+        }
+        html, body, #wrap {
+            position: relative;
+            height: 100%;
+        }
+        #container {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            z-index: 1;
+            left: 0;
+        }
+        #header {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+        .inner_header {
+            max-width: fit-content;
+            padding: 10px 20px 10px 0px;
+            text-align: right;
+            height: 30px;
+            right: 0px;
+            position: absolute;
+        }
+        .inner_header > button {
+            background-color: transparent;
+            float: right;
+            position: absolute;
+            right: 40px;
+            cursor: pointer;
+            font-size: 16px; 
+            color: var(--menu-color);
+        }
+        .inner_header > button:hover { color: var(--menu-color-hover); }
+        .dropdown { display: inline-block; }
+        .dropdown-bars {
+            cursor: pointer;
+            font-size: 16px; 
+            color: var(--menu-color);
+        }
+        .dropdown-bars:hover { color: var(--menu-color-hover); }
+        .dropdown-inner {
+            text-shadow: var(--back-color) 1px -1px 0px, var(--back-color) 1px 1px 0px, var(--back-color) -1px -1px 0px, var(--back-color) -1px 0px 0px, var(--back-color) 0px -1px 0px, var(--back-color) 0px 1px 0px, var(--back-color) 1px 0px 0px, var(--back-color) -1px 1px 0px;
+            background: var(--back-color);
+            padding: 10px;
+            border: 1px solid var(--divider-bg);
+            border-radius: 2px;
+            margin-top: 5px;
+            text-align: left; 
+        }
+        .dropdown-inner a {
+            display: block;
+            color: var(--menu-color);
+            cursor: pointer;
+            padding: 6px 0; 
+            font-size: 12px; 
+        }
+        .dropdown-inner a:hover { color: var(--menu-color-hover); }
+        .inner_index {
+            position: relative;
+            max-width: 725px;
+            margin: 80px auto;
+            overflow: hidden;
+        }
+
+        #view-home, #view-list {
+            padding: 0 20px;
+        }
+
+        .search-wrap {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .search-wrap i {
+            color: var(--sub-color);
+            font-size: 12px;
+            margin-right: 5px;
+        }
+        #search-input {
+            border: none;
+            border-bottom: 1px solid var(--divider-bg);
+            background: transparent;
+            color: var(--main-color);
+            font-size: 12px;
+            padding: 5px 0;
+            width: 120px;
+            outline: none;
+            transition: width 0.3s, border-color 0.3s;
+        }
+        #search-input::placeholder {
+            color: var(--sub-color);
+            opacity: 0.7;
+        }
+        #search-input:focus {
+            width: 150px;
+            border-bottom: 1px solid var(--sub-color);
+        }
+
+        .box_contents {
+            padding: 12px 0px;
+            border-bottom: 1px solid var(--divider-bg);
+            width: 100%;
+            transition: opacity 0.2s;
+        }
+        .box_contents:hover { opacity: 0.7; }
+        .box_contents .link_title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        .box_contents .link_title .title_post {
+            font-size: 14px; 
+            color: var(--title-color);
+            line-height: 120%;
+            font-weight: normal; 
+        }
+        .article_content .title_view {
+            font-size: 18px; 
+            color: var(--title-color);
+            line-height: 120%;
+            font-weight: bold; 
+            margin-bottom: 10px;
+            letter-spacing: normal;
+        }
+        .box_contents .info_post {
+            line-height: 100%;
+            font-size: 12px; 
+            color: var(--sub-color);
+            white-space: nowrap;
+            margin-left: 20px;
+            text-align: right;
+        }
+
+        .area_view_content {
+            padding: 0 20px;
+            max-height: auto !important;
+            position: relative;
+        }
+        
+        .category-menu {
+            margin: 0px 0px 30px 0px;
+            font-size: 14px; 
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .category-item {
+            color: var(--sub-color);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .category-item:hover, .category-item.active {
+            color: var(--title-color);
+            font-weight: bold;
+        }
+        .category-item::before { content: "# "; }
+
+        .page-view { display: none; }
+        
+        .message { font-family: 'Jeju Myeongjo', serif; line-height: 120%; font-size: 13px; padding: 5px; margin: 2px 0; }
+        .message.general { background-color: var(--general1-bg); color: var(--general1-txt); }
+        .message.emote { background-color: var(--em-bg); color: var(--em-txt); }
+        .message.desc { background-color: var(--desc-bg); color: var(--desc-txt); }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <div id="container">
+            
+            <header id="header">
+                <div class="inner_header">
+                    <button onclick="toggleTheme()" title="테마 변경">
+                        <i id="theme-icon" class="xi-toggle-off"></i>
+                    </button>
+                    <div class="dropdown">
+                        <div class="dropdown-bars" title="메뉴 열기">
+                            <i id="menu-icon" class="xi-bars"></i>
+                        </div>
+                        <div class="dropdown-inner">
+                            <a href="#home" onclick="loadExternalPage('home', 'home.html');">
+                                <i class="xi-home"></i> home
+                            </a>
+                            <a href="#notice" onclick="loadExternalPage('notice', 'notice.html');">
+                                <i class="xi-bell"></i> notice
+                            </a>
+                            <a href="#list" onclick="changeView('list');">
+                                <i class="xi-list"></i> list
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main id="main">
+                <div class="inner_index">
+
+                    <div id="view-home" class="page-view">
+                        <div id="home-content"></div>
+                    </div>
+
+                    <div id="view-notice" class="page-view">
+                        <div class="area_view_content">
+                            <div class="article_content">
+                                <div class="info_post">
+                                    <div class="title_view" id="notice-title">공지사항</div>
+                                </div>
+                                <div class="article_view" id="notice-content"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="view-list" class="page-view">
+                        <div class="search-wrap">
+                            <i class="xi-search"></i>
+                            <input type="text" id="search-input" placeholder="제목 검색..." autocomplete="off">
+                        </div>
+                        <div class="category-menu" id="category-menu-container"></div>
+                        <div id="list-container"></div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        let CONFIG_CATEGORIES = [];
+        let CONFIG_ARTICLES = [];
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $(".dropdown-inner").hide();
+            $(".dropdown-bars").click(function (e) {
+                e.stopPropagation();
+                $(".dropdown-inner").slideToggle(200); 
+                let icon = $("#menu-icon");
+                icon.toggleClass("xi-bars xi-close");
+            });
+            
+            $(".dropdown-inner a, body").click(function() {
+                $(".dropdown-inner").slideUp(200);
+                $("#menu-icon").removeClass("xi-close").addClass("xi-bars");
+            });
+            $('.dropdown-inner').click(function(e) { e.stopPropagation(); });
+
+            $('#search-input').on('input', function() {
+                const activeCategory = $('.category-item.active').text() || '전체';
+                buildList(activeCategory);
+            });
+
+            $.ajax({
+                url: 'list.html',
+                dataType: 'html',
+                success: function(data) {
+                    const tempDiv = $('<div>').html(data);
+                    const categoriesSet = new Set();
+
+                    tempDiv.find('.list-item').each(function() {
+                        const id = $(this).attr('data-id');
+                        const category = $(this).attr('data-category');
+                        const title = $(this).text().trim();
+                        const date = $(this).attr('data-date');
+                        
+                        CONFIG_ARTICLES.push({ id, category, title, date });
+                        if(category) categoriesSet.add(category);
+                    });
+                    
+                    CONFIG_CATEGORIES = Array.from(categoriesSet);
+                    initializeWebsite();
+                    
+                    // 해시(#) 주소에 따라 첫 화면을 똑똑하게 띄워줌
+                    const hash = window.location.hash.replace('#', '');
+                    if (hash === 'list') {
+                        changeView('list');
+                    } else if (hash === 'notice') {
+                        loadExternalPage('notice', 'notice.html');
+                    } else {
+                        loadExternalPage('home', 'home.html');
+                    }
+                },
+                error: function() {
+                    $('#list-container').html('<p style="text-align:center; margin-top:50px; color:var(--sub-color);">list.html 파일을 찾을 수 없거나 불러오기에 실패했습니다.</p>');
+                }
+            });
+        });
+
+        function setTheme(themeName) {
+            localStorage.setItem('theme', themeName);
+            document.documentElement.className = themeName;
+            if(themeName === 'theme-dark') {
+                $('#theme-icon').removeClass('xi-toggle-off').addClass('xi-toggle-on');
+            } else {
+                $('#theme-icon').removeClass('xi-toggle-on').addClass('xi-toggle-off');
+            }
+        }
+
+        function toggleTheme() {
+            setTheme(localStorage.getItem('theme') === 'theme-dark' ? 'theme-light' : 'theme-dark');
+        }
+
+        (function () {
+            setTheme(localStorage.getItem('theme') === 'theme-dark' ? 'theme-dark' : 'theme-light');
+        })();
+
+        function changeView(viewName) {
+            const $currentVisible = $('.page-view:visible');
+            if ($currentVisible.length > 0) {
+                $currentVisible.fadeOut(200, function() {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    $(`#view-${viewName}`).fadeIn(300);
+                });
+            } else {
+                $(`#view-${viewName}`).show();
+            }
+        }
+
+        function loadExternalPage(viewName, url) {
+            $.ajax({
+                url: url,
+                dataType: 'html',
+                success: function(data) {
+                    $(`#${viewName}-content`).html(data);
+                    if(viewName !== 'list') changeView(viewName);
+                },
+                error: function() {
+                    $(`#${viewName}-content`).html('<p style="text-align:center; margin-top:100px;">파일을 불러오지 못했습니다. (' + url + ')</p>');
+                    if(viewName !== 'list') changeView(viewName);
+                }
+            });
+        }
+
+        function initializeWebsite() {
+            const menuContainer = $('#category-menu-container');
+            menuContainer.empty();
+            menuContainer.append(`<span class="category-item active" onclick="filterCategory('전체', this)">전체</span>`);
+            CONFIG_CATEGORIES.forEach(cat => {
+                menuContainer.append(`<span class="category-item" onclick="filterCategory('${cat}', this)">${cat}</span>`);
+            });
+            buildList('전체');
+        }
+
+        function buildList(targetCategory) {
+            const listContainer = $('#list-container');
+            listContainer.empty();
+            
+            const keyword = $('#search-input').val().toLowerCase();
+
+            CONFIG_ARTICLES.forEach((item, index) => {
+                const matchCategory = (targetCategory === '전체' || item.category === targetCategory);
+                const matchKeyword = item.title.toLowerCase().includes(keyword);
+
+                if (matchCategory && matchKeyword) {
+                    const html = `
+                        <div class="box_contents">
+                            <a href="txt/${item.id}.html" class="link_title">
+                                <div class="title_post">${item.title}</div>
+                                <div class="info_post">${item.date} · ${item.category}</div>
+                            </a>
+                        </div>
+                    `;
+                    listContainer.append(html);
+                }
+            });
+        }
+
+        function filterCategory(categoryName, element) {
+            $('.category-item').removeClass('active');
+            $(element).addClass('active');
+            $('#list-container').fadeOut(150, function() {
+                buildList(categoryName);
+                $(this).fadeIn(200);
+            });
+        }
+    </script>
+</body>
+</html>

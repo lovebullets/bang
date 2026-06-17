@@ -198,7 +198,7 @@
             margin-bottom: 5px;
         }
 
-        /* 0.모바일반응형 불멸의 규칙 - 모바일 환경 992px 이하 1단 위아래 배치 */
+        /* 모바일 반응형 규칙 */
         @media (max-width: 992px) {
             .grid-2col { grid-template-columns: 1fr; }
             .settings-grid { grid-template-columns: 1fr; }
@@ -322,7 +322,7 @@
         <textarea id="finalHtmlCode" rows="8" placeholder="이곳에 이전에 저장해둔 HTML 코드를 붙여넣으세요..." style="background: #fdfdfd; font-size: 12px; font-family: monospace;"></textarea>
         <div style="display: flex; gap: 10px; margin-top: 10px;">
             <button class="btn-sync" onclick="importFromHtml()" style="flex: 1;">붙여넣은 HTML 동기화하기 🔄</button>
-            <button onclick="copyHtml()" style="flex: 1;">최종 HTML 복 복사하기 📋</button>
+            <button onclick="copyHtml()" style="flex: 1;">최종 HTML 복사하기 📋</button>
         </div>
     </div>
 </div>
@@ -348,7 +348,6 @@
     let blocks = [];
     let outputVersion = 1; 
 
-    // 부드러운 팝업(Toast) 알림 함수 - (닫아야하는 alert 팝업 대신 유지되는 자동 닫힘 팝업)
     function showToast(msg) {
         let toast = document.getElementById('toast-notification');
         if (!toast) {
@@ -366,7 +365,6 @@
         }, 2500);
     }
 
-    // HTML 태그 충돌 방지용 이스케이프 함수
     function escapeHtml(unsafe) {
         return (unsafe || '').toString()
              .replace(/&/g, "&amp;")
@@ -376,7 +374,6 @@
              .replace(/'/g, "&#039;");
     }
 
-    // 색상 픽커 양방향 바인딩 초기화 함수
     function setupColorPicker(pickerId, textId) {
         const picker = document.getElementById(pickerId);
         const text = document.getElementById(textId);
@@ -597,7 +594,6 @@
         }
     }
 
-    // 노션 스타일 플로팅 툴바 연동 및 제어 함수
     function handleSelection() {
         const selection = window.getSelection();
         const toolbar = document.getElementById('floatingToolbar');
@@ -1061,7 +1057,6 @@
         updateOutput();
     }
 
-    // 3번 창과 4번 창의 드래그 서식 및 HTML 코드 완전 보존 동기화 함수
     function syncPreviewToBlocks() {
         blocks.forEach((block, index) => {
             const el = document.getElementById(`preview-block-${index}`);
@@ -1166,13 +1161,13 @@
                     dividerInner = `<div style="display: flex; align-items: center; width: 100%;"><div style="flex: 1; height: 1px; background-color: #e5e5ea;"></div><div style="width: 9px; height: 9px; border: 1px solid #c7c7cc; background-color: transparent; transform: rotate(45deg); margin: 0 15px; box-sizing: border-box;"></div><div style="flex: 1; height: 1px; background-color: #e5e5ea;"></div></div>`;
                 }
                 
-                htmlStr = `<div id="preview-block-${index}" data-type="divider" data-style="${dStyle}" onclick="focusAndScrollBlock(${index}, true)" style="width: 100%; max-width: 600px; margin: 30px auto; padding: 0; box-sizing: border-box; display: flex; justify-content: center; align-items: center;">\n    ${dividerInner}\n</div>\n`;
+                htmlStr = `<div id="preview-block-${index}" data-type="divider" data-style="${dStyle}" onclick="focusAndScrollBlock(${index}, true)" style="width: 100%; margin: 30px 0; padding: 0; box-sizing: border-box; display: flex; justify-content: center; align-items: center;">\n    ${dividerInner}\n</div>\n`;
             } else {
                 let lines = block.content.split('\n').filter(l => l.trim() !== '');
                 let divContent = lines.map(l => applyTextStyles(l)).join('<br>');
 
                 if (block.type === 'title') {
-                    htmlStr = `<div id="preview-block-${index}" data-type="title" onclick="focusAndScrollBlock(${index}, true)" style="width: 100%; max-width: 600px; margin: ${mt === '0px' ? '15px' : mt} auto 0; padding: 10px 0; box-sizing: border-box; font-size: 18pt; font-weight: bold; text-align: left; color: #1c1c1e; word-break: keep-all;">\n    ${applyTextStyles(block.content)}\n</div>\n`;
+                    htmlStr = `<div id="preview-block-${index}" data-type="title" onclick="focusAndScrollBlock(${index}, true)" style="width: 100%; margin: ${mt === '0px' ? '15px' : mt} 0 0; padding: 10px 0; box-sizing: border-box; font-size: 18pt; font-weight: bold; text-align: left; color: #1c1c1e; word-break: keep-all;">\n    ${applyTextStyles(block.content)}\n</div>\n`;
                 }
                 else if (isCurrDiag) {
                     let textColor;
@@ -1181,12 +1176,12 @@
                     else if (curr === 'mob') { textColor = '#666666'; }
                     else { textColor = block.customTextColor || '#333333'; }
 
-                    htmlStr = `<div id="preview-block-${index}" data-type="${curr}" onclick="focusAndScrollBlock(${index}, true)" style="width: 100%; max-width: 600px; margin: ${mt === '0px' ? '10px' : mt} auto 0; padding: 5px 0; box-sizing: border-box; color: ${textColor}; word-break: keep-all; text-align: left; line-height: 1.6;">\n    ${divContent}\n</div>\n`;
+                    htmlStr = `<div id="preview-block-${index}" data-type="${curr}" onclick="focusAndScrollBlock(${index}, true)" style="width: 100%; margin: ${mt === '0px' ? '10px' : mt} 0 0; padding: 5px 0; box-sizing: border-box; color: ${textColor}; word-break: keep-all; text-align: left; line-height: 1.6;">\n    ${divContent}\n</div>\n`;
                 }
                 else if (block.type === 'bgm') {
                     hasBgm = true;
                     let vid = extractVideoId(block.bgmUrl);
-                    htmlStr = `<div id="preview-block-${index}" data-type="bgm" onclick="focusAndScrollBlock(${index}, true)" style="width: 100%; max-width: 600px; margin: 10px auto; text-align: center; box-sizing: border-box;">\n    <div style="display: inline-flex; align-items: center; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 20px; padding: 4px 12px; gap: 8px; font-size: 11px; color: #8e8e93; box-shadow: 0 1px 2px rgba(0,0,0,0.02); line-height: 1;">\n        <span style="display: flex; align-items: center; color: #aeaeb2;">\n            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>\n        </span>\n        <span style="max-width: 120px; padding: 0 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #3a3a3c;">${block.bgmTitle || 'BGM'}</span>\n        <span style="color: #d1d1d6;">|</span>\n        <div style="display: flex; align-items: center; gap: 4px;">\n            <div onclick="playBGM('${vid}', '${block.bgmTitle}')" style="cursor: pointer; width: 18px; height: 18px; border-radius: 50%; background-color: #f2f2f7; display: flex; align-items: center; justify-content: center; transition: 0.2s;" title="재생">\n                <svg width="8" height="8" viewBox="0 0 24 24" fill="#3a3a3c"><path d="M8 5v14l11-7z"/></svg>\n            </div>\n            <div onclick="stopBGM()" style="cursor: pointer; width: 18px; height: 18px; border-radius: 50%; background-color: #f2f2f7; display: flex; align-items: center; justify-content: center; transition: 0.2s;" title="정지">\n                <svg width="7" height="7" viewBox="0 0 24 24" fill="#3a3a3c"><path d="M6 6h12v12H6z"/></svg>\n            </div>\n        </div>\n    </div>\n</div>\n`;
+                    htmlStr = `<div id="preview-block-${index}" data-type="bgm" onclick="focusAndScrollBlock(${index}, true)" style="width: 100%; margin: 10px 0; text-align: center; box-sizing: border-box;">\n    <div style="display: inline-flex; align-items: center; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 20px; padding: 4px 12px; gap: 8px; font-size: 11px; color: #8e8e93; box-shadow: 0 1px 2px rgba(0,0,0,0.02); line-height: 1;">\n        <span style="display: flex; align-items: center; color: #aeaeb2;">\n            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>\n        </span>\n        <span style="max-width: 120px; padding: 0 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #3a3a3c;">${block.bgmTitle || 'BGM'}</span>\n        <span style="color: #d1d1d6;">|</span>\n        <div style="display: flex; align-items: center; gap: 4px;">\n            <div onclick="playBGM('${vid}', '${block.bgmTitle}')" style="cursor: pointer; width: 18px; height: 18px; border-radius: 50%; background-color: #f2f2f7; display: flex; align-items: center; justify-content: center; transition: 0.2s;" title="재생">\n                <svg width="8" height="8" viewBox="0 0 24 24" fill="#3a3a3c"><path d="M8 5v14l11-7z"/></svg>\n            </div>\n            <div onclick="stopBGM()" style="cursor: pointer; width: 18px; height: 18px; border-radius: 50%; background-color: #f2f2f7; display: flex; align-items: center; justify-content: center; transition: 0.2s;" title="정지">\n                <svg width="7" height="7" viewBox="0 0 24 24" fill="#3a3a3c"><path d="M6 6h12v12H6z"/></svg>\n            </div>\n        </div>\n    </div>\n</div>\n`;
                 }
                 else if (block.type === 'status') {
                     if (block.content.trim().startsWith('<div')) {
@@ -1332,16 +1327,16 @@
                     }
                 }
                 else if (block.type === 'narration') {
-                    htmlStr = `<div id="preview-block-${index}" data-type="narration" onclick="focusAndScrollBlock(${index}, true)" style="width: 100%; max-width: 600px; margin: ${mt === '0px' ? '4px' : mt} auto 0; padding: 5px 0; box-sizing: border-box; color: ${narrColor}; font-style: ${narrItalic}; word-break: keep-all; text-align: left; line-height: 1.6;">\n    ${lines.join('<br>')}\n</div>\n`;
+                    htmlStr = `<div id="preview-block-${index}" data-type="narration" onclick="focusAndScrollBlock(${index}, true)" style="width: 100%; margin: ${mt === '0px' ? '4px' : mt} 0 0; padding: 5px 0; box-sizing: border-box; color: ${narrColor}; font-style: ${narrItalic}; word-break: keep-all; text-align: left; line-height: 1.6;">\n    ${lines.join('<br>')}\n</div>\n`;
                 }
                 else if (block.type === 'thought') {
-                    htmlStr = `<div id="preview-block-${index}" data-type="thought" onclick="focusAndScrollBlock(${index}, true)" style="width: 100%; max-width: 600px; margin: ${mt === '0px' ? '4px' : mt} auto 0; padding: 5px 0; box-sizing: border-box; color: #8e8e93; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">\n    ${lines.join('<br>')}\n</div>\n`;
+                    htmlStr = `<div id="preview-block-${index}" data-type="thought" onclick="focusAndScrollBlock(${index}, true)" style="width: 100%; margin: ${mt === '0px' ? '4px' : mt} 0 0; padding: 5px 0; box-sizing: border-box; color: #8e8e93; font-style: italic; word-break: keep-all; text-align: left; line-height: 1.6;">\n    ${lines.join('<br>')}\n</div>\n`;
                 }
                 else if (block.type === 'dday') {
-                    htmlStr = `<div id="preview-block-${index}" data-type="dday" onclick="focusAndScrollBlock(${index}, true)" style="width: 100%; max-width: 600px; margin: 20px auto; text-align: left; padding: 0; box-sizing: border-box;">\n    <span style="font-size: 13px; color: #8e8e93; font-weight: 600;"> ${applyTextStyles(block.content)}</span>\n</div>\n`;
+                    htmlStr = `<div id="preview-block-${index}" data-type="dday" onclick="focusAndScrollBlock(${index}, true)" style="width: 100%; margin: 20px 0; text-align: left; padding: 0; box-sizing: border-box;">\n    <span style="font-size: 13px; color: #8e8e93; font-weight: 600;"> ${applyTextStyles(block.content)}</span>\n</div>\n`;
                 }
                 else if (block.type === 'image') {
-                    htmlStr = `<div id="preview-block-${index}" data-type="image" onclick="focusAndScrollBlock(${index}, true)" style="width: 100%; max-width: 600px; margin: 15px auto; text-align: center; box-sizing: border-box;">\n    <img src="${block.content}" style="max-width: 100%; border-radius: 8px;" alt="image">\n</div>\n`;
+                    htmlStr = `<div id="preview-block-${index}" data-type="image" onclick="focusAndScrollBlock(${index}, true)" style="width: 100%; margin: 15px 0; text-align: center; box-sizing: border-box;">\n    <img src="${block.content}" style="max-width: 100%; border-radius: 8px;" alt="image">\n</div>\n`;
                 }
                 else if (block.type === 'html') {
                     htmlStr = `<div id="preview-block-${index}" data-type="html" onclick="focusAndScrollBlock(${index}, true)">\n${block.content}\n</div>\n`;
@@ -1398,8 +1393,11 @@
         font-size: 14px;
         line-height: 1.6;
         word-break: keep-all;
-        padding: 0 20px;
+        /* 👇 여기서 양 옆 여백을 자유롭게 수정하세요 (기본 25px) */
+        padding: 0 25px;
         box-sizing: border-box;
+        max-width: 600px;
+        margin: 0 auto;
     }
     .tistory-post-wrapper * { box-sizing: border-box; }
     /*나레이션 간격*/
@@ -1428,7 +1426,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🐇</title>
     <style>
-        body { margin: 0; padding: 20px 0; background-color: #ffffff; overflow-x: hidden; }
+        /* 👇 바디 배경을 투명(transparent)으로 변경하고 바디 자체의 불필요한 패딩을 없앴습니다 */
+        body { margin: 0; padding: 0; background-color: transparent; overflow-x: hidden; }
     </style>
 </head>
 <body>
@@ -1439,7 +1438,6 @@ ${cleanInnerContent}
 </body>
 </html>`;
         } else {
-            // V2 포맷: html, head, body 제거 및 최외곽 wrapper div 제거하고 순수 내용물만 나열
             finalHtml = globalStyle + cleanInnerContent;
         }
 
@@ -1449,7 +1447,6 @@ ${cleanInnerContent}
         document.getElementById('finalHtmlCode').value = finalHtml;
     }
 
-    // V2 포맷(틀 없는 정적 구조) 코드를 넣어도 완벽히 자식 노드를 다이렉트로 추적해 복원해내는 동기화 로직
     function importFromHtml() {
         const htmlText = document.getElementById('finalHtmlCode').value;
         if (!htmlText.trim()) {
@@ -1460,7 +1457,6 @@ ${cleanInnerContent}
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = htmlText;
 
-        // V1 구조용 래퍼 탐색 및 V2 다이렉트 자식 구조 수용
         let container = tempDiv.querySelector('#content-wrapper') || tempDiv.querySelector('body') || tempDiv;
         const newBlocks = [];
 

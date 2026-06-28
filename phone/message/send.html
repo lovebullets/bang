@@ -557,11 +557,11 @@
                 }
                 continue;
             }
-
+/*
             // --- Phase 5: Fallback (일반 텍스트 파트너 처리) ---
             messages.push({ sender: 'partner', type: 'text', text: line, delayValue: 1.0 }); addedCount++;
         }
-
+*/
         // 루프 종료 후 남은 tempDate 처리 (줄바꿈 후 시간이 안 나온 경우)
         if (tempDate) {
             messages.push({ sender: 'date', type: 'text', dateText: tempDate, timeText: "", delayValue: 0 });

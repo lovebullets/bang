@@ -7,91 +7,85 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <style>
-        /* === 기본 리셋 및 폰트 강제 지정 === */
+        /* === 기본 세팅 및 Noto Serif KR 강제 무장 === */
         * { 
             margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-tap-highlight-color: transparent; 
-            font-family: 'Noto Serif KR', serif !important; /* 지정 폰트로 전면 강제 무장 */
+            font-family: 'Noto Serif KR', serif !important;
         }
         
         body, html {
-            width: 100%;
-            height: 100dvh;
-            overflow: hidden;
-            background-color: #1B1B1B; /* 배경 지정색 고정 */
+            width: 100%; height: 100dvh; overflow: hidden;
+            background-color: #1B1B1B;
+            color: #F9F9F8; /* 밀크 아이보리 지정색 */
         }
 
-        /* 글로벌 페이드인 애니메이션 */
+        /* 글로벌 페이지 진입 부드러운 애니메이션 */
         @keyframes pageFadeIn {
-            from { opacity: 0; transform: translateY(5px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
         #archive-container {
-            position: relative;
-            width: 100vw;
-            height: 100dvh;
+            position: relative; width: 100vw; height: 100dvh;
             background-color: #1B1B1B;
-            animation: pageFadeIn 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            animation: pageFadeIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
         .content-layer {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            z-index: 10;
+            position: relative; width: 100%; height: 100%;
+            display: flex; flex-direction: column; z-index: 10;
         }
 
-        /* === 상단 헤더 UI (뒤로가기 & 영어 변경 탭) === */
+        /* === 상단 헤더 UI (뒤로가기, 탭 메뉴, 검색창 통합) === */
         header {
             width: 100%;
-            padding: max(20px, env(safe-area-inset-top)) 20px 10px 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+            padding: max(15px, env(safe-area-inset-top)) 20px 10px 20px;
+            display: flex; flex-direction: column; gap: 15px;
         }
         .header-top {
-            display: flex;
-            align-items: center;
-            position: relative;
-            height: 30px;
+            display: flex; align-items: center; justify-content: space-between;
+            position: relative; height: 35px;
         }
         .back-btn {
-            position: absolute;
-            left: 0;
-            color: #F9F9F8; /* 눈이 편안한 아이보리 오프화이트 */
-            text-decoration: none;
-            font-size: 26px;
-            display: flex;
-            align-items: center;
-            transition: all 0.2s;
-            filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.5));
+            color: #F9F9F8; text-decoration: none; font-size: 24px;
+            display: flex; align-items: center;
+            transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-        .back-btn:active { transform: scale(0.9) translateX(-3px); }
+        .back-btn:active { transform: scale(0.85) translateX(-3px); }
         
-        /* 1번 항목: 영어 표기 전환 (DAILY / EVENT / AU) */
+        /* 2. 안 보이게 예쁘고 작게 세팅한 스마트 통합 검색창 */
+        .search-box-wrapper {
+            position: relative; display: flex; align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(249, 249, 248, 0.15);
+            border-radius: 20px; padding: 4px 12px; width: 140px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .search-box-wrapper:focus-within {
+            width: 180px; border-color: rgba(249, 249, 248, 0.6);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .search-box-wrapper iconify-icon {
+            font-size: 16px; color: rgba(249, 249, 248, 0.4); margin-right: 6px;
+        }
+        .search-input {
+            width: 100%; background: none; border: none; outline: none;
+            color: #F9F9F8; font-size: 11px; font-weight: 500;
+        }
+        .search-input::placeholder { color: rgba(249, 249, 248, 0.3); }
+
+        /* 1. 영문 카테고리 탭 (DAILY / EVENT / AU) */
         .tab-menu {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 35px;
-            width: 100%;
+            display: flex; justify-content: center; align-items: center; gap: 35px; width: 100%;
         }
         .tab-item {
-            font-size: 14px;
-            font-weight: 700;
-            color: rgba(249, 249, 248, 0.4); /* 기본값 투명도 조절 */
-            cursor: pointer;
-            padding-bottom: 6px;
-            position: relative;
-            letter-spacing: 2px;
-            transition: all 0.3s ease;
+            font-size: 14px; font-weight: 700; color: rgba(249, 249, 248, 0.35);
+            cursor: pointer; padding-bottom: 6px; position: relative; letter-spacing: 2px;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         }
         .tab-item.active {
-            color: #F9F9F8;
-            font-weight: 900;
-            text-shadow: 0px 0px 10px rgba(249,249,248,0.3);
+            color: #F9F9F8; font-weight: 900;
+            text-shadow: 0px 0px 12px rgba(249,249,248,0.3);
         }
         .tab-item::after {
             content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px;
@@ -100,191 +94,142 @@
         }
         .tab-item.active::after { width: 100%; }
 
-        /* 3번 항목: 카테고리 밑에 단독으로 뜨는 동그란 필터 태그 모음 플레이스 */
-        .category-tag-bar {
-            display: flex;
-            gap: 8px;
-            padding: 0 20px 10px 20px;
-            overflow-x: auto;
-            width: 100%;
+        /* === 1. 각 카테고리 탭마다 세트로 매칭 및 중앙 정렬 처리한 알약 태그 바 === */
+        .tag-filter-container-wrapper {
+            position: relative; width: 100%; padding: 0 20px 8px 20px;
         }
-        .category-tag-bar::-webkit-scrollbar { display: none; }
+        .tag-filter-pool {
+            display: none; /* 기본 숨김 후 자바스크립트로 활성 탭 세트만 캼 */
+            /* 1. 왼쪽 정렬 싹 깨부수고 무조건 완전 정중앙 정렬 */
+            justify-content: center; align-items: center; 
+            gap: 8px; flex-wrap: wrap; width: 100%;
+        }
+        .tag-filter-pool.active { display: flex; }
+        
         .filter-tag-btn {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(249, 249, 248, 0.15);
-            padding: 5px 14px;
-            border-radius: 20px; /* 레퍼런스 같은 동그란 알약 캡슐 핏 */
-            font-size: 11px;
-            color: rgba(249, 249, 248, 0.7);
-            white-space: nowrap;
-            transition: all 0.2s;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(249, 249, 248, 0.12);
+            padding: 4px 12px; border-radius: 20px; /* 영롱한 알약 라운딩 */
+            font-size: 10px; font-weight: 700; color: rgba(249, 249, 248, 0.6);
+            white-space: nowrap; transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
             cursor: pointer;
         }
-        .filter-tag-btn.active, .filter-tag-btn:active {
-            background: #F9F9F8;
-            color: #1B1B1B;
-            border-color: #F9F9F8;
+        /* 4. 태그 호버/액티브 애니메이션 추가 */
+        .filter-tag-btn:hover {
+            background: rgba(255, 255, 255, 0.15); color: #F9F9F8; transform: translateY(-1px);
+        }
+        .filter-tag-btn.active {
+            background: #F9F9F8; color: #1B1B1B; border-color: #F9F9F8;
+            box-shadow: 0 4px 10px rgba(249,249,248,0.2);
         }
 
-        /* === 슬라이드 컨테이너 === */
-        .slider-wrapper {
-            flex: 1;
-            width: 100%;
-            overflow: hidden;
-            position: relative;
-        }
+        /* === 슬라이드 컨테이너 뷰 === */
+        .slider-wrapper { flex: 1; width: 100%; overflow: hidden; position: relative; }
         .slider-track {
-            display: flex;
-            width: 300%;
-            height: 100%;
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            display: flex; width: 300%; height: 100%;
+            transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
         }
         .tab-content {
-            width: 33.333%;
-            height: 100%;
-            overflow-y: auto;
+            width: 33.333%; height: 100%; overflow-y: auto;
             padding: 10px 20px max(30px, env(safe-area-inset-bottom)) 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+            display: flex; flex-direction: column; gap: 14px;
         }
         .tab-content::-webkit-scrollbar { display: none; }
 
-        /* === 가로 와이드형 카드 뼈대 디자인 === */
+        /* === 가로형 카드 마스터 디자인 === */
         .card {
-            width: 100%;
-            height: 150px; /* 가독성 및 정밀 배치를 위한 최적 높이 증대 */
-            background: #262626; /* 기본 카드 베이스 다크 그레이 */
-            border-radius: 14px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            display: flex;
-            overflow: hidden;
-            text-decoration: none;
-            position: relative;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            width: 100%; height: 135px; background: #242424;
+            border-radius: 16px; display: flex; overflow: hidden;
+            text-decoration: none; position: relative;
+            border: 1px solid rgba(255,255,255,0.04);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+            /* 4. 18trip 레퍼런스 감성의 부드러운 바운스 카드 인터랙션 선언 */
+            transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1.1);
         }
-        .card:active {
-            transform: scale(0.98);
+        /* 4. 카드 터치 및 호버 시 영롱하게 스케일업 되며 떠오르는 애니메이션 */
+        .card:hover {
+            transform: translateY(-4px) scale(1.015);
+            border-color: rgba(249, 249, 248, 0.25);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4), 0 0 15px rgba(249,249,248,0.05);
         }
+        .card:active { transform: scale(0.98); transition: transform 0.1s; }
 
-        /* === 4번 항목: 절대 공식 하이라이트 (왼쪽 1/4 고정 -> 1/2 서서히 투명 그라데이션) === */
+        /* === 3. 부자연스럽게 꺾이던 선을 밀크빛으로 스무스하게 보정한 실크 그라데이션 오버레이 === */
         .card-scenery-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            /* 0%~25% 구간은 완전한 불투명 밀크 화이트 패드 적용 -> 50% 지점까지 완전 소멸 스무스 그라데이션 */
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            /* 0%~25% 완전 불투명 하우징 고정 -> 55% 지점까지 한 치의 이질감 없이 스며들듯 소멸하는 알파 커브 연산 */
             background: linear-gradient(to right, 
-                rgba(249, 249, 248, 0.95) 0%, 
-                rgba(249, 249, 248, 0.95) 25%, 
-                rgba(249, 249, 248, 0.4) 38%,
-                rgba(249, 249, 248, 0) 50%
+                rgba(249, 249, 248, 1) 0%, 
+                rgba(249, 249, 248, 1) 25%, 
+                rgba(249, 249, 248, 0.85) 34%,
+                rgba(249, 249, 248, 0.4) 45%,
+                rgba(249, 249, 248, 0) 58%
             );
-            z-index: 5;
-            pointer-events: none; /* 터치 간섭 증발 */
+            z-index: 5; pointer-events: none;
         }
 
-        /* 텍스트 내용물 절대 배치 제어 */
+        /* 내부 정보 레이아웃 레이어 */
         .card-inner-info {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            padding: 16px;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            pointer-events: none;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            padding: 14px 16px; z-index: 10; display: flex; flex-direction: column;
+            justify-content: space-between; pointer-events: none;
         }
 
-        /* 5번 항목 상단 파트: 제목과 줄거리 요약 (왼쪽 하단 몰아주기 레이아웃화) */
+        /* 5. 제목 + 줄거리 요약 (왼쪽 하단 완전 일임 몰아주기 고정) */
         .card-bottom-left-group {
-            position: absolute;
-            bottom: 16px;
-            left: 16px;
-            width: 50%; /* 그라데이션 안전 영역인 왼쪽 절반 내로 가둠 */
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
+            position: absolute; bottom: 14px; left: 16px; width: 50%;
+            display: flex; flex-direction: column; gap: 3px;
         }
         .card-title {
-            font-size: 15px;
-            font-weight: 900;
-            color: #1B1B1B; /* 흰 배경 위라 깊고 뚜렷하게 다크 지정 */
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            font-size: 14px; font-weight: 900; color: #1B1B1B; /* 밀크 배경 전용 다크 그레이 */
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            letter-spacing: -0.3px;
         }
         .card-summary {
-            font-size: 11px;
-            color: #444444;
-            line-height: 1.4;
-            font-weight: 500;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            font-size: 10.5px; color: #484848; line-height: 1.4; font-weight: 700;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+            overflow: hidden; text-overflow: ellipsis;
         }
 
-        /* 5번 항목 하단 파트: 날짜 (오른쪽 하단 몰아주기 배정) */
-        .card-bottom-right-group {
-            position: absolute;
-            bottom: 16px;
-            right: 16px;
-            text-align: right;
+        /* 6. 오른쪽 하단에서 왼쪽 그라데이션 스페이스 상단 파트로 완벽 이주 완료한 날짜 배치 */
+        .card-top-left-group {
+            position: absolute; top: 14px; left: 16px;
         }
         .card-date {
-            font-size: 11px;
-            color: #F9F9F8; /* 뒷배경 사진 영역 위라 맑은 화이트 계열로 보정 */
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            background: rgba(0,0,0,0.3); /* 사진 위 가독성을 위한 가벼운 차광막 패드 */
-            padding: 3px 8px;
-            border-radius: 4px;
-            backdrop-filter: blur(2px);
+            font-size: 10px; color: #6E6E6E; font-weight: 700; letter-spacing: 0.3px;
         }
 
-        /* === 4번 항목 우측 1/2 온전한 단독 일러스트 스페이스 === */
+        /* 오른쪽 1/2 온전한 단독 일러스트 스페이스 프레임 */
         .card-illustration-frame {
-            position: absolute;
-            top: 0; right: 0; width: 100%; height: 100%;
-            z-index: 1;
+            position: absolute; top: 0; right: 0; width: 50%; height: 100%; z-index: 1;
         }
         .card-img {
-            width: 100%; height: 100%; object-fit: cover;
-            object-position: center right; /* 이미지 중심을 우측으로 유도 */
+            width: 100%; height: 100%; object-fit: cover; object-position: center center;
         }
         .card-no-img-placeholder {
-            width: 100%; height: 100%;
-            background: #333333;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 40px;
-            font-size: 12px;
-            color: rgba(249,249,248,0.15);
-            font-weight: 700;
-            letter-spacing: 2px;
+            width: 100%; height: 100%; background: #2B2B2B;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px; color: rgba(249,249,248,0.12); font-weight: 900; letter-spacing: 2px;
         }
 
-        /* === PC 버전 대화면 격자 보정 뷰 === */
+        /* === PC 버전 그리드 와이드 배치 보정 === */
         @media (min-width: 768px) {
-            header { padding: 40px 40px 10px 40px; }
-            .category-tag-bar { padding: 0 40px 15px 40px; gap: 12px; }
-            .tab-menu { gap: 60px; }
+            header { padding: 30px 40px 10px 40px; }
+            .tag-filter-container-wrapper { padding: 0 40px 12px 40px; }
+            .tab-menu { gap: 55px; }
             .tab-item { font-size: 16px; }
+            .filter-tag-btn { font-size: 11px; padding: 5px 15px; }
             
             .tab-content {
-                padding: 20px 40px 40px 40px;
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
-                gap: 25px;
+                padding: 15px 40px 40px 40px;
+                display: grid; grid-template-columns: repeat(auto-fill, minmax(440px, 1fr)); gap: 20px;
             }
-            .card { height: 165px; }
-            .card-bottom-left-group { bottom: 20px; left: 20px; width: 52%; }
-            .card-bottom-right-group { bottom: 20px; right: 20px; }
-            .card-title { font-size: 17px; }
-            .card-summary { font-size: 12px; }
-            .card-date { font-size: 12px; }
+            .card { height: 150px; }
+            .card-bottom-left-group { bottom: 18px; left: 20px; width: 52%; }
+            .card-top-left-group { top: 18px; left: 20px; }
+            .card-title { font-size: 16px; }
+            .card-summary { font-size: 11.5px; }
+            .card-date { font-size: 11px; }
         }
     </style>
 </head>
@@ -296,6 +241,11 @@
         <header>
             <div class="header-top">
                 <a href="../" class="back-btn"><iconify-icon icon="solar:alt-arrow-left-linear"></iconify-icon></a>
+                
+                <div class="search-box-wrapper">
+                    <iconify-icon icon="solar:magnifer-linear"></iconify-icon>
+                    <input type="text" id="memory-search-input" class="search-input" placeholder="기억 검색..." autocomplete="off">
+                </div>
             </div>
             <div class="tab-menu">
                 <div class="tab-item active" onclick="switchTab(0)">DAILY</div>
@@ -304,9 +254,17 @@
             </div>
         </header>
 
-        <div class="category-tag-bar" id="dynamic-tag-filter-pool">
-            <div class="filter-tag-btn active" onclick="filterByTag('all')">ALL</div>
+        <div class="tag-filter-container-wrapper">
+            <div class="tag-filter-pool active" id="tag-pool-daily">
+                <div class="filter-tag-btn active" onclick="filterByTag('all')">ALL</div>
             </div>
+            <div class="tag-filter-pool" id="tag-pool-event">
+                <div class="filter-tag-btn active" onclick="filterByTag('all')">ALL</div>
+            </div>
+            <div class="tag-filter-pool" id="tag-pool-au">
+                <div class="filter-tag-btn active" onclick="filterByTag('all')">ALL</div>
+            </div>
+        </div>
 
         <div class="slider-wrapper">
             <div class="slider-track" id="slider-track">
@@ -322,66 +280,105 @@
 <script>
     let activeCategoryIndex = 0;
     let selectedTag = 'all';
+    let searchQueryStr = '';
+    
     const track = document.getElementById('slider-track');
     const tabs = document.querySelectorAll('.tab-item');
-    let allCardDataElements = []; // 필터 처리를 위한 전역 풀링
+    const tagPools = document.querySelectorAll('.tag-filter-pool');
+    const searchInput = document.getElementById('memory-search-input');
+    
+    let allCardDataElements = []; // 통합 다차원 필터 연산 풀
 
-    // 1단 슬라이드 및 탭 전환 모듈
+    // 1. 카테고리별 태그 모음 세트 체인지 연동 슬라이드 모듈
     function switchTab(index) {
         activeCategoryIndex = index;
+        
+        // 탭 메뉴 활성화 토글
         tabs.forEach(tab => tab.classList.remove('active'));
         tabs[index].classList.add('active');
+        
+        // 1. 해당 카테고리 전용 태그 풀 박스만 교체 노출
+        tagPools.forEach(pool => pool.classList.remove('active'));
+        tagPools[index].classList.add('active');
+        
+        // 트랙 슉 이동
         track.style.transform = `translateX(-${index * 33.333}%)`;
         
-        // 카테고리가 바뀌면 태그 필터링 리셋 연동
-        filterByTag('all');
-        updateTagActiveState();
+        // 카테고리 변경 시 검색 및 태그 필터 완전 초기화 연동
+        selectedTag = 'all';
+        searchInput.value = '';
+        searchQueryStr = '';
+        
+        executeMasterFilter();
     }
 
-    // 4번 항목 트랜지션 애니메이션 링크 이동 연산
+    // 4. 18trip 레퍼런스 스타일 페이지 부드러운 퇴장 페이드 링크 체인져
     function smoothLink(url) {
         const container = document.getElementById('archive-container');
         container.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
         container.style.opacity = '0';
-        container.style.transform = 'translateY(-4px)';
+        container.style.transform = 'translateY(-5px)';
         setTimeout(() => { window.location.href = url; }, 250);
     }
 
-    // 태그 기반 필터 스위칭 실행기
+    // 태그 소속 스위칭 연산자
     function filterByTag(tagName) {
         selectedTag = tagName;
-        updateTagActiveState();
-
-        allCardDataElements.forEach(cardPack => {
-            const cardTags = cardPack.tags;
-            const element = cardPack.domElement;
-            
-            if(tagName === 'all' || cardTags.includes(tagName)) {
-                element.style.display = 'flex';
-            } else {
-                element.style.display = 'none';
-            }
-        });
+        executeMasterFilter();
     }
 
-    function updateTagActiveState() {
-        const tagButtons = document.querySelectorAll('.filter-tag-btn');
-        tagButtons.forEach(btn => {
-            if(btn.textContent.replace('#', '').trim() === selectedTag.toUpperCase()) {
+    // 2. [날짜 + 태그 + 제목 + 본문 내용] 입체 조건 매칭 연산 코어 시스템
+    function executeMasterFilter() {
+        // 활성화된 태그 단추 불 켜기 연동
+        const currentActivePool = tagPools[activeCategoryIndex];
+        const buttons = currentActivePool.querySelectorAll('.filter-tag-btn');
+        buttons.forEach(btn => {
+            const btnText = btn.textContent.replace('#', '').trim();
+            if(btnText === selectedTag.toUpperCase()) {
                 btn.classList.add('active');
             } else {
                 btn.classList.remove('active');
             }
         });
+
+        // 카드 하우징 필터링 루프 가동
+        allCardDataElements.forEach(cardPack => {
+            const el = cardPack.domElement;
+            const categoryMatch = (cardPack.category === getCategoryKeyByIndex(activeCategoryIndex));
+            
+            // 태그 조건 확인
+            const tagMatch = (selectedTag === 'all' || cardPack.tags.includes(selectedTag));
+            
+            // 검색 조건 확인 (제목, 요약문, 날짜, 태그 문자열 전체 결합 스캔)
+            const searchMatch = (searchQueryStr === '' || cardPack.searchBlob.includes(searchQueryStr));
+
+            if(categoryMatch && tagMatch && searchMatch) {
+                el.style.display = 'flex';
+            } else {
+                el.style.display = 'none';
+            }
+        });
     }
 
-    // `list.html` 실시간 데이터 파싱 및 가공 코어 엔진
+    function getCategoryKeyByIndex(index) {
+        if(index === 0) return 'daily';
+        if(index === 1) return 'event';
+        return 'au';
+    }
+
+    // 2. 실시간 검색 입력 디바운싱 바인딩
+    searchInput.addEventListener('input', (e) => {
+        searchQueryStr = e.target.value.toLowerCase().trim();
+        executeMasterFilter();
+    });
+
+    // `list.html` 원본 무결성 수동 백업 데이터 처리 코어
     document.addEventListener('DOMContentLoaded', () => {
-        const tagPoolContainer = document.getElementById('dynamic-tag-filter-pool');
-        const uniqueTagsTracker = new Set();
+        // 카테고리별 중복 없는 태그 트래커 분할 선언
+        const tagsTracker = { daily: new Set(), event: new Set(), au: new Set() };
 
         fetch('list.html')
-            .then(response => response.text())
+            .then(res => res.text())
             .then(html => {
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
@@ -392,75 +389,81 @@
                     const category = item.getAttribute('data-category') || 'daily';
                     const rawTags = item.getAttribute('data-tag') || '';
                     const imgUrl = item.getAttribute('data-img');
-                    const date = item.getAttribute('data-date');
+                    const date = item.getAttribute('data-date') || '';
                     
                     const title = item.querySelector('.memory-title').innerHTML;
                     const summary = item.querySelector('.memory-summary').innerHTML;
 
-                    // 동적 태그 전역 트래킹 누적 연산
+                    // 동적 태그 추출 및 세트 분배 연산
                     const processedTagsArray = [];
                     if(rawTags.trim() !== "") {
                         rawTags.split(',').forEach(t => {
                             const cleaned = t.trim();
                             if(cleaned) {
-                                uniqueTagsTracker.add(cleaned);
+                                tagsTracker[category].add(cleaned); // 해당 카테고리 폰트에 누적
                                 processedTagsArray.push(cleaned);
                             }
                         });
                     }
 
-                    // 가로형 카드 동적 오브젝트 하우징 조립
+                    // 가로형 구조 카드 생성
                     const card = document.createElement('a');
                     card.className = 'card';
                     card.href = `javascript:smoothLink('dialog/${id}.html')`;
 
-                    // 4번 항목 우측 절반 레이어 (이미지 有 / 無 처리 분기)
-                    let rightSectionHtml = '';
+                    let thumbHtml = '';
                     if(imgUrl && imgUrl.trim() !== "") {
-                        rightSectionHtml = `<img src="${imgUrl}" class="card-img" alt="${title}">`;
+                        thumbHtml = `<img src="${imgUrl}" class="card-img" alt="${title}">`;
                     } else {
-                        rightSectionHtml = `<div class="card-no-img-placeholder">FEARLESS</div>`;
+                        thumbHtml = `<div class="card-no-img-placeholder">FEARLESS</div>`;
                     }
 
-                    // 4, 5번 항목 완벽한 정밀 레이아웃 주입
+                    // 6. 날짜는 왼쪽 상단, 제목과 요약은 왼쪽 하단 레이아웃 완전 이식 완료
                     card.innerHTML = `
                         <div class="card-scenery-overlay"></div>
                         <div class="card-illustration-frame">
-                            ${rightSectionHtml}
+                            ${thumbHtml}
                         </div>
                         <div class="card-inner-info">
+                            <div class="card-top-left-group">
+                                <div class="card-date">${date}</div>
+                            </div>
                             <div class="card-bottom-left-group">
                                 <div class="card-title">${title}</div>
                                 <div class="card-summary">${summary}</div>
                             </div>
-                            <div class="card-bottom-right-group">
-                                <div class="card-date">${date}</div>
-                            </div>
                         </div>
                     `;
 
-                    // 전역 데이터 풀에 수납 개체 매핑 등록
+                    // 2. 통합 다차원 스캔을 위한 검색 전용 원문 텍스트 결합체 빌드 (제목+요약+날짜+태그)
+                    const searchBlob = `${title} ${summary} ${date} ${processedTagsArray.join(' ')}`.toLowerCase();
+
+                    // 구조 수납 개체 매핑 등록
                     allCardDataElements.push({
                         category: category,
                         tags: processedTagsArray,
+                        searchBlob: searchBlob,
                         domElement: card
                     });
 
-                    // 분배 트랙 세팅 실행
+                    // 분배 기동
                     const targetContainer = document.getElementById(`list-${category}`);
                     if(targetContainer) targetContainer.appendChild(card);
                 });
 
-                // 3단 필터 인터페이스 - 알약 태그 리스트 누적 동적 생성
-                uniqueTagsTracker.forEach(tagName => {
-                    const tagBtn = document.createElement('div');
-                    tagBtn.className = 'filter-tag-btn';
-                    tagBtn.textContent = `#${tagName.toUpperCase()}`;
-                    tagBtn.onclick = () => filterByTag(tagName);
-                    tagPoolContainer.appendChild(tagBtn);
+                // 1. 카테고리별 수집된 태그들을 개별 알약 필터 단추로 조립하여 격리 누적 주입
+                Object.keys(tagsTracker).forEach(catKey => {
+                    const poolContainer = document.getElementById(`tag-pool-${catKey}`);
+                    tagsTracker[catKey].forEach(tagName => {
+                        const btn = document.createElement('div');
+                        btn.className = 'filter-tag-btn';
+                        btn.textContent = `#${tagName.toUpperCase()}`;
+                        btn.onclick = () => filterByTag(tagName);
+                        poolContainer.appendChild(btn);
+                    });
                 });
             })
-            .catch(err => console.error('기억의 데이터베이스 처리 장애 발생:', err));
+            .catch(err => console.error('기억 보관소 로드 실패:', err));
     });
 </script>
 

@@ -6,214 +6,379 @@
     <title>Memory Archive</title>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <style>
+        /* === 기본 리셋 및 부드러운 페이드인 효과 === */
         * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-tap-highlight-color: transparent; }
         
         body, html {
             width: 100%;
             height: 100dvh;
-            background-color: #0f1115; /* 어두운 밤 컨셉 배경 */
-            background-image: radial-gradient(circle at 50% 0%, #2a3342 0%, #0f1115 70%);
-            font-family: -apple-system, BlinkMacSystemFont, "Pretendard", sans-serif;
-            color: #ebebeb;
-            overflow-x: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+            color: #333333; /* 가독성을 위한 고급스러운 다크 그레이 텍스트 */
+            overflow: hidden;
+            background-color: #f7f8fa;
         }
 
-        /* === 상단 헤더 (뒤로가기 & 타이틀) === */
+        /* 글로벌 화면 전환 페이드인 애니메이션 */
+        @keyframes pageFadeIn {
+            from { opacity: 0; transform: scale(1.02); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        /* === 전체를 감싸는 반응형 블러 배경 === */
+        #archive-container {
+            position: relative;
+            width: 100vw;
+            height: 100dvh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            animation: pageFadeIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            
+            /* 수동 백업용 원본 이미지 배치 후 가공 */
+            background-image: url('https://i.ibb.co/jkkjfz16/c6f62fdc-5a82-4c99-9e3f-e07d6e8561bf.png');
+        }
+        @media (min-width: 768px) {
+            #archive-container {
+                background-image: url('https://i.ibb.co/M5j3LxKJ/IMG-2051.jpg');
+            }
+        }
+        /* 메인처럼 은은하고 맑은 화이트 블러 필터 적용 */
+        #archive-container::before {
+            content: ''; position: absolute; top:0; left:0; width:100%; height:100%;
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(25px) brightness(1.05);
+            z-index: 1;
+        }
+
+        /* 레이아웃 내용물들을 블러 장막 위로 올림 */
+        .content-layer {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+        }
+
+        /* === 상단 헤더 UI (뒤로가기 & 3단 카테고리 탭) === */
         header {
-            position: sticky;
-            top: 0;
+            width: 100%;
+            padding: max(15px, env(safe-area-inset-top)) 20px 10px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .header-top {
             display: flex;
             align-items: center;
-            justify-content: center;
-            padding: max(20px, env(safe-area-inset-top)) 20px 20px 20px;
-            background: rgba(15, 17, 21, 0.85);
-            backdrop-filter: blur(15px);
-            z-index: 100;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            height: 40px;
         }
         .back-btn {
             position: absolute;
-            left: 20px;
-            color: #ebebeb;
+            left: 0;
+            color: #444;
             text-decoration: none;
-            font-size: 28px;
+            font-size: 26px;
             display: flex;
             align-items: center;
+            transition: all 0.2s;
+        }
+        .back-btn:active { transform: scale(0.9) translateX(-3px); }
+        
+        /* 5번 항목: 데일리, 이벤트, AU 3단 탭 메뉴 */
+        .tab-menu {
+            display: flex;
             justify-content: center;
-            transition: transform 0.2s;
-        }
-        .back-btn:active { transform: scale(0.9); }
-        h1 { font-size: 18px; font-weight: 700; letter-spacing: 2px; }
-
-        /* === 메모리 그리드 레이아웃 === */
-        #memory-grid {
-            display: grid;
-            /* 모바일은 2열, PC는 남는 공간만큼 다중 열 */
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 15px;
-            padding: 20px;
-            padding-bottom: max(40px, env(safe-area-inset-bottom));
-        }
-
-        /* === 개별 메모리 카드 디자인 === */
-        .card {
-            position: relative;
+            align-items: center;
+            gap: 30px;
             width: 100%;
-            aspect-ratio: 3 / 4; /* 오토메게임 특유의 세로 긴 카드 비율 */
-            border-radius: 12px;
+        }
+        .tab-item {
+            font-size: 15px;
+            font-weight: 700;
+            color: #888888;
+            cursor: pointer;
+            padding-bottom: 6px;
+            position: relative;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+        .tab-item.active {
+            color: #111111;
+        }
+        /* 선택된 탭 밑줄 애니메이션 */
+        .tab-item::after {
+            content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px;
+            background-color: #111; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            transform: translateX(-50%);
+        }
+        .tab-item.active::after { width: 100%; }
+
+        /* === 슬라이드 컨테이너 (슉슉 옆으로 부드럽게 넘어가게 처리) === */
+        .slider-wrapper {
+            flex: 1;
+            width: 100%;
             overflow: hidden;
-            text-decoration: none;
-            display: block;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
         }
-        .card:hover, .card:active {
-            transform: translateY(-5px) scale(1.02);
-            border-color: rgba(255, 255, 255, 0.5);
-            box-shadow: 0 12px 25px rgba(255, 255, 255, 0.15);
-        }
-
-        /* 1. 이미지가 있는 경우의 배경 */
-        .card-bg-img {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover;
-            z-index: 1;
-        }
-
-        /* 2. 이미지가 없는 경우의 대체 디자인 (고급스러운 유리 질감) */
-        .card-no-img {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, #2b3240 0%, #151820 100%);
+        .slider-track {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1;
+            width: 300%; /* 3개 카테고리 분량 */
+            height: 100%;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* 부드러운 옆슬라이딩 효과 */
         }
-        .card-no-img iconify-icon {
-            font-size: 60px;
-            color: rgba(255, 255, 255, 0.1); /* 배경에 은은하게 박힌 아이콘 */
-        }
-
-        /* === 카드 하단 그라데이션 및 정보 영역 === */
-        .card-info {
-            position: absolute;
-            bottom: 0; left: 0; width: 100%;
-            padding: 40px 12px 12px 12px;
-            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, transparent 100%);
-            z-index: 10;
+        .tab-content {
+            width: 33.333%;
+            height: 100%;
+            overflow-y: auto;
+            padding: 10px 20px max(30px, env(safe-area-inset-bottom)) 20px;
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 15px;
+        }
+        /* 스크롤바 숨김 */
+        .tab-content::-webkit-scrollbar { display: none; }
+
+        /* === 1,3번 항목: 가로형 카드 디자인 (화이트 글래스모피즘 반영) === */
+        .card {
+            width: 100%;
+            height: 125px; /* 모바일 가로 긴 카드 최적의 컴팩트 높이 */
+            background: rgba(255, 255, 255, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            display: flex;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .card:hover, .card:active {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.65);
+            border-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        /* 왼쪽 1/3 화이트 불투명 텍스트 고정 영역 */
+        .card-left-text {
+            width: 60%; /* 모바일 기준 가독성을 위해 텍스트 비중 60% 확대 */
+            height: 100%;
+            background: rgba(255, 255, 255, 0.75); /* 맑은 흰색 불투명 패드 */
+            backdrop-filter: blur(5px);
+            padding: 12px 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 5;
+            border-right: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .card-top-info {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
         }
         .card-title {
-            color: #fff;
             font-size: 14px;
             font-weight: 700;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-            /* 텍스트가 길면 말줄임표 처리 */
+            color: #111;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
+        /* 줄거리 요약: 2줄 한계선 후 이쁘게 말줄임표 처리 */
+        .card-summary {
+            font-size: 11px;
+            color: #666;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .card-date {
-            color: #aaa;
             font-size: 10px;
+            color: #999;
             font-weight: 500;
         }
 
-        /* === 카드 등급 (SSR, SR 배지) === */
-        .badge {
-            position: absolute;
-            top: 10px; left: 10px;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 10px;
-            font-weight: 900;
-            letter-spacing: 1px;
-            z-index: 10;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+        /* 오른쪽 2/3 영역 (이미지 꽉 채움 또는 노이미지 백그라운드) */
+        .card-right-thumb {
+            width: 40%;
+            height: 100%;
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
         }
-        .badge.ssr { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); color: #d6336c; }
-        .badge.sr  { background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); color: #1c7ed6; }
-        .badge.r   { background: linear-gradient(135deg, #e2e2e2 0%, #c9d6ff 100%); color: #495057; }
+        .card-img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        /* 노이미지일 때도 깔끔하게 통일감 유지 */
+        .card-no-img-text {
+            width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+            font-size: 11px; color: rgba(0,0,0,0.15); font-weight: bold; letter-spacing: 1px;
+        }
 
+        /* 6번 항목: 동적 태그 레이아웃 디자인 */
+        .tag-container {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            z-index: 10;
+        }
+        .tag-badge {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0,0,0,0.06);
+            padding: 3px 6px;
+            border-radius: 6px;
+            font-size: 9px;
+            font-weight: 600;
+            color: #555;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        /* === PC 버전 보정 가로 와이드 핏 === */
         @media (min-width: 768px) {
-            #memory-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 25px; padding: 40px; }
+            header { padding: 40px 40px 15px 40px; }
+            .tab-menu { gap: 50px; }
+            .tab-item { font-size: 17px; }
+            
+            .tab-content {
+                padding: 20px 40px 40px 40px;
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); /* 가로로 나열되도록 */
+                gap: 20px;
+            }
+            .card { height: 140px; }
+            .card-left-text { width: 55%; padding: 15px; }
+            .card-right-thumb { width: 45%; }
             .card-title { font-size: 16px; }
-            .card-date { font-size: 12px; }
-            .badge { font-size: 12px; padding: 4px 10px; }
+            .card-summary { font-size: 12px; -webkit-line-clamp: 2; }
+            .card-date { font-size: 11px; }
+            .tag-badge { font-size: 10px; padding: 4px 8px; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <a href="../" class="back-btn"><iconify-icon icon="solar:alt-arrow-left-linear"></iconify-icon></a>
-        <h1>기억의 파편</h1>
-    </header>
+<div id="archive-container">
+    <div class="content-layer">
 
-    <div id="memory-grid">
+        <header>
+            <div class="header-top">
+                <a href="../" class="back-btn"><iconify-icon icon="solar:alt-arrow-left-linear"></iconify-icon></a>
+            </div>
+            <div class="tab-menu">
+                <div class="tab-item active" onclick="switchTab(0)">데일리</div>
+                <div class="tab-item" onclick="switchTab(1)">이벤트</div>
+                <div class="tab-item" onclick="switchTab(2)">AU</div>
+            </div>
+        </header>
+
+        <div class="slider-wrapper">
+            <div class="slider-track" id="slider-track">
+                <div class="tab-content" id="list-daily"></div>
+                <div class="tab-content" id="list-event"></div>
+                <div class="tab-content" id="list-au"></div>
+            </div>
         </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const memoryGrid = document.getElementById('memory-grid');
+    </div>
+</div>
 
-            // list.html 데이터를 불러와서 파싱
-            fetch('list.html')
-                .then(response => response.text())
-                .then(html => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const items = doc.querySelectorAll('.memory-data');
+<script>
+    // 3단 슬라이드 트랙 이동 로직
+    const track = document.getElementById('slider-track');
+    const tabs = document.querySelectorAll('.tab-item');
 
-                    items.forEach(item => {
-                        const id = item.getAttribute('data-id');
-                        const imgUrl = item.getAttribute('data-img');
-                        const grade = item.getAttribute('data-grade');
-                        const date = item.getAttribute('data-date');
-                        const title = item.textContent.trim();
+    function switchTab(index) {
+        // 활성화 밑줄 이동
+        tabs.forEach(tab => tab.classList.remove('active'));
+        tabs[index].classList.add('active');
+        
+        // 트랙 슉 이동 처리
+        track.style.transform = `translateX(-${index * 33.333}%)`;
+    }
 
-                        // 다이얼로그 폴더로 연결되는 링크 생성
-                        const cardLink = document.createElement('a');
-                        cardLink.href = `dialog/${id}.html`;
-                        cardLink.className = 'card';
+    // 부드러운 글로벌 링크 이동 페이드 애니메이션 효과
+    function smoothLink(url) {
+        const container = document.getElementById('archive-container');
+        container.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        container.style.opacity = '0';
+        container.style.transform = 'scale(0.98)';
+        setTimeout(() => { window.location.href = url; }, 300);
+    }
 
-                        // 이미지 유무에 따른 배경 처리 분기점
-                        let backgroundHtml = '';
-                        if (imgUrl && imgUrl !== "") {
-                            backgroundHtml = `<img src="${imgUrl}" class="card-bg-img" alt="${title}">`;
-                        } else {
-                            // 이미지가 없을 땐 FEARLESS 로고나 자물쇠 아이콘 같은 걸 은은하게 띄움
-                            backgroundHtml = `
-                                <div class="card-no-img">
-                                    <iconify-icon icon="solar:lock-password-unlocked-linear"></iconify-icon>
-                                </div>
-                            `;
-                        }
+    // list.html 연동 해석 스크립트
+    document.addEventListener('DOMContentLoaded', () => {
+        fetch('list.html')
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const items = doc.querySelectorAll('.memory-data');
 
-                        // 내부 HTML 조립 (등급은 소문자로 변환해 CSS 클래스와 매칭)
-                        cardLink.innerHTML = `
-                            ${backgroundHtml}
-                            <div class="badge ${grade ? grade.toLowerCase() : 'r'}">${grade || 'R'}</div>
-                            <div class="card-info">
+                items.forEach(item => {
+                    const id = item.getAttribute('data-id');
+                    const category = item.getAttribute('data-category') || 'daily';
+                    const rawTags = item.getAttribute('data-tag') || '';
+                    const imgUrl = item.getAttribute('data-img');
+                    const date = item.getAttribute('data-date');
+                    
+                    const title = item.querySelector('.memory-title').innerHTML;
+                    const summary = item.querySelector('.memory-summary').innerHTML;
+
+                    // 카드 엘리먼트 동적 조립
+                    const card = document.createElement('a');
+                    card.className = 'card';
+                    card.href = `javascript:smoothLink('dialog/${id}.html')`;
+
+                    // 우측 썸네일 분기 (이미지 有 / 無)
+                    let rightThumbHtml = '';
+                    if(imgUrl && imgUrl.trim() !== "") {
+                        rightThumbHtml = `<img src="${imgUrl}" class="card-img" alt="${title}">`;
+                    } else {
+                        rightThumbHtml = `<div class="card-no-img-text">FEARLESS</div>`;
+                    }
+
+                    // 태그 파싱 분기
+                    let tagsHtml = '<div class="tag-container">';
+                    if(rawTags.trim() !== "") {
+                        rawTags.split(',').forEach(t => {
+                            tagsHtml += `<span class="tag-badge">#${t.trim()}</span>`;
+                        });
+                    }
+                    tagsHtml += '</div>';
+
+                    // 1/3 레이아웃 주입 고정
+                    card.innerHTML = `
+                        <div class="card-left-text">
+                            <div class="card-top-info">
                                 <div class="card-title">${title}</div>
-                                <div class="card-date">${date}</div>
+                                <div class="card-summary">${summary}</div>
                             </div>
-                        `;
+                            <div class="card-date">${date}</div>
+                        </div>
+                        <div class="card-right-thumb">
+                            ${rightThumbHtml}
+                            ${tagsHtml}
+                        </div>
+                    `;
 
-                        memoryGrid.appendChild(cardLink);
-                    });
-                })
-                .catch(error => {
-                    console.error('기억 리스트를 불러오지 못했습니다:', error);
-                    memoryGrid.innerHTML = '<p style="text-align:center; padding: 20px; color:#aaa;">데이터를 불러올 수 없습니다.</p>';
+                    // 매칭되는 카테고리 탭 리스트 공간에 배정 분배
+                    const targetTarget = document.getElementById(`list-${category}`);
+                    if(targetTarget) targetTarget.appendChild(card);
                 });
-        });
-    </script>
+            })
+            .catch(err => console.error('데이터 파싱 오류:', err));
+    });
+</script>
 
 </body>
 </html>

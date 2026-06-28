@@ -48,7 +48,7 @@ body {
     position: relative; z-index: 10; width: 100%; height: 100%;
     display: flex; flex-direction: column; padding: 60px 20px 20px; box-sizing: border-box;
     /* 앱 클릭 시 앱화면(알맹이)만 커지며 넘어가는 애니메이션 */
-    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease;
     animation: zoomOutApp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 @keyframes zoomOutApp { from { transform: scale(1.2); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -91,7 +91,7 @@ function launchApp(url) {
     const screen = document.getElementById('home-screen');
     screen.style.transform = 'scale(1.5)'; // 배경 제외하고 내용물만 확대
     screen.style.opacity = '0';
-    setTimeout(() => { location.href = url; }, 300);
+    setTimeout(() => { location.href = url; }, 550);
 }
 </script>
 </body>

@@ -8,16 +8,14 @@
 <style>
 body { margin: 0; padding: 0; background-color: #e5e5ea; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, sans-serif; overflow: hidden; }
 
-/* 프레임은 고정. 절대 슬라이딩 되지 않음 */
+/* 프레임 고정 및 초슬림 베젤 */
 .device-frame { position: relative; width: 100%; height: 100vh; background-color: #fff; overflow: hidden; box-shadow: 0 0 20px rgba(0,0,0,0.05); }
 @media (min-width: 768px) { 
-    .device-frame { width: 393px; height: 852px; border-radius: 55px; box-shadow: 0 0 0 2px #333, 0 30px 60px rgba(0,0,0,0.3); border: 8px solid #1c1c1e; } 
+    .device-frame { width: 393px; height: 852px; border-radius: 55px; box-shadow: 0 0 0 2px #333, 0 30px 60px rgba(0,0,0,0.3); border: 4px solid #1c1c1e; } 
     .dynamic-island { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 120px; height: 35px; background-color: #000; border-radius: 20px; z-index: 999; } 
 }
 
-/* 상단 시계 (메시지 앱 내부는 블랙 텍스트) */
-.status-bar { position: absolute; top: 15px; width: 100%; display: flex; justify-content: space-between; padding: 0 25px; box-sizing: border-box; z-index: 998; font-size: 15px; font-weight: 600; color: #1c1c1e; pointer-events: none; }
-.status-icons i { margin-left: 4px; font-size: 14px; }
+/* 상태바 완벽 제거 완료 */
 
 /* 앱 실행 시 알맹이 확대 효과 (Zoom In) */
 .app-inner {
@@ -44,13 +42,12 @@ body { margin: 0; padding: 0; background-color: #e5e5ea; display: flex; justify-
 
 <div class="device-frame">
     <div class="dynamic-island"></div>
-    <div class="status-bar"><span class="status-time">00:00</span><span class="status-icons"><i class="ri-signal-wifi-fill"></i><i class="ri-battery-fill"></i></span></div>
     
     <div class="app-inner">
         <!-- 리스트 컨테이너 (list.html 내용이 fetch 되어 들어옴) -->
         <div id="list-view" class="view-screen"></div>
 
-        <!-- 뷰어 컨테이너 (260628.html 등의 내용이 fetch 되어 들어옴) -->
+        <!-- 뷰어 컨테이너 (유저의 원본 코드가 fetch 되어 들어옴) -->
         <div id="viewer-view" class="view-screen">
             <div class="viewer-header">
                 <div class="nav-back" onclick="location.hash='list'"><i class="ri-arrow-left-s-line"></i>메시지</div>
@@ -61,17 +58,6 @@ body { margin: 0; padding: 0; background-color: #e5e5ea; display: flex; justify-
 </div>
 
 <script>
-// KST 시계 업데이트
-function updateClock() {
-    const now = new Date();
-    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-    const kst = new Date(utc + (3600000 * 9));
-    let h = kst.getHours(); let m = kst.getMinutes();
-    h = h < 10 ? '0' + h : h; m = m < 10 ? '0' + m : m;
-    document.querySelector('.status-time').innerText = `${h}:${m}`;
-}
-setInterval(updateClock, 1000); updateClock();
-
 // SPA 라우팅 및 리스트 로드
 function handleRoute() {
     const hash = window.location.hash.replace('#', '');
@@ -80,32 +66,27 @@ function handleRoute() {
     const contentArea = document.getElementById('dynamic-content');
 
     if (!hash || hash === 'list') {
-        // 리스트 뷰로 이동
         listView.style.transform = 'translateX(0)';
         viewerView.style.transform = 'translateX(100%)';
         listView.style.pointerEvents = 'auto';
-        document.activeElement.blur(); // 키보드 숨김 방어
+        if(document.activeElement) document.activeElement.blur(); 
 
-        // list.html 이 아직 로드되지 않았다면 Fetch
         if(listView.innerHTML.trim() === '') {
             fetch('list.html').then(r => r.text()).then(html => {
                 listView.innerHTML = html;
-                initListLogic(); // 필터링 로직 초기화
+                initListLogic(); 
             });
         }
     } else {
-        // 뷰어(대화창) 뷰로 이동
         listView.style.transform = 'translateX(-30%)';
         viewerView.style.transform = 'translateX(0)';
         listView.style.pointerEvents = 'none'; 
         contentArea.innerHTML = '<div style="text-align:center; padding: 50px;"><i class="ri-loader-4-line ri-spin" style="font-size:24px; color:#8e8e93;"></i></div>';
 
-        // 260628.html 등 파일 불러오기 (유저 코드 원본 100% 보존 구역)
         fetch(`dialog/${hash}.html`).then(r => {
             if(!r.ok) throw new Error('메시지가 없습니다.'); return r.text();
         }).then(html => {
             contentArea.innerHTML = html;
-            // 유저 코드의 스크립트 실행 보장
             Array.from(contentArea.querySelectorAll('script')).forEach(oldScript => {
                 const newScript = document.createElement('script');
                 Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
@@ -116,7 +97,7 @@ function handleRoute() {
     }
 }
 
-// 홈 화면으로 나갈 때 축소되는 애니메이션 연출
+// 홈 화면으로 나갈 때 축소되는 애니메이션 연출 (알맹이만 축소)
 window.exitApp = function() {
     const inner = document.querySelector('.app-inner');
     inner.style.transition = 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
@@ -125,7 +106,7 @@ window.exitApp = function() {
     setTimeout(() => { location.href = '../index.html'; }, 250);
 }
 
-// 검색 및 태그 필터링 자바스크립트 로직
+// 검색 및 태그 필터링 자바스크립트 로직 (날짜 검색 추가)
 function initListLogic() {
     const searchInput = document.getElementById('msg-search');
     const tags = document.querySelectorAll('.tag');
@@ -137,8 +118,11 @@ function initListLogic() {
 
         items.forEach(item => {
             const name = item.querySelector('.chat-name').innerText.toLowerCase();
+            const date = item.querySelector('.chat-date').innerText.toLowerCase(); // 날짜 텍스트 추출
             const itemTags = item.dataset.tags || '';
-            const matchesSearch = name.includes(keyword);
+            
+            // 이름이나 날짜 중 하나라도 검색어(keyword)를 포함하면 true
+            const matchesSearch = name.includes(keyword) || date.includes(keyword);
             const matchesTag = (activeTag === '전체') || itemTags.includes(activeTag);
 
             if(matchesSearch && matchesTag) { item.style.display = 'flex'; }

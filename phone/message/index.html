@@ -1,1 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>메시지 목록</title>
+<style>
+/* --- 공통 반응형 폰 프레임 로직 --- */
+body { margin: 0; padding: 0; background-color: #e5e5ea; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, sans-serif; overflow: hidden; }
+.device-frame { position: relative; width: 100%; height: 100vh; background-color: #fff; overflow: hidden; display: flex; flex-direction: column; animation: slideInRight 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+@media (min-width: 768px) { .device-frame { width: 390px; height: 844px; border-radius: 45px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); border: 12px solid #1c1c1e; } .device-notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 120px; height: 30px; background-color: #1c1c1e; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; z-index: 999; } }
+@keyframes slideInRight { from { transform: translateX(30%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
+/* --- 상단 헤더 & 네비게이션 --- */
+.header { position: sticky; top: 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 40px 15px 10px 15px; z-index: 30; border-bottom: 1px solid #f0f0f0; }
+@media (max-width: 767px) { .header { padding-top: 20px; } } /* 모바일은 상단 여백 줄임 */
+.nav-back { color: #007aff; font-size: 17px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; margin-bottom: 15px; transition: opacity 0.2s; }
+.nav-back:active { opacity: 0.5; }
+.list-title { font-size: 28px; font-weight: 700; color: #1c1c1e; margin-bottom: 15px; }
+
+/* --- 검색 및 태그 --- */
+.search-bar { display: flex; align-items: center; background-color: #e2e2e7; border-radius: 10px; padding: 8px 12px; margin-bottom: 15px; }
+.search-bar input { border: none; background: transparent; font-size: 15px; width: 100%; margin-left: 8px; outline: none; font-family: inherit; }
+.tag-container { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; }
+.tag-container::-webkit-scrollbar { display: none; }
+.tag { background-color: #f2f2f7; color: #1c1c1e; padding: 5px 12px; border-radius: 15px; font-size: 13px; font-weight: 500; white-space: nowrap; cursor: pointer; }
+.tag.active { background-color: #007aff; color: white; }
+
+/* --- 메시지 리스트 --- */
+.chat-list-container { flex: 1; overflow-y: auto; }
+.chat-item { display: flex; padding: 15px; border-bottom: 1px solid #f0f0f0; align-items: center; cursor: pointer; transition: background-color 0.2s; }
+.chat-item:active { background-color: #f2f2f7; }
+.chat-profile { width: 50px; height: 50px; border-radius: 50%; overflow: hidden; flex-shrink: 0; box-shadow: 0 2px 6px rgba(0,0,0,0.1); margin-right: 15px; }
+.chat-profile img { width: 100%; height: 100%; object-fit: cover; }
+.chat-info { flex: 1; min-width: 0; }
+.chat-name-row { display: flex; justify-content: space-between; margin-bottom: 4px; align-items: center; }
+.chat-name { font-size: 16px; font-weight: 600; color: #1c1c1e; }
+.chat-date { font-size: 13px; color: #8e8e93; }
+.chat-preview { font-size: 14px; color: #8e8e93; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+</style>
+</head>
+<body>
+
+<div class="device-frame">
+    <div class="device-notch"></div>
+    
+    <div class="header">
+        <!-- 뒤로 가기: 홈 화면(phone/index.html)으로 이동 -->
+        <div class="nav-back" onclick="location.href='../index.html'">
+            <svg width="12" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>홈
+        </div>
+        <div class="list-title">메시지</div>
+        <div class="search-bar">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8e8e93" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" placeholder="검색">
+        </div>
+        <div class="tag-container">
+            <div class="tag active">전체</div>
+            <div class="tag">미확인</div>
+            <div class="tag">FEARLESS</div>
+        </div>
+    </div>
+
+    <div class="chat-list-container">
+        <!-- 채팅 목록 클릭 시 상세 화면(phone/message/dialog/260628.html)으로 이동 -->
+        <div class="chat-item" onclick="location.href='dialog/260628.html'">
+            <div class="chat-profile">
+                <!-- 뱅(하시온) 프로필 이미지 -->
+                <img src="https://i.ibb.co/VYrHdHd8/IMG-6825.jpg" alt="Profile">
+            </div>
+            <div class="chat-info">
+                <div class="chat-name-row">
+                    <span class="chat-name">내 여보♡</span>
+                    <span class="chat-date">오후 9:31</span>
+                </div>
+                <div class="chat-preview">상대메시지</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <style>
-        /* === 기본 리셋 및 Noto Serif KR 강제 무장 === */
+        /* === 기본 세팅 및 Noto Serif KR 강제 무장 === */
         * { 
             margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-tap-highlight-color: transparent; 
             font-family: 'Noto Serif KR', serif !important;
@@ -16,9 +16,10 @@
         body, html {
             width: 100%; height: 100dvh; overflow: hidden;
             background-color: #1B1B1B;
-            color: #F9F9F8; /* 밀크 아이보리 지정색 */
+            color: #F9F9F8;
         }
 
+        /* 글로벌 페이지 진입 부드러운 애니메이션 */
         @keyframes pageFadeIn {
             from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
@@ -35,7 +36,7 @@
             display: flex; flex-direction: column; z-index: 10;
         }
 
-        /* === 상단 헤더 UI === */
+        /* === 상단 헤더 UI (뒤로가기, 탭 메뉴, 검색창 통합) === */
         header {
             width: 100%;
             padding: max(15px, env(safe-area-inset-top)) 20px 10px 20px;
@@ -52,7 +53,7 @@
         }
         .back-btn:active { transform: scale(0.85) translateX(-3px); }
         
-        /* 미니멀 통합 검색창 */
+        /* 통합 검색창 */
         .search-box-wrapper {
             position: relative; display: flex; align-items: center;
             background: rgba(255, 255, 255, 0.05);
@@ -73,7 +74,7 @@
         }
         .search-input::placeholder { color: rgba(249, 249, 248, 0.3); }
 
-        /* 영문 카테고리 탭 */
+        /* 영문 카테고리 탭 (DAILY / EVENT / AU) */
         .tab-menu {
             display: flex; justify-content: center; align-items: center; gap: 35px; width: 100%;
         }
@@ -132,10 +133,10 @@
         }
         .tab-content::-webkit-scrollbar { display: none; }
 
-        /* === 가로형 카드 마스터 디자인 (아주 약간 통통하게 세로 증대) === */
+        /* === 가로형 카드 마스터 디자인 (모바일) === */
         .card {
             width: 100%; 
-            height: 155px; /* 135px -> 155px로 아주 약간 통통하게 조절 */
+            height: 155px; /* 모바일 통통한 높이 유지 */
             background: #242424;
             border-radius: 16px; display: flex; overflow: hidden;
             text-decoration: none; position: relative;
@@ -150,10 +151,9 @@
         }
         .card:active { transform: scale(0.98); transition: transform 0.1s; }
 
-        /* === 2,3번 항목: 이미지가 카드 전체배경(width:100%)을 채우도록 연산된 실크 그라데이션 장막 === */
+        /* 이미지가 카드 전체배경(width:100%)을 채우도록 연산된 실크 그라데이션 장막 */
         .card-scenery-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            /* 왼쪽 0%~25%는 텍스트 가독성을 위해 불투명 오프화이트 고정 -> 우측으로 가며 스무스하게 투명해짐 */
             background: linear-gradient(to right, 
                 rgba(249, 249, 248, 1) 0%, 
                 rgba(249, 249, 248, 1) 25%, 
@@ -178,36 +178,34 @@
             display: flex; flex-direction: column; gap: 4px;
         }
         .card-title {
-            font-size: 15px; font-weight: 900; color: #1B1B1B;
+            font-size: 15px; 
+            font-weight: 700; /* 900(익스트림)에서 700(예쁜 볼드)으로 굵기 완화 */
+            color: #1B1B1B;
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             letter-spacing: -0.3px;
         }
-        /* 줄거리 요약: 볼드체 해제 후 가독성 높은 Regular(400) 핏으로 수정 */
         .card-summary {
             font-size: 11px; color: #484848; line-height: 1.4; 
-            font-weight: 400; /* 볼드체 해제 완료 */
+            font-weight: 400; 
             display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
             overflow: hidden; text-overflow: ellipsis;
         }
 
-        /* 1번 항목: 우측 상단으로 똑바로 유도 고정한 날짜 배치 */
+        /* 날짜 우측 상단 배치 */
         .card-top-right-group {
-            position: absolute; 
-            top: 16px; 
-            right: 18px; /* 우측 상단으로 확실하게 이동 */
+            position: absolute; top: 16px; right: 18px; 
         }
         .card-date {
             font-size: 10px; color: #F9F9F8; font-weight: 700; letter-spacing: 0.3px;
-            background: rgba(0,0,0,0.4); /* 이미지 위 가독성 방어막 */
+            background: rgba(0,0,0,0.4); 
             padding: 3px 8px; border-radius: 4px; backdrop-filter: blur(2px);
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        /* 2번 항목: 이미지 프레임을 width 100% 전체 영역으로 전면 확장 고정 */
+        /* 이미지 프레임 width 100% 전체 영역으로 전면 확장 고정 */
         .card-illustration-frame {
             position: absolute; top: 0; left: 0; 
-            width: 100%; /* 카드 전체를 꽉 채우도록 수정 */
-            height: 100%; z-index: 1;
+            width: 100%; height: 100%; z-index: 1;
         }
         .card-img {
             width: 100%; height: 100%; object-fit: cover; object-position: center center;
@@ -228,15 +226,19 @@
             
             .tab-content {
                 padding: 15px 40px 40px 40px;
-                display: grid; grid-template-columns: repeat(auto-fill, minmax(460px, 1fr)); gap: 20px;
+                display: grid; 
+                /* PC 가로 길이를 원상복구(축소)하여 너무 납작하게 늘어나는 현상 완벽 방지 */
+                grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 25px;
             }
-            /* PC 버전 카드도 핏에 맞춰 150px -> 175px로 통통하게 증가 */
-            .card { height: 175px; } 
+            /* PC 버전 카드의 높이를 200px까지 시원하게 늘려 '통통한' 핏 완성 */
+            .card { height: 200px; } 
+            
             .card-bottom-left-group { bottom: 20px; left: 22px; width: 55%; }
             .card-top-right-group { top: 20px; right: 22px; }
-            .card-title { font-size: 16px; }
-            .card-summary { font-size: 12px; }
-            .card-date { font-size: 11px; }
+            
+            .card-title { font-size: 17px; font-weight: 700; } /* 굵기 완화 유지 */
+            .card-summary { font-size: 12px; -webkit-line-clamp: 3; } /* PC는 통통해져서 3줄까지 출력되도록 여유 확보 */
+            .card-date { font-size: 12px; }
         }
     </style>
 </head>
@@ -406,7 +408,6 @@
                         thumbHtml = `<div class="card-no-img-placeholder">FEARLESS</div>`;
                     }
 
-                    // 수정한 정밀 내부 레이아웃 주입 (날짜 우측 상단 고정)
                     card.innerHTML = `
                         <div class="card-scenery-overlay"></div>
                         <div class="card-illustration-frame">

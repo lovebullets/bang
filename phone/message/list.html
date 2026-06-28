@@ -1,1 +1,79 @@
- 
+ <!-- 헤더 영역 (검색창, 태그, 뒤로가기) -->
+<style>
+.header { position: sticky; top: 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); padding: 50px 15px 10px 15px; z-index: 30; border-bottom: 1px solid #f0f0f0; }
+@media (max-width: 767px) { .header { padding-top: 25px; } }
+.list-title { font-size: 28px; font-weight: 700; color: #1c1c1e; margin-bottom: 15px; }
+.search-bar { display: flex; align-items: center; background-color: #e2e2e7; border-radius: 10px; padding: 8px 12px; margin-bottom: 15px; }
+.search-bar i { color: #8e8e93; font-size: 18px; }
+.search-bar input { border: none; background: transparent; font-size: 15px; width: 100%; margin-left: 8px; outline: none; font-family: inherit; color: #1c1c1e; }
+.tag-container { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; }
+.tag-container::-webkit-scrollbar { display: none; }
+.tag { background-color: #f2f2f7; color: #1c1c1e; padding: 5px 12px; border-radius: 15px; font-size: 13px; font-weight: 500; white-space: nowrap; cursor: pointer; transition: background 0.2s; }
+.tag.active { background-color: #007aff; color: white; }
+.chat-list-container { flex: 1; padding-bottom: 20px; }
+.chat-item { display: flex; padding: 15px; border-bottom: 1px solid #f0f0f0; align-items: center; cursor: pointer; transition: background-color 0.2s; }
+.chat-item:active { background-color: #f2f2f7; }
+.chat-profile { width: 50px; height: 50px; border-radius: 50%; overflow: hidden; flex-shrink: 0; margin-right: 15px; }
+.chat-profile img { width: 100%; height: 100%; object-fit: cover; }
+.chat-info { flex: 1; min-width: 0; }
+.chat-name-row { display: flex; justify-content: space-between; margin-bottom: 4px; align-items: center; }
+.chat-name { font-size: 16px; font-weight: 600; color: #1c1c1e; }
+.chat-date { font-size: 13px; color: #8e8e93; }
+.chat-preview { font-size: 14px; color: #8e8e93; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+</style>
+
+<div class="header">
+    <!-- exitApp() 함수를 호출하여 화면이 작아지며 바탕화면으로 나가게 합니다 -->
+    <div class="nav-back" onclick="exitApp()" style="margin-bottom: 15px;"><i class="ri-arrow-left-s-line"></i>홈</div>
+    <div class="list-title">메시지</div>
+    <div class="search-bar">
+        <i class="ri-search-line"></i>
+        <!-- 검색 인풋 (JS에서 자동 인식함) -->
+        <input type="text" id="msg-search" placeholder="검색" onfocus="this.placeholder=''" onblur="this.placeholder='검색'">
+    </div>
+    <div class="tag-container">
+        <!-- data-tag 속성에 맞춰 아래 리스트를 필터링합니다 -->
+        <div class="tag active" data-tag="전체">전체</div>
+        <div class="tag" data-tag="미확인">미확인</div>
+        <div class="tag" data-tag="FEARLESS">FEARLESS</div>
+    </div>
+</div>
+
+<div class="chat-list-container">
+
+    <!-- ▼▼▼ 여기서부터 유저가 직접 복사해서 목록을 추가하는 공간입니다 ▼▼▼ -->
+    
+    <!-- 1. data-tags="미확인 FEARLESS" 등 띄어쓰기로 태그를 추가하면 자동 필터링 됩니다. -->
+    <!-- 2. location.hash='260628' 의 숫자를 변경하여 dialog 폴더 안의 해당 파일을 불러옵니다. -->
+    <div class="chat-item" data-tags="미확인 FEARLESS" onclick="location.hash='260628'">
+        <div class="chat-profile">
+            <img src="https://i.ibb.co/VYrHdHd8/IMG-6825.jpg" alt="Profile">
+        </div>
+        <div class="chat-info">
+            <div class="chat-name-row">
+                <span class="chat-name">내 여보♡</span> <!-- 검색할 때 인식되는 이름입니다 -->
+                <span class="chat-date">오후 9:31</span>
+            </div>
+            <div class="chat-preview">상대메시지</div>
+        </div>
+    </div>
+
+    <!-- 새로운 목록 추가 예시 (태그 없음) -->
+    <!--
+    <div class="chat-item" data-tags="" onclick="location.hash='260629'">
+        <div class="chat-profile">
+            <img src="https://i.ibb.co/VYrHdHd8/IMG-6825.jpg" alt="Profile">
+        </div>
+        <div class="chat-info">
+            <div class="chat-name-row">
+                <span class="chat-name">뱅(임무중)</span>
+                <span class="chat-date">어제</span>
+            </div>
+            <div class="chat-preview">가요. 집에 가서 토끼 밥 줘야지.</div>
+        </div>
+    </div>
+    -->
+
+    <!-- ▲▲▲ 추가 공간 끝 ▲▲▲ -->
+
+</div>

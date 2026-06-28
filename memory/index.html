@@ -4,53 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Memory Archive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <style>
-        /* === 기본 리셋 및 부드러운 페이드인 효과 === */
-        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-tap-highlight-color: transparent; }
+        /* === 기본 리셋 및 폰트 강제 지정 === */
+        * { 
+            margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-tap-highlight-color: transparent; 
+            font-family: 'Noto Serif KR', serif !important; /* 지정 폰트로 전면 강제 무장 */
+        }
         
         body, html {
             width: 100%;
             height: 100dvh;
-            font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
-            color: #333333; /* 가독성을 위한 고급스러운 다크 그레이 텍스트 */
             overflow: hidden;
-            background-color: #f7f8fa;
+            background-color: #1B1B1B; /* 배경 지정색 고정 */
         }
 
-        /* 글로벌 화면 전환 페이드인 애니메이션 */
+        /* 글로벌 페이드인 애니메이션 */
         @keyframes pageFadeIn {
-            from { opacity: 0; transform: scale(1.02); }
-            to { opacity: 1; transform: scale(1); }
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        /* === 전체를 감싸는 반응형 블러 배경 === */
         #archive-container {
             position: relative;
             width: 100vw;
             height: 100dvh;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            animation: pageFadeIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-            
-            /* 수동 백업용 원본 이미지 배치 후 가공 */
-            background-image: url('https://i.ibb.co/jkkjfz16/c6f62fdc-5a82-4c99-9e3f-e07d6e8561bf.png');
-        }
-        @media (min-width: 768px) {
-            #archive-container {
-                background-image: url('https://i.ibb.co/M5j3LxKJ/IMG-2051.jpg');
-            }
-        }
-        /* 메인처럼 은은하고 맑은 화이트 블러 필터 적용 */
-        #archive-container::before {
-            content: ''; position: absolute; top:0; left:0; width:100%; height:100%;
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(25px) brightness(1.05);
-            z-index: 1;
+            background-color: #1B1B1B;
+            animation: pageFadeIn 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
-        /* 레이아웃 내용물들을 블러 장막 위로 올림 */
         .content-layer {
             position: relative;
             width: 100%;
@@ -60,62 +43,90 @@
             z-index: 10;
         }
 
-        /* === 상단 헤더 UI (뒤로가기 & 3단 카테고리 탭) === */
+        /* === 상단 헤더 UI (뒤로가기 & 영어 변경 탭) === */
         header {
             width: 100%;
-            padding: max(15px, env(safe-area-inset-top)) 20px 10px 20px;
+            padding: max(20px, env(safe-area-inset-top)) 20px 10px 20px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
         }
         .header-top {
             display: flex;
             align-items: center;
             position: relative;
-            height: 40px;
+            height: 30px;
         }
         .back-btn {
             position: absolute;
             left: 0;
-            color: #444;
+            color: #F9F9F8; /* 눈이 편안한 아이보리 오프화이트 */
             text-decoration: none;
             font-size: 26px;
             display: flex;
             align-items: center;
             transition: all 0.2s;
+            filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.5));
         }
         .back-btn:active { transform: scale(0.9) translateX(-3px); }
         
-        /* 5번 항목: 데일리, 이벤트, AU 3단 탭 메뉴 */
+        /* 1번 항목: 영어 표기 전환 (DAILY / EVENT / AU) */
         .tab-menu {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 30px;
+            gap: 35px;
             width: 100%;
         }
         .tab-item {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 700;
-            color: #888888;
+            color: rgba(249, 249, 248, 0.4); /* 기본값 투명도 조절 */
             cursor: pointer;
             padding-bottom: 6px;
             position: relative;
-            letter-spacing: 1px;
-            transition: color 0.3s ease;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
         }
         .tab-item.active {
-            color: #111111;
+            color: #F9F9F8;
+            font-weight: 900;
+            text-shadow: 0px 0px 10px rgba(249,249,248,0.3);
         }
-        /* 선택된 탭 밑줄 애니메이션 */
         .tab-item::after {
             content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px;
-            background-color: #111; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            background-color: #F9F9F8; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
             transform: translateX(-50%);
         }
         .tab-item.active::after { width: 100%; }
 
-        /* === 슬라이드 컨테이너 (슉슉 옆으로 부드럽게 넘어가게 처리) === */
+        /* 3번 항목: 카테고리 밑에 단독으로 뜨는 동그란 필터 태그 모음 플레이스 */
+        .category-tag-bar {
+            display: flex;
+            gap: 8px;
+            padding: 0 20px 10px 20px;
+            overflow-x: auto;
+            width: 100%;
+        }
+        .category-tag-bar::-webkit-scrollbar { display: none; }
+        .filter-tag-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(249, 249, 248, 0.15);
+            padding: 5px 14px;
+            border-radius: 20px; /* 레퍼런스 같은 동그란 알약 캡슐 핏 */
+            font-size: 11px;
+            color: rgba(249, 249, 248, 0.7);
+            white-space: nowrap;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .filter-tag-btn.active, .filter-tag-btn:active {
+            background: #F9F9F8;
+            color: #1B1B1B;
+            border-color: #F9F9F8;
+        }
+
+        /* === 슬라이드 컨테이너 === */
         .slider-wrapper {
             flex: 1;
             width: 100%;
@@ -124,9 +135,9 @@
         }
         .slider-track {
             display: flex;
-            width: 300%; /* 3개 카테고리 분량 */
+            width: 300%;
             height: 100%;
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* 부드러운 옆슬라이딩 효과 */
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
         .tab-content {
             width: 33.333%;
@@ -137,131 +148,143 @@
             flex-direction: column;
             gap: 15px;
         }
-        /* 스크롤바 숨김 */
         .tab-content::-webkit-scrollbar { display: none; }
 
-        /* === 1,3번 항목: 가로형 카드 디자인 (화이트 글래스모피즘 반영) === */
+        /* === 가로 와이드형 카드 뼈대 디자인 === */
         .card {
             width: 100%;
-            height: 125px; /* 모바일 가로 긴 카드 최적의 컴팩트 높이 */
-            background: rgba(255, 255, 255, 0.45);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            height: 150px; /* 가독성 및 정밀 배치를 위한 최적 높이 증대 */
+            background: #262626; /* 기본 카드 베이스 다크 그레이 */
+            border-radius: 14px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
             display: flex;
             overflow: hidden;
             text-decoration: none;
-            color: inherit;
             position: relative;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-        .card:hover, .card:active {
-            transform: translateY(-2px);
-            background: rgba(255, 255, 255, 0.65);
-            border-color: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        .card:active {
+            transform: scale(0.98);
         }
 
-        /* 왼쪽 1/3 화이트 불투명 텍스트 고정 영역 */
-        .card-left-text {
-            width: 60%; /* 모바일 기준 가독성을 위해 텍스트 비중 60% 확대 */
-            height: 100%;
-            background: rgba(255, 255, 255, 0.75); /* 맑은 흰색 불투명 패드 */
-            backdrop-filter: blur(5px);
-            padding: 12px 15px;
+        /* === 4번 항목: 절대 공식 하이라이트 (왼쪽 1/4 고정 -> 1/2 서서히 투명 그라데이션) === */
+        .card-scenery-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            /* 0%~25% 구간은 완전한 불투명 밀크 화이트 패드 적용 -> 50% 지점까지 완전 소멸 스무스 그라데이션 */
+            background: linear-gradient(to right, 
+                rgba(249, 249, 248, 0.95) 0%, 
+                rgba(249, 249, 248, 0.95) 25%, 
+                rgba(249, 249, 248, 0.4) 38%,
+                rgba(249, 249, 248, 0) 50%
+            );
+            z-index: 5;
+            pointer-events: none; /* 터치 간섭 증발 */
+        }
+
+        /* 텍스트 내용물 절대 배치 제어 */
+        .card-inner-info {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            padding: 16px;
+            z-index: 10;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            z-index: 5;
-            border-right: 1px solid rgba(255, 255, 255, 0.4);
+            pointer-events: none;
         }
-        .card-top-info {
+
+        /* 5번 항목 상단 파트: 제목과 줄거리 요약 (왼쪽 하단 몰아주기 레이아웃화) */
+        .card-bottom-left-group {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            width: 50%; /* 그라데이션 안전 영역인 왼쪽 절반 내로 가둠 */
             display: flex;
             flex-direction: column;
-            gap: 3px;
+            gap: 4px;
         }
         .card-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: #111;
+            font-size: 15px;
+            font-weight: 900;
+            color: #1B1B1B; /* 흰 배경 위라 깊고 뚜렷하게 다크 지정 */
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        /* 줄거리 요약: 2줄 한계선 후 이쁘게 말줄임표 처리 */
         .card-summary {
             font-size: 11px;
-            color: #666;
+            color: #444444;
             line-height: 1.4;
+            font-weight: 500;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
+        /* 5번 항목 하단 파트: 날짜 (오른쪽 하단 몰아주기 배정) */
+        .card-bottom-right-group {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            text-align: right;
+        }
         .card-date {
-            font-size: 10px;
-            color: #999;
-            font-weight: 500;
+            font-size: 11px;
+            color: #F9F9F8; /* 뒷배경 사진 영역 위라 맑은 화이트 계열로 보정 */
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            background: rgba(0,0,0,0.3); /* 사진 위 가독성을 위한 가벼운 차광막 패드 */
+            padding: 3px 8px;
+            border-radius: 4px;
+            backdrop-filter: blur(2px);
         }
 
-        /* 오른쪽 2/3 영역 (이미지 꽉 채움 또는 노이미지 백그라운드) */
-        .card-right-thumb {
-            width: 40%;
-            height: 100%;
-            position: relative;
-            background: rgba(255, 255, 255, 0.1);
+        /* === 4번 항목 우측 1/2 온전한 단독 일러스트 스페이스 === */
+        .card-illustration-frame {
+            position: absolute;
+            top: 0; right: 0; width: 100%; height: 100%;
+            z-index: 1;
         }
         .card-img {
             width: 100%; height: 100%; object-fit: cover;
+            object-position: center right; /* 이미지 중심을 우측으로 유도 */
         }
-        /* 노이미지일 때도 깔끔하게 통일감 유지 */
-        .card-no-img-text {
-            width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
-            font-size: 11px; color: rgba(0,0,0,0.15); font-weight: bold; letter-spacing: 1px;
-        }
-
-        /* 6번 항목: 동적 태그 레이아웃 디자인 */
-        .tag-container {
-            position: absolute;
-            bottom: 8px;
-            right: 8px;
+        .card-no-img-placeholder {
+            width: 100%; height: 100%;
+            background: #333333;
             display: flex;
-            gap: 4px;
-            flex-wrap: wrap;
+            align-items: center;
             justify-content: flex-end;
-            z-index: 10;
-        }
-        .tag-badge {
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(0,0,0,0.06);
-            padding: 3px 6px;
-            border-radius: 6px;
-            font-size: 9px;
-            font-weight: 600;
-            color: #555;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            padding-right: 40px;
+            font-size: 12px;
+            color: rgba(249,249,248,0.15);
+            font-weight: 700;
+            letter-spacing: 2px;
         }
 
-        /* === PC 버전 보정 가로 와이드 핏 === */
+        /* === PC 버전 대화면 격자 보정 뷰 === */
         @media (min-width: 768px) {
-            header { padding: 40px 40px 15px 40px; }
-            .tab-menu { gap: 50px; }
-            .tab-item { font-size: 17px; }
+            header { padding: 40px 40px 10px 40px; }
+            .category-tag-bar { padding: 0 40px 15px 40px; gap: 12px; }
+            .tab-menu { gap: 60px; }
+            .tab-item { font-size: 16px; }
             
             .tab-content {
                 padding: 20px 40px 40px 40px;
                 display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); /* 가로로 나열되도록 */
-                gap: 20px;
+                grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+                gap: 25px;
             }
-            .card { height: 140px; }
-            .card-left-text { width: 55%; padding: 15px; }
-            .card-right-thumb { width: 45%; }
-            .card-title { font-size: 16px; }
-            .card-summary { font-size: 12px; -webkit-line-clamp: 2; }
-            .card-date { font-size: 11px; }
-            .tag-badge { font-size: 10px; padding: 4px 8px; }
+            .card { height: 165px; }
+            .card-bottom-left-group { bottom: 20px; left: 20px; width: 52%; }
+            .card-bottom-right-group { bottom: 20px; right: 20px; }
+            .card-title { font-size: 17px; }
+            .card-summary { font-size: 12px; }
+            .card-date { font-size: 12px; }
         }
     </style>
 </head>
@@ -275,11 +298,15 @@
                 <a href="../" class="back-btn"><iconify-icon icon="solar:alt-arrow-left-linear"></iconify-icon></a>
             </div>
             <div class="tab-menu">
-                <div class="tab-item active" onclick="switchTab(0)">데일리</div>
-                <div class="tab-item" onclick="switchTab(1)">이벤트</div>
+                <div class="tab-item active" onclick="switchTab(0)">DAILY</div>
+                <div class="tab-item" onclick="switchTab(1)">EVENT</div>
                 <div class="tab-item" onclick="switchTab(2)">AU</div>
             </div>
         </header>
+
+        <div class="category-tag-bar" id="dynamic-tag-filter-pool">
+            <div class="filter-tag-btn active" onclick="filterByTag('all')">ALL</div>
+            </div>
 
         <div class="slider-wrapper">
             <div class="slider-track" id="slider-track">
@@ -293,30 +320,66 @@
 </div>
 
 <script>
-    // 3단 슬라이드 트랙 이동 로직
+    let activeCategoryIndex = 0;
+    let selectedTag = 'all';
     const track = document.getElementById('slider-track');
     const tabs = document.querySelectorAll('.tab-item');
+    let allCardDataElements = []; // 필터 처리를 위한 전역 풀링
 
+    // 1단 슬라이드 및 탭 전환 모듈
     function switchTab(index) {
-        // 활성화 밑줄 이동
+        activeCategoryIndex = index;
         tabs.forEach(tab => tab.classList.remove('active'));
         tabs[index].classList.add('active');
-        
-        // 트랙 슉 이동 처리
         track.style.transform = `translateX(-${index * 33.333}%)`;
+        
+        // 카테고리가 바뀌면 태그 필터링 리셋 연동
+        filterByTag('all');
+        updateTagActiveState();
     }
 
-    // 부드러운 글로벌 링크 이동 페이드 애니메이션 효과
+    // 4번 항목 트랜지션 애니메이션 링크 이동 연산
     function smoothLink(url) {
         const container = document.getElementById('archive-container');
-        container.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        container.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
         container.style.opacity = '0';
-        container.style.transform = 'scale(0.98)';
-        setTimeout(() => { window.location.href = url; }, 300);
+        container.style.transform = 'translateY(-4px)';
+        setTimeout(() => { window.location.href = url; }, 250);
     }
 
-    // list.html 연동 해석 스크립트
+    // 태그 기반 필터 스위칭 실행기
+    function filterByTag(tagName) {
+        selectedTag = tagName;
+        updateTagActiveState();
+
+        allCardDataElements.forEach(cardPack => {
+            const cardTags = cardPack.tags;
+            const element = cardPack.domElement;
+            
+            if(tagName === 'all' || cardTags.includes(tagName)) {
+                element.style.display = 'flex';
+            } else {
+                element.style.display = 'none';
+            }
+        });
+    }
+
+    function updateTagActiveState() {
+        const tagButtons = document.querySelectorAll('.filter-tag-btn');
+        tagButtons.forEach(btn => {
+            if(btn.textContent.replace('#', '').trim() === selectedTag.toUpperCase()) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    }
+
+    // `list.html` 실시간 데이터 파싱 및 가공 코어 엔진
     document.addEventListener('DOMContentLoaded', () => {
+        const tagPoolContainer = document.getElementById('dynamic-tag-filter-pool');
+        const uniqueTagsTracker = new Set();
+
         fetch('list.html')
             .then(response => response.text())
             .then(html => {
@@ -334,49 +397,70 @@
                     const title = item.querySelector('.memory-title').innerHTML;
                     const summary = item.querySelector('.memory-summary').innerHTML;
 
-                    // 카드 엘리먼트 동적 조립
+                    // 동적 태그 전역 트래킹 누적 연산
+                    const processedTagsArray = [];
+                    if(rawTags.trim() !== "") {
+                        rawTags.split(',').forEach(t => {
+                            const cleaned = t.trim();
+                            if(cleaned) {
+                                uniqueTagsTracker.add(cleaned);
+                                processedTagsArray.push(cleaned);
+                            }
+                        });
+                    }
+
+                    // 가로형 카드 동적 오브젝트 하우징 조립
                     const card = document.createElement('a');
                     card.className = 'card';
                     card.href = `javascript:smoothLink('dialog/${id}.html')`;
 
-                    // 우측 썸네일 분기 (이미지 有 / 無)
-                    let rightThumbHtml = '';
+                    // 4번 항목 우측 절반 레이어 (이미지 有 / 無 처리 분기)
+                    let rightSectionHtml = '';
                     if(imgUrl && imgUrl.trim() !== "") {
-                        rightThumbHtml = `<img src="${imgUrl}" class="card-img" alt="${title}">`;
+                        rightSectionHtml = `<img src="${imgUrl}" class="card-img" alt="${title}">`;
                     } else {
-                        rightThumbHtml = `<div class="card-no-img-text">FEARLESS</div>`;
+                        rightSectionHtml = `<div class="card-no-img-placeholder">FEARLESS</div>`;
                     }
 
-                    // 태그 파싱 분기
-                    let tagsHtml = '<div class="tag-container">';
-                    if(rawTags.trim() !== "") {
-                        rawTags.split(',').forEach(t => {
-                            tagsHtml += `<span class="tag-badge">#${t.trim()}</span>`;
-                        });
-                    }
-                    tagsHtml += '</div>';
-
-                    // 1/3 레이아웃 주입 고정
+                    // 4, 5번 항목 완벽한 정밀 레이아웃 주입
                     card.innerHTML = `
-                        <div class="card-left-text">
-                            <div class="card-top-info">
+                        <div class="card-scenery-overlay"></div>
+                        <div class="card-illustration-frame">
+                            ${rightSectionHtml}
+                        </div>
+                        <div class="card-inner-info">
+                            <div class="card-bottom-left-group">
                                 <div class="card-title">${title}</div>
                                 <div class="card-summary">${summary}</div>
                             </div>
-                            <div class="card-date">${date}</div>
-                        </div>
-                        <div class="card-right-thumb">
-                            ${rightThumbHtml}
-                            ${tagsHtml}
+                            <div class="card-bottom-right-group">
+                                <div class="card-date">${date}</div>
+                            </div>
                         </div>
                     `;
 
-                    // 매칭되는 카테고리 탭 리스트 공간에 배정 분배
-                    const targetTarget = document.getElementById(`list-${category}`);
-                    if(targetTarget) targetTarget.appendChild(card);
+                    // 전역 데이터 풀에 수납 개체 매핑 등록
+                    allCardDataElements.push({
+                        category: category,
+                        tags: processedTagsArray,
+                        domElement: card
+                    });
+
+                    // 분배 트랙 세팅 실행
+                    const targetContainer = document.getElementById(`list-${category}`);
+                    if(targetContainer) targetContainer.appendChild(card);
+                });
+
+                // 3단 필터 인터페이스 - 알약 태그 리스트 누적 동적 생성
+                uniqueTagsTracker.forEach(tagName => {
+                    const tagBtn = document.createElement('div');
+                    tagBtn.className = 'filter-tag-btn';
+                    tagBtn.textContent = `#${tagName.toUpperCase()}`;
+                    tagBtn.onclick = () => filterByTag(tagName);
+                    tagPoolContainer.appendChild(tagBtn);
                 });
             })
-            .catch(err => console.error('데이터 파싱 오류:', err));
+            .catch(err => console.error('기억의 데이터베이스 처리 장애 발생:', err));
     });
 </script>
 

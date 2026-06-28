@@ -94,6 +94,26 @@ function getTodayData() {
     };
 }
 
+// ID 입력 시 자동으로 날짜로 변환해주는 스마트 함수
+function handleIdChange(index, newId) {
+    updateItem(index, 'id', newId);
+    
+    // 정규식으로 앞 6자리 숫자만 똑똑하게 추출 (ex: 260628_2 -> 26, 06, 28)
+    const match = newId.match(/^(\d{2})(\d{2})(\d{2})/);
+    if (match) {
+        const yy = match[1];
+        const mm = parseInt(match[2], 10); // 06 -> 6 으로 변환
+        const dd = parseInt(match[3], 10); // 08 -> 8 으로 변환
+        
+        // 날짜 필드 자동 업데이트 (ex: 2026. 6. 28)
+        const newDate = `20${yy}. ${mm}. ${dd}`;
+        updateItem(index, 'date', newDate);
+    }
+    
+    // UI 즉시 새로고침
+    renderEditor();
+}
+
 // 기존 데이터 파싱
 function parseHTML() {
     const htmlString = document.getElementById('import-area').value;
@@ -141,14 +161,15 @@ function removeItem(index) {
     }
 }
 
-// 새 항목 추가
+// 새 항목 추가 (기본 배경 이미지 적용 완료)
 function addNewItem() {
     const today = getTodayData();
-    memoryItems.push({
+    // 새 카드가 항상 리스트의 맨 앞에 오도록 맨 위(unshift)에 추가
+    memoryItems.unshift({
         id: today.id,
         category: 'daily',
         tag: '',
-        img: '',
+        img: 'https://i.ibb.co/CKF6H7pv/IMG-3826.jpg', // 지정해주신 기본 배경 이미지
         date: today.formatted,
         title: '새로운 기억',
         summary: ''
@@ -180,7 +201,7 @@ function renderEditor() {
             <div class="grid-2">
                 <div>
                     <label>ID (dialog 폴더 파일명)</label>
-                    <input type="text" value="${escapeHTML(item.id)}" placeholder="ex) 260628" onchange="updateItem(${index}, 'id', this.value)">
+                    <input type="text" value="${escapeHTML(item.id)}" placeholder="ex) 260628" onchange="handleIdChange(${index}, this.value)">
                 </div>
                 <div>
                     <label>카테고리</label>
@@ -194,7 +215,7 @@ function renderEditor() {
             <div class="grid-2">
                 <div>
                     <label>날짜</label>
-                    <input type="text" value="${escapeHTML(item.date)}" placeholder="2026. 06. 28" onchange="updateItem(${index}, 'date', this.value)">
+                    <input type="text" value="${escapeHTML(item.date)}" placeholder="2026. 6. 28" onchange="updateItem(${index}, 'date', this.value)">
                 </div>
                 <div>
                     <label>태그 (쉼표로 구분)</label>
@@ -202,7 +223,7 @@ function renderEditor() {
                 </div>
             </div>
             <div>
-                <label>배경 이미지 링크 (없으면 비워두기)</label>
+                <label>배경 이미지 링크</label>
                 <input type="text" value="${escapeHTML(item.img)}" placeholder="https://..." onchange="updateItem(${index}, 'img', this.value)">
             </div>
             <div>

@@ -6,7 +6,7 @@
 <title>메시지</title>
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 <style>
-/* 기본 폰트 사이즈 12px 적용 및 전체 스케일 다운 */
+/* 12px 베이스 및 공통 셋업 */
 body { margin: 0; padding: 0; background-color: #e5e5ea; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 12px; overflow: hidden; }
 
 .device-frame { position: relative; width: 100%; height: 100vh; background-color: #fff; overflow: hidden; box-shadow: 0 0 20px rgba(0,0,0,0.05); }
@@ -22,14 +22,55 @@ body { margin: 0; padding: 0; background-color: #e5e5ea; display: flex; justify-
 #list-view { transform: translateX(0); z-index: 10; }
 #viewer-view { transform: translateX(100%); z-index: 20; background-color: transparent; }
 
-/* 뷰어 헤더 폰트 조정 */
-.viewer-header { position: sticky; top: 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); padding: 40px 15px 10px 15px; z-index: 50; display: flex; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); }
+/* ---------------------------------------------------- */
+/* ▼▼▼ list.html 에 있던 모든 UI 디자인을 이곳으로 이관 ▼▼▼ */
+/* ---------------------------------------------------- */
+.list-header { position: sticky; top: 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 40px 15px 10px 15px; z-index: 30; border-bottom: 1px solid #f0f0f0; }
+@media (max-width: 767px) { .list-header { padding-top: 20px; } }
+.nav-back-list { color: #007aff; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 2px; margin-bottom: 10px; font-weight: 400; letter-spacing: -0.5px;}
+.nav-back-list i { font-size: 20px; font-weight: 300; margin-top: 1px; margin-right: -4px;}
+.list-title { font-size: 22px; font-weight: 700; color: #1c1c1e; margin-bottom: 15px; }
+
+.tag-container { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; }
+.tag-container::-webkit-scrollbar { display: none; }
+.tag { background-color: #f2f2f7; color: #1c1c1e; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 500; white-space: nowrap; cursor: pointer; transition: background 0.2s; }
+.tag.active { background-color: #007aff; color: white; }
+
+/* 리스트 알맹이가 꽂힐 컨테이너 (하단 툴바 가림 방지 padding) */
+.chat-list-container { flex: 1; padding-bottom: 80px; overflow-y: auto; }
+
+/* 불러와질 알맹이(.chat-item) 디자인 */
+.chat-item { display: flex; padding: 12px 15px; border-bottom: 1px solid #f0f0f0; align-items: center; cursor: pointer; transition: background-color 0.2s; }
+.chat-item:active { background-color: #f2f2f7; }
+.chat-profile { width: 44px; height: 44px; border-radius: 50%; overflow: hidden; flex-shrink: 0; margin-right: 12px; }
+.chat-profile img { width: 100%; height: 100%; object-fit: cover; }
+.chat-info { flex: 1; min-width: 0; }
+.chat-name-row { display: flex; justify-content: space-between; margin-bottom: 2px; align-items: center; }
+.chat-name { font-size: 13px; font-weight: 600; color: #1c1c1e; }
+.chat-date { font-size: 11px; color: #8e8e93; }
+.chat-preview { font-size: 12px; color: #8e8e93; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* 하단 글래스모피즘 툴바 및 팝업 메뉴 */
+.bottom-toolbar { position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 10px 15px 25px 15px; display: flex; gap: 10px; align-items: center; border-top: 1px solid rgba(0,0,0,0.05); z-index: 40; box-sizing: border-box; }
+.search-pill { flex: 1; background-color: #e2e2e7; border-radius: 20px; display: flex; align-items: center; padding: 6px 12px; }
+.search-pill i { color: #8e8e93; font-size: 14px; }
+.search-pill input { border: none; background: transparent; font-size: 12px; width: 100%; margin-left: 6px; outline: none; font-family: inherit; color: #1c1c1e; }
+.compose-btn { width: 32px; height: 32px; flex-shrink: 0; border-radius: 50%; background: transparent; border: none; color: #007aff; font-size: 22px; cursor: pointer; display: flex; justify-content: center; align-items: center; padding: 0; }
+.compose-btn:active { opacity: 0.5; }
+
+.compose-menu { position: absolute; bottom: 70px; right: 15px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); display: flex; flex-direction: column; overflow: hidden; width: 150px; transform: translateY(10px) scale(0.95); opacity: 0; pointer-events: none; transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); z-index: 50; }
+.compose-menu.active { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
+.compose-menu-item { padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: #1c1c1e; font-weight: 500; cursor: pointer; border-bottom: 1px solid rgba(0,0,0,0.05); text-decoration: none; }
+.compose-menu-item:last-child { border-bottom: none; }
+.compose-menu-item:active { background: #f2f2f7; }
+.compose-menu-item i { font-size: 16px; color: #007aff; }
+
+/* 뷰어창 디자인 */
+.viewer-header { position: sticky; top: 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 40px 15px 10px 15px; z-index: 50; display: flex; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); }
 @media (max-width: 767px) { .viewer-header { padding-top: 20px; } }
 .nav-back { color: #007aff; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 2px; font-weight: 400; letter-spacing: -0.5px;}
 .nav-back:active { opacity: 0.5; }
 .nav-back i { font-size: 20px; font-weight: 300; margin-top: 1px; margin-right: -4px;}
-
-/* 유저 코드 보존 구역 (양옆 여백 유지) */
 #dynamic-content { flex: 1; overflow-y: auto; background-color: #fff; position: relative; padding: 0 12px; box-sizing: border-box; }
 </style>
 </head>
@@ -39,8 +80,37 @@ body { margin: 0; padding: 0; background-color: #e5e5ea; display: flex; justify-
     <div class="dynamic-island"></div>
     
     <div class="app-inner">
-        <div id="list-view" class="view-screen"></div>
+        <!-- [1] 리스트 뷰 (껍데기 전체 구현됨) -->
+        <div id="list-view" class="view-screen">
+            <div class="list-header">
+                <div class="nav-back-list" onclick="exitApp()"><i class="ri-arrow-left-s-line"></i>홈</div>
+                <div class="list-title">메시지</div>
+                <div class="tag-container">
+                    <div class="tag active" data-tag="전체">전체</div>
+                    <div class="tag" data-tag="미확인">미확인</div>
+                    <div class="tag" data-tag="FEARLESS">FEARLESS</div>
+                </div>
+            </div>
+            
+            <!-- list.html 의 순수 알맹이 텍스트만 fetch 되어 꽂히는 공간 -->
+            <div id="chat-list-container" class="chat-list-container"></div>
 
+            <div class="bottom-toolbar">
+                <div class="search-pill">
+                    <i class="ri-search-line"></i>
+                    <input type="text" id="msg-search" placeholder="검색" onfocus="this.placeholder=''" onblur="this.placeholder='검색'">
+                </div>
+                <button class="compose-btn" id="compose-btn">
+                    <i class="ri-edit-box-line"></i>
+                </button>
+                <div class="compose-menu" id="compose-menu">
+                    <a class="compose-menu-item" href="send.html">메시지 쓰기 <i class="ri-chat-new-line"></i></a>
+                    <a class="compose-menu-item" href="list-editor.html">리스트 수정 <i class="ri-list-settings-line"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- [2] 대화창 뷰어 (기존과 동일) -->
         <div id="viewer-view" class="view-screen">
             <div class="viewer-header">
                 <div class="nav-back" onclick="location.hash='list'"><i class="ri-arrow-left-s-line"></i>메시지</div>
@@ -57,6 +127,7 @@ function handleRoute() {
     const listView = document.getElementById('list-view');
     const viewerView = document.getElementById('viewer-view');
     const contentArea = document.getElementById('dynamic-content');
+    const listContainer = document.getElementById('chat-list-container');
 
     if (!hash || hash === 'list') {
         listView.style.transform = 'translateX(0)';
@@ -64,9 +135,10 @@ function handleRoute() {
         listView.style.pointerEvents = 'auto';
         if(document.activeElement) document.activeElement.blur(); 
 
-        if(listView.innerHTML.trim() === '') {
+        // 순수 알맹이만 있는 list.html 을 컨테이너 안으로 로드
+        if(listContainer.innerHTML.trim() === '') {
             fetch('list.html').then(r => r.text()).then(html => {
-                listView.innerHTML = html;
+                listContainer.innerHTML = html;
                 initListLogic(); 
             });
         }
@@ -104,7 +176,6 @@ function initListLogic() {
     const tags = document.querySelectorAll('.tag');
     const items = document.querySelectorAll('.chat-item');
 
-    // 검색 필터링
     function filterItems() {
         const keyword = searchInput.value.toLowerCase();
         const activeTag = document.querySelector('.tag.active').dataset.tag;
@@ -132,27 +203,20 @@ function initListLogic() {
         });
     });
 
-    // 팝업 메뉴 토글 로직 (이벤트 버블링 차단)
     const composeBtn = document.getElementById('compose-btn');
     const composeMenu = document.getElementById('compose-menu');
     
     if(composeBtn && composeMenu) {
         composeBtn.addEventListener('click', function(e) {
-            e.stopPropagation(); // 뒤에 클릭 안 되게 막음
+            e.stopPropagation(); 
             composeMenu.classList.toggle('active');
         });
-
-        // 빈 화면 터치 시 팝업 닫기
         document.addEventListener('click', function(e) {
             if(composeMenu.classList.contains('active')) {
                 composeMenu.classList.remove('active');
             }
         });
-
-        // 팝업 내부 클릭 시 닫히지 않게 유지 (필요 시)
-        composeMenu.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
+        composeMenu.addEventListener('click', function(e) { e.stopPropagation(); });
     }
 }
 

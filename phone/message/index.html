@@ -3,81 +3,162 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>메시지 목록</title>
+<title>메시지</title>
+<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 <style>
-/* --- 공통 반응형 폰 프레임 로직 --- */
 body { margin: 0; padding: 0; background-color: #e5e5ea; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, sans-serif; overflow: hidden; }
-.device-frame { position: relative; width: 100%; height: 100vh; background-color: #fff; overflow: hidden; display: flex; flex-direction: column; animation: slideInRight 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-@media (min-width: 768px) { .device-frame { width: 390px; height: 844px; border-radius: 45px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); border: 12px solid #1c1c1e; } .device-notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 120px; height: 30px; background-color: #1c1c1e; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; z-index: 999; } }
-@keyframes slideInRight { from { transform: translateX(30%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-/* --- 상단 헤더 & 네비게이션 --- */
-.header { position: sticky; top: 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 40px 15px 10px 15px; z-index: 30; border-bottom: 1px solid #f0f0f0; }
-@media (max-width: 767px) { .header { padding-top: 20px; } } /* 모바일은 상단 여백 줄임 */
-.nav-back { color: #007aff; font-size: 17px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; margin-bottom: 15px; transition: opacity 0.2s; }
+/* 프레임은 고정. 절대 슬라이딩 되지 않음 */
+.device-frame { position: relative; width: 100%; height: 100vh; background-color: #fff; overflow: hidden; box-shadow: 0 0 20px rgba(0,0,0,0.05); }
+@media (min-width: 768px) { 
+    .device-frame { width: 393px; height: 852px; border-radius: 55px; box-shadow: 0 0 0 2px #333, 0 30px 60px rgba(0,0,0,0.3); border: 8px solid #1c1c1e; } 
+    .dynamic-island { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 120px; height: 35px; background-color: #000; border-radius: 20px; z-index: 999; } 
+}
+
+/* 상단 시계 (메시지 앱 내부는 블랙 텍스트) */
+.status-bar { position: absolute; top: 15px; width: 100%; display: flex; justify-content: space-between; padding: 0 25px; box-sizing: border-box; z-index: 998; font-size: 15px; font-weight: 600; color: #1c1c1e; pointer-events: none; }
+.status-icons i { margin-left: 4px; font-size: 14px; }
+
+/* 앱 실행 시 알맹이 확대 효과 (Zoom In) */
+.app-inner {
+    position: relative; width: 100%; height: 100%; background-color: #fff;
+    animation: zoomInApp 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+@keyframes zoomInApp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+/* 뷰 전환 화면 */
+.view-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: #fff; overflow-y: auto; overflow-x: hidden; transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94); display: flex; flex-direction: column; }
+#list-view { transform: translateX(0); z-index: 10; }
+#viewer-view { transform: translateX(100%); z-index: 20; background-color: transparent; }
+
+/* 공통 헤더 뼈대 */
+.viewer-header { position: sticky; top: 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); padding: 50px 15px 15px 15px; z-index: 50; display: flex; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); }
+@media (max-width: 767px) { .viewer-header { padding-top: 20px; } }
+.nav-back { color: #007aff; font-size: 16px; cursor: pointer; display: flex; align-items: center; gap: 2px; }
 .nav-back:active { opacity: 0.5; }
-.list-title { font-size: 28px; font-weight: 700; color: #1c1c1e; margin-bottom: 15px; }
-
-/* --- 검색 및 태그 --- */
-.search-bar { display: flex; align-items: center; background-color: #e2e2e7; border-radius: 10px; padding: 8px 12px; margin-bottom: 15px; }
-.search-bar input { border: none; background: transparent; font-size: 15px; width: 100%; margin-left: 8px; outline: none; font-family: inherit; }
-.tag-container { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; }
-.tag-container::-webkit-scrollbar { display: none; }
-.tag { background-color: #f2f2f7; color: #1c1c1e; padding: 5px 12px; border-radius: 15px; font-size: 13px; font-weight: 500; white-space: nowrap; cursor: pointer; }
-.tag.active { background-color: #007aff; color: white; }
-
-/* --- 메시지 리스트 --- */
-.chat-list-container { flex: 1; overflow-y: auto; }
-.chat-item { display: flex; padding: 15px; border-bottom: 1px solid #f0f0f0; align-items: center; cursor: pointer; transition: background-color 0.2s; }
-.chat-item:active { background-color: #f2f2f7; }
-.chat-profile { width: 50px; height: 50px; border-radius: 50%; overflow: hidden; flex-shrink: 0; box-shadow: 0 2px 6px rgba(0,0,0,0.1); margin-right: 15px; }
-.chat-profile img { width: 100%; height: 100%; object-fit: cover; }
-.chat-info { flex: 1; min-width: 0; }
-.chat-name-row { display: flex; justify-content: space-between; margin-bottom: 4px; align-items: center; }
-.chat-name { font-size: 16px; font-weight: 600; color: #1c1c1e; }
-.chat-date { font-size: 13px; color: #8e8e93; }
-.chat-preview { font-size: 14px; color: #8e8e93; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nav-back i { font-size: 20px; font-weight: 300; }
+#dynamic-content { flex: 1; overflow-y: auto; background-color: #fff; position: relative; }
 </style>
 </head>
 <body>
 
 <div class="device-frame">
-    <div class="device-notch"></div>
+    <div class="dynamic-island"></div>
+    <div class="status-bar"><span class="status-time">00:00</span><span class="status-icons"><i class="ri-signal-wifi-fill"></i><i class="ri-battery-fill"></i></span></div>
     
-    <div class="header">
-        <!-- 뒤로 가기: 홈 화면(phone/index.html)으로 이동 -->
-        <div class="nav-back" onclick="location.href='../index.html'">
-            <svg width="12" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>홈
-        </div>
-        <div class="list-title">메시지</div>
-        <div class="search-bar">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8e8e93" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <input type="text" placeholder="검색">
-        </div>
-        <div class="tag-container">
-            <div class="tag active">전체</div>
-            <div class="tag">미확인</div>
-            <div class="tag">FEARLESS</div>
-        </div>
-    </div>
+    <div class="app-inner">
+        <!-- 리스트 컨테이너 (list.html 내용이 fetch 되어 들어옴) -->
+        <div id="list-view" class="view-screen"></div>
 
-    <div class="chat-list-container">
-        <!-- 채팅 목록 클릭 시 상세 화면(phone/message/dialog/260628.html)으로 이동 -->
-        <div class="chat-item" onclick="location.href='dialog/260628.html'">
-            <div class="chat-profile">
-                <!-- 뱅(하시온) 프로필 이미지 -->
-                <img src="https://i.ibb.co/VYrHdHd8/IMG-6825.jpg" alt="Profile">
+        <!-- 뷰어 컨테이너 (260628.html 등의 내용이 fetch 되어 들어옴) -->
+        <div id="viewer-view" class="view-screen">
+            <div class="viewer-header">
+                <div class="nav-back" onclick="location.hash='list'"><i class="ri-arrow-left-s-line"></i>메시지</div>
             </div>
-            <div class="chat-info">
-                <div class="chat-name-row">
-                    <span class="chat-name">내 여보♡</span>
-                    <span class="chat-date">오후 9:31</span>
-                </div>
-                <div class="chat-preview">상대메시지</div>
-            </div>
+            <div id="dynamic-content"></div>
         </div>
     </div>
 </div>
 
+<script>
+// KST 시계 업데이트
+function updateClock() {
+    const now = new Date();
+    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const kst = new Date(utc + (3600000 * 9));
+    let h = kst.getHours(); let m = kst.getMinutes();
+    h = h < 10 ? '0' + h : h; m = m < 10 ? '0' + m : m;
+    document.querySelector('.status-time').innerText = `${h}:${m}`;
+}
+setInterval(updateClock, 1000); updateClock();
+
+// SPA 라우팅 및 리스트 로드
+function handleRoute() {
+    const hash = window.location.hash.replace('#', '');
+    const listView = document.getElementById('list-view');
+    const viewerView = document.getElementById('viewer-view');
+    const contentArea = document.getElementById('dynamic-content');
+
+    if (!hash || hash === 'list') {
+        // 리스트 뷰로 이동
+        listView.style.transform = 'translateX(0)';
+        viewerView.style.transform = 'translateX(100%)';
+        listView.style.pointerEvents = 'auto';
+        document.activeElement.blur(); // 키보드 숨김 방어
+
+        // list.html 이 아직 로드되지 않았다면 Fetch
+        if(listView.innerHTML.trim() === '') {
+            fetch('list.html').then(r => r.text()).then(html => {
+                listView.innerHTML = html;
+                initListLogic(); // 필터링 로직 초기화
+            });
+        }
+    } else {
+        // 뷰어(대화창) 뷰로 이동
+        listView.style.transform = 'translateX(-30%)';
+        viewerView.style.transform = 'translateX(0)';
+        listView.style.pointerEvents = 'none'; 
+        contentArea.innerHTML = '<div style="text-align:center; padding: 50px;"><i class="ri-loader-4-line ri-spin" style="font-size:24px; color:#8e8e93;"></i></div>';
+
+        // 260628.html 등 파일 불러오기 (유저 코드 원본 100% 보존 구역)
+        fetch(`dialog/${hash}.html`).then(r => {
+            if(!r.ok) throw new Error('메시지가 없습니다.'); return r.text();
+        }).then(html => {
+            contentArea.innerHTML = html;
+            // 유저 코드의 스크립트 실행 보장
+            Array.from(contentArea.querySelectorAll('script')).forEach(oldScript => {
+                const newScript = document.createElement('script');
+                Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+                newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+                oldScript.parentNode.replaceChild(newScript, oldScript);
+            });
+        }).catch(e => { contentArea.innerHTML = `<div style="padding: 20px; color: red;">${e.message}</div>`; });
+    }
+}
+
+// 홈 화면으로 나갈 때 축소되는 애니메이션 연출
+window.exitApp = function() {
+    const inner = document.querySelector('.app-inner');
+    inner.style.transition = 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    inner.style.transform = 'scale(0.8)';
+    inner.style.opacity = '0';
+    setTimeout(() => { location.href = '../index.html'; }, 250);
+}
+
+// 검색 및 태그 필터링 자바스크립트 로직
+function initListLogic() {
+    const searchInput = document.getElementById('msg-search');
+    const tags = document.querySelectorAll('.tag');
+    const items = document.querySelectorAll('.chat-item');
+
+    function filterItems() {
+        const keyword = searchInput.value.toLowerCase();
+        const activeTag = document.querySelector('.tag.active').dataset.tag;
+
+        items.forEach(item => {
+            const name = item.querySelector('.chat-name').innerText.toLowerCase();
+            const itemTags = item.dataset.tags || '';
+            const matchesSearch = name.includes(keyword);
+            const matchesTag = (activeTag === '전체') || itemTags.includes(activeTag);
+
+            if(matchesSearch && matchesTag) { item.style.display = 'flex'; }
+            else { item.style.display = 'none'; }
+        });
+    }
+
+    searchInput.addEventListener('input', filterItems);
+    
+    tags.forEach(tag => {
+        tag.addEventListener('click', (e) => {
+            tags.forEach(t => t.classList.remove('active'));
+            e.target.classList.add('active');
+            filterItems();
+        });
+    });
+}
+
+window.addEventListener('hashchange', handleRoute);
+window.addEventListener('DOMContentLoaded', handleRoute);
+</script>
 </body>
 </html>

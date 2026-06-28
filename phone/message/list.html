@@ -1,116 +1,34 @@
-<style>
-/* 상단 헤더 슬림화 및 폰트 축소 */
-.list-header { position: sticky; top: 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); padding: 40px 15px 10px 15px; z-index: 30; border-bottom: 1px solid #f0f0f0; }
-@media (max-width: 767px) { .list-header { padding-top: 20px; } }
-.list-title { font-size: 22px; font-weight: 700; color: #1c1c1e; margin-bottom: 15px; }
+<!-- 
+  ※ 이 파일에는 디자인이나 헤더가 들어가지 않습니다. 
+  오직 리스트 덩어리만 추가하시면 됩니다. 
+  data-tags 에 태그를 띄어쓰기로 넣으면 자동으로 탭 버튼이 생성됩니다.
+-->
 
-/* 태그 및 뒤로가기 폰트 축소 */
-.nav-back-list { color: #007aff; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 2px; margin-bottom: 10px; font-weight: 400; letter-spacing: -0.5px;}
-.nav-back-list i { font-size: 20px; font-weight: 300; margin-top: 1px; margin-right: -4px;}
-.tag-container { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; }
-.tag-container::-webkit-scrollbar { display: none; }
-.tag { background-color: #f2f2f7; color: #1c1c1e; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 500; white-space: nowrap; cursor: pointer; transition: background 0.2s; }
-.tag.active { background-color: #007aff; color: white; }
-
-/* 채팅 리스트 폰트 12px 기준 축소 */
-.chat-list-container { flex: 1; padding-bottom: 80px; /* 하단 툴바 가림 방지 */ overflow-y: auto;}
-.chat-item { display: flex; padding: 12px 15px; border-bottom: 1px solid #f0f0f0; align-items: center; cursor: pointer; transition: background-color 0.2s; }
-.chat-item:active { background-color: #f2f2f7; }
-.chat-profile { width: 44px; height: 44px; border-radius: 50%; overflow: hidden; flex-shrink: 0; margin-right: 12px; }
-.chat-profile img { width: 100%; height: 100%; object-fit: cover; }
-.chat-info { flex: 1; min-width: 0; }
-.chat-name-row { display: flex; justify-content: space-between; margin-bottom: 2px; align-items: center; }
-.chat-name { font-size: 13px; font-weight: 600; color: #1c1c1e; }
-.chat-date { font-size: 11px; color: #8e8e93; }
-.chat-preview { font-size: 12px; color: #8e8e93; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-/* 
-  ▼▼▼ 신규: 아이폰 스타일 하단 툴바 및 팝업 모달 ▼▼▼ 
-*/
-.bottom-toolbar {
-    position: absolute; bottom: 0; left: 0; width: 100%;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    padding: 10px 15px 25px 15px; /* 모바일 하단 쓸어올리기 영역 고려 */
-    display: flex; gap: 10px; align-items: center;
-    border-top: 1px solid rgba(0,0,0,0.05);
-    z-index: 40; box-sizing: border-box;
-}
-
-/* 검색바 (알약 형태) */
-.search-pill { flex: 1; background-color: #e2e2e7; border-radius: 20px; display: flex; align-items: center; padding: 6px 12px; }
-.search-pill i { color: #8e8e93; font-size: 14px; }
-.search-pill input { border: none; background: transparent; font-size: 12px; width: 100%; margin-left: 6px; outline: none; font-family: inherit; color: #1c1c1e; }
-
-/* 글쓰기 버튼 */
-.compose-btn { width: 32px; height: 32px; flex-shrink: 0; border-radius: 50%; background: transparent; border: none; color: #007aff; font-size: 22px; cursor: pointer; display: flex; justify-content: center; align-items: center; padding: 0; }
-.compose-btn:active { opacity: 0.5; }
-
-/* 글쓰기 팝업 모달 */
-.compose-menu {
-    position: absolute; bottom: 70px; right: 15px;
-    background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    display: flex; flex-direction: column; overflow: hidden; width: 150px;
-    transform: translateY(10px) scale(0.95); opacity: 0; pointer-events: none;
-    transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    z-index: 50;
-}
-.compose-menu.active { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
-.compose-menu-item {
-    padding: 12px 15px; display: flex; align-items: center; justify-content: space-between;
-    font-size: 13px; color: #1c1c1e; font-weight: 500; cursor: pointer; border-bottom: 1px solid rgba(0,0,0,0.05); text-decoration: none;
-}
-.compose-menu-item:last-child { border-bottom: none; }
-.compose-menu-item:active { background: #f2f2f7; }
-.compose-menu-item i { font-size: 16px; color: #007aff; }
-</style>
-
-<div class="list-header">
-    <div class="nav-back-list" onclick="exitApp()"><i class="ri-arrow-left-s-line"></i>홈</div>
-    <div class="list-title">메시지</div>
-    <div class="tag-container">
-        <div class="tag active" data-tag="전체">전체</div>
-        <div class="tag" data-tag="미확인">미확인</div>
-        <div class="tag" data-tag="FEARLESS">FEARLESS</div>
+<div class="chat-item" data-tags="미확인 FEARLESS" onclick="location.hash='260628'">
+    <div class="chat-profile">
+        <img src="https://i.ibb.co/VYrHdHd8/IMG-6825.jpg" alt="Profile">
     </div>
-</div>
-
-<div class="chat-list-container">
-    <!-- 리스트 항목 -->
-    <div class="chat-item" data-tags="미확인 FEARLESS" onclick="location.hash='260628'">
-        <div class="chat-profile">
-            <img src="https://i.ibb.co/VYrHdHd8/IMG-6825.jpg" alt="Profile">
+    <div class="chat-info">
+        <div class="chat-name-row">
+            <span class="chat-name">내 여보♡</span>
+            <span class="chat-date">오후 9:31</span>
         </div>
-        <div class="chat-info">
-            <div class="chat-name-row">
-                <span class="chat-name">내 여보♡</span>
-                <span class="chat-date">오후 9:31</span>
-            </div>
-            <div class="chat-preview">상대메시지</div>
+        <div class="chat-preview">상대메시지</div>
+    </div>
+</div>
+
+<!-- 예시: 태그가 없는 경우 -->
+<!--
+<div class="chat-item" data-tags="" onclick="location.hash='260629'">
+    <div class="chat-profile">
+        <img src="https://i.ibb.co/VYrHdHd8/IMG-6825.jpg" alt="Profile">
+    </div>
+    <div class="chat-info">
+        <div class="chat-name-row">
+            <span class="chat-name">김성빈</span>
+            <span class="chat-date">어제 오후 9:54</span>
         </div>
+        <div class="chat-preview">아니야 괜찮아</div>
     </div>
 </div>
-
-<!-- 하단 툴바 및 팝업 (iOS 스타일) -->
-<div class="bottom-toolbar">
-    <div class="search-pill">
-        <i class="ri-search-line"></i>
-        <input type="text" id="msg-search" placeholder="검색" onfocus="this.placeholder=''" onblur="this.placeholder='검색'">
-    </div>
-    <button class="compose-btn" id="compose-btn">
-        <i class="ri-edit-box-line"></i>
-    </button>
-
-    <!-- 글쓰기 버튼 클릭 시 뜨는 팝업 메뉴 -->
-    <div class="compose-menu" id="compose-menu">
-        <!-- send.html 링크 -->
-        <a class="compose-menu-item" href="send.html">
-            메시지 쓰기 <i class="ri-chat-new-line"></i>
-        </a>
-        <!-- list-editor.html 링크 -->
-        <a class="compose-menu-item" href="list-editor.html">
-            리스트 수정 <i class="ri-list-settings-line"></i>
-        </a>
-    </div>
-</div>
+-->

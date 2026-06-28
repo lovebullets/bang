@@ -6,44 +6,31 @@
 <title>메시지</title>
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 <style>
-body { margin: 0; padding: 0; background-color: #e5e5ea; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, sans-serif; overflow: hidden; }
+/* 기본 폰트 사이즈 12px 적용 및 전체 스케일 다운 */
+body { margin: 0; padding: 0; background-color: #e5e5ea; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 12px; overflow: hidden; }
 
-/* 프레임 고정 및 초슬림 베젤 */
 .device-frame { position: relative; width: 100%; height: 100vh; background-color: #fff; overflow: hidden; box-shadow: 0 0 20px rgba(0,0,0,0.05); }
 @media (min-width: 768px) { 
     .device-frame { width: 393px; height: 852px; border-radius: 55px; box-shadow: 0 0 0 2px #333, 0 30px 60px rgba(0,0,0,0.3); border: 4px solid #1c1c1e; } 
     .dynamic-island { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 120px; height: 35px; background-color: #000; border-radius: 20px; z-index: 999; } 
 }
 
-/* 앱 실행 시 알맹이 확대 효과 (Zoom In) */
-.app-inner {
-    position: relative; width: 100%; height: 100%; background-color: #fff;
-    animation: zoomInApp 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
+.app-inner { position: relative; width: 100%; height: 100%; background-color: #fff; animation: zoomInApp 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
 @keyframes zoomInApp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-/* 뷰 전환 화면 */
 .view-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: #fff; overflow-y: auto; overflow-x: hidden; transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94); display: flex; flex-direction: column; }
 #list-view { transform: translateX(0); z-index: 10; }
 #viewer-view { transform: translateX(100%); z-index: 20; background-color: transparent; }
 
-/* 공통 헤더 뼈대 */
-.viewer-header { position: sticky; top: 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); padding: 50px 15px 15px 15px; z-index: 50; display: flex; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); }
+/* 뷰어 헤더 폰트 조정 */
+.viewer-header { position: sticky; top: 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); padding: 40px 15px 10px 15px; z-index: 50; display: flex; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); }
 @media (max-width: 767px) { .viewer-header { padding-top: 20px; } }
-.nav-back { color: #007aff; font-size: 17px; cursor: pointer; display: flex; align-items: center; gap: 4px; font-weight: 400; letter-spacing: -0.5px;}
+.nav-back { color: #007aff; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 2px; font-weight: 400; letter-spacing: -0.5px;}
 .nav-back:active { opacity: 0.5; }
-.nav-back i { font-size: 24px; font-weight: 300; margin-top: 1px; margin-right: -4px;}
+.nav-back i { font-size: 20px; font-weight: 300; margin-top: 1px; margin-right: -4px;}
 
-/* 
-  ▼▼▼ 핵심 수정 사항 ▼▼▼
-  이곳에 padding: 0 12px; 을 추가하여 원본 코드를 건드리지 않고도 
-  실제 아이폰과 동일한 양옆 여백을 확보했습니다.
-*/
-#dynamic-content { 
-    flex: 1; overflow-y: auto; background-color: #fff; position: relative; 
-    padding: 0 12px; 
-    box-sizing: border-box;
-}
+/* 유저 코드 보존 구역 (양옆 여백 유지) */
+#dynamic-content { flex: 1; overflow-y: auto; background-color: #fff; position: relative; padding: 0 12px; box-sizing: border-box; }
 </style>
 </head>
 <body>
@@ -52,10 +39,8 @@ body { margin: 0; padding: 0; background-color: #e5e5ea; display: flex; justify-
     <div class="dynamic-island"></div>
     
     <div class="app-inner">
-        <!-- 리스트 컨테이너 (list.html 내용이 fetch 되어 들어옴) -->
         <div id="list-view" class="view-screen"></div>
 
-        <!-- 뷰어 컨테이너 (유저의 원본 코드가 fetch 되어 들어옴) -->
         <div id="viewer-view" class="view-screen">
             <div class="viewer-header">
                 <div class="nav-back" onclick="location.hash='list'"><i class="ri-arrow-left-s-line"></i>메시지</div>
@@ -66,7 +51,7 @@ body { margin: 0; padding: 0; background-color: #e5e5ea; display: flex; justify-
 </div>
 
 <script>
-// SPA 라우팅 및 리스트 로드
+// SPA 라우팅 로직
 function handleRoute() {
     const hash = window.location.hash.replace('#', '');
     const listView = document.getElementById('list-view');
@@ -89,7 +74,7 @@ function handleRoute() {
         listView.style.transform = 'translateX(-30%)';
         viewerView.style.transform = 'translateX(0)';
         listView.style.pointerEvents = 'none'; 
-        contentArea.innerHTML = '<div style="text-align:center; padding: 50px;"><i class="ri-loader-4-line ri-spin" style="font-size:24px; color:#8e8e93;"></i></div>';
+        contentArea.innerHTML = '<div style="text-align:center; padding: 50px;"><i class="ri-loader-4-line ri-spin" style="font-size:20px; color:#8e8e93;"></i></div>';
 
         fetch(`dialog/${hash}.html`).then(r => {
             if(!r.ok) throw new Error('메시지가 없습니다.'); return r.text();
@@ -105,7 +90,6 @@ function handleRoute() {
     }
 }
 
-// 홈 화면으로 나갈 때 축소되는 애니메이션 연출 (알맹이만 축소)
 window.exitApp = function() {
     const inner = document.querySelector('.app-inner');
     inner.style.transition = 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
@@ -114,12 +98,13 @@ window.exitApp = function() {
     setTimeout(() => { location.href = '../index.html'; }, 250);
 }
 
-// 검색 및 태그 필터링 자바스크립트 로직 (날짜 검색 포함)
+// 검색, 태그 및 하단 팝업 메뉴 로직
 function initListLogic() {
     const searchInput = document.getElementById('msg-search');
     const tags = document.querySelectorAll('.tag');
     const items = document.querySelectorAll('.chat-item');
 
+    // 검색 필터링
     function filterItems() {
         const keyword = searchInput.value.toLowerCase();
         const activeTag = document.querySelector('.tag.active').dataset.tag;
@@ -137,7 +122,7 @@ function initListLogic() {
         });
     }
 
-    searchInput.addEventListener('input', filterItems);
+    if(searchInput) searchInput.addEventListener('input', filterItems);
     
     tags.forEach(tag => {
         tag.addEventListener('click', (e) => {
@@ -146,6 +131,29 @@ function initListLogic() {
             filterItems();
         });
     });
+
+    // 팝업 메뉴 토글 로직 (이벤트 버블링 차단)
+    const composeBtn = document.getElementById('compose-btn');
+    const composeMenu = document.getElementById('compose-menu');
+    
+    if(composeBtn && composeMenu) {
+        composeBtn.addEventListener('click', function(e) {
+            e.stopPropagation(); // 뒤에 클릭 안 되게 막음
+            composeMenu.classList.toggle('active');
+        });
+
+        // 빈 화면 터치 시 팝업 닫기
+        document.addEventListener('click', function(e) {
+            if(composeMenu.classList.contains('active')) {
+                composeMenu.classList.remove('active');
+            }
+        });
+
+        // 팝업 내부 클릭 시 닫히지 않게 유지 (필요 시)
+        composeMenu.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
 }
 
 window.addEventListener('hashchange', handleRoute);

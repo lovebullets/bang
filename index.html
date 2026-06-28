@@ -1,1 +1,305 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Main Lobby</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        /* 기본 리셋 및 폰트 설정 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none; /* 드래그 방지 */
+        }
 
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+            color: #fff;
+        }
+
+        /* 반응형 배경화면 설정 (핵심: 중앙 정렬 및 찌그러짐 방지) */
+        #app-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            /* 기본(모바일) 배경화면 */
+            background-image: url('https://i.ibb.co/JwCS4GGV/image.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* PC (태블릿 이상) 배경화면 가로 버전으로 변경 */
+        @media (min-width: 768px) {
+            #app-container {
+                background-image: url('https://i.ibb.co/LdfN7qdM/IMG-5405.jpg');
+            }
+        }
+
+        /* === UI 공통 글래스모피즘 (투명도 효과) === */
+        .glass-btn {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        
+        .glass-btn:active {
+            transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* === 상단 좌측 프로필 === */
+        .top-left-profile {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            padding: 5px 15px 5px 5px;
+            border-radius: 30px;
+        }
+        .level-badge {
+            background: #fff;
+            color: #333;
+            font-weight: bold;
+            font-size: 14px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        .user-name {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* === 좌측 서브 메뉴 (우편, 선물) === */
+        .left-sub-menu {
+            position: absolute;
+            top: 80px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .left-sub-menu .glass-btn {
+            width: 45px;
+            height: 45px;
+            font-size: 20px;
+        }
+
+        /* === 우측 세로 메인 메뉴 (일정, 이벤트, 상점 등) === */
+        .right-vertical-menu {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            text-decoration: none;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .menu-item:active { transform: scale(0.95); }
+        .menu-item .icon-wrapper {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            border-radius: 12px; /* 살짝 둥근 사각형 */
+            border: 1px solid rgba(255,255,255,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        .menu-item span {
+            font-size: 11px;
+            font-weight: 500;
+            text-shadow: 0px 1px 3px rgba(0,0,0,0.8);
+        }
+
+        /* === 하단 네비게이션 (데이트, 메모리, 시작) === */
+        .bottom-nav {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: flex-end;
+            gap: 30px;
+        }
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+            color: #fff;
+        }
+        .bottom-nav-item .circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .bottom-nav-item span {
+            font-size: 12px;
+            font-weight: 600;
+            text-shadow: 0px 1px 3px rgba(0,0,0,0.8);
+        }
+        /* 거대한 메인 START 버튼 */
+        .bottom-nav-item.start-btn .circle {
+            width: 90px;
+            height: 90px;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(0,0,0,0.6) 100%);
+            border: 2px solid rgba(255,255,255,0.6);
+            font-size: 32px;
+            box-shadow: 0 0 15px rgba(255,255,255,0.2);
+        }
+        .bottom-nav-item.start-btn span {
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+
+        /* === 좌측 하단 스마트폰 아이콘 (연결 완료) === */
+        .phone-icon-wrapper {
+            position: absolute;
+            bottom: 30px;
+            left: 20px;
+        }
+        .phone-icon-wrapper a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 55px;
+            height: 55px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.5);
+            color: #fff;
+            text-decoration: none;
+            font-size: 28px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+        }
+        .phone-icon-wrapper a:active {
+            transform: scale(0.9);
+        }
+        /* 알림 배지 (빨간 점) */
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff3b30;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body>
+
+<div id="app-container">
+
+    <div class="top-left-profile">
+        <div class="level-badge">1</div>
+        <div class="user-name">Player</div>
+    </div>
+
+    <div class="left-sub-menu">
+        <a href="#" class="glass-btn"><i class="ri-mail-line"></i></a>
+        <a href="#" class="glass-btn"><i class="ri-gift-line"></i></a>
+    </div>
+
+    <div class="right-vertical-menu">
+        <a href="#" class="menu-item">
+            <div class="icon-wrapper"><i class="ri-calendar-check-line"></i></div>
+            <span>일정</span>
+        </a>
+        <a href="#" class="menu-item">
+            <div class="icon-wrapper"><i class="ri-sparkling-line"></i></div>
+            <span>이벤트</span>
+        </a>
+        <a href="#" class="menu-item">
+            <div class="icon-wrapper"><i class="ri-star-line"></i></div>
+            <span>소원</span>
+        </a>
+        <a href="#" class="menu-item">
+            <div class="icon-wrapper"><i class="ri-store-2-line"></i></div>
+            <span>상점</span>
+        </a>
+        <a href="#" class="menu-item">
+            <div class="icon-wrapper"><i class="ri-heart-pulse-line"></i></div>
+            <span>인연</span>
+        </a>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="#" class="bottom-nav-item">
+            <div class="circle"><i class="ri-quill-pen-line"></i></div>
+            <span>데이트</span>
+        </a>
+        <a href="#" class="bottom-nav-item start-btn">
+            <div class="circle"><i class="ri-planet-line"></i></div>
+            <span>START</span>
+        </a>
+        <a href="#" class="bottom-nav-item">
+            <div class="circle"><i class="ri-film-line"></i></div>
+            <span>메모리</span>
+        </a>
+    </div>
+
+    <div class="phone-icon-wrapper">
+        <a href="phone/">
+            <i class="ri-smartphone-line"></i>
+            <div class="notification-badge">N</div>
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>

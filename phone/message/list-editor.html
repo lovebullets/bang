@@ -6,7 +6,6 @@
 <title>FEARLESS - List Editor</title>
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 <style>
-/* 12px 핏으로 재조정된 에디터 기본 셋업 */
 :root { --bg: #f2f2f7; --card-bg: rgba(255, 255, 255, 0.7); --blue: #007aff; --text: #1c1c1e; --sub-text: #8e8e93; }
 body { margin: 0; padding: 20px; background-color: var(--bg); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--text); padding-bottom: 40px; font-size: 12px; }
 * { box-sizing: border-box; }
@@ -34,11 +33,13 @@ input[type="text"]:focus { border-color: var(--blue); }
 .item-controls { display: flex; gap: 5px; }
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
+/* 모바일 화면에서 인풋칸 찌그러짐 방지 */
+@media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+
 .tag-chips { display: flex; gap: 6px; margin-top: 4px; }
 .tag-chip { background: #f2f2f7; color: var(--blue); padding: 4px 8px; border-radius: 12px; font-size: 11px; cursor: pointer; font-weight: 500; border: none; }
 .tag-chip:active { background: #e5e5ea; }
 
-/* 고정 바 해제: 문서 하단에 자연스럽게 위치하도록 수정 */
 .action-bar { display: flex; gap: 10px; justify-content: flex-end; margin-top: 15px; }
 </style>
 </head>
@@ -64,10 +65,7 @@ input[type="text"]:focus { border-color: var(--blue); }
 
     <div class="section" id="export-section">
         <h2 class="section-title"><i class="ri-code-box-line"></i> 최종 순수 코드 추출</h2>
-        <p style="font-size: 11px; color: #ff3b30; margin-top: 0; font-weight: 600;">※ UI 껍데기 없이 순수 리스트 덩어리만 출력됩니다.</p>
         <textarea id="export-area" readonly placeholder="하단의 '최종 코드 생성' 버튼을 누르세요."></textarea>
-        
-        <!-- 하단 고정 바가 아닌, 텍스트 상자 바로 아래에 위치하도록 변경 -->
         <div class="action-bar">
             <button class="btn" onclick="generateHTML()"><i class="ri-magic-line"></i> 최종 코드 생성</button>
             <button class="btn btn-secondary" id="copy-btn" onclick="copyCode()"><i class="ri-clipboard-line"></i> 코드 복사</button>
@@ -78,16 +76,14 @@ input[type="text"]:focus { border-color: var(--blue); }
 <script>
 let chatItems = [];
 
-// 대한민국(KST) 기준 실시간 오늘 날짜 및 해시 생성
+// 오늘 날짜 추출 (KST)
 function getTodayData() {
     const now = new Date();
     const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
     const kst = new Date(utc + (3600000 * 9));
-    
     const yy = String(kst.getFullYear()).slice(-2);
     const mm = String(kst.getMonth() + 1).padStart(2, '0');
     const dd = String(kst.getDate()).padStart(2, '0');
-    
     return {
         hash: `${yy}${mm}${dd}`,
         formatted: `20${yy}. ${kst.getMonth() + 1}. ${kst.getDate()}`
@@ -108,7 +104,7 @@ function parseHTML() {
         let hashMatch = hashAttr ? hashAttr.match(/location\.hash='([^']+)'/) : null;
         let hash = hashMatch ? hashMatch[1] : '';
 
-        // 기존 <i> 아이콘(화살표) 텍스트를 배제하고 순수 날짜 텍스트만 추출
+        // 기존 화살표 아이콘 등의 태그를 걷어내고 순수 날짜 텍스트만 추출
         const dateEl = item.querySelector('.chat-date');
         let rawDate = dateEl ? dateEl.textContent.trim() : '';
 
@@ -150,16 +146,16 @@ function renderEditor() {
             </div>
             <div class="grid-2">
                 <input type="text" placeholder="이름 (예: 내 여보♡)" value="${escapeHTML(item.name)}" oninput="updateItem(${index}, 'name', this.value)">
-                <input type="text" placeholder="해시 ID (예: 260628)" value="${escapeHTML(item.hash)}" oninput="handleHashInput(${index}, this.value)">
+                <input type="text" placeholder="해시 ID (예: 260628_2)" value="${escapeHTML(item.hash)}" oninput="handleHashInput(${index}, this.value)">
             </div>
-            <input type="text" placeholder="미리보기 텍스트" value="${escapeHTML(item.preview)}" oninput="updateItem(${index}, 'preview', this.value)">
+            <input type="text" placeholder="미리보기 텍스트 (비워둠)" value="${escapeHTML(item.preview)}" oninput="updateItem(${index}, 'preview', this.value)">
             <div class="grid-2">
                 <input type="text" placeholder="날짜 (예: 2026. 6. 28)" id="date-input-${index}" value="${escapeHTML(item.date)}" oninput="updateItem(${index}, 'date', this.value)">
                 <div>
                     <input type="text" placeholder="태그 입력" value="${escapeHTML(item.tags)}" oninput="updateItem(${index}, 'tags', this.value)" id="tag-input-${index}">
                     <div class="tag-chips">
-                        <button class="tag-chip" onclick="addTag(${index}, '미확인')">+ 미확인</button>
-                        <button class="tag-chip" onclick="addTag(${index}, 'FEARLESS')">+ FEARLESS</button>
+                        <button class="tag-chip" onclick="addTag(${index}, '♡')">+ ♡</button>
+                        <button class="tag-chip" onclick="addTag(${index}, '현대물AU')">+ 현대물AU</button>
                     </div>
                 </div>
             </div>
@@ -169,21 +165,24 @@ function renderEditor() {
     });
 }
 
+// unshift 를 사용하여 새 항목을 최상단(가장 최근)에 삽입
 function addNewItem() {
     const today = getTodayData();
-    // 제목과 미리보기 텍스트 비워두기 요청 반영
-    chatItems.push({ id: Date.now(), tags: '', hash: today.hash, imgSrc: 'https://i.ibb.co/VYrHdHd8/IMG-6825.jpg', name: '', date: today.formatted, preview: '' });
+    chatItems.unshift({ 
+        id: Date.now(), tags: '', hash: today.hash, imgSrc: 'https://i.ibb.co/VYrHdHd8/IMG-6825.jpg', 
+        name: '', date: today.formatted, preview: '' 
+    });
     renderEditor();
 }
 
-// 해시 ID 입력 시 날짜 자동 동기화 로직
+// 해시 ID 입력 시 (260628_2 등 대응) 정규식으로 앞 6자리만 파싱해 날짜 변환
 function handleHashInput(index, value) {
     chatItems[index].hash = value;
-    // 6자리 숫자일 경우 자동으로 날짜 변환
-    if (value.length === 6 && !isNaN(value)) {
-        const yy = value.substring(0, 2);
-        const mm = parseInt(value.substring(2, 4), 10);
-        const dd = parseInt(value.substring(4, 6), 10);
+    const match = value.match(/^(\d{6})/);
+    if (match) {
+        const yy = match[1].substring(0, 2);
+        const mm = parseInt(match[1].substring(2, 4), 10);
+        const dd = parseInt(match[1].substring(4, 6), 10);
         if (!isNaN(mm) && !isNaN(dd)) {
             chatItems[index].date = `20${yy}. ${mm}. ${dd}`;
             document.getElementById(`date-input-${index}`).value = chatItems[index].date;
@@ -211,7 +210,6 @@ function addTag(index, tagString) {
 function generateHTML() {
     let finalCode = '';
     chatItems.forEach(item => {
-        // 아이폰 메시지 스타일의 > 화살표를 세로 중앙에 완벽히 맞춘 인라인 스타일 적용
         finalCode += `
 <div class="chat-item" data-tags="${escapeAttr(item.tags)}" onclick="location.hash='${escapeAttr(item.hash)}'">
     <div class="chat-profile">
@@ -233,21 +231,20 @@ function generateHTML() {
     document.getElementById('export-area').value = finalCode;
 }
 
-// 팝업 제거 및 버튼 UI 변경으로 직관적 피드백 제공
+// 팝업 제거, 버튼 색상 변경 및 텍스트 알림
 function copyCode() {
     const exportArea = document.getElementById('export-area');
-    if(!exportArea.value) return; // 코드가 없을 경우 무시
+    if(!exportArea.value) return;
 
     exportArea.select();
     document.execCommand('copy');
     
-    // 알림창 대신 버튼의 색상과 텍스트를 변경하여 피드백 제공
     const copyBtn = document.getElementById('copy-btn');
     const originalText = copyBtn.innerHTML;
     const originalBg = copyBtn.style.background;
     
     copyBtn.innerHTML = '<i class="ri-check-line"></i> 복사 완료!';
-    copyBtn.style.background = '#34c759'; // 시스템 그린
+    copyBtn.style.background = '#34c759'; 
     copyBtn.style.color = '#fff';
     
     setTimeout(() => {
@@ -260,7 +257,6 @@ function copyCode() {
 function escapeHTML(str) { return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag])); }
 function escapeAttr(str) { return str.replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
 
-// 초기 셋업 로드
 renderEditor();
 </script>
 </body>

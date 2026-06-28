@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>FEARLESS - Message List Editor</title>
+<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+/* 에디터 전용 기본 셋업 (Apple 스타일 글래스모피즘 및 깔끔한 UI) */
+:root { --bg: #f2f2f7; --card-bg: rgba(255, 255, 255, 0.7); --blue: #007aff; --text: #1c1c1e; --sub-text: #8e8e93; }
+body { margin: 0; padding: 20px; background-color: var(--bg); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--text); padding-bottom: 100px; }
+* { box-sizing: border-box; }
+h1 { font-size: 24px; font-weight: 700; margin-bottom: 20px; text-align: center; }
+
+/* 레이아웃 컨테이너 */
+.container { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+.section { background: var(--card-bg); backdrop-filter: blur(20px); border-radius: 16px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.2s, opacity 0.2s; }
+.section-title { font-size: 16px; font-weight: 600; margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+
+/* 폼 및 입력 UI */
+textarea { width: 100%; height: 120px; border: 1px solid #d1d1d6; border-radius: 12px; padding: 12px; font-family: monospace; font-size: 13px; resize: vertical; outline: none; transition: border-color 0.2s; }
+textarea:focus { border-color: var(--blue); }
+input[type="text"] { width: 100%; border: 1px solid #d1d1d6; border-radius: 8px; padding: 10px 12px; font-size: 14px; outline: none; transition: border-color 0.2s; }
+input[type="text"]:focus { border-color: var(--blue); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 5px; background: var(--blue); color: #fff; border: none; border-radius: 10px; padding: 10px 16px; font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity 0.2s, transform 0.1s; }
+.btn:active { transform: scale(0.96); opacity: 0.8; }
+.btn-secondary { background: #e5e5ea; color: var(--text); }
+.btn-danger { background: #ff3b30; color: #fff; padding: 6px 10px; font-size: 12px; }
+.btn-icon { background: transparent; color: var(--sub-text); padding: 5px; font-size: 20px; }
+.btn-icon:hover { color: var(--blue); }
+
+/* 리스트 아이템 카드 (수정 UI) */
+.item-card { background: #fff; border: 1px solid #e5e5ea; border-radius: 12px; padding: 15px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; position: relative; animation: fadeIn 0.3s ease forwards; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.item-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; padding-bottom: 10px; margin-bottom: 5px; }
+.item-controls { display: flex; gap: 5px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+/* 하단 플로팅 바 (코드 복사) */
+.floating-bar { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); border-radius: 30px; padding: 10px 20px; display: flex; gap: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 1000; }
+</style>
+</head>
+<body>
+
+<h1><i class="ri-settings-4-fill" style="color: #007aff;"></i> FEARLESS List Editor</h1>
+
+<div class="container">
+    
+    <!-- 1. 동기화 (Load) 구역 -->
+    <div class="section">
+        <h2 class="section-title"><i class="ri-download-cloud-2-line"></i> 기존 코드 불러오기 (동기화)</h2>
+        <p style="font-size: 12px; color: var(--sub-text); margin-top: 0;">기존의 list.html 전체 코드를 붙여넣고 동기화를 누르면 편집 모드로 변환됩니다.</p>
+        <textarea id="import-area" placeholder="list.html 코드를 이곳에 붙여넣으세요..."></textarea>
+        <div style="text-align: right; margin-top: 10px;">
+            <button class="btn" onclick="parseHTML()"><i class="ri-refresh-line"></i> 데이터 동기화</button>
+        </div>
+    </div>
+
+    <!-- 2. 아이템 리스트 관리 구역 -->
+    <div class="section">
+        <h2 class="section-title"><i class="ri-list-check-2"></i> 메시지 목록 편집</h2>
+        <div id="editor-list"></div>
+        <button class="btn btn-secondary" style="width: 100%; margin-top: 10px;" onclick="addNewItem()"><i class="ri-add-line"></i> 새 메시지 추가</button>
+    </div>
+
+    <!-- 3. 추출 (Export) 구역 -->
+    <div class="section" id="export-section">
+        <h2 class="section-title"><i class="ri-code-box-line"></i> 최종 list.html 코드 추출</h2>
+        <textarea id="export-area" readonly placeholder="하단의 '최종 코드 생성' 버튼을 누르면 이곳에 코드가 출력됩니다."></textarea>
+    </div>
+
+</div>
+
+<!-- 하단 플로팅 액션 바 -->
+<div class="floating-bar">
+    <button class="btn" onclick="generateHTML()"><i class="ri-magic-line"></i> 최종 코드 생성</button>
+    <button class="btn btn-secondary" onclick="copyCode()"><i class="ri-clipboard-line"></i> 코드 복사</button>
+</div>
+
+<script>
+// 내부 데이터 상태 배열
+let chatItems = [];
+
+// 1. 기존 HTML에서 데이터 파싱
+function parseHTML() {
+    const htmlString = document.getElementById('import-area').value;
+    if (!htmlString.trim()) return alert("코드를 입력해주세요.");
+    
+    // 임시 DOM 렌더링을 통한 데이터 추출
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlString, 'text/html');
+    const items = doc.querySelectorAll('.chat-item');
+    
+    chatItems = [];
+    items.forEach(item => {
+        const hashAttr = item.getAttribute('onclick');
+        let hashMatch = hashAttr ? hashAttr.match(/location\.hash='([^']+)'/) : null;
+        let hash = hashMatch ? hashMatch[1] : '';
+
+        chatItems.push({
+            id: Date.now() + Math.random(), // 고유 식별자
+            tags: item.getAttribute('data-tags') || '',
+            hash: hash,
+            imgSrc: item.querySelector('img') ? item.querySelector('img').getAttribute('src') : '',
+            name: item.querySelector('.chat-name') ? item.querySelector('.chat-name').innerText : '',
+            date: item.querySelector('.chat-date') ? item.querySelector('.chat-date').innerText : '',
+            preview: item.querySelector('.chat-preview') ? item.querySelector('.chat-preview').innerText : ''
+        });
+    });
+
+    renderEditor();
+    alert(`총 ${chatItems.length}개의 메시지 항목이 동기화되었습니다.`);
+    document.getElementById('import-area').value = ''; // 정리
+}
+
+// 2. 에디터 UI 렌더링
+function renderEditor() {
+    const listContainer = document.getElementById('editor-list');
+    listContainer.innerHTML = '';
+
+    if(chatItems.length === 0) {
+        listContainer.innerHTML = '<p style="text-align:center; font-size:13px; color:#8e8e93;">추가된 메시지가 없습니다.</p>';
+        return;
+    }
+
+    chatItems.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'item-card';
+        card.innerHTML = `
+            <div class="item-header">
+                <strong style="font-size:14px; color:#007aff;">항목 #${index + 1}</strong>
+                <div class="item-controls">
+                    <button class="btn-icon" onclick="moveItem(${index}, -1)" ${index === 0 ? 'disabled' : ''}><i class="ri-arrow-up-s-line"></i></button>
+                    <button class="btn-icon" onclick="moveItem(${index}, 1)" ${index === chatItems.length - 1 ? 'disabled' : ''}><i class="ri-arrow-down-s-line"></i></button>
+                    <button class="btn btn-danger" onclick="deleteItem(${index})" style="margin-left: 5px;"><i class="ri-delete-bin-line"></i> 삭제</button>
+                </div>
+            </div>
+            <div class="grid-2">
+                <input type="text" placeholder="이름 (예: 내 여보♡)" value="${escapeHTML(item.name)}" oninput="updateItem(${index}, 'name', this.value)">
+                <input type="text" placeholder="날짜 (예: 오후 9:31)" value="${escapeHTML(item.date)}" oninput="updateItem(${index}, 'date', this.value)">
+            </div>
+            <input type="text" placeholder="미리보기 텍스트" value="${escapeHTML(item.preview)}" oninput="updateItem(${index}, 'preview', this.value)">
+            <div class="grid-2">
+                <input type="text" placeholder="해시 ID (연결될 파일명, 예: 260628)" value="${escapeHTML(item.hash)}" oninput="updateItem(${index}, 'hash', this.value)">
+                <input type="text" placeholder="태그 (띄어쓰기로 구분, 예: 미확인 FEARLESS)" value="${escapeHTML(item.tags)}" oninput="updateItem(${index}, 'tags', this.value)">
+            </div>
+            <input type="text" placeholder="프로필 이미지 URL" value="${escapeHTML(item.imgSrc)}" oninput="updateItem(${index}, 'imgSrc', this.value)">
+        `;
+        listContainer.appendChild(card);
+    });
+}
+
+// 아이템 추가, 수정, 삭제, 이동 로직
+function addNewItem() {
+    chatItems.push({ id: Date.now(), tags: '', hash: '', imgSrc: 'https://i.ibb.co/VYrHdHd8/IMG-6825.jpg', name: '내 여보♡', date: '오늘', preview: '새로운 메시지입니다.' });
+    renderEditor();
+}
+function updateItem(index, key, value) { chatItems[index][key] = value; }
+function deleteItem(index) { if(confirm('정말 삭제하시겠습니까?')) { chatItems.splice(index, 1); renderEditor(); } }
+function moveItem(index, direction) {
+    const targetIndex = index + direction;
+    if(targetIndex < 0 || targetIndex >= chatItems.length) return;
+    const temp = chatItems[index];
+    chatItems[index] = chatItems[targetIndex];
+    chatItems[targetIndex] = temp;
+    renderEditor();
+}
+
+// 3. 최종 HTML 생성 (기존 규칙 완벽 보존)
+function generateHTML() {
+    // 뼈대가 되는 헤더 및 CSS 템플릿
+    let finalCode = `<!-- 헤더 영역 (검색창, 태그, 뒤로가기) -->
+<style>
+.header { position: sticky; top: 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); padding: 50px 15px 10px 15px; z-index: 30; border-bottom: 1px solid #f0f0f0; }
+@media (max-width: 767px) { .header { padding-top: 25px; } }
+.list-title { font-size: 28px; font-weight: 700; color: #1c1c1e; margin-bottom: 15px; }
+.search-bar { display: flex; align-items: center; background-color: #e2e2e7; border-radius: 10px; padding: 8px 12px; margin-bottom: 15px; }
+.search-bar i { color: #8e8e93; font-size: 18px; }
+.search-bar input { border: none; background: transparent; font-size: 15px; width: 100%; margin-left: 8px; outline: none; font-family: inherit; color: #1c1c1e; }
+.tag-container { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; }
+.tag-container::-webkit-scrollbar { display: none; }
+.tag { background-color: #f2f2f7; color: #1c1c1e; padding: 5px 12px; border-radius: 15px; font-size: 13px; font-weight: 500; white-space: nowrap; cursor: pointer; transition: background 0.2s; }
+.tag.active { background-color: #007aff; color: white; }
+.chat-list-container { flex: 1; padding-bottom: 20px; }
+.chat-item { display: flex; padding: 15px; border-bottom: 1px solid #f0f0f0; align-items: center; cursor: pointer; transition: background-color 0.2s; }
+.chat-item:active { background-color: #f2f2f7; }
+.chat-profile { width: 50px; height: 50px; border-radius: 50%; overflow: hidden; flex-shrink: 0; margin-right: 15px; }
+.chat-profile img { width: 100%; height: 100%; object-fit: cover; }
+.chat-info { flex: 1; min-width: 0; }
+.chat-name-row { display: flex; justify-content: space-between; margin-bottom: 4px; align-items: center; }
+.chat-name { font-size: 16px; font-weight: 600; color: #1c1c1e; }
+.chat-date { font-size: 13px; color: #8e8e93; }
+.chat-preview { font-size: 14px; color: #8e8e93; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+</style>
+
+<div class="header">
+    <div class="nav-back" onclick="exitApp()" style="margin-bottom: 15px; font-size: 17px; display: flex; align-items: center; gap: 4px; color: #007aff; cursor: pointer; font-weight: 400; letter-spacing: -0.5px;">
+        <i class="ri-arrow-left-s-line" style="font-size: 24px; font-weight: 300; margin-top: 1px; margin-right: -4px;"></i>홈
+    </div>
+    <div class="list-title">메시지</div>
+    <div class="search-bar">
+        <i class="ri-search-line"></i>
+        <input type="text" id="msg-search" placeholder="검색" onfocus="this.placeholder=''" onblur="this.placeholder='검색'">
+    </div>
+    <div class="tag-container">
+        <div class="tag active" data-tag="전체">전체</div>
+        <div class="tag" data-tag="미확인">미확인</div>
+        <div class="tag" data-tag="FEARLESS">FEARLESS</div>
+    </div>
+</div>
+
+<div class="chat-list-container">\n`;
+
+    // 유저가 설정한 데이터 루프
+    chatItems.forEach(item => {
+        finalCode += `
+    <div class="chat-item" data-tags="${escapeAttr(item.tags)}" onclick="location.hash='${escapeAttr(item.hash)}'">
+        <div class="chat-profile">
+            <img src="${escapeAttr(item.imgSrc)}" alt="Profile">
+        </div>
+        <div class="chat-info">
+            <div class="chat-name-row">
+                <span class="chat-name">${escapeHTML(item.name)}</span>
+                <span class="chat-date">${escapeHTML(item.date)}</span>
+            </div>
+            <div class="chat-preview">${escapeHTML(item.preview)}</div>
+        </div>
+    </div>\n`;
+    });
+
+    finalCode += `</div>`;
+    
+    document.getElementById('export-area').value = finalCode;
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); // 코드 생성 후 아래로 스크롤
+}
+
+// 코드 복사 기능
+function copyCode() {
+    const exportArea = document.getElementById('export-area');
+    if(!exportArea.value) return alert("먼저 '최종 코드 생성' 버튼을 눌러주세요.");
+    exportArea.select();
+    document.execCommand('copy');
+    alert("복사 완료! phone/message/list.html 파일에 덮어씌워 주세요.");
+}
+
+// XSS/Syntax 에러 방지를 위한 이스케이프 처리 (규칙 준수)
+function escapeHTML(str) { return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag])); }
+function escapeAttr(str) { return str.replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
+</script>
+</body>
+</html>

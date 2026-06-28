@@ -19,7 +19,6 @@
             height: 100%;
             overflow: hidden;
             font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
-            /* 쨍한 흰색 대신 부드러운 오프화이트 컬러 적용 */
             color: #ebebeb; 
         }
 
@@ -31,7 +30,7 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            transition: background-image 0.4s ease-in-out; /* 배경 스무스하게 변경 */
+            transition: background-image 0.4s ease-in-out;
             
             /* 기본(모바일) 라이트 모드 배경화면 */
             background-image: url('https://i.ibb.co/JwCS4GGV/image.png');
@@ -52,19 +51,25 @@
                 /* 나이트 모드 PC 배경화면 */
                 background-image: url('https://i.ibb.co/1fRGCJgk/IMG-0765.jpg');
             }
+
+            /* === PC 버전 좌우상하 여백 최적화 === */
+            .top-left-profile { top: 40px !important; left: 40px !important; }
+            .left-sub-menu { top: 110px !important; left: 40px !important; }
+            .right-vertical-menu { right: 40px !important; }
+            .bottom-nav { bottom: 40px !important; }
+            .phone-icon-wrapper { bottom: 40px !important; left: 40px !important; }
         }
 
-        /* === 밝은 배경에서도 잘 보이도록 UI 가독성 향상 === */
-        /* 공통 텍스트 그림자 */
+        /* === 흰색 반투명 배경에서도 글씨가 잘 보이도록 강한 텍스트 그림자 === */
         .text-shadow {
-            text-shadow: 0px 2px 6px rgba(0, 0, 0, 0.85);
+            text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.85);
         }
 
-        /* === UI 공통 글래스모피즘 (투명도 효과) === */
+        /* === UI 공통 글래스모피즘 (화이트 계열 맑은 유리 효과) === */
         .glass-btn {
-            background: rgba(0, 0, 0, 0.35); /* 밝은 배경 대비를 위해 블랙 톤 강화 */
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.25); /* 화이트톤 반투명 */
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
             border-radius: 50%;
             display: flex;
             flex-direction: column;
@@ -74,29 +79,29 @@
             text-decoration: none;
             transition: all 0.2s ease-in-out;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* 그림자는 옅고 부드럽게 */
         }
         
         .glass-btn:active {
             transform: scale(0.95);
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(255, 255, 255, 0.4);
         }
 
-        /* === 상단 좌측 모드 전환 토글 버튼 (FEARLESS / VILLAIN) === */
+        /* === 상단 좌측 모드 전환 토글 버튼 === */
         .top-left-profile {
             position: absolute;
             top: env(safe-area-inset-top, 20px);
             left: 20px;
             display: flex;
             align-items: center;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.25); /* 화이트톤 반투명 */
+            backdrop-filter: blur(12px);
             padding: 8px 20px;
             border-radius: 30px;
             cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.5);
             transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
         .top-left-profile:active {
             transform: scale(0.95);
@@ -108,7 +113,7 @@
             color: #ebebeb;
         }
 
-        /* === 좌측 서브 메뉴 (우편, 선물) === */
+        /* === 좌측 서브 메뉴 === */
         .left-sub-menu {
             position: absolute;
             top: 80px;
@@ -147,15 +152,15 @@
         .menu-item .icon-wrapper {
             width: 50px;
             height: 50px;
-            background: rgba(0, 0, 0, 0.35);
+            background: rgba(255, 255, 255, 0.25); /* 화이트톤 반투명 네모 */
             backdrop-filter: blur(12px);
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 24px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
         .menu-item span {
             font-size: 11px;
@@ -184,34 +189,35 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.25); /* 화이트톤 반투명 */
+            backdrop-filter: blur(12px);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 24px;
-            border: 1px solid rgba(255,255,255,0.2);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
         .bottom-nav-item span {
             font-size: 12px;
             font-weight: 700;
         }
-        /* 거대한 메인 START 버튼 */
+        
+        /* 거대한 메인 START 버튼 (돋보이도록 그라데이션) */
         .bottom-nav-item.start-btn .circle {
             width: 90px;
             height: 90px;
-            background: radial-gradient(circle, rgba(60,60,60,0.5) 0%, rgba(0,0,0,0.8) 100%);
-            border: 2px solid rgba(255,255,255,0.3);
+            background: radial-gradient(circle, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.1) 100%);
+            border: 2px solid rgba(255,255,255,0.8);
             font-size: 32px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            box-shadow: 0 0 15px rgba(255,255,255,0.4);
         }
         .bottom-nav-item.start-btn span {
             font-size: 14px;
             letter-spacing: 2px;
         }
 
-        /* === 좌측 하단 스마트폰 아이콘 (순수 아이콘화) === */
+        /* === 좌측 하단 스마트폰 아이콘 === */
         .phone-icon-wrapper {
             position: absolute;
             bottom: max(30px, env(safe-area-inset-bottom));
@@ -224,9 +230,9 @@
             justify-content: center;
             color: #ebebeb;
             text-decoration: none;
-            font-size: 42px; /* 큼직하게 */
+            font-size: 42px;
             transition: transform 0.2s;
-            /* 배경 없이 아이콘 자체에 뚜렷한 그림자 부여 */
+            /* 배경 없이 아이콘에 그림자만 줌 */
             filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.8));
         }
         .phone-icon-wrapper a:active {
@@ -287,7 +293,7 @@
 
     <div class="phone-icon-wrapper">
         <a href="phone/">
-            <i class="ri-smartphone-line"></i>
+            <i class="ri-cellphone-line"></i>
         </a>
     </div>
 
@@ -300,10 +306,8 @@
     const modeText = document.getElementById('mode-text');
 
     modeToggleBtn.addEventListener('click', () => {
-        // night-mode 클래스 토글
         appContainer.classList.toggle('night-mode');
         
-        // 텍스트 스위칭
         if (appContainer.classList.contains('night-mode')) {
             modeText.textContent = 'VILLAIN';
         } else {

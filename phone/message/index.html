@@ -15,8 +15,6 @@ body { margin: 0; padding: 0; background-color: #e5e5ea; display: flex; justify-
     .dynamic-island { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 120px; height: 35px; background-color: #000; border-radius: 20px; z-index: 999; } 
 }
 
-/* 상태바 완벽 제거 완료 */
-
 /* 앱 실행 시 알맹이 확대 효과 (Zoom In) */
 .app-inner {
     position: relative; width: 100%; height: 100%; background-color: #fff;
@@ -32,10 +30,20 @@ body { margin: 0; padding: 0; background-color: #e5e5ea; display: flex; justify-
 /* 공통 헤더 뼈대 */
 .viewer-header { position: sticky; top: 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); padding: 50px 15px 15px 15px; z-index: 50; display: flex; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); }
 @media (max-width: 767px) { .viewer-header { padding-top: 20px; } }
-.nav-back { color: #007aff; font-size: 16px; cursor: pointer; display: flex; align-items: center; gap: 2px; }
+.nav-back { color: #007aff; font-size: 17px; cursor: pointer; display: flex; align-items: center; gap: 4px; font-weight: 400; letter-spacing: -0.5px;}
 .nav-back:active { opacity: 0.5; }
-.nav-back i { font-size: 20px; font-weight: 300; }
-#dynamic-content { flex: 1; overflow-y: auto; background-color: #fff; position: relative; }
+.nav-back i { font-size: 24px; font-weight: 300; margin-top: 1px; margin-right: -4px;}
+
+/* 
+  ▼▼▼ 핵심 수정 사항 ▼▼▼
+  이곳에 padding: 0 12px; 을 추가하여 원본 코드를 건드리지 않고도 
+  실제 아이폰과 동일한 양옆 여백을 확보했습니다.
+*/
+#dynamic-content { 
+    flex: 1; overflow-y: auto; background-color: #fff; position: relative; 
+    padding: 0 12px; 
+    box-sizing: border-box;
+}
 </style>
 </head>
 <body>
@@ -106,7 +114,7 @@ window.exitApp = function() {
     setTimeout(() => { location.href = '../index.html'; }, 250);
 }
 
-// 검색 및 태그 필터링 자바스크립트 로직 (날짜 검색 추가)
+// 검색 및 태그 필터링 자바스크립트 로직 (날짜 검색 포함)
 function initListLogic() {
     const searchInput = document.getElementById('msg-search');
     const tags = document.querySelectorAll('.tag');
@@ -118,10 +126,9 @@ function initListLogic() {
 
         items.forEach(item => {
             const name = item.querySelector('.chat-name').innerText.toLowerCase();
-            const date = item.querySelector('.chat-date').innerText.toLowerCase(); // 날짜 텍스트 추출
+            const date = item.querySelector('.chat-date').innerText.toLowerCase(); 
             const itemTags = item.dataset.tags || '';
             
-            // 이름이나 날짜 중 하나라도 검색어(keyword)를 포함하면 true
             const matchesSearch = name.includes(keyword) || date.includes(keyword);
             const matchesTag = (activeTag === '전체') || itemTags.includes(activeTag);
 

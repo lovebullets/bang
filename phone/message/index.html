@@ -10,9 +10,13 @@
 body { margin: 0; padding: 0; background-color: #e5e5ea; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 12px; overflow: hidden; }
 
 .device-frame { position: relative; width: 100%; height: 100vh; background-color: #fff; overflow: hidden; box-shadow: 0 0 20px rgba(0,0,0,0.05); }
+
+.status-bar { display: none; }
 @media (min-width: 768px) { 
     .device-frame { width: 393px; height: 852px; border-radius: 55px; box-shadow: 0 0 0 2px #333, 0 30px 60px rgba(0,0,0,0.3); border: 4px solid #1c1c1e; } 
     .dynamic-island { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 120px; height: 35px; background-color: #000; border-radius: 20px; z-index: 999; } 
+    .status-bar { display: flex; position: absolute; top: 15px; width: 100%; justify-content: space-between; padding: 0 25px; box-sizing: border-box; z-index: 998; font-size: 14px; font-weight: 600; color: #1c1c1e; pointer-events: none; }
+    .status-icons i { margin-left: 4px; font-size: 14px; }
 }
 
 .app-inner { position: relative; width: 100%; height: 100%; background-color: #fff; animation: zoomInApp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
@@ -22,37 +26,36 @@ body { margin: 0; padding: 0; background-color: #e5e5ea; display: flex; justify-
 #list-view { transform: translateX(0); z-index: 10; }
 #viewer-view { transform: translateX(100%); z-index: 20; background-color: transparent; }
 
-/* ---------------------------------------------------- */
-/* 목록 화면 헤더 UI (검색창, 글쓰기, 태그 배치) */
-/* ---------------------------------------------------- */
-.list-header { position: sticky; top: 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 40px 15px 10px 15px; z-index: 30; border-bottom: 1px solid #f0f0f0; }
+/* 리스트 헤더 UI */
+.list-header { position: sticky; top: 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 45px 15px 10px 15px; z-index: 30; border-bottom: 1px solid rgba(0,0,0,0.05); }
 @media (max-width: 767px) { .list-header { padding-top: 15px; } }
 
-/* 상단 1열: 뒤로가기 / 글쓰기 버튼 */
 .header-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
 .nav-back-list { color: #007aff; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; font-weight: 400; letter-spacing: -0.5px; }
-.nav-back-list i { font-size: 20px; font-weight: 300; margin-top: 1px; margin-right: -2px; }
-
-/* 글쓰기 버튼 (우측 상단) */
-.compose-btn { background: transparent; border: none; color: #007aff; font-size: 20px; cursor: pointer; padding: 5px; margin-right: -5px; }
+.nav-back-list i { font-size: 22px; font-weight: 300; margin-top: 1px; margin-right: -4px; }
+.compose-btn { background: transparent; border: none; color: #007aff; font-size: 22px; cursor: pointer; padding: 0; margin-right: 5px; }
 .compose-btn:active { opacity: 0.5; }
 
-/* 타이틀 및 검색바 */
-.list-title { font-size: 24px; font-weight: 700; color: #1c1c1e; margin-bottom: 12px; }
+.compose-menu { position: absolute; top: 35px; right: 0; background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); display: flex; flex-direction: column; overflow: hidden; width: 140px; transform: translateY(-10px) scale(0.95); opacity: 0; pointer-events: none; transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); z-index: 999; }
+.compose-menu.active { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
+.compose-menu-item { padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: #1c1c1e; font-weight: 500; cursor: pointer; border-bottom: 1px solid rgba(0,0,0,0.05); text-decoration: none; }
+.compose-menu-item:last-child { border-bottom: none; }
+.compose-menu-item:active { background: #f2f2f7; }
+.compose-menu-item i { font-size: 16px; color: #007aff; }
+
+.list-title { font-size: 26px; font-weight: 700; color: #1c1c1e; margin-bottom: 12px; letter-spacing: -0.5px; }
 .search-pill { background-color: rgba(118, 118, 128, 0.12); border-radius: 10px; display: flex; align-items: center; padding: 6px 10px; margin-bottom: 12px; }
 .search-pill i { color: #8e8e93; font-size: 14px; }
 .search-pill input { border: none; background: transparent; font-size: 13px; width: 100%; margin-left: 6px; outline: none; font-family: inherit; color: #1c1c1e; }
 .search-pill input::placeholder { color: #8e8e93; }
 
-/* 동적 생성 태그 영역 */
 .tag-container { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; }
 .tag-container::-webkit-scrollbar { display: none; }
 .tag { background-color: #f2f2f7; color: #1c1c1e; padding: 4px 12px; border-radius: 14px; font-size: 12px; font-weight: 500; white-space: nowrap; cursor: pointer; transition: background 0.2s; }
 .tag.active { background-color: #007aff; color: white; }
 
-/* 채팅 리스트 껍데기 및 아이템 스타일 (12px 최적화) */
 .chat-list-container { flex: 1; overflow-y: auto; }
-.chat-item { display: flex; padding: 10px 15px; border-bottom: 1px solid #f0f0f0; align-items: center; cursor: pointer; transition: background-color 0.2s; }
+.chat-item { display: flex; padding: 10px 15px; border-bottom: 1px solid rgba(0,0,0,0.05); align-items: center; cursor: pointer; transition: background-color 0.2s; }
 .chat-item:active { background-color: #f2f2f7; }
 .chat-profile { width: 44px; height: 44px; border-radius: 50%; overflow: hidden; flex-shrink: 0; margin-right: 12px; }
 .chat-profile img { width: 100%; height: 100%; object-fit: cover; }
@@ -62,47 +65,38 @@ body { margin: 0; padding: 0; background-color: #e5e5ea; display: flex; justify-
 .chat-date { font-size: 12px; color: #8e8e93; }
 .chat-preview { font-size: 13px; color: #8e8e93; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-/* 
-  글쓰기 카드 팝업 메뉴 (유저 요청: 불투명도 높은 화이트) 
-*/
-.compose-menu { 
-    position: absolute; top: 40px; right: 15px; 
-    background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); 
-    border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.15); 
-    display: flex; flex-direction: column; overflow: hidden; width: 140px; 
-    transform: translateY(-10px) scale(0.95); opacity: 0; pointer-events: none; 
-    transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); z-index: 999; 
-}
-.compose-menu.active { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
-.compose-menu-item { padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: #1c1c1e; font-weight: 500; cursor: pointer; border-bottom: 1px solid rgba(0,0,0,0.05); text-decoration: none; }
-.compose-menu-item:last-child { border-bottom: none; }
-.compose-menu-item:active { background: #f2f2f7; }
-.compose-menu-item i { font-size: 16px; color: #007aff; }
-
-/* 뷰어창 디자인 */
-.viewer-header { position: sticky; top: 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 40px 15px 10px 15px; z-index: 50; display: flex; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); }
+.viewer-header { position: sticky; top: 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 45px 15px 10px 15px; z-index: 50; display: flex; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); }
 @media (max-width: 767px) { .viewer-header { padding-top: 15px; } }
 .nav-back { color: #007aff; font-size: 15px; cursor: pointer; display: flex; align-items: center; gap: 2px; font-weight: 400; letter-spacing: -0.5px;}
 .nav-back:active { opacity: 0.5; }
-.nav-back i { font-size: 22px; font-weight: 300; margin-top: 1px; margin-right: -4px;}
-#dynamic-content { flex: 1; overflow-y: auto; background-color: #fff; position: relative; padding: 0 12px; box-sizing: border-box; }
-/* ... 기존 스타일 코드들 ... */
+.nav-back i { font-size: 24px; font-weight: 300; margin-top: 1px; margin-right: -4px;}
 
+/* ▼▼▼ 대화창(알맹이)를 감싸는 영역의 상/하단 여백 및 13px 폰트 강제 적용 ▼▼▼ */
+#dynamic-content { 
+    flex: 1; overflow-y: auto; background-color: #fff; position: relative; 
+    /* 상단 35px, 좌우 12px, 하단 25px (모바일 브라우저 바 간섭 방지) */
+    padding: 35px 12px 25px 12px; 
+    box-sizing: border-box; 
+    font-size: 13px !important; /* 대화창 폰트 13px로 업그레이드 */
+}
+
+/* 말풍선 내부 텍스트 13px 강제 상속 */
+#dynamic-content .msg-bubble > div > div:first-child {
+    font-size: 13px !important;
+}
 </style>
 </head>
 <body>
 
 <div class="device-frame">
     <div class="dynamic-island"></div>
+    <div class="status-bar"><span class="status-time">00:00</span><span class="status-icons"><i class="ri-signal-wifi-fill"></i><i class="ri-battery-fill"></i></span></div>
     
     <div class="app-inner">
-        <!-- [1] 리스트 뷰 -->
         <div id="list-view" class="view-screen">
             <div class="list-header">
                 <div class="header-top-row">
                     <div class="nav-back-list" onclick="exitApp()"><i class="ri-arrow-left-s-line"></i>홈</div>
-                    
-                    <!-- 글쓰기 아이콘 및 팝업 컨테이너 -->
                     <div style="position: relative;">
                         <button class="compose-btn" id="compose-btn"><i class="ri-edit-box-line"></i></button>
                         <div class="compose-menu" id="compose-menu">
@@ -116,19 +110,11 @@ body { margin: 0; padding: 0; background-color: #e5e5ea; display: flex; justify-
                     <i class="ri-search-line"></i>
                     <input type="text" id="msg-search" placeholder="검색">
                 </div>
-                
-                <!-- 태그 컨테이너: list.html 데이터에 따라 동적 생성됨 -->
-                <div class="tag-container" id="dynamic-tag-container">
-                    <div class="tag active" data-tag="전체">전체</div>
-                    <!-- 자바스크립트가 자동으로 추가 태그를 여기에 붙입니다. -->
-                </div>
+                <div class="tag-container" id="dynamic-tag-container"></div>
             </div>
-            
-            <!-- list.html 순수 알맹이가 꽂히는 공간 -->
             <div id="chat-list-container" class="chat-list-container"></div>
         </div>
 
-        <!-- [2] 대화창 뷰어 (유저 원본 코드 보호구역) -->
         <div id="viewer-view" class="view-screen">
             <div class="viewer-header">
                 <div class="nav-back" onclick="location.hash='list'"><i class="ri-arrow-left-s-line"></i>메시지</div>
@@ -139,7 +125,17 @@ body { margin: 0; padding: 0; background-color: #e5e5ea; display: flex; justify-
 </div>
 
 <script>
-// SPA 라우팅 로직
+function updateClock() {
+    const now = new Date();
+    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const kst = new Date(utc + (3600000 * 9));
+    let h = kst.getHours(); let m = kst.getMinutes();
+    h = h < 10 ? '0' + h : h; m = m < 10 ? '0' + m : m;
+    const timeEl = document.querySelector('.status-time');
+    if(timeEl) timeEl.innerText = `${h}:${m}`;
+}
+setInterval(updateClock, 1000); updateClock();
+
 function handleRoute() {
     const hash = window.location.hash.replace('#', '');
     const listView = document.getElementById('list-view');
@@ -153,11 +149,10 @@ function handleRoute() {
         listView.style.pointerEvents = 'auto';
         if(document.activeElement) document.activeElement.blur(); 
 
-        // 순수 알맹이 list.html 로드
         if(listContainer.innerHTML.trim() === '') {
             fetch('list.html').then(r => r.text()).then(html => {
                 listContainer.innerHTML = html;
-                initListLogic(); // 로드 완료 후 태그 추출 및 스크립트 가동
+                initListLogic(); 
             });
         }
     } else {
@@ -188,31 +183,21 @@ window.exitApp = function() {
     setTimeout(() => { location.href = '../index.html'; }, 250);
 }
 
-// 태그 자동 추출 및 메뉴 제어 로직
 function initListLogic() {
     const listContainer = document.getElementById('chat-list-container');
     const items = listContainer.querySelectorAll('.chat-item');
     const tagContainer = document.getElementById('dynamic-tag-container');
 
-    // 1. 아이템에서 고유 태그(data-tags) 자동 수집
     let uniqueTags = new Set();
     items.forEach(item => {
         const tags = item.dataset.tags;
-        if(tags) {
-            tags.split(' ').forEach(t => {
-                if(t.trim()) uniqueTags.add(t.trim());
-            });
-        }
+        if(tags) tags.split(' ').forEach(t => { if(t.trim()) uniqueTags.add(t.trim()); });
     });
 
-    // 2. 수집된 태그로 UI 버튼 자동 생성
     let tagHTML = '<div class="tag active" data-tag="전체">전체</div>';
-    uniqueTags.forEach(tag => {
-        tagHTML += `<div class="tag" data-tag="${tag}">${tag}</div>`;
-    });
+    uniqueTags.forEach(tag => { tagHTML += `<div class="tag" data-tag="${tag}">${tag}</div>`; });
     tagContainer.innerHTML = tagHTML;
 
-    // 3. 필터링 로직 바인딩
     const searchInput = document.getElementById('msg-search');
     const tagElements = tagContainer.querySelectorAll('.tag');
 
@@ -224,7 +209,6 @@ function initListLogic() {
             const name = item.querySelector('.chat-name').innerText.toLowerCase();
             const date = item.querySelector('.chat-date').innerText.toLowerCase(); 
             const itemTags = item.dataset.tags || '';
-            
             const matchesSearch = name.includes(keyword) || date.includes(keyword);
             const matchesTag = (activeTag === '전체') || itemTags.includes(activeTag);
 
@@ -243,21 +227,16 @@ function initListLogic() {
         });
     });
 
-    // 4. 글쓰기 팝업 (우측 상단) 이벤트 제어
     const composeBtn = document.getElementById('compose-btn');
     const composeMenu = document.getElementById('compose-menu');
-    
     if(composeBtn && composeMenu) {
         composeBtn.addEventListener('click', function(e) {
-            e.stopPropagation(); 
-            composeMenu.classList.toggle('active');
+            e.stopPropagation(); composeMenu.classList.toggle('active');
         });
-        document.addEventListener('click', function(e) {
-            if(composeMenu.classList.contains('active')) {
-                composeMenu.classList.remove('active');
-            }
+        document.addEventListener('click', function() {
+            if(composeMenu.classList.contains('active')) composeMenu.classList.remove('active');
         });
-        composeMenu.addEventListener('click', function(e) { e.stopPropagation(); });
+        composeMenu.addEventListener('click', e => e.stopPropagation());
     }
 }
 

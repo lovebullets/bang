@@ -136,7 +136,7 @@
         /* === 가로형 카드 마스터 디자인 (모바일) === */
         .card {
             width: 100%; 
-            height: 155px; /* 모바일 통통한 높이 유지 */
+            height: 155px;
             background: #242424;
             border-radius: 16px; display: flex; overflow: hidden;
             text-decoration: none; position: relative;
@@ -151,16 +151,17 @@
         }
         .card:active { transform: scale(0.98); transition: transform 0.1s; }
 
-        /* 이미지가 카드 전체배경(width:100%)을 채우도록 연산된 실크 그라데이션 장막 */
+        /* 🔥 수정된 그라데이션 장막: 딱딱하게 끊기는 선(밴딩 현상) 완벽 제거. 아주 부드러운 스플라인 곡선 연산 도입 */
         .card-scenery-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(to right, 
                 rgba(249, 249, 248, 1) 0%, 
-                rgba(249, 249, 248, 1) 25%, 
-                rgba(249, 249, 248, 0.9) 35%,
-                rgba(249, 249, 248, 0.5) 48%,
-                rgba(249, 249, 248, 0.1) 65%,
-                transparent 80%
+                rgba(249, 249, 248, 0.98) 15%, 
+                rgba(249, 249, 248, 0.9) 30%, 
+                rgba(249, 249, 248, 0.75) 45%, 
+                rgba(249, 249, 248, 0.5) 65%, 
+                rgba(249, 249, 248, 0.15) 85%, 
+                rgba(249, 249, 248, 0) 100%
             );
             z-index: 5; pointer-events: none;
         }
@@ -178,15 +179,12 @@
             display: flex; flex-direction: column; gap: 4px;
         }
         .card-title {
-            font-size: 15px; 
-            font-weight: 700; /* 900(익스트림)에서 700(예쁜 볼드)으로 굵기 완화 */
-            color: #1B1B1B;
+            font-size: 15px; font-weight: 700; color: #1B1B1B;
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             letter-spacing: -0.3px;
         }
         .card-summary {
-            font-size: 11px; color: #484848; line-height: 1.4; 
-            font-weight: 400; 
+            font-size: 11px; color: #484848; line-height: 1.4; font-weight: 400; 
             display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
             overflow: hidden; text-overflow: ellipsis;
         }
@@ -202,10 +200,9 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        /* 이미지 프레임 width 100% 전체 영역으로 전면 확장 고정 */
+        /* 이미지 프레임 100% 전체 영역으로 전면 확장 고정 */
         .card-illustration-frame {
-            position: absolute; top: 0; left: 0; 
-            width: 100%; height: 100%; z-index: 1;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;
         }
         .card-img {
             width: 100%; height: 100%; object-fit: cover; object-position: center center;
@@ -226,18 +223,15 @@
             
             .tab-content {
                 padding: 15px 40px 40px 40px;
-                display: grid; 
-                /* PC 가로 길이를 원상복구(축소)하여 너무 납작하게 늘어나는 현상 완벽 방지 */
-                grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 25px;
+                display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 25px;
             }
-            /* PC 버전 카드의 높이를 200px까지 시원하게 늘려 '통통한' 핏 완성 */
-            .card { height: 200px; } 
+            .card { height: 175px; } 
             
             .card-bottom-left-group { bottom: 20px; left: 22px; width: 55%; }
             .card-top-right-group { top: 20px; right: 22px; }
             
-            .card-title { font-size: 17px; font-weight: 700; } /* 굵기 완화 유지 */
-            .card-summary { font-size: 12px; -webkit-line-clamp: 3; } /* PC는 통통해져서 3줄까지 출력되도록 여유 확보 */
+            .card-title { font-size: 17px; font-weight: 700; }
+            .card-summary { font-size: 12px; -webkit-line-clamp: 3; }
             .card-date { font-size: 12px; }
         }
     </style>

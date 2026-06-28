@@ -443,52 +443,35 @@
     function openGenLightbox(src) { document.getElementById('gen-lightbox-img').src = src; document.getElementById('gen-lightbox').style.display = 'flex'; }
     function closeGenLightbox() { document.getElementById('gen-lightbox').style.display = 'none'; }
 
-    // [수정] 대본 파싱 로직 변경: 요청하신 날짜/시간 엄격 파싱 추가 및 포맷팅
+    // [수정] 대본 파싱 로직: 여러 줄 지원 및 새로운 트리거 대응
     function parseAndAddMessages() {
         const raw = document.getElementById('bulk-input').value.trim();
         const me = document.getElementById('trigger-me').value.trim();
         const pt = document.getElementById('trigger-partner').value.trim();
         if(!raw) return;
 
-        // 임시 데이터 (대본 데이터)
         let addedCount = 0;
         let scriptLines = raw.split('\n');
-        let tempDate = ""; // [Date] 싱글톤 대기
+        let tempDate = ""; 
+        let currentSpeaker = null;
 
-        // 파싱 Regex 정의 (수정됨)
-        // 1. 트리거 기반 (기존 유지)
-        const explicitTriggerRegex = /^\s*\[([^:\]]+):\s*([\s\S]*?)\]\s*$/;
-        
-        // 2. [날짜], [시간], (시간) 엄격 파싱 (싱글톤 또는 세트)
-        // 날짜 지원 양식: yyyy.MM.dd, MM.dd ( separators . - , 또는 년월일 구분), 년월일 직접 입력
         const strictDateRegex = /^\s*\[(\s*(\d{4})?[,\.\-\s년]*(0?\d|1[012])[,\.\-\s월]*(0?\d|[12]\d|3[01])[일,\.\-\s]*\s*)\]\s*$/;
-        // 시간 지원 양식: HH:mm 또는 AM/PM HH:mm, 오후/오전 입력 포함, [] 또는 () 감싸기
         const strictTimeRegex = /^\s*[\[\(]\s*((오전|오후|AM|PM)?\s*(0?\d|1\d|2[0-3]):(0\d|[1-5]\d))\s*[\]\)]\s*$/i;
-
-        // 3. 다이어리 모드 트리거 (수정됨: 시간 양식이 위 Regex를 만족할 때만 파싱)
         const diaryTriggerRegex = /^\s*[\(\[]\s*(((오전|오후|AM|PM)?\s*(0?\d|1\d|2[0-3]):(0\d|[1-5]\d))\s*[\]\)]\s*([\s\S]+))$/i;
 
-        // 날짜/시간 포맷팅 함수
         const normalizeDate = (rawStr) => {
             let text = rawStr.replace(/[\[\]]/g, '').trim(); 
-            // Regex ymd lenitent separators
             let ymdRegex = /(\d{4})[,\.\-\s년]*(0?\d|1[012])[,\.\-\s월]*(0?\d|[12]\d|3[01])[일,\.\-\s]*/;
             let mdRegex = /(0?\d|1[012])[,\.\-\s월]*(0?\d|[12]\d|3[01])[일,\.\-\s]*/;
-
             let matchYmd = text.match(ymdRegex);
-            if (matchYmd) {
-                return `${matchYmd[1]}년 ${parseInt(matchYmd[2])}월 ${parseInt(matchYmd[3])}일`;
-            }
+            if (matchYmd) return `${matchYmd[1]}년 ${parseInt(matchYmd[2])}월 ${parseInt(matchYmd[3])}일`;
             let matchMd = text.match(mdRegex);
-            if (matchMd) {
-                 return `${parseInt(matchMd[1])}월 ${parseInt(matchMd[2])}일`;
-            }
-            return text; // fallback
+            if (matchMd) return `${parseInt(matchMd[1])}월 ${parseInt(matchMd[2])}일`;
+            return text;
         };
 
         const normalizeTime = (rawStr) => {
             let text = rawStr.replace(/[\(\)\[\]]/g, '').trim(); 
-            // Look for 오전/오후, AM/PM
             let timeRegex = /(오전|오후|AM|PM)?\s*(0?\d|1\d|2[0-3]):(0\d|[1-5]\d)/i;
             let match = text.match(timeRegex);
             if (match) {
@@ -496,76 +479,137 @@
                 let ampm = "";
                 if(ampmRaw === "AM") ampm = "오전";
                 else if(ampmRaw === "PM") ampm = "오후";
-                else ampm = ampmRaw; // 오전/오후 그대로 사용
-
+                else ampm = ampmRaw;
                 return `${ampm} ${match[2]}:${match[3]}`.trim();
             }
-            return text; // fallback
+            return text;
         };
 
-        // 줄 단위 처리
         for (let line of scriptLines) {
-            line = line.trim();
-            if (!line) continue;
+            let originalLine = line.trim();
+            if (!originalLine) continue;
 
-            // --- Phase 1: 트리거 처리 (기존 유지) ---
-            let triggerMatch = line.match(explicitTriggerRegex);
-            if (triggerMatch) {
-                const n = triggerMatch[1].trim(); const blk = triggerMatch[2].trim();
-                let s = null;
-                if (n === me) s = 'me'; else if (n === pt) s = 'partner';
-                if (s) {
-                    messages.push({ sender: s, type: 'text', text: blk, delayValue: 1.0 }); addedCount++; continue;
-                }
-            }
-
-            // --- Phase 2: 엄격한 [Date] 파싱 ---
-            let dateMatch = line.match(strictDateRegex);
+            // 0. 날짜/시간 우선 처리
+            let dateMatch = originalLine.match(strictDateRegex);
             if (dateMatch) {
-                tempDate = normalizeDate(dateMatch[1]); // 임시 저장
+                tempDate = normalizeDate(dateMatch[1]);
+                currentSpeaker = null;
                 continue;
             }
 
-            // --- Phase 3: 엄격한 [Time]/(Time) 파싱 (싱글톤 또는 날짜 세트) ---
-            let timeStrictMatch = line.match(strictTimeRegex);
+            let timeStrictMatch = originalLine.match(strictTimeRegex);
             if (timeStrictMatch) {
                 let formattedTime = normalizeTime(timeStrictMatch[1]);
                 if (tempDate) {
-                    messages.push({ sender: 'date', type: 'text', dateText: tempDate, timeText: formattedTime, delayValue: 0 }); tempDate = ""; // 사용 후 초기화
+                    messages.push({ sender: 'date', type: 'text', dateText: tempDate, timeText: formattedTime, delayValue: 0 }); tempDate = "";
                 } else {
                     messages.push({ sender: 'date', type: 'text', dateText: "", timeText: formattedTime, delayValue: 0 });
                 }
-                addedCount++; continue;
+                addedCount++;
+                currentSpeaker = null;
+                continue;
             }
 
-            // --- Phase 4: 다이어리 모드 트리거 처리 ---
-            let diaryMatch = line.match(diaryTriggerRegex);
+            let diaryMatch = originalLine.match(diaryTriggerRegex);
             if (diaryMatch) {
                 let formattedTime = normalizeTime(diaryMatch[2]);
                 let messageText = diaryMatch[6].trim();
-
-                // 날짜 대기 중이면 년월일 입력, 아니면 시간만
                 if (tempDate) {
-                    messages.push({ sender: 'date', type: 'text', dateText: tempDate, timeText: formattedTime, delayValue: 0 }); tempDate = ""; // 사용 후 초기화
+                    messages.push({ sender: 'date', type: 'text', dateText: tempDate, timeText: formattedTime, delayValue: 0 }); tempDate = "";
                 } else {
                     messages.push({ sender: 'date', type: 'text', dateText: "", timeText: formattedTime, delayValue: 0 });
                 }
-
-                // 파트너 메시지 추가
                 if (messageText) {
                     messages.push({ sender: 'partner', type: 'text', text: messageText, delayValue: 1.0 }); addedCount++;
                 }
+                currentSpeaker = null;
                 continue;
             }
-/*
-            // --- Phase 5: Fallback (일반 텍스트 파트너 처리) ---
-            messages.push({ sender: 'partner', type: 'text', text: line, delayValue: 1.0 }); addedCount++;
+
+            // 1. [이름: 내용] 형태 (멀티라인 시작 가능성)
+            let match1 = originalLine.match(/^\[([^:\]]+):\s*(.*)$/);
+            if (match1) {
+                let speakerName = match1[1].trim();
+                let content = match1[2].trim();
+                
+                let endsWithBracket = content.endsWith(']');
+                if (endsWithBracket) content = content.replace(/\]$/, '').trim();
+
+                if (speakerName === me) currentSpeaker = 'me';
+                else if (speakerName === pt) currentSpeaker = 'partner';
+                else currentSpeaker = null; 
+
+                if (currentSpeaker && content) {
+                    messages.push({ sender: currentSpeaker, type: 'text', text: content, delayValue: 1.0 }); 
+                    addedCount++;
+                }
+
+                if (endsWithBracket) currentSpeaker = null;
+                continue;
+            }
+
+            // 2. [이름] 내용
+            let match2 = originalLine.match(/^\[([^\]]+)\]\s+(.*)$/);
+            if (match2) {
+                let speakerName = match2[1].trim();
+                let content = match2[2].trim();
+                let spk = null;
+                if (speakerName === me) spk = 'me';
+                else if (speakerName === pt) spk = 'partner';
+                
+                if (spk && content) {
+                    messages.push({ sender: spk, type: 'text', text: content, delayValue: 1.0 }); 
+                    addedCount++;
+                }
+                currentSpeaker = null;
+                continue;
+            }
+
+            // 3. ✉️내용
+            let match3 = originalLine.match(/^✉️\s*(.*)$/);
+            if (match3) {
+                let content = match3[1].trim();
+                if (content) {
+                    messages.push({ sender: 'partner', type: 'text', text: content, delayValue: 1.0 }); 
+                    addedCount++;
+                }
+                currentSpeaker = null;
+                continue;
+            }
+
+            // 4. [내용]
+            let match4 = originalLine.match(/^\[(.*)\]$/);
+            if (match4) {
+                let content = match4[1].trim();
+                if (content) {
+                    messages.push({ sender: 'partner', type: 'text', text: content, delayValue: 1.0 }); 
+                    addedCount++;
+                }
+                currentSpeaker = null;
+                continue;
+            }
+
+            // 5. 멀티라인 진행 중 (여러 줄 텍스트가 들어올 때 개별 메시지로 분리)
+            if (currentSpeaker) {
+                let content = originalLine;
+                let endsWithBracket = content.endsWith(']');
+                if (endsWithBracket) content = content.replace(/\]$/, '').trim();
+                
+                if (content) {
+                    messages.push({ sender: currentSpeaker, type: 'text', text: content, delayValue: 1.0 }); 
+                    addedCount++;
+                }
+                
+                if (endsWithBracket) currentSpeaker = null;
+                continue;
+            }
+
+            // 6. 이외의 기본 텍스트는 전부 무시 (요청사항 반영)
         }
-*/
-        // 루프 종료 후 남은 tempDate 처리 (줄바꿈 후 시간이 안 나온 경우)
+
         if (tempDate) {
             messages.push({ sender: 'date', type: 'text', dateText: tempDate, timeText: "", delayValue: 0 });
-            addedCount++; tempDate = ""; // 초기화
+            addedCount++; tempDate = "";
         }
 
         if(addedCount > 0) { 
@@ -592,6 +636,14 @@
         updateUI(); 
         renderSavedList(); 
     }
+
+    // [추가] 리스트에서 직접 화자를 전환하는 함수
+    window.changeSender = function(index, newSender) {
+        if (messages[index]) {
+            messages[index].sender = newSender;
+            updateUI();
+        }
+    };
 
     function deleteMessage(i) { messages.splice(i, 1); updateUI(); }
     function startEdit(i) { editIndex = i; renderMessageList(); }
@@ -660,7 +712,21 @@
                 else if (msg.type === 'image') c = `${msg.sender==='me'?'[나]':'[상대]'} <img src="${msg.imgUrl}" style="height:30px; vertical-align:middle;">`;
                 else c = `${msg.sender==='me'?'[나]':'[상대]'} ${msg.text.replace(/</g, '&lt;').replace(/>/g, '&gt;')}`;
                 
-                const b = (msg.type === 'header' || msg.type === 'footer') ? `<button class="btn-red" onclick="deleteMessage(${i})">삭제</button>` : `<button class="btn-edit" onclick="startEdit(${i})">편집</button><button class="btn-red" onclick="deleteMessage(${i})">삭제</button>`;
+                // [수정] 나/상대 원클릭 변경 버튼 추가 적용
+                let b = '';
+                if (msg.type === 'header' || msg.type === 'footer') {
+                    b = `<button class="btn-red" onclick="deleteMessage(${i})">삭제</button>`;
+                } else if (msg.type === 'read' || msg.sender === 'date') {
+                    b = `<button class="btn-edit" onclick="startEdit(${i})">편집</button><button class="btn-red" onclick="deleteMessage(${i})">삭제</button>`;
+                } else {
+                    let btnMe = msg.sender === 'me' ? 'btn-blue' : 'btn-gray';
+                    let btnPt = msg.sender === 'partner' ? 'btn-blue' : 'btn-gray';
+                    b = `<button class="${btnMe}" style="padding:6px 10px; font-size:11px; margin-right:2px;" onclick="changeSender(${i}, 'me')">나</button>
+                         <button class="${btnPt}" style="padding:6px 10px; font-size:11px; margin-right:6px;" onclick="changeSender(${i}, 'partner')">상대</button>
+                         <button class="btn-edit" onclick="startEdit(${i})">편집</button>
+                         <button class="btn-red" onclick="deleteMessage(${i})">삭제</button>`;
+                }
+
                 li.innerHTML = `<div style="width:100%;"><div style="display:flex; justify-content:space-between; align-items:center;"><div class="msg-info">${c}</div><div style="white-space:nowrap;">${b}</div></div><div style="margin-top:5px; display:flex; gap:5px;"><button class="btn-insert" onclick="openInsertModal(${i},0)">⬆️ 위로 추가</button><button class="btn-insert" onclick="openInsertModal(${i},1)">⬇️ 아래로 추가</button></div></div>`;
             }
             list.appendChild(li);
@@ -802,14 +868,14 @@ function closeLb(e) { document.getElementById('lb-'+e).style.display='none'; }
                 let animDelay = currentVersion === 1 ? ` animation-delay: ${delay.toFixed(1)}s;` : "";
                 
                 let tail = "";
-                let bRadius = "18px"; // 직전 수정 사항 (곡률 유지)
+                let bRadius = "18px"; 
                 if (!same && msg.type !== 'image') {
                     if (msg.sender === 'partner') {
                         tail = `<svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; left: -7px; bottom: 0; z-index: -1;"><path d="M18 18H0C6 18 9 11 18 0V18Z" fill="#e9e9eb"/></svg>`;
-                        bRadius = "18px 18px 18px 6px"; // 꼬리 두께에 맞춰 곡률 살짝 조정
+                        bRadius = "18px 18px 18px 6px"; 
                     } else {
                         tail = `<svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; right: -7px; bottom: 0; z-index: -1;"><path d="M0 18H18C12 18 9 11 0 0V18Z" fill="${myBubbleColor}"/></svg>`;
-                        bRadius = "18px 18px 6px 18px"; // 꼬리 두께에 맞춰 곡률 살짝 조정
+                        bRadius = "18px 18px 6px 18px"; 
                     }
                 }
 

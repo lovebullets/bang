@@ -9,7 +9,6 @@ const searchInput = document.getElementById('memory-search-input');
 
 let allCardDataElements = [];
 
-// 탭 스위칭
 function switchTab(index) {
     activeCategoryIndex = index;
     tabs.forEach(tab => tab.classList.remove('active'));
@@ -26,7 +25,6 @@ function switchTab(index) {
     executeMasterFilter();
 }
 
-// 🔥 극강의 스무스 아웃 애니메이션 (클릭 시 작아지면서 블러 처리)
 function smoothLink(url) {
     const container = document.getElementById('archive-container');
     container.style.transition = 'opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1), transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s ease';
@@ -36,7 +34,6 @@ function smoothLink(url) {
     setTimeout(() => { window.location.href = url; }, 380);
 }
 
-// 태그 및 검색 필터링 코어
 function filterByTag(tagName) {
     selectedTag = tagName;
     executeMasterFilter();
@@ -73,9 +70,11 @@ searchInput.addEventListener('input', (e) => {
     executeMasterFilter();
 });
 
-// 데이터베이스 파싱 및 렌더링
 document.addEventListener('DOMContentLoaded', () => {
     const tagsTracker = { daily: new Set(), event: new Set(), au: new Set() };
+    
+    // 🔥 카테고리별 애니메이션 순서 지연을 위한 카운터
+    const delayCounter = { daily: 0, event: 0, au: 0 };
 
     fetch('list.html')
         .then(res => res.text())
@@ -84,18 +83,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const doc = parser.parseFromString(html, 'text/html');
             const items = doc.querySelectorAll('.memory-data');
 
-            items.forEach(item => {
+            items.forEach((item) => {
                 const id = item.getAttribute('data-id');
                 const category = item.getAttribute('data-category') || 'daily';
                 const rawTags = item.getAttribute('data-tag') || '';
-                const imgUrl = item.getAttribute('data-img');
                 const date = item.getAttribute('data-date') || '';
-                
-                // AU 전용 설정값 파싱 (에디터에 추가할 용도)
                 const auSetting = item.getAttribute('data-au-setting') || '';
                 
+                const imgUrl = item.getAttribute('data-img');
+                const imgX = item.getAttribute('data-img-x') || '50';
+                const imgY = item.getAttribute('data-img-y') || '50';
+                const imgScale = item.getAttribute('data-img-scale') || '1';
+                
                 const title = item.querySelector('.memory-title').innerHTML;
-                // 줄거리 텍스트 (없으면 빈값 처리)
                 const summaryEl = item.querySelector('.memory-summary');
                 const summary = summaryEl ? summaryEl.innerHTML.trim() : '';
 
@@ -111,15 +111,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 const card = document.createElement('a');
-                // AU일 경우 au-card 클래스를 추가하여 다크 레이아웃 적용
                 card.className = `card ${category === 'au' ? 'au-card' : ''}`;
                 card.href = `javascript:smoothLink('dialog/${id}.html')`;
 
+                // 🔥 각 카테고리 내에서 0.06초 간격으로 순차적인 딜레이(Stagger) 부여
+                card.style.animationDelay = `${delayCounter[category] * 0.06}s`;
+                delayCounter[category]++; // 카운터 증가
+
                 let thumbHtml = (imgUrl && imgUrl.trim() !== "") 
-                    ? `<img src="${imgUrl}" class="card-img" alt="${title}">` 
+                    ? `<img src="${imgUrl}" class="card-img" alt="${title}" style="object-position: ${imgX}% ${imgY}%; transform-origin: ${imgX}% ${imgY}%; transform: scale(${imgScale});">` 
                     : `<div class="card-no-img-placeholder">FEARLESS</div>`;
 
-                // 🔥 줄거리가 비어있으면 생성하지 않음 -> CSS Flexbox에 의해 제목이 바닥으로 내려앉음
                 let summaryHtml = summary ? `<div class="card-summary">${summary}</div>` : '';
                 let auSettingHtml = (category === 'au' && auSetting) ? `<div class="au-setting-text">[ ${auSetting} ]</div>` : '';
 

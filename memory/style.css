@@ -10,7 +10,7 @@ body, html {
     color: #F9F9F8;
 }
 
-/* 🔥 진입 시 스무스한 블러 + 페이드 애니메이션 */
+/* 글로벌 페이지 진입 스무스 애니메이션 */
 @keyframes pageFadeIn {
     from { opacity: 0; transform: scale(0.97) translateY(10px); filter: blur(8px); }
     to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
@@ -119,8 +119,14 @@ header {
 .tab-content::-webkit-scrollbar { display: none; }
 
 /* =======================================
-   가로형 카드 마스터 디자인 (DAILY / EVENT)
+   🔥 카드 진입 애니메이션 (차례로 떠오르기)
    ======================================= */
+@keyframes cardFadeUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* === 가로형 카드 마스터 디자인 === */
 .card {
     width: 100%; height: 155px; background: #242424;
     border-radius: 16px; display: flex; overflow: hidden;
@@ -128,7 +134,12 @@ header {
     border: 1px solid rgba(255,255,255,0.04);
     box-shadow: 0 6px 20px rgba(0,0,0,0.25);
     transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1.1);
+    
+    /* 🔥 애니메이션 기본 장착 (opacity 0에서 시작) */
+    opacity: 0; 
+    animation: cardFadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
+
 .card:hover {
     transform: translateY(-4px) scale(1.015); border-color: rgba(249, 249, 248, 0.25);
     box-shadow: 0 12px 30px rgba(0,0,0,0.4), 0 0 15px rgba(249,249,248,0.05);
@@ -155,7 +166,7 @@ header {
 .card-bottom-left-group {
     position: absolute; bottom: 16px; left: 18px; width: 55%;
     display: flex; flex-direction: column; gap: 4px;
-    justify-content: flex-end; /* 빈칸 시 자동 하단 정착 */
+    justify-content: flex-end;
 }
 .card-title {
     font-size: 15px; font-weight: 700; color: #1B1B1B;
@@ -175,30 +186,24 @@ header {
 .card-illustration-frame {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;
 }
-.card-img { width: 100%; height: 100%; object-fit: cover; object-position: center center; }
+.card-img { width: 100%; height: 100%; object-fit: cover; }
 
-/* =======================================
-   🔥 AU 전용 스페셜 카드 디자인
-   ======================================= */
-.au-card { height: 240px; } /* 세로가 훌쩍 길어짐 */
+/* === AU 전용 스페셜 카드 디자인 === */
+.au-card { height: 240px; } 
 .au-card .card-scenery-overlay {
-    /* 왼쪽 흰색 대신 하단부 다크 그라데이션 */
     background: linear-gradient(to top, 
         rgba(15, 15, 15, 0.95) 0%, rgba(15, 15, 15, 0.8) 25%, 
         rgba(15, 15, 15, 0.4) 50%, rgba(15, 15, 15, 0) 100%);
 }
-.au-card .card-bottom-left-group {
-    width: 90%; /* 우측 끝까지 텍스트 사용 가능 */
-}
-.au-card .card-title { color: #F9F9F8; font-size: 17px; } /* 다크배경에 맞춘 흰색 제목 */
+.au-card .card-bottom-left-group { width: 90%; }
+.au-card .card-title { color: #F9F9F8; font-size: 17px; } 
 .au-card .card-summary { color: #D1D1D1; }
-/* AU 설정 미니 텍스트 */
 .au-setting-text {
     font-size: 10px; color: #A0B0C0; font-weight: 900; 
     margin-bottom: 2px; letter-spacing: 0.5px; text-transform: uppercase;
 }
 
-/* === PC 버전 그리드 와이드 배치 보정 === */
+/* === PC 버전 그리드 보정 === */
 @media (min-width: 768px) {
     header { padding: 30px 40px 10px 40px; }
     .tag-filter-container-wrapper { padding: 0 40px 12px 40px; }
@@ -209,7 +214,7 @@ header {
         grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 25px;
     }
     .card { height: 175px; } 
-    .au-card { height: 280px; } /* PC AU 카드는 더 웅장하게 */
+    .au-card { height: 280px; } 
     .card-bottom-left-group { bottom: 20px; left: 22px; width: 55%; }
     .au-card .card-bottom-left-group { width: 85%; }
     .card-top-right-group { top: 20px; right: 22px; }

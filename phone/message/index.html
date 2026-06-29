@@ -6,7 +6,7 @@
 <title>메시지</title>
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 <style>
-/* 유저 지정 절대 규칙: 전체 베이스 폰트 12px (아이폰 최소 글씨 설정) */
+/* 유저 지정 절대 규칙: 전체 베이스 폰트 12px */
 body { margin: 0; padding: 0; background-color: #e5e5ea; display: flex; justify-content: center; align-items: center; min-height: 100vh; min-height: 100dvh; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 12px; overflow: hidden; }
 
 .device-frame { position: relative; width: 100%; height: 100dvh; background-color: #fff; overflow: hidden; box-shadow: 0 0 20px rgba(0,0,0,0.05); }
@@ -26,40 +26,47 @@ body { margin: 0; padding: 0; background-color: #e5e5ea; display: flex; justify-
 #list-view { transform: translateX(0); z-index: 10; }
 #viewer-view { transform: translateX(100%); z-index: 20; background-color: transparent; }
 
-/* 리스트 헤더 */
+/* ---------------------------------------------------- */
+/* [1] 리스트 헤더 (상단 여백 부드럽게 조정) */
+/* ---------------------------------------------------- */
 .list-header { padding: 45px 15px 10px 15px; background-color: #fff; z-index: 30; }
 @media (max-width: 767px) { .list-header { padding-top: 15px; } }
-.header-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+
+/* 편집 버튼과 메시지, 목록 사이의 간격을 살짝 늘렸습니다 (5px -> 15px, 20px) */
+.header-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; } 
 .edit-btn { color: #007aff; font-size: 13px; font-weight: 400; background: none; border: none; padding: 5px 0; cursor: pointer; letter-spacing: -0.5px; }
 .header-top-row .ri-more-2-fill { color: #007aff; font-size: 18px; font-weight: 500; }
-.list-title { font-size: 24px; font-weight: 700; color: #000; margin: 0; letter-spacing: -0.5px; }
+.list-title { font-size: 28px; font-weight: 700; color: #000; margin: 0 0 20px 0; letter-spacing: -0.5px; }
 
-/* 편집 메뉴 팝업 */
+/* 편집 메뉴 팝업 (메모 고정용) */
 .edit-menu { position: absolute; top: 30px; left: 0; background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); display: flex; flex-direction: column; overflow: hidden; width: 120px; transform: translateY(-5px) scale(0.95); opacity: 0; pointer-events: none; transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); z-index: 999; }
 .edit-menu.active { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
 .edit-menu-item { padding: 10px 12px; font-size: 12px; color: #000; font-weight: 400; cursor: pointer; border-bottom: 1px solid rgba(0,0,0,0.05); text-decoration: none; display: flex; align-items: center; justify-content: space-between; }
 .edit-menu-item:last-child { border-bottom: none; }
 .edit-menu-item:active { background: #f2f2f7; }
 
-/* 채팅 리스트 (최소 글꼴 사이즈 정밀 조정) */
-.chat-list-container { flex: 1; overflow-y: auto; padding-bottom: calc(60px + env(safe-area-inset-bottom, 15px)); display: flex; flex-direction: column; }
+/* ---------------------------------------------------- */
+/* [2] 채팅 리스트 */
+/* ---------------------------------------------------- */
+/* 하단에 플로팅 바가 덮이므로 padding-bottom을 넉넉히 줍니다 */
+.chat-list-container { flex: 1; overflow-y: auto; padding-bottom: calc(90px + env(safe-area-inset-bottom, 20px)); display: flex; flex-direction: column; }
 .chat-item { position: relative; display: flex; padding: 8px 12px 8px 8px; align-items: center; cursor: pointer; transition: background-color 0.2s; }
 .chat-item:active { background-color: #f2f2f7; }
 
 .chat-item[data-tags*="미확인"]::before { content: ''; position: absolute; left: 4px; top: 50%; transform: translateY(-50%); width: 6px; height: 6px; background-color: #007aff; border-radius: 50%; }
 .chat-item[data-tags*="미확인"] .chat-name, .chat-item[data-tags*="미확인"] .chat-date { color: #000; font-weight: 600; }
 
-.chat-profile { width: 40px; height: 40px; border-radius: 50%; overflow: hidden; flex-shrink: 0; margin-left: 10px; margin-right: 10px; background-color: #e5e5ea; }
+.chat-profile { width: 44px; height: 44px; border-radius: 50%; overflow: hidden; flex-shrink: 0; margin-left: 10px; margin-right: 12px; background-color: #e5e5ea; }
 .chat-profile img { width: 100%; height: 100%; object-fit: cover; }
 
-.chat-info { flex: 1; min-width: 0; border-bottom: 1px solid rgba(0,0,0,0.06); padding-bottom: 10px; padding-top: 2px; display: flex; flex-direction: column; justify-content: center; }
+.chat-info { flex: 1; min-width: 0; border-bottom: 1px solid rgba(0,0,0,0.06); padding-bottom: 12px; padding-top: 2px; display: flex; flex-direction: column; justify-content: center; }
 .chat-item:last-child .chat-info { border-bottom: none; }
 
-.chat-name-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; }
-.chat-name { font-size: 13px; font-weight: 600; color: #000; display: flex; align-items: center; gap: 4px;}
-.chat-date { font-size: 11px; color: #8e8e93; display: flex; align-items: center; }
-.chat-date i { font-size: 14px; color: #c7c7cc; margin-left: 2px; }
-.chat-preview { font-size: 12px; color: #8e8e93; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.3; padding-right: 10px; }
+.chat-name-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px; }
+.chat-name { font-size: 14px; font-weight: 600; color: #000; display: flex; align-items: center; gap: 4px;}
+.chat-date { font-size: 12px; color: #8e8e93; display: flex; align-items: center; }
+.chat-date i { font-size: 16px; color: #c7c7cc; margin-left: 2px; }
+.chat-preview { font-size: 13px; color: #8e8e93; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.3; padding-right: 10px; }
 
 .pin-icon { color: #8e8e93; font-size: 12px; margin-left: 4px; display: none; }
 .chat-item.pinned { order: -1; background-color: #fafafa; }
@@ -67,28 +74,67 @@ body { margin: 0; padding: 0; background-color: #e5e5ea; display: flex; justify-
 .chat-list-container.pin-edit-mode .chat-item { background-color: #f2f2f7; border-radius: 8px; margin: 0 8px 4px 8px; border-bottom: none; }
 .chat-list-container.pin-edit-mode .chat-info { border-bottom: none; }
 
-/* 하단 툴바 */
-.bottom-toolbar { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(250, 250, 250, 0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 12px)); display: flex; gap: 10px; align-items: center; border-top: 1px solid rgba(0,0,0,0.1); z-index: 40; box-sizing: border-box; }
-.search-pill { flex: 1; background-color: #e3e3e8; border-radius: 8px; display: flex; align-items: center; padding: 5px 8px; }
-.search-pill i { color: #8e8e93; font-size: 14px; }
-.search-pill input { border: none; background: transparent; font-size: 12px; width: 100%; margin-left: 6px; outline: none; font-family: inherit; color: #000; }
-.search-pill input::placeholder { color: #8e8e93; }
-.compose-btn { background: transparent; border: none; color: #007aff; font-size: 20px; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; }
+/* ---------------------------------------------------- */
+/* [3] 하단 플로팅 툴바 (캡처 이미지 기반 완벽 둥근 불투명 UI) */
+/* ---------------------------------------------------- */
+/* 뒷배경이 없고 버튼들만 둥둥 떠다니는 구조 */
+.floating-bottom-bar { 
+    position: absolute; bottom: 0; left: 0; right: 0; 
+    padding: 10px 15px calc(15px + env(safe-area-inset-bottom, 15px)) 15px; 
+    display: flex; gap: 12px; align-items: flex-end; 
+    z-index: 40; pointer-events: none; /* 리스트 스크롤 간섭 방지 */
+}
 
-/* 뷰어창 디자인 (유저 요청 여백 완벽 적용) */
+/* 둥근 검색 알약 */
+.search-pill { 
+    pointer-events: auto; flex: 1; 
+    background: rgba(255, 255, 255, 0.92); 
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06), 0 0 0 0.5px rgba(0,0,0,0.03); 
+    border-radius: 25px; 
+    display: flex; align-items: center; padding: 0 15px; height: 46px; box-sizing: border-box; 
+}
+.search-pill i.ri-search-line { color: #000; font-size: 18px; font-weight: 500; }
+.search-pill input { border: none; background: transparent; font-size: 14px; width: 100%; margin: 0 10px; outline: none; color: #000; }
+.search-pill input::placeholder { color: #8e8e93; font-weight: 400; }
+.search-pill i.ri-mic-fill { color: #000; font-size: 18px; }
+
+/* 글쓰기 버튼 동그라미 */
+.compose-wrapper { position: relative; pointer-events: auto; }
+.compose-btn { 
+    width: 46px; height: 46px; 
+    background: rgba(255, 255, 255, 0.92); 
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06), 0 0 0 0.5px rgba(0,0,0,0.03); 
+    border-radius: 50%; 
+    display: flex; justify-content: center; align-items: center; 
+    color: #000; font-size: 20px; border: none; cursor: pointer; 
+}
+.compose-btn:active { background: #f2f2f7; }
+
+/* 글쓰기 버튼 클릭 시 뜨는 팝업 */
+.compose-menu { 
+    position: absolute; bottom: 55px; right: 0; 
+    background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); 
+    border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); 
+    display: flex; flex-direction: column; overflow: hidden; width: 150px; 
+    transform: translateY(10px) scale(0.95); opacity: 0; pointer-events: none; 
+    transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); z-index: 999; 
+}
+.compose-menu.active { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
+.compose-menu-item { padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: #1c1c1e; font-weight: 500; cursor: pointer; border-bottom: 1px solid rgba(0,0,0,0.05); text-decoration: none; }
+.compose-menu-item:last-child { border-bottom: none; }
+.compose-menu-item:active { background: #f2f2f7; }
+.compose-menu-item i { font-size: 16px; color: #007aff; }
+
+/* ---------------------------------------------------- */
+/* [4] 대화창 뷰어 */
+/* ---------------------------------------------------- */
 .viewer-header { position: sticky; top: 0; background: rgba(250, 250, 250, 0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); padding: 45px 15px 10px 15px; z-index: 50; display: flex; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.1); }
 @media (max-width: 767px) { .viewer-header { padding-top: calc(10px + env(safe-area-inset-top, 10px)); } }
-.nav-back { color: #007aff; font-size: 14px; cursor: pointer; display: flex; align-items: center; font-weight: 400; letter-spacing: -0.5px;}
-.nav-back i { font-size: 24px; font-weight: 300; margin-top: 1px; margin-right: -4px;}
-
-/* ▼▼▼ 대화창 13px 강제 적용 및 상단>하단 비대칭 여백 세팅 ▼▼▼ */
-#dynamic-content { 
-    flex: 1; overflow-y: auto; background-color: #fff; position: relative; 
-    /* 상단 30px, 좌우 12px, 하단 15px+안전영역 (하단 바 간섭 회피 & 상단이 더 넓게) */
-    padding: 30px 12px calc(15px + env(safe-area-inset-bottom, 15px)) 12px; 
-    box-sizing: border-box; 
-    font-size: 13px !important; /* 대화창 폰트만 13px로 업그레이드 */
-}
+.nav-back { color: #007aff; font-size: 15px; cursor: pointer; display: flex; align-items: center; gap: 0; font-weight: 400; letter-spacing: -0.5px;}
+.nav-back i { font-size: 26px; font-weight: 300; margin-top: 1px; margin-right: -4px;}
+#dynamic-content { flex: 1; overflow-y: auto; background-color: #fff; position: relative; padding: 30px 12px calc(15px + env(safe-area-inset-bottom, 15px)) 12px; box-sizing: border-box; font-size: 13px !important; }
 #dynamic-content .msg-bubble > div > div:first-child { font-size: 13px !important; }
 </style>
 </head>
@@ -105,7 +151,6 @@ body { margin: 0; padding: 0; background-color: #e5e5ea; display: flex; justify-
                     <div style="position: relative;">
                         <button class="edit-btn" id="edit-btn">편집</button>
                         <div class="edit-menu" id="edit-menu">
-                            <a class="edit-menu-item" href="list-editor.html">리스트 수정 <i class="ri-list-check"></i></a>
                             <div class="edit-menu-item" id="pin-mode-btn">메모 고정 <i class="ri-pushpin-line"></i></div>
                         </div>
                     </div>
@@ -116,15 +161,22 @@ body { margin: 0; padding: 0; background-color: #e5e5ea; display: flex; justify-
             
             <div id="chat-list-container" class="chat-list-container"></div>
 
-            <div class="bottom-toolbar">
+            <div class="floating-bottom-bar">
                 <div class="search-pill">
                     <i class="ri-search-line"></i>
                     <input type="text" id="msg-search" placeholder="검색">
-                    <i class="ri-mic-fill" style="margin-left: auto;"></i>
+                    <i class="ri-mic-fill"></i>
                 </div>
-                <button class="compose-btn" onclick="location.href='https://usagiarchiving.github.io/white/editor/iMessage.html'">
-                    <i class="ri-edit-box-line"></i>
-                </button>
+                
+                <div class="compose-wrapper">
+                    <button class="compose-btn" id="compose-btn">
+                        <i class="ri-edit-box-line"></i>
+                    </button>
+                    <div class="compose-menu" id="compose-menu">
+                        <a class="compose-menu-item" href="https://usagiarchiving.github.io/white/editor/iMessage.html">메시지 쓰기 <i class="ri-chat-new-line"></i></a>
+                        <a class="compose-menu-item" href="https://usagiarchiving.github.io/white/editor/message-list-editor.html">리스트 수정 <i class="ri-list-settings-line"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -238,6 +290,7 @@ document.getElementById('chat-list-container').addEventListener('click', functio
     }
 }, true);
 
+// 좌측 상단 편집 메뉴 (메모 고정용)
 const editBtn = document.getElementById('edit-btn');
 const editMenu = document.getElementById('edit-menu');
 const pinModeBtn = document.getElementById('pin-mode-btn');
@@ -257,8 +310,17 @@ pinModeBtn.addEventListener('click', function(e) {
     document.getElementById('chat-list-container').classList.add('pin-edit-mode');
 });
 
-document.addEventListener('click', function() {
+// 우측 하단 글쓰기 팝업 메뉴
+const composeBtn = document.getElementById('compose-btn');
+const composeMenu = document.getElementById('compose-menu');
+
+composeBtn.addEventListener('click', function(e) {
+    e.stopPropagation(); composeMenu.classList.toggle('active');
+});
+
+document.addEventListener('click', function(e) {
     if(editMenu.classList.contains('active')) editMenu.classList.remove('active');
+    if(composeMenu.classList.contains('active')) composeMenu.classList.remove('active');
 });
 
 function initSearchLogic() {

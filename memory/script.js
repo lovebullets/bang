@@ -1,6 +1,7 @@
 let activeCategoryIndex = 0;
 let selectedTag = 'all';
 let searchQueryStr = '';
+let isSliding = false; // 🔥 슬라이드 중인지 확인하는 락(Lock) 변수
 
 const track = document.getElementById('slider-track');
 const tabs = document.querySelectorAll('.tab-item');
@@ -9,7 +10,27 @@ const searchInput = document.getElementById('memory-search-input');
 
 let allCardDataElements = [];
 
+// 🔥 스크롤을 감지해서 카드를 띄워주는 센서 (Intersection Observer)
+const cardObserver = new IntersectionObserver((entries) => {
+    let delayCount = 0;
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const card = entry.target;
+            // 슬라이드 중이 아닐 때만 딴딴딴 딜레이를 주며 띄움
+            if (!card.classList.contains('show') && !card.classList.contains('sliding-lock')) {
+                setTimeout(() => {
+                    card.classList.add('show');
+                }, delayCount * 80);
+                delayCount++;
+            }
+        }
+    });
+}, { threshold: 0.05 });
+
+// 탭 스위칭 (슬라이드 완료 후 애니메이션 발동)
 function switchTab(index) {
+    if (activeCategoryIndex === index) return;
+    
     activeCategoryIndex = index;
     tabs.forEach(tab => tab.classList.remove('active'));
     tabs[index].classList.add('active');
@@ -17,12 +38,47 @@ function switchTab(index) {
     tagPools.forEach(pool => pool.classList.remove('active'));
     tagPools[index].classList.add('active');
     
+    const targetCat = getCategoryKeyByIndex(index);
+    const targetCards = document.querySelectorAll(`#list-${targetCat} .card`);
+    
+    // 1. 슬라이드 전: 넘어갈 탭의 카드들을 순식간에 숨기고 센서 무시 락(Lock)을 건다
+    targetCards.forEach(card => {
+        card.classList.remove('show');
+        card.classList.add('sliding-lock');
+        card.style.transition = 'none'; 
+    });
+
+    // 2. 옆으로 슉! 슬라이드
     track.style.transform = `translateX(-${index * 33.333}%)`;
     
     selectedTag = 'all';
     searchInput.value = '';
     searchQueryStr = '';
     executeMasterFilter();
+
+    isSliding = true;
+
+    // 3. 슬라이드가 완전히 끝난 후(450ms) 락을 풀고 애니메이션 발동!
+    setTimeout(() => {
+        isSliding = false;
+        let delay = 0;
+        targetCards.forEach(card => {
+            card.style.transition = ''; // 트랜지션 원상복구
+            card.classList.remove('sliding-lock'); // 센서 락 해제
+            
+            // 화면 안에 있는 애들만 차례대로 딴딴딴 띄움
+            if (card.style.display !== 'none') {
+                const rect = card.getBoundingClientRect();
+                const isVisible = (rect.top < window.innerHeight && rect.bottom >= 0);
+                if (isVisible && !card.classList.contains('show')) {
+                    setTimeout(() => {
+                        card.classList.add('show');
+                    }, delay);
+                    delay += 80;
+                }
+            }
+        });
+    }, 450);
 }
 
 function smoothLink(url) {
@@ -54,8 +110,16 @@ function executeMasterFilter() {
         const tagMatch = (selectedTag === 'all' || cardPack.tags.includes(selectedTag));
         const searchMatch = (searchQueryStr === '' || cardPack.searchBlob.includes(searchQueryStr));
 
-        if(categoryMatch && tagMatch && searchMatch) el.style.display = 'flex';
-        else el.style.display = 'none';
+        if(categoryMatch && tagMatch && searchMatch) {
+            // 필터링 돼서 다시 나타날 때도 부드럽게 뜨도록 설정
+            if (el.style.display === 'none') {
+                el.style.display = 'flex';
+                el.classList.remove('show');
+            }
+        } else {
+            el.style.display = 'none';
+            el.classList.remove('show');
+        }
     });
 }
 
@@ -72,9 +136,6 @@ searchInput.addEventListener('input', (e) => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const tagsTracker = { daily: new Set(), event: new Set(), au: new Set() };
-    
-    // 🔥 카테고리별 애니메이션 순서 지연을 위한 카운터
-    const delayCounter = { daily: 0, event: 0, au: 0 };
 
     fetch('list.html')
         .then(res => res.text())
@@ -114,10 +175,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.className = `card ${category === 'au' ? 'au-card' : ''}`;
                 card.href = `javascript:smoothLink('dialog/${id}.html')`;
 
-                // 🔥 각 카테고리 내에서 0.06초 간격으로 순차적인 딜레이(Stagger) 부여
-                card.style.animationDelay = `${delayCounter[category] * 0.06}s`;
-                delayCounter[category]++; // 카운터 증가
-
                 let thumbHtml = (imgUrl && imgUrl.trim() !== "") 
                     ? `<img src="${imgUrl}" class="card-img" alt="${title}" style="object-position: ${imgX}% ${imgY}%; transform-origin: ${imgX}% ${imgY}%; transform: scale(${imgScale});">` 
                     : `<div class="card-no-img-placeholder">FEARLESS</div>`;
@@ -147,7 +204,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 const targetContainer = document.getElementById(`list-${category}`);
-                if(targetContainer) targetContainer.appendChild(card);
+                if(targetContainer) {
+                    targetContainer.appendChild(card);
+                    // 🔥 생성된 카드를 스크롤 센서에 등록
+                    cardObserver.observe(card);
+                }
             });
 
             Object.keys(tagsTracker).forEach(catKey => {

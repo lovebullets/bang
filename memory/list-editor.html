@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>FEARLESS - Memory List Editor</title>
+<title>FEARLESS - Memory List Editor V2</title>
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 <style>
 :root { --bg: #f2f2f7; --card-bg: rgba(255, 255, 255, 0.7); --blue: #007aff; --text: #1c1c1e; --sub-text: #8e8e93; }
@@ -11,11 +11,11 @@ body { margin: 0; padding: 20px; background-color: var(--bg); font-family: -appl
 * { box-sizing: border-box; }
 h1 { font-size: 22px; font-weight: 700; margin-bottom: 20px; text-align: center; }
 
-.container { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+.container { max-width: 650px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
 .section { background: var(--card-bg); backdrop-filter: blur(20px); border-radius: 16px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.2s, opacity 0.2s; }
-.section-title { font-size: 15px; font-weight: 600; margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+.section-title { font-size: 15px; font-weight: 600; margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; justify-content: space-between; }
 
-textarea { width: 100%; height: 120px; border: 1px solid #d1d1d6; border-radius: 12px; padding: 12px; font-family: monospace; font-size: 12px; resize: vertical; outline: none; transition: border-color 0.2s; }
+textarea { width: 100%; height: 80px; border: 1px solid #d1d1d6; border-radius: 12px; padding: 12px; font-family: monospace; font-size: 12px; resize: vertical; outline: none; transition: border-color 0.2s; }
 textarea:focus { border-color: var(--blue); }
 input[type="text"], select { width: 100%; border: 1px solid #d1d1d6; border-radius: 8px; padding: 10px 12px; font-size: 13px; outline: none; transition: border-color 0.2s; background: #fff; }
 input[type="text"]:focus, select:focus { border-color: var(--blue); }
@@ -29,41 +29,65 @@ label { font-size: 11px; color: var(--sub-text); margin-bottom: 4px; display: bl
 .btn-icon { background: transparent; color: var(--sub-text); padding: 5px; font-size: 20px; cursor: pointer; border: none; }
 .btn-icon:hover { color: var(--blue); }
 
-.item-card { background: #fff; border: 1px solid #e5e5ea; border-radius: 12px; padding: 15px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; animation: fadeIn 0.3s ease forwards; }
+/* 아코디언 카드 스타일 */
+.item-card { background: #fff; border: 1px solid #e5e5ea; border-radius: 12px; padding: 15px; margin-bottom: 15px; display: flex; flex-direction: column; transition: all 0.3s ease; animation: fadeIn 0.3s ease forwards; overflow: hidden; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-.item-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; padding-bottom: 10px; margin-bottom: 5px; }
-.item-controls { display: flex; gap: 5px; }
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-/* 모바일 화면에서 인풋칸 찌그러짐 방지 */
+/* 카드 헤더 (접기/펴기 영역) */
+.item-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; border-bottom: 1px solid transparent; padding-bottom: 0; transition: all 0.3s; }
+.item-header.expanded { border-bottom-color: #f0f0f0; padding-bottom: 12px; margin-bottom: 12px; }
+.header-info-group { display: flex; align-items: center; gap: 10px; flex: 1; overflow: hidden; }
+.index-badge { background: var(--blue); color: #fff; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; cursor: pointer; transition: transform 0.2s; box-shadow: 0 2px 5px rgba(0,122,255,0.3); }
+.index-badge:active { transform: scale(0.9); }
+.header-title-text { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text); }
+.item-controls { display: flex; gap: 5px; align-items: center; }
+
+/* 카드 본문 (애니메이션 슬라이드) */
+.item-body { display: none; flex-direction: column; gap: 12px; }
+.item-body.expanded { display: flex; animation: slideDown 0.3s ease; }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+
+/* 실시간 썸네일 미리보기 UI */
+.img-input-group { display: flex; gap: 12px; align-items: center; }
+.thumb-preview { width: 50px; height: 50px; min-width: 50px; border-radius: 8px; object-fit: cover; background: #e5e5ea; border: 1px solid #d1d1d6; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+
+/* 조건부 노출 필드 스무스 처리 */
+.conditional-field { display: none; margin-top: 10px; animation: slideDown 0.3s ease; }
 
 .action-bar { display: flex; gap: 10px; justify-content: flex-end; margin-top: 15px; }
 </style>
 </head>
 <body>
 
-<h1><i class="ri-gallery-fill" style="color: #007aff;"></i> FEARLESS Memory Editor</h1>
+<h1><i class="ri-gallery-fill" style="color: #007aff;"></i> Memory Editor V2</h1>
 
 <div class="container">
     <div class="section">
         <h2 class="section-title"><i class="ri-download-cloud-2-line"></i> 기존 데이터 불러오기</h2>
         <p style="font-size: 11px; color: var(--sub-text); margin-top: 0;">memory/list.html 파일의 순수 데이터를 붙여넣으세요.</p>
-        <textarea id="import-area" placeholder="<div class='memory-data'>... 덩어리를 여기에 붙여넣기"></textarea>
+        <textarea id="import-area" style="height: 100px;" placeholder="<div class='memory-data'>... 덩어리를 여기에 붙여넣기"></textarea>
         <div style="text-align: right; margin-top: 10px;">
             <button class="btn" onclick="parseHTML()"><i class="ri-refresh-line"></i> 데이터 동기화</button>
         </div>
     </div>
 
     <div class="section">
-        <h2 class="section-title"><i class="ri-list-check-2"></i> 기억(Memory) 목록 편집</h2>
+        <div class="section-title">
+            <span><i class="ri-list-check-2"></i> 기억 목록 편집</span>
+            <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px;" onclick="sortItemsByDate()">
+                <i class="ri-sort-desc"></i> 날짜순 정렬
+            </button>
+        </div>
         <div id="editor-list"></div>
-        <button class="btn btn-secondary" style="width: 100%; margin-top: 10px;" onclick="addNewItem()"><i class="ri-add-line"></i> 새 기억 추가하기</button>
+        <button class="btn btn-secondary" style="width: 100%; margin-top: 10px;" onclick="addNewItem()"><i class="ri-add-line"></i> 새 기억 맨 위에 추가하기</button>
     </div>
 
     <div class="section" id="export-section">
         <h2 class="section-title"><i class="ri-code-box-line"></i> 최종 순수 코드 추출</h2>
-        <textarea id="export-area" readonly placeholder="하단의 '최종 코드 생성' 버튼을 누르세요."></textarea>
+        <textarea id="export-area" style="height: 120px;" readonly placeholder="하단의 '최종 코드 생성' 버튼을 누르세요."></textarea>
         <div class="action-bar">
             <button class="btn" onclick="generateHTML()"><i class="ri-magic-line"></i> 최종 코드 생성</button>
             <button class="btn btn-secondary" id="copy-btn" onclick="copyCode()"><i class="ri-clipboard-line"></i> 코드 복사</button>
@@ -73,14 +97,14 @@ label { font-size: 11px; color: var(--sub-text); margin-bottom: 4px; display: bl
 
 <script>
 let memoryItems = [];
+let isSortDesc = true;
 
-// 특수문자 HTML 이스케이프 방지/보호 처리
+// HTML 이스케이프 방지/보호
 function escapeHTML(str) {
     if (!str) return '';
     return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
 }
 
-// 오늘 날짜 및 ID 생성기 (KST)
 function getTodayData() {
     const now = new Date();
     const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
@@ -94,27 +118,21 @@ function getTodayData() {
     };
 }
 
-// ID 입력 시 자동으로 날짜로 변환해주는 스마트 함수
+// 스마트 ID -> 날짜 자동 파싱
 function handleIdChange(index, newId) {
     updateItem(index, 'id', newId);
-    
-    // 정규식으로 앞 6자리 숫자만 똑똑하게 추출 (ex: 260628_2 -> 26, 06, 28)
     const match = newId.match(/^(\d{2})(\d{2})(\d{2})/);
     if (match) {
         const yy = match[1];
-        const mm = parseInt(match[2], 10); // 06 -> 6 으로 변환
-        const dd = parseInt(match[3], 10); // 08 -> 8 으로 변환
-        
-        // 날짜 필드 자동 업데이트 (ex: 2026. 6. 28)
+        const mm = parseInt(match[2], 10);
+        const dd = parseInt(match[3], 10);
         const newDate = `20${yy}. ${mm}. ${dd}`;
         updateItem(index, 'date', newDate);
     }
-    
-    // UI 즉시 새로고침
-    renderEditor();
+    renderEditor(); // 헤더 정보 업데이트를 위해 리렌더링
 }
 
-// 기존 데이터 파싱
+// 데이터 파싱 (불러올 땐 모두 접힌 상태로!)
 function parseHTML() {
     const htmlString = document.getElementById('import-area').value;
     if (!htmlString.trim()) return;
@@ -128,23 +146,43 @@ function parseHTML() {
         memoryItems.push({
             id: item.getAttribute('data-id') || '',
             category: item.getAttribute('data-category') || 'daily',
+            auSetting: item.getAttribute('data-au-setting') || '',
             tag: item.getAttribute('data-tag') || '',
             img: item.getAttribute('data-img') || '',
             date: item.getAttribute('data-date') || '',
             title: item.querySelector('.memory-title') ? item.querySelector('.memory-title').textContent.trim() : '',
-            summary: item.querySelector('.memory-summary') ? item.querySelector('.memory-summary').textContent.trim() : ''
+            summary: item.querySelector('.memory-summary') ? item.querySelector('.memory-summary').textContent.trim() : '',
+            isExpanded: false // 기본적으로 모두 접기
         });
     });
     
     renderEditor();
-    alert('데이터를 성공적으로 동기화했습니다!');
+    alert('데이터가 쏙 들어왔습니다!');
 }
 
 function updateItem(index, key, value) {
     memoryItems[index][key] = value;
 }
 
-// 항목 순서 이동
+// 카테고리 변경 시 AU 필드 즉시 노출 로직 (포커스 잃지 않음)
+function handleCategoryChange(index, value) {
+    updateItem(index, 'category', value);
+    const auField = document.getElementById(`au-field-${index}`);
+    if (value === 'au') {
+        auField.style.display = 'block';
+    } else {
+        auField.style.display = 'none';
+        updateItem(index, 'auSetting', ''); // 다른 걸로 바꾸면 AU설정값 초기화
+    }
+}
+
+// 카드 접기/펴기 로직
+function toggleAccordion(index) {
+    memoryItems[index].isExpanded = !memoryItems[index].isExpanded;
+    renderEditor();
+}
+
+// 화살표 한 칸 이동
 function moveItem(index, dir) {
     if (index + dir < 0 || index + dir >= memoryItems.length) return;
     const temp = memoryItems[index];
@@ -153,31 +191,63 @@ function moveItem(index, dir) {
     renderEditor();
 }
 
-// 항목 삭제
+// 🔥 번호 클릭 시 원하는 위치로 한방에 텔레포트
+function promptMoveTo(index) {
+    let input = prompt(`[ 현재 순서: #${index + 1} ]\n몇 번째 순서로 이동시킬까요? (1 ~ ${memoryItems.length})`);
+    if (!input) return;
+    
+    let targetNum = parseInt(input, 10);
+    if (isNaN(targetNum) || targetNum < 1 || targetNum > memoryItems.length) {
+        alert("올바른 번호가 아닙니다!");
+        return;
+    }
+    
+    let targetIndex = targetNum - 1;
+    if (targetIndex === index) return;
+
+    let [movedItem] = memoryItems.splice(index, 1);
+    memoryItems.splice(targetIndex, 0, movedItem);
+    renderEditor();
+}
+
+// 🔥 날짜(ID) 기준 전체 자동 정렬
+function sortItemsByDate() {
+    if(memoryItems.length === 0) return;
+    
+    memoryItems.sort((a, b) => {
+        // ID가 '260628' 형식이므로 문자열 비교만으로 날짜 정렬이 완벽하게 됨
+        if (isSortDesc) return b.id.localeCompare(a.id); // 최신순
+        else return a.id.localeCompare(b.id); // 과거순
+    });
+    
+    isSortDesc = !isSortDesc;
+    renderEditor();
+}
+
 function removeItem(index) {
-    if (confirm('정말로 이 카드를 삭제하시겠습니까?')) {
+    if (confirm('정말로 이 기억 카드를 삭제하시겠습니까?')) {
         memoryItems.splice(index, 1);
         renderEditor();
     }
 }
 
-// 새 항목 추가 (기본 배경 이미지 적용 완료)
+// 새 항목은 무조건 최상단에, 펴진 상태로 추가!
 function addNewItem() {
     const today = getTodayData();
-    // 새 카드가 항상 리스트의 맨 앞에 오도록 맨 위(unshift)에 추가
     memoryItems.unshift({
         id: today.id,
         category: 'daily',
+        auSetting: '',
         tag: '',
-        img: 'https://i.ibb.co/CKF6H7pv/IMG-3826.jpg', // 지정해주신 기본 배경 이미지
+        img: 'https://i.ibb.co/CKF6H7pv/IMG-3826.jpg',
         date: today.formatted,
         title: '새로운 기억',
-        summary: ''
+        summary: '',
+        isExpanded: true // 새 항목은 바로 수정하라고 펴줍니다!
     });
     renderEditor();
 }
 
-// UI 렌더링
 function renderEditor() {
     const list = document.getElementById('editor-list');
     list.innerHTML = '';
@@ -188,68 +258,92 @@ function renderEditor() {
     }
     
     memoryItems.forEach((item, index) => {
+        const expandedClass = item.isExpanded ? 'expanded' : '';
+        const chevronIcon = item.isExpanded ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line';
+        
         list.innerHTML += `
         <div class="item-card">
-            <div class="item-header">
-                <strong>#${index + 1} 기억 편집</strong>
-                <div class="item-controls">
-                    <button class="btn-icon" onclick="moveItem(${index}, -1)"><i class="ri-arrow-up-line"></i></button>
-                    <button class="btn-icon" onclick="moveItem(${index}, 1)"><i class="ri-arrow-down-line"></i></button>
-                    <button class="btn btn-danger" onclick="removeItem(${index})"><i class="ri-delete-bin-line"></i></button>
+            <div class="item-header ${expandedClass}" onclick="toggleAccordion(${index})">
+                <div class="header-info-group">
+                    <span class="index-badge" title="클릭해서 번호 이동" onclick="promptMoveTo(${index}); event.stopPropagation();">#${index + 1}</span>
+                    <span class="header-title-text"><span style="color:#8e8e93; font-weight:400;">${escapeHTML(item.date)}</span> | ${escapeHTML(item.title)}</span>
+                </div>
+                <div class="item-controls" onclick="event.stopPropagation();">
+                    <button class="btn-icon" title="위로" onclick="moveItem(${index}, -1)"><i class="ri-arrow-up-line"></i></button>
+                    <button class="btn-icon" title="아래로" onclick="moveItem(${index}, 1)"><i class="ri-arrow-down-line"></i></button>
+                    <button class="btn-icon" title="삭제" style="color: #ff3b30;" onclick="removeItem(${index})"><i class="ri-delete-bin-line"></i></button>
+                    <i class="${chevronIcon}" style="font-size:24px; color:#c7c7cc; margin-left: 5px;"></i>
                 </div>
             </div>
-            <div class="grid-2">
+
+            <div class="item-body ${expandedClass}">
+                <div class="grid-2">
+                    <div>
+                        <label>ID (자동 날짜 동기화)</label>
+                        <input type="text" value="${escapeHTML(item.id)}" placeholder="ex) 260628" onchange="handleIdChange(${index}, this.value)">
+                    </div>
+                    <div>
+                        <label>카테고리</label>
+                        <select onchange="handleCategoryChange(${index}, this.value)">
+                            <option value="daily" ${item.category === 'daily' ? 'selected' : ''}>DAILY</option>
+                            <option value="event" ${item.category === 'event' ? 'selected' : ''}>EVENT</option>
+                            <option value="au" ${item.category === 'au' ? 'selected' : ''}>AU (스페셜)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="au-field-${index}" class="conditional-field" style="display: ${item.category === 'au' ? 'block' : 'none'};">
+                    <label>AU 설정 뱃지 (작은 글씨)</label>
+                    <input type="text" value="${escapeHTML(item.auSetting)}" placeholder="예: 느와르 AU, 오메가버스" onchange="updateItem(${index}, 'auSetting', this.value)">
+                </div>
+
+                <div class="grid-2">
+                    <div>
+                        <label>출력 날짜</label>
+                        <input type="text" value="${escapeHTML(item.date)}" onchange="updateItem(${index}, 'date', this.value)">
+                    </div>
+                    <div>
+                        <label>태그 (쉼표 콤마(,)로 구분)</label>
+                        <input type="text" value="${escapeHTML(item.tag)}" placeholder="데이트, 비밀" onchange="updateItem(${index}, 'tag', this.value)">
+                    </div>
+                </div>
+                
                 <div>
-                    <label>ID (dialog 폴더 파일명)</label>
-                    <input type="text" value="${escapeHTML(item.id)}" placeholder="ex) 260628" onchange="handleIdChange(${index}, this.value)">
+                    <label>배경 이미지 링크 (없으면 비워두기)</label>
+                    <div class="img-input-group">
+                        <img id="thumb-${index}" class="thumb-preview" src="${item.img || 'https://via.placeholder.com/50?text=No'}" onerror="this.src='https://via.placeholder.com/50?text=Error'">
+                        <input type="text" value="${escapeHTML(item.img)}" placeholder="https://i.ibb.co/..." 
+                            oninput="document.getElementById('thumb-${index}').src = this.value || 'https://via.placeholder.com/50?text=No';" 
+                            onchange="updateItem(${index}, 'img', this.value)">
+                    </div>
+                </div>
+
+                <div>
+                    <label>기억의 제목</label>
+                    <input type="text" value="${escapeHTML(item.title)}" oninput="updateItem(${index}, 'title', this.value); document.querySelector('#editor-list > .item-card:nth-child(${index+1}) .header-title-text').innerHTML = '<span style=\\'color:#8e8e93; font-weight:400;\\'>${escapeHTML(item.date)}</span> | ' + escapeHTML(this.value);">
                 </div>
                 <div>
-                    <label>카테고리</label>
-                    <select onchange="updateItem(${index}, 'category', this.value)">
-                        <option value="daily" ${item.category === 'daily' ? 'selected' : ''}>DAILY</option>
-                        <option value="event" ${item.category === 'event' ? 'selected' : ''}>EVENT</option>
-                        <option value="au" ${item.category === 'au' ? 'selected' : ''}>AU</option>
-                    </select>
+                    <label>줄거리 요약 <span style="font-weight:400; font-size:10px; color:var(--blue);">(대략 40~50자 권장, 비우면 제목이 정렬됩니다)</span></label>
+                    <textarea onchange="updateItem(${index}, 'summary', this.value)">${escapeHTML(item.summary)}</textarea>
                 </div>
-            </div>
-            <div class="grid-2">
-                <div>
-                    <label>날짜</label>
-                    <input type="text" value="${escapeHTML(item.date)}" placeholder="2026. 6. 28" onchange="updateItem(${index}, 'date', this.value)">
-                </div>
-                <div>
-                    <label>태그 (쉼표로 구분)</label>
-                    <input type="text" value="${escapeHTML(item.tag)}" placeholder="데이트, 현대물AU" onchange="updateItem(${index}, 'tag', this.value)">
-                </div>
-            </div>
-            <div>
-                <label>배경 이미지 링크</label>
-                <input type="text" value="${escapeHTML(item.img)}" placeholder="https://..." onchange="updateItem(${index}, 'img', this.value)">
-            </div>
-            <div>
-                <label>제목</label>
-                <input type="text" value="${escapeHTML(item.title)}" onchange="updateItem(${index}, 'title', this.value)">
-            </div>
-            <div>
-                <label>줄거리 요약</label>
-                <textarea style="height: 70px;" onchange="updateItem(${index}, 'summary', this.value)">${escapeHTML(item.summary)}</textarea>
             </div>
         </div>`;
     });
 }
 
-// 최종 HTML 생성
 function generateHTML() {
     let finalCode = '';
     
     memoryItems.forEach(item => {
-        finalCode += `<div class="memory-data" \n     data-id="${escapeHTML(item.id)}" \n     data-category="${escapeHTML(item.category)}" \n     data-tag="${escapeHTML(item.tag)}" \n     data-img="${item.img ? escapeHTML(item.img) : ''}" \n     data-date="${escapeHTML(item.date)}">\n    <div class="memory-title">${escapeHTML(item.title)}</div>\n    <div class="memory-summary">${escapeHTML(item.summary)}</div>\n</div>\n\n`;
+        // AU 카테고리이면서 AU설정값이 있을 때만 data-au-setting 출력
+        const auAttr = (item.category === 'au' && item.auSetting.trim() !== '') ? ` \n     data-au-setting="${escapeHTML(item.auSetting)}"` : '';
+        
+        finalCode += `<div class="memory-data" \n     data-id="${escapeHTML(item.id)}" \n     data-category="${escapeHTML(item.category)}"${auAttr} \n     data-tag="${escapeHTML(item.tag)}" \n     data-img="${item.img ? escapeHTML(item.img) : ''}" \n     data-date="${escapeHTML(item.date)}">\n    <div class="memory-title">${escapeHTML(item.title)}</div>\n    <div class="memory-summary">${escapeHTML(item.summary)}</div>\n</div>\n\n`;
     });
     
     document.getElementById('export-area').value = finalCode.trim();
 }
 
-// 코드 복사 애니메이션 효과
 function copyCode() {
     const exportArea = document.getElementById('export-area');
     if(!exportArea.value) return;

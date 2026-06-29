@@ -1,0 +1,219 @@
+/* === 기본 세팅 및 Noto Serif KR 강제 무장 === */
+* { 
+    margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-tap-highlight-color: transparent; 
+    font-family: 'Noto Serif KR', serif !important;
+}
+
+body, html {
+    width: 100%; height: 100dvh; overflow: hidden;
+    background-color: #1B1B1B;
+    color: #F9F9F8;
+}
+
+/* 🔥 진입 시 스무스한 블러 + 페이드 애니메이션 */
+@keyframes pageFadeIn {
+    from { opacity: 0; transform: scale(0.97) translateY(10px); filter: blur(8px); }
+    to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+}
+
+#archive-container {
+    position: relative; width: 100vw; height: 100dvh;
+    background-color: #1B1B1B;
+    animation: pageFadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.content-layer {
+    position: relative; width: 100%; height: 100%;
+    display: flex; flex-direction: column; z-index: 10;
+}
+
+/* === 상단 헤더 UI === */
+header {
+    width: 100%; padding: max(15px, env(safe-area-inset-top)) 20px 10px 20px;
+    display: flex; flex-direction: column; gap: 15px;
+}
+.header-top {
+    display: flex; align-items: center; justify-content: space-between;
+    position: relative; height: 35px;
+}
+.back-btn {
+    color: #F9F9F8; text-decoration: none; font-size: 24px;
+    display: flex; align-items: center;
+    transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.back-btn:active { transform: scale(0.85) translateX(-3px); }
+
+/* 통합 검색창 */
+.search-box-wrapper {
+    position: relative; display: flex; align-items: center;
+    background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(249, 249, 248, 0.15);
+    border-radius: 20px; padding: 4px 12px; width: 140px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.search-box-wrapper:focus-within {
+    width: 180px; border-color: rgba(249, 249, 248, 0.6); background: rgba(255, 255, 255, 0.1);
+}
+.search-box-wrapper iconify-icon {
+    font-size: 16px; color: rgba(249, 249, 248, 0.4); margin-right: 6px;
+}
+.search-input {
+    width: 100%; background: none; border: none; outline: none;
+    color: #F9F9F8; font-size: 11px; font-weight: 500;
+}
+.search-input::placeholder { color: rgba(249, 249, 248, 0.3); }
+
+/* 영문 카테고리 탭 */
+.tab-menu {
+    display: flex; justify-content: center; align-items: center; gap: 35px; width: 100%;
+}
+.tab-item {
+    font-size: 14px; font-weight: 700; color: rgba(249, 249, 248, 0.35);
+    cursor: pointer; padding-bottom: 6px; position: relative; letter-spacing: 2px;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.tab-item.active {
+    color: #F9F9F8; font-weight: 900; text-shadow: 0px 0px 12px rgba(249,249,248,0.3);
+}
+.tab-item::after {
+    content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px;
+    background-color: #F9F9F8; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    transform: translateX(-50%);
+}
+.tab-item.active::after { width: 100%; }
+
+/* 알약 태그 바 */
+.tag-filter-container-wrapper {
+    position: relative; width: 100%; padding: 0 20px 8px 20px;
+}
+.tag-filter-pool {
+    display: none; justify-content: center; align-items: center; 
+    gap: 8px; flex-wrap: wrap; width: 100%;
+}
+.tag-filter-pool.active { display: flex; }
+
+.filter-tag-btn {
+    background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(249, 249, 248, 0.12);
+    padding: 4px 12px; border-radius: 20px;
+    font-size: 10px; font-weight: 700; color: rgba(249, 249, 248, 0.6);
+    white-space: nowrap; transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1); cursor: pointer;
+}
+.filter-tag-btn:hover {
+    background: rgba(255, 255, 255, 0.15); color: #F9F9F8; transform: translateY(-1px);
+}
+.filter-tag-btn.active {
+    background: #F9F9F8; color: #1B1B1B; border-color: #F9F9F8;
+    box-shadow: 0 4px 10px rgba(249,249,248,0.2);
+}
+
+/* === 슬라이드 컨테이너 뷰 === */
+.slider-wrapper { flex: 1; width: 100%; overflow: hidden; position: relative; }
+.slider-track {
+    display: flex; width: 300%; height: 100%;
+    transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.tab-content {
+    width: 33.333%; height: 100%; overflow-y: auto;
+    padding: 10px 20px max(30px, env(safe-area-inset-bottom)) 20px;
+    display: flex; flex-direction: column; gap: 14px;
+}
+.tab-content::-webkit-scrollbar { display: none; }
+
+/* =======================================
+   가로형 카드 마스터 디자인 (DAILY / EVENT)
+   ======================================= */
+.card {
+    width: 100%; height: 155px; background: #242424;
+    border-radius: 16px; display: flex; overflow: hidden;
+    text-decoration: none; position: relative;
+    border: 1px solid rgba(255,255,255,0.04);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1.1);
+}
+.card:hover {
+    transform: translateY(-4px) scale(1.015); border-color: rgba(249, 249, 248, 0.25);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.4), 0 0 15px rgba(249,249,248,0.05);
+}
+.card:active { transform: scale(0.98); transition: transform 0.1s; }
+
+/* 왼쪽 흰색 그라데이션 장막 */
+.card-scenery-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to right, 
+        rgba(249, 249, 248, 1) 0%, rgba(249, 249, 248, 0.98) 15%, 
+        rgba(249, 249, 248, 0.9) 30%, rgba(249, 249, 248, 0.75) 45%, 
+        rgba(249, 249, 248, 0.5) 65%, rgba(249, 249, 248, 0.15) 85%, 
+        rgba(249, 249, 248, 0) 100%);
+    z-index: 5; pointer-events: none;
+}
+
+/* 내부 텍스트 레이아웃 */
+.card-inner-info {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    padding: 16px 18px; z-index: 10; display: flex; flex-direction: column;
+    justify-content: space-between; pointer-events: none;
+}
+.card-bottom-left-group {
+    position: absolute; bottom: 16px; left: 18px; width: 55%;
+    display: flex; flex-direction: column; gap: 4px;
+    justify-content: flex-end; /* 빈칸 시 자동 하단 정착 */
+}
+.card-title {
+    font-size: 15px; font-weight: 700; color: #1B1B1B;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -0.3px;
+}
+.card-summary {
+    font-size: 11px; color: #484848; line-height: 1.4; font-weight: 400; 
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden; text-overflow: ellipsis;
+}
+.card-top-right-group { position: absolute; top: 16px; right: 18px; }
+.card-date {
+    font-size: 10px; color: #F9F9F8; font-weight: 700; letter-spacing: 0.3px;
+    background: rgba(0,0,0,0.4); padding: 3px 8px; border-radius: 4px; 
+    backdrop-filter: blur(2px); box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.card-illustration-frame {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;
+}
+.card-img { width: 100%; height: 100%; object-fit: cover; object-position: center center; }
+
+/* =======================================
+   🔥 AU 전용 스페셜 카드 디자인
+   ======================================= */
+.au-card { height: 240px; } /* 세로가 훌쩍 길어짐 */
+.au-card .card-scenery-overlay {
+    /* 왼쪽 흰색 대신 하단부 다크 그라데이션 */
+    background: linear-gradient(to top, 
+        rgba(15, 15, 15, 0.95) 0%, rgba(15, 15, 15, 0.8) 25%, 
+        rgba(15, 15, 15, 0.4) 50%, rgba(15, 15, 15, 0) 100%);
+}
+.au-card .card-bottom-left-group {
+    width: 90%; /* 우측 끝까지 텍스트 사용 가능 */
+}
+.au-card .card-title { color: #F9F9F8; font-size: 17px; } /* 다크배경에 맞춘 흰색 제목 */
+.au-card .card-summary { color: #D1D1D1; }
+/* AU 설정 미니 텍스트 */
+.au-setting-text {
+    font-size: 10px; color: #A0B0C0; font-weight: 900; 
+    margin-bottom: 2px; letter-spacing: 0.5px; text-transform: uppercase;
+}
+
+/* === PC 버전 그리드 와이드 배치 보정 === */
+@media (min-width: 768px) {
+    header { padding: 30px 40px 10px 40px; }
+    .tag-filter-container-wrapper { padding: 0 40px 12px 40px; }
+    .tab-menu { gap: 55px; } .tab-item { font-size: 16px; }
+    .filter-tag-btn { font-size: 11px; padding: 5px 15px; }
+    .tab-content {
+        padding: 15px 40px 40px 40px; display: grid; 
+        grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 25px;
+    }
+    .card { height: 175px; } 
+    .au-card { height: 280px; } /* PC AU 카드는 더 웅장하게 */
+    .card-bottom-left-group { bottom: 20px; left: 22px; width: 55%; }
+    .au-card .card-bottom-left-group { width: 85%; }
+    .card-top-right-group { top: 20px; right: 22px; }
+    .card-title { font-size: 17px; }
+    .au-card .card-title { font-size: 19px; }
+    .card-summary { font-size: 12px; -webkit-line-clamp: 3; }
+}

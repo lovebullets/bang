@@ -1,7 +1,7 @@
 let activeCategoryIndex = 0;
 let selectedTag = 'all';
 let searchQueryStr = '';
-let isSliding = false; // 🔥 슬라이드 중인지 확인하는 락(Lock) 변수
+let isSliding = false; // 슬라이드 중인지 확인하는 락(Lock) 변수
 
 const track = document.getElementById('slider-track');
 const tabs = document.querySelectorAll('.tab-item');
@@ -135,7 +135,8 @@ searchInput.addEventListener('input', (e) => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    const tagsTracker = { daily: new Set(), event: new Set(), au: new Set() };
+    // 🔥 카테고리별로 태그 '등장 횟수(Count)'를 기록할 객체 생성
+    const tagsTracker = { daily: {}, event: {}, au: {} };
 
     fetch('list.html')
         .then(res => res.text())
@@ -151,6 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const date = item.getAttribute('data-date') || '';
                 const auSetting = item.getAttribute('data-au-setting') || '';
                 
+                // 이미지 속성 가져오기
                 const imgUrl = item.getAttribute('data-img');
                 const imgX = item.getAttribute('data-img-x') || '50';
                 const imgY = item.getAttribute('data-img-y') || '50';
@@ -165,7 +167,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     rawTags.split(',').forEach(t => {
                         const cleaned = t.trim();
                         if(cleaned) {
-                            tagsTracker[category].add(cleaned);
+                            // 🔥 태그가 등장할 때마다 횟수 +1 씩 누적
+                            tagsTracker[category][cleaned] = (tagsTracker[category][cleaned] || 0) + 1;
                             processedTagsArray.push(cleaned);
                         }
                     });
@@ -175,6 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.className = `card ${category === 'au' ? 'au-card' : ''}`;
                 card.href = `javascript:smoothLink('dialog/${id}.html')`;
 
+                // 이미지 삽입 및 줌/패닝 적용
                 let thumbHtml = (imgUrl && imgUrl.trim() !== "") 
                     ? `<img src="${imgUrl}" class="card-img" alt="${title}" style="object-position: ${imgX}% ${imgY}%; transform-origin: ${imgX}% ${imgY}%; transform: scale(${imgScale});">` 
                     : `<div class="card-no-img-placeholder">FEARLESS</div>`;
@@ -206,14 +210,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 const targetContainer = document.getElementById(`list-${category}`);
                 if(targetContainer) {
                     targetContainer.appendChild(card);
-                    // 🔥 생성된 카드를 스크롤 센서에 등록
+                    // 생성된 카드를 스크롤 센서에 등록
                     cardObserver.observe(card);
                 }
             });
 
+            // 🔥 태그 렌더링: 등장 횟수(Count)가 높은 순서대로 내림차순 정렬 후 버튼 배치
             Object.keys(tagsTracker).forEach(catKey => {
                 const poolContainer = document.getElementById(`tag-pool-${catKey}`);
-                tagsTracker[catKey].forEach(tagName => {
+                
+                // 등장 횟수 기반으로 정렬된 배열 생성
+                const sortedTags = Object.keys(tagsTracker[catKey]).sort((a, b) => {
+                    return tagsTracker[catKey][b] - tagsTracker[catKey][a];
+                });
+
+                // 정렬된 순서대로 버튼 DOM에 추가
+                sortedTags.forEach(tagName => {
                     const btn = document.createElement('div');
                     btn.className = 'filter-tag-btn';
                     btn.textContent = `#${tagName.toUpperCase()}`;

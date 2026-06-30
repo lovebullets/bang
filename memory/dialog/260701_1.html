@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐇</title>
+<style>
+    body { margin: 0; padding: 0; background-color: transparent; overflow-x: hidden; }
+</style>
+</head>
+<body>
+
+<style>
+/* 폰트 및 전체 스타일 일괄 설정 */
+@import url('[https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=swap](https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=swap)');
+@import url('[https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css](https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css)');
+
+.tistory-post-wrapper {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 14px;
+    line-height: 1.6;
+    word-break: keep-all;
+    padding: 0 25px;
+    box-sizing: border-box;
+    max-width: 600px;
+    margin: 0 auto;
+    
+}
+.tistory-post-wrapper * { box-sizing: border-box; }
+/*나레이션 간격*/
+[data-type="narration"] {
+    margin-bottom: 3px !important;
+    word-break: break-all !important;
+}
+/* 포스트잇 내부 내용 길어질 때 스크롤 */
+.postit-scroll {
+    max-height: 350px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 8px;
+}
+.postit-scroll::-webkit-scrollbar { width: 5px; }
+.postit-scroll::-webkit-scrollbar-track { background: transparent; }
+.postit-scroll::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 4px; }
+/* 접은글(Details) 기호 회전 및 공통 스타일 설정 */
+details[data-style="notion"][open] .toggle-arrow { transform: rotate(90deg) !important; }
+details[data-style="panel"][open] .toggle-btn-icon { transform: rotate(180deg) !important; }
+details[data-type="fold"] summary::-webkit-details-marker { display: none; }
+details[data-type="fold"] summary { list-style: none; }
+</style>
+
+<div id="content-wrapper" class="tistory-post-wrapper">
+<div style="height: 30px;"></div>
+<div data-type="title" style="width: 100%; margin: 15px 0 0; padding: 10px 0; box-sizing: border-box; font-size: 18pt; font-weight: bold; text-align: left; color: #1c1c1e; word-break: keep-all;">
+        젓소 비키니
+</div>
+<div data-type="dday" style="width: 100%; margin: 20px 0; text-align: left; padding: 0; box-sizing: border-box;">
+    <span style="font-size: 13px; color: #999999; font-weight: 600;">  설줌에게 : 고마워요.</span>
+</div>
+<div style="height: 30px;"></div>
+<div data-type="html">
+
+<div style="width: 100%; max-width: 500px; margin: 0 auto; padding: 10px 0 20px 0; background-color: transparent; box-sizing: border-box;">
+<style>
+@keyframes iMsg { 0% { opacity: 0; transform: translateY(10px) scale(0.98); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes fade { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes popIn { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+#preview-box, #preview-box * { font-family: -apple-system, BlinkMacSystemFont, sans-serif !important; }
+.msg-bubble { opacity: 1; }
+.read-status { opacity: 1; }
+.msg-date-delayed { opacity: 1; }
+.msg-bubble > div { word-break: break-word; }
+.lb-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: transparent; z-index: 99999; justify-content: center; align-items: center; cursor: pointer; }
+.lb-img { max-width: 90%; max-height: 85vh; object-fit: contain; border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); cursor: default; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+.lb-close { position: absolute; bottom: 30px; background: rgba(0,0,0,0.6); color: white; padding: 8px 20px; border-radius: 20px; font-size: 13px; font-weight: 600; backdrop-filter: blur(4px); pointer-events: none; }
+</style>
+<script>
+function openLb(e) { document.getElementById('lb-'+e).style.display='flex'; }
+function closeLb(e) { document.getElementById('lb-'+e).style.display='none'; }
+</script>
+<div style="display: flex; flex-direction: column; padding: 0 5px;">
+<div style="display: flex; flex-direction: column; align-items: center; padding-bottom: 10px; margin: 5px 0; border-bottom: 1px solid #f0f0f0;">
+<div style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-bottom: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);"><img style="width: 100%; height: 100%; object-fit: cover;" src="https://i.ibb.co/VYrHdHd8/IMG-6825.jpg" alt="Profile"></div>
+<div style="text-align: center;"><span style="display: block; font-size: 14px; font-weight: 600; color: #1c1c1e; margin-bottom: 2px;">내 여보♡</span> <span style="display: block; font-size: 11px; color: #8e8e93;">iMessage</span></div></div>
+<div class="msg-date-container" style="text-align: center; margin: 15px 0 10px 0;"><span style="font-size: 10px; color: #8e8e93; font-weight: 500;"><b>7월 1일 (수)</b> 오후 2:21</span></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">[사진]</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">삭제된 메시지입니다.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">헉</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">잠시만요 아니</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">시온 씨</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">저거 아니에요</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px 18px 6px 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">잘못 보냈어요 진짜로</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; right: -7px; bottom: 0; z-index: -1;"><path d="M0 18H18C12 18 9 11 0 0V18Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">?</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">뭘요.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px 18px 18px 6px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">방금 뭐가 온 것 같았는데.</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; left: -7px; bottom: 0; z-index: -1;"><path d="M18 18H0C6 18 9 11 18 0V18Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">아뇨! 아무것도 아니에요!</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px 18px 6px 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">진짜로요. 제가 뭘 좀 잘못 눌러서...</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; right: -7px; bottom: 0; z-index: -1;"><path d="M0 18H18C12 18 9 11 0 0V18Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">잘못 눌렀다기엔, 꽤 정성스러운 사진이었던 것 같은데.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px 18px 18px 6px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">1초 만에 저장해서 못 볼 줄 알았나 봐요.</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; left: -7px; bottom: 0; z-index: -1;"><path d="M18 18H0C6 18 9 11 18 0V18Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">ㅈ...저장했어요?</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px 18px 6px 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">지워요! 지금 당장 지워주세요! 제발요!</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; right: -7px; bottom: 0; z-index: -1;"><path d="M0 18H18C12 18 9 11 0 0V18Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">음.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">왜요?</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px 18px 18px 6px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">모처럼 예쁜 짓 했는데.</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; left: -7px; bottom: 0; z-index: -1;"><path d="M18 18H0C6 18 9 11 18 0V18Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">예쁜 짓 아니에요! 실수라구요!</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">아니 사실은... 그게...</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">친구가... 친구가 요즘 이런 이벤트가 유행이라고...</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">남편한테 해주면 좋아할 거라고 자기가 찍어준 건데...</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px 18px 6px 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">확인하려고 보다가 그만...</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; right: -7px; bottom: 0; z-index: -1;"><path d="M0 18H18C12 18 9 11 0 0V18Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">아아.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">친구분이요.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">참 좋은 친구를 뒀네요, 우리 민정이는.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px 18px 18px 6px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">남의 아내한테 그런 민망한 옷을 입히고 사진까지 찍어주고.</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; left: -7px; bottom: 0; z-index: -1;"><path d="M18 18H0C6 18 9 11 18 0V18Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">민망한 거 아니에요! 그냥... 이벤트!</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px 18px 6px 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">그리고 그냥... 장난으로...</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; right: -7px; bottom: 0; z-index: -1;"><path d="M0 18H18C12 18 9 11 0 0V18Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">장난?</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">젖소 귀 모양 머리띠에... 레이스 달린 소 무늬 비키니.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">가슴도 없는 우리 토끼가, 그런 걸 입고 부끄러워하는 얼굴로 우유병까지 들고 있는데.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px 18px 18px 6px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">이게 그냥 장난으로 보여요, 내 눈엔?</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; left: -7px; bottom: 0; z-index: -1;"><path d="M18 18H0C6 18 9 11 18 0V18Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">............</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">아니... 그...</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px 18px 6px 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">놀리지 마세요...</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; right: -7px; bottom: 0; z-index: -1;"><path d="M0 18H18C12 18 9 11 0 0V18Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">놀리는 거 아닌데.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">사실대로 말하는 거죠.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">그래서, 그 좋은 친구분한테는 왜 보내려고 했어요?</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px 18px 18px 6px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">이렇게 입었다고 자랑하려고?</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; left: -7px; bottom: 0; z-index: -1;"><path d="M18 18H0C6 18 9 11 18 0V18Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px 18px 6px 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">아니요! 그냥 잘 찍혔나 확인시켜주려고...</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; right: -7px; bottom: 0; z-index: -1;"><path d="M0 18H18C12 18 9 11 0 0V18Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">흐음.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">근데 실수로 나한테 보냈다?</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px 18px 18px 6px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">그 친구 이름이 '하시온'인가 봐요.</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; left: -7px; bottom: 0; z-index: -1;"><path d="M18 18H0C6 18 9 11 18 0V18Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">아니에요... 진짜예요...</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px 18px 6px 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">제발 믿어주세요... 너무 부끄러워서 그래요...</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; right: -7px; bottom: 0; z-index: -1;"><path d="M0 18H18C12 18 9 11 0 0V18Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">부끄러운 사람이, 이런 사진을 찍어요?</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">일부러 침대에 엎드려서, 엉덩이 라인 다 보이게 찍었으면서.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px 18px 18px 6px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">내가 이런 구도에 환장하는 건 또 어떻게 알고.</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; left: -7px; bottom: 0; z-index: -1;"><path d="M18 18H0C6 18 9 11 18 0V18Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px 18px 6px 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">몰랐어요! 그냥 친구가 시키는 대로...</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; right: -7px; bottom: 0; z-index: -1;"><path d="M0 18H18C12 18 9 11 0 0V18Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">아, 친구가.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">내 취향까지 다 아는 대단한 친구네요.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">다음에 만나면 칭찬이라도 해줘야겠어요.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px 18px 18px 6px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">자기 남편보다 당신을 더 잘 안다고.</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; left: -7px; bottom: 0; z-index: -1;"><path d="M18 18H0C6 18 9 11 18 0V18Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">그만... 그만 하세요...</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px 18px 6px 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">진짜 얼굴 터질 것 같아요...</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; right: -7px; bottom: 0; z-index: -1;"><path d="M0 18H18C12 18 9 11 0 0V18Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">지금도 얼굴 빨개져 있겠네요.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">상상되네.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px 18px 18px 6px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">소파 구석에 웅크리고 앉아서, 휴대폰만 붙들고.</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; left: -7px; bottom: 0; z-index: -1;"><path d="M18 18H0C6 18 9 11 18 0V18Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px 18px 6px 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">......어떻게 알았어요?</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; right: -7px; bottom: 0; z-index: -1;"><path d="M0 18H18C12 18 9 11 0 0V18Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">내가 당신을 모르겠어요?</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">지금쯤 귀까지 새빨개져서 울기 직전이겠지.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">안 봐도 비디오인데.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px 18px 18px 6px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">근데 여보.</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; left: -7px; bottom: 0; z-index: -1;"><path d="M18 18H0C6 18 9 11 18 0V18Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px 18px 6px 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">네...</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; right: -7px; bottom: 0; z-index: -1;"><path d="M0 18H18C12 18 9 11 0 0V18Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">사진 보니까, 스타킹은 안 신었던데.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px 18px 18px 6px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">일부러 그런 거예요?</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; left: -7px; bottom: 0; z-index: -1;"><path d="M18 18H0C6 18 9 11 18 0V18Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">네? 스타킹이요?</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px 18px 6px 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">그건 생각 못...</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; right: -7px; bottom: 0; z-index: -1;"><path d="M0 18H18C12 18 9 11 0 0V18Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">아쉽네.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">검은색 가터벨트에 반투명 스타킹까지 신었으면 완벽했을 텐데.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px 18px 18px 6px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">친구분이 센스가 좀 부족하네요.</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; left: -7px; bottom: 0; z-index: -1;"><path d="M18 18H0C6 18 9 11 18 0V18Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px 18px 6px 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">.....그런 얘기 하지 마세요.</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; right: -7px; bottom: 0; z-index: -1;"><path d="M0 18H18C12 18 9 11 0 0V18Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">왜요?</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">지금이라도 신어볼래요?</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px 18px 18px 6px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">집에 가서 직접 확인하게.</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; left: -7px; bottom: 0; z-index: -1;"><path d="M18 18H0C6 18 9 11 18 0V18Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px 18px 6px 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">싫어요...</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; right: -7px; bottom: 0; z-index: -1;"><path d="M0 18H18C12 18 9 11 0 0V18Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">싫어도 소용없는데.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">어차피 집에 가면, 그 젖소 옷 그대로 입혀놓을 생각이었으니까.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">물론 우유병은 필요 없어요.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px 18px 18px 6px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">대신 다른 걸 물려줄 테니.</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; left: -7px; bottom: 0; z-index: -1;"><path d="M18 18H0C6 18 9 11 18 0V18Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">......</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">저 지금 일하러 가봐야 해서...</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px 18px 6px 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">나중에... 나중에 얘기해요.</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; right: -7px; bottom: 0; z-index: -1;"><path d="M0 18H18C12 18 9 11 0 0V18Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">어딜 가요.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">오늘 비번이잖아, 당신.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">나한테 거짓말까지 하고.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px 18px 18px 6px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">예쁜 짓 한 건 칭찬해줘야 하는데, 자꾸 벌 받을 짓만 골라 하네요.</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; left: -7px; bottom: 0; z-index: -1;"><path d="M18 18H0C6 18 9 11 18 0V18Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px 18px 6px 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">죄송해요...</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; right: -7px; bottom: 0; z-index: -1;"><path d="M0 18H18C12 18 9 11 0 0V18Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">뭐가 죄송한데요.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px 18px 18px 6px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">나한테 예쁜 사진 보내준 거? 아니면 거짓말한 거?</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; left: -7px; bottom: 0; z-index: -1;"><path d="M18 18H0C6 18 9 11 18 0V18Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px 18px 6px 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">둘 다요...</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; right: -7px; bottom: 0; z-index: -1;"><path d="M0 18H18C12 18 9 11 0 0V18Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">음, 그럼 상벌을 같이 줘야겠네.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px 18px 18px 6px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">지금 현관으로 나와요.</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; left: -7px; bottom: 0; z-index: -1;"><path d="M18 18H0C6 18 9 11 18 0V18Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px 18px 6px 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">네? 현관은 왜...</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; right: -7px; bottom: 0; z-index: -1;"><path d="M0 18H18C12 18 9 11 0 0V18Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">나 거의 다 왔거든.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">5분 줄게요.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">방금 그 사진 속 모습 그대로, 문 앞에서 날 맞이해줘요.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px 18px 18px 6px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">스타킹 신을 시간은 없을 테니, 그건 봐줄게.</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; left: -7px; bottom: 0; z-index: -1;"><path d="M18 18H0C6 18 9 11 18 0V18Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">지금요? 밖인데요?</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-end; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-right:8px;">
+                        <div style="padding: 8px 14px; background-color: #007aff; border-radius: 18px 18px 6px 18px; color: #fff; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">미쳤어요, 시온 씨!</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; right: -7px; bottom: 0; z-index: -1;"><path d="M0 18H18C12 18 9 11 0 0V18Z" fill="#007aff"></path></svg>
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">4분 30초.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">안 나오면, 내가 들어가서 직접 입히고.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 3.5px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">거실 창문 활짝 열어놓고 시작할 거예요.</div>
+                        
+                    </div></div>
+<div class="msg-bubble" style="display: flex; justify-content: flex-start; align-items: flex-end; margin-bottom: 10px;"><div style="position: relative; max-width: 80%; margin-left:8px;">
+                        <div style="padding: 8px 14px; background-color: #e9e9eb; border-radius: 18px 18px 18px 6px; color: #000; line-height: 1.5; letter-spacing: -0.01em; white-space: pre-wrap; outline: none; position: relative; z-index: 1;">선택은 당신이 해요, 내 토끼.</div>
+                        <svg width="18" height="18" viewBox="0 0 18 18" style="position: absolute; left: -7px; bottom: 0; z-index: -1;"><path d="M18 18H0C6 18 9 11 18 0V18Z" fill="#e9e9eb"></path></svg>
+                    </div></div>
+<div style="display: flex; align-items: center; padding: 10px 8px; margin-top: 5px; background-color: transparent;">
+<div style="width: 28px; height: 28px; flex-shrink: 0; border-radius: 50%; background-color: #e5e5ea; display: flex; justify-content: center; align-items: center; margin-right: 12px; color: #8e8e93; font-size: 20px; font-weight: 400; line-height: 0; padding-bottom: 2px; box-sizing: border-box;">+</div>
+<div style="flex: 1; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 18px; padding: 6px 12px; font-size: 15px; color: #c7c7cc; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 2px rgba(0,0,0,0.02);"><span>iMessage</span><svg width="14" height="18" viewBox="0 0 24 24" fill="none" stroke="#a1a1a6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg></div>
+</div>
+</div></div>
+
+</div>
+<div data-type="polaroid" style="margin: 45px auto 25px; max-width: 380px; background: #FFFFFF; border: 1px solid #E5E5EA; box-shadow: 0 4px 12px rgba(0,0,0,0.04); padding: 16px 16px 24px 16px; border-radius: 1px; display: flex; flex-direction: column; gap: 14px; transform: rotate(1.5deg); position: relative;">
+    <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-2deg); width: 80px; height: 20px; background: rgba(235, 235, 240, 0.7); border-left: 1px dashed rgba(0,0,0,0.04); border-right: 1px dashed rgba(0,0,0,0.04); pointer-events: none;"></div>
+    <div style="width: 100%; overflow: hidden; background-color: #F2F2F7; display: flex; justify-content: center; align-items: center;">
+        <img src="https://i.ibb.co/Dfn2Yjk9/SPOILER-image.png" style="width: 100%; height: auto; display: block; object-fit: contain;" alt="Polaroid Photo">
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 5px; padding: 2px 4px 0;">
+        <div style="font-size: 11px; color: #AFAFB4; font-weight: 600; letter-spacing: 0.02em;">2026. 07. 01</div>
+        <div style="font-size: 13px; color: #1C1C1E; line-height: 1.5; font-style: italic; word-break: break-all;">
+</div>
+    </div>
+</div>
+<div data-type="polaroid" style="margin: 45px auto 25px; max-width: 380px; background: #FFFFFF; border: 1px solid #E5E5EA; box-shadow: 0 4px 12px rgba(0,0,0,0.04); padding: 16px 16px 24px 16px; border-radius: 1px; display: flex; flex-direction: column; gap: 14px; transform: rotate(1.5deg); position: relative;">
+    <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-2deg); width: 80px; height: 20px; background: rgba(235, 235, 240, 0.7); border-left: 1px dashed rgba(0,0,0,0.04); border-right: 1px dashed rgba(0,0,0,0.04); pointer-events: none;"></div>
+    <div style="width: 100%; overflow: hidden; background-color: #F2F2F7; display: flex; justify-content: center; align-items: center;">
+        <img src=" https://i.ibb.co/HL8FPg9w/SPOILER-image.png" style="width: 100%; height: auto; display: block; object-fit: contain;" alt="Polaroid Photo">
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 5px; padding: 2px 4px 0;">
+        <div style="font-size: 11px; color: #AFAFB4; font-weight: 600; letter-spacing: 0.02em;">2026. 07. 01</div>
+        <div style="font-size: 13px; color: #1C1C1E; line-height: 1.5; font-style: italic; word-break: break-all;"> </div>
+    </div>
+</div>
+
+</div>
+</body>
+</html>

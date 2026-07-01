@@ -1,33 +1,63 @@
 let activeCategoryIndex = 0;
 let selectedTag = 'all';
 let searchQueryStr = '';
-let isSliding = false; // 슬라이드 중인지 확인하는 락(Lock) 변수
+let isSliding = false;
+let tagsExpanded = false; // 🔥 태그 더보기 상태 변수
 
 const track = document.getElementById('slider-track');
 const tabs = document.querySelectorAll('.tab-item');
 const tagPools = document.querySelectorAll('.tag-filter-pool');
 const searchInput = document.getElementById('memory-search-input');
+const tagExpandBtn = document.getElementById('tag-expand-btn'); // 🔥 더보기 버튼
 
 let allCardDataElements = [];
 
-// 🔥 스크롤을 감지해서 카드를 띄워주는 센서 (Intersection Observer)
 const cardObserver = new IntersectionObserver((entries) => {
     let delayCount = 0;
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             const card = entry.target;
-            // 슬라이드 중이 아닐 때만 딴딴딴 딜레이를 주며 띄움
             if (!card.classList.contains('show') && !card.classList.contains('sliding-lock')) {
-                setTimeout(() => {
-                    card.classList.add('show');
-                }, delayCount * 80);
+                setTimeout(() => { card.classList.add('show'); }, delayCount * 80);
                 delayCount++;
             }
         }
     });
 }, { threshold: 0.05 });
 
-// 탭 스위칭 (슬라이드 완료 후 애니메이션 발동)
+// 🔥 태그 더보기/접기 토글 함수
+function toggleTags() {
+    tagsExpanded = !tagsExpanded;
+    const activePool = tagPools[activeCategoryIndex];
+    if(tagsExpanded) {
+        activePool.classList.add('expanded');
+        tagExpandBtn.classList.add('active');
+    } else {
+        activePool.classList.remove('expanded');
+        tagExpandBtn.classList.remove('active');
+    }
+}
+
+// 🔥 태그가 1줄(약 30px)을 넘는지 체크해서 더보기 버튼을 띄울지 말지 결정하는 센서
+function checkTagWrap() {
+    const activePool = tagPools[activeCategoryIndex];
+    if (!activePool) return;
+
+    // 높이 제한을 잠시 풀어서 진짜 줄이 넘어가는지 체크
+    activePool.style.maxHeight = 'none';
+    const isWrapping = activePool.scrollHeight > 35; // 35px 이상이면 무조건 2줄 이상임
+    activePool.style.maxHeight = ''; // 다시 원상 복구
+
+    if (isWrapping) {
+        tagExpandBtn.style.display = 'flex';
+    } else {
+        tagExpandBtn.style.display = 'none';
+    }
+}
+
+// 윈도우 크기가 변해서 태그 줄바꿈이 바뀔 때도 실시간으로 센서 작동
+window.addEventListener('resize', checkTagWrap);
+
 function switchTab(index) {
     if (activeCategoryIndex === index) return;
     
@@ -35,20 +65,26 @@ function switchTab(index) {
     tabs.forEach(tab => tab.classList.remove('active'));
     tabs[index].classList.add('active');
     
-    tagPools.forEach(pool => pool.classList.remove('active'));
+    tagPools.forEach(pool => {
+        pool.classList.remove('active');
+        pool.classList.remove('expanded'); // 탭 바꿀 때 무조건 접어두기
+    });
     tagPools[index].classList.add('active');
+    
+    // 상태 초기화
+    tagsExpanded = false;
+    tagExpandBtn.classList.remove('active');
+    checkTagWrap(); // 탭 바뀐 후 태그 줄 수 다시 체크!
     
     const targetCat = getCategoryKeyByIndex(index);
     const targetCards = document.querySelectorAll(`#list-${targetCat} .card`);
     
-    // 1. 슬라이드 전: 넘어갈 탭의 카드들을 순식간에 숨기고 센서 무시 락(Lock)을 건다
     targetCards.forEach(card => {
         card.classList.remove('show');
         card.classList.add('sliding-lock');
         card.style.transition = 'none'; 
     });
 
-    // 2. 옆으로 슉! 슬라이드
     track.style.transform = `translateX(-${index * 33.333}%)`;
     
     selectedTag = 'all';
@@ -58,22 +94,18 @@ function switchTab(index) {
 
     isSliding = true;
 
-    // 3. 슬라이드가 완전히 끝난 후(450ms) 락을 풀고 애니메이션 발동!
     setTimeout(() => {
         isSliding = false;
         let delay = 0;
         targetCards.forEach(card => {
-            card.style.transition = ''; // 트랜지션 원상복구
-            card.classList.remove('sliding-lock'); // 센서 락 해제
+            card.style.transition = ''; 
+            card.classList.remove('sliding-lock'); 
             
-            // 화면 안에 있는 애들만 차례대로 딴딴딴 띄움
             if (card.style.display !== 'none') {
                 const rect = card.getBoundingClientRect();
                 const isVisible = (rect.top < window.innerHeight && rect.bottom >= 0);
                 if (isVisible && !card.classList.contains('show')) {
-                    setTimeout(() => {
-                        card.classList.add('show');
-                    }, delay);
+                    setTimeout(() => { card.classList.add('show'); }, delay);
                     delay += 80;
                 }
             }
@@ -111,7 +143,6 @@ function executeMasterFilter() {
         const searchMatch = (searchQueryStr === '' || cardPack.searchBlob.includes(searchQueryStr));
 
         if(categoryMatch && tagMatch && searchMatch) {
-            // 필터링 돼서 다시 나타날 때도 부드럽게 뜨도록 설정
             if (el.style.display === 'none') {
                 el.style.display = 'flex';
                 el.classList.remove('show');
@@ -135,7 +166,6 @@ searchInput.addEventListener('input', (e) => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 🔥 카테고리별로 태그 '등장 횟수(Count)'를 기록할 객체 생성
     const tagsTracker = { daily: {}, event: {}, au: {} };
 
     fetch('list.html')
@@ -152,7 +182,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const date = item.getAttribute('data-date') || '';
                 const auSetting = item.getAttribute('data-au-setting') || '';
                 
-                // 이미지 속성 가져오기
                 const imgUrl = item.getAttribute('data-img');
                 const imgX = item.getAttribute('data-img-x') || '50';
                 const imgY = item.getAttribute('data-img-y') || '50';
@@ -167,7 +196,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     rawTags.split(',').forEach(t => {
                         const cleaned = t.trim();
                         if(cleaned) {
-                            // 🔥 태그가 등장할 때마다 횟수 +1 씩 누적
                             tagsTracker[category][cleaned] = (tagsTracker[category][cleaned] || 0) + 1;
                             processedTagsArray.push(cleaned);
                         }
@@ -178,7 +206,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.className = `card ${category === 'au' ? 'au-card' : ''}`;
                 card.href = `javascript:smoothLink('dialog/${id}.html')`;
 
-                // 이미지 삽입 및 줌/패닝 적용
                 let thumbHtml = (imgUrl && imgUrl.trim() !== "") 
                     ? `<img src="${imgUrl}" class="card-img" alt="${title}" style="object-position: ${imgX}% ${imgY}%; transform-origin: ${imgX}% ${imgY}%; transform: scale(${imgScale});">` 
                     : `<div class="card-no-img-placeholder">FEARLESS</div>`;
@@ -210,21 +237,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 const targetContainer = document.getElementById(`list-${category}`);
                 if(targetContainer) {
                     targetContainer.appendChild(card);
-                    // 생성된 카드를 스크롤 센서에 등록
                     cardObserver.observe(card);
                 }
             });
 
-            // 🔥 태그 렌더링: 등장 횟수(Count)가 높은 순서대로 내림차순 정렬 후 버튼 배치
             Object.keys(tagsTracker).forEach(catKey => {
                 const poolContainer = document.getElementById(`tag-pool-${catKey}`);
-                
-                // 등장 횟수 기반으로 정렬된 배열 생성
                 const sortedTags = Object.keys(tagsTracker[catKey]).sort((a, b) => {
                     return tagsTracker[catKey][b] - tagsTracker[catKey][a];
                 });
 
-                // 정렬된 순서대로 버튼 DOM에 추가
                 sortedTags.forEach(tagName => {
                     const btn = document.createElement('div');
                     btn.className = 'filter-tag-btn';
@@ -233,6 +255,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     poolContainer.appendChild(btn);
                 });
             });
+
+            // 🔥 모든 데이터를 불러오고 태그를 버튼으로 다 구운 뒤에, 태그가 넘치는지 확인!
+            setTimeout(checkTagWrap, 100); 
         })
         .catch(err => console.error('기억 보관소 로드 실패:', err));
 });

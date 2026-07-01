@@ -10,7 +10,6 @@ body, html {
     color: #F9F9F8;
 }
 
-/* 글로벌 페이지 진입 스무스 애니메이션 */
 @keyframes pageFadeIn {
     from { opacity: 0; transform: scale(0.97) translateY(10px); filter: blur(8px); }
     to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
@@ -81,15 +80,23 @@ header {
 }
 .tab-item.active::after { width: 100%; }
 
-/* 알약 태그 바 */
+/* =======================================
+   🔥 알약 태그 바 및 더보기 버튼 디자인
+   ======================================= */
 .tag-filter-container-wrapper {
-    position: relative; width: 100%; padding: 0 20px 8px 20px;
+    position: relative; width: 100%; padding: 0 45px 8px 20px; /* 우측 버튼 공간(45px) 확보 */
 }
 .tag-filter-pool {
     display: none; justify-content: center; align-items: center; 
     gap: 8px; flex-wrap: wrap; width: 100%;
+    
+    /* 기본 1줄 높이만 보이도록 잠금 */
+    max-height: 26px; overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .tag-filter-pool.active { display: flex; }
+/* 버튼을 눌렀을 때 늘어나는 클래스 */
+.tag-filter-pool.expanded { max-height: 300px; } 
 
 .filter-tag-btn {
     background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(249, 249, 248, 0.12);
@@ -97,13 +104,23 @@ header {
     font-size: 10px; font-weight: 700; color: rgba(249, 249, 248, 0.6);
     white-space: nowrap; transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1); cursor: pointer;
 }
-.filter-tag-btn:hover {
-    background: rgba(255, 255, 255, 0.15); color: #F9F9F8; transform: translateY(-1px);
-}
+.filter-tag-btn:hover { background: rgba(255, 255, 255, 0.15); color: #F9F9F8; transform: translateY(-1px); }
 .filter-tag-btn.active {
     background: #F9F9F8; color: #1B1B1B; border-color: #F9F9F8;
     box-shadow: 0 4px 10px rgba(249,249,248,0.2);
 }
+
+/* 태그 접기/펴기 버튼 */
+.tag-expand-btn {
+    position: absolute; top: -1px; right: 15px;
+    width: 26px; height: 26px;
+    display: none; /* 스크립트가 1줄 넘을 때만 켬 */
+    align-items: center; justify-content: center;
+    background: rgba(255, 255, 255, 0.08); border-radius: 50%; color: #F9F9F8;
+    cursor: pointer; transition: all 0.3s;
+}
+.tag-expand-btn iconify-icon { font-size: 16px; transition: transform 0.3s; }
+.tag-expand-btn.active iconify-icon { transform: rotate(180deg); } /* 누르면 아이콘 뒤집힘 */
 
 /* === 슬라이드 컨테이너 뷰 === */
 .slider-wrapper { flex: 1; width: 100%; overflow: hidden; position: relative; }
@@ -119,7 +136,7 @@ header {
 .tab-content::-webkit-scrollbar { display: none; }
 
 /* =======================================
-   🔥 가로형 카드 마스터 디자인 (스크롤 감지형)
+   🔥 가로형 카드 디자인 (찌그러짐 방지 락 추가)
    ======================================= */
 .card {
     width: 100%; height: 155px; background: #242424;
@@ -128,25 +145,21 @@ header {
     border: 1px solid rgba(255,255,255,0.04);
     box-shadow: 0 6px 20px rgba(0,0,0,0.25);
     
-    /* 🔥 평소엔 투명하고 아래에 가라앉아 있음 */
+    /* 🔥 게시글이 아무리 많아져도 세로 높이가 찌그러지지 않게 락(Lock) */
+    flex-shrink: 0; 
+    
     opacity: 0;
     transform: translateY(30px) scale(1);
     transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* 🔥 JS가 스크롤을 감지해서 이 클래스를 붙여주면 스르륵 떠오름 */
-.card.show {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-}
-
+.card.show { opacity: 1; transform: translateY(0) scale(1); }
 .card.show:hover {
     transform: translateY(-4px) scale(1.015); border-color: rgba(249, 249, 248, 0.25);
     box-shadow: 0 12px 30px rgba(0,0,0,0.4), 0 0 15px rgba(249,249,248,0.05);
 }
 .card.show:active { transform: scale(0.98); transition: transform 0.1s; }
 
-/* 왼쪽 흰색 그라데이션 장막 */
 .card-scenery-overlay {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     background: linear-gradient(to right, 
@@ -157,7 +170,6 @@ header {
     z-index: 5; pointer-events: none;
 }
 
-/* 내부 텍스트 레이아웃 */
 .card-inner-info {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     padding: 16px 18px; z-index: 10; display: flex; flex-direction: column;
@@ -165,8 +177,7 @@ header {
 }
 .card-bottom-left-group {
     position: absolute; bottom: 16px; left: 18px; width: 55%;
-    display: flex; flex-direction: column; gap: 4px;
-    justify-content: flex-end;
+    display: flex; flex-direction: column; gap: 4px; justify-content: flex-end;
 }
 .card-title {
     font-size: 15px; font-weight: 700; color: #1B1B1B;
@@ -174,8 +185,7 @@ header {
 }
 .card-summary {
     font-size: 11px; color: #484848; line-height: 1.4; font-weight: 400; 
-    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-    overflow: hidden; text-overflow: ellipsis;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;
 }
 .card-top-right-group { position: absolute; top: 16px; right: 18px; }
 .card-date {
@@ -183,42 +193,32 @@ header {
     background: rgba(0,0,0,0.4); padding: 3px 8px; border-radius: 4px; 
     backdrop-filter: blur(2px); box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
-.card-illustration-frame {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;
-}
+.card-illustration-frame { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
 .card-img { width: 100%; height: 100%; object-fit: cover; }
 
-/* === AU 전용 스페셜 카드 디자인 === */
+/* === AU 전용 스페셜 카드 === */
 .au-card { height: 240px; } 
 .au-card .card-scenery-overlay {
-    background: linear-gradient(to top, 
-        rgba(15, 15, 15, 0.95) 0%, rgba(15, 15, 15, 0.8) 25%, 
-        rgba(15, 15, 15, 0.4) 50%, rgba(15, 15, 15, 0) 100%);
+    background: linear-gradient(to top, rgba(15, 15, 15, 0.95) 0%, rgba(15, 15, 15, 0.8) 25%, rgba(15, 15, 15, 0.4) 50%, rgba(15, 15, 15, 0) 100%);
 }
 .au-card .card-bottom-left-group { width: 90%; }
 .au-card .card-title { color: #F9F9F8; font-size: 17px; } 
 .au-card .card-summary { color: #D1D1D1; }
-.au-setting-text {
-    font-size: 10px; color: #A0B0C0; font-weight: 900; 
-    margin-bottom: 2px; letter-spacing: 0.5px; text-transform: uppercase;
-}
+.au-setting-text { font-size: 10px; color: #A0B0C0; font-weight: 900; margin-bottom: 2px; letter-spacing: 0.5px; text-transform: uppercase; }
 
-/* === PC 버전 그리드 보정 === */
+/* === PC 버전 === */
 @media (min-width: 768px) {
     header { padding: 30px 40px 10px 40px; }
-    .tag-filter-container-wrapper { padding: 0 40px 12px 40px; }
+    .tag-filter-container-wrapper { padding: 0 50px 12px 40px; }
+    .tag-expand-btn { right: 20px; } /* PC 화면 버튼 위치 보정 */
     .tab-menu { gap: 55px; } .tab-item { font-size: 16px; }
     .filter-tag-btn { font-size: 11px; padding: 5px 15px; }
-    .tab-content {
-        padding: 15px 40px 40px 40px; display: grid; 
-        grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 25px;
-    }
+    .tab-content { padding: 15px 40px 40px 40px; display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 25px; }
     .card { height: 175px; } 
     .au-card { height: 280px; } 
     .card-bottom-left-group { bottom: 20px; left: 22px; width: 55%; }
     .au-card .card-bottom-left-group { width: 85%; }
     .card-top-right-group { top: 20px; right: 22px; }
-    .card-title { font-size: 17px; }
-    .au-card .card-title { font-size: 19px; }
+    .card-title { font-size: 17px; } .au-card .card-title { font-size: 19px; }
     .card-summary { font-size: 12px; -webkit-line-clamp: 3; }
 }

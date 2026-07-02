@@ -213,7 +213,13 @@ header {
     .tag-expand-btn { right: 20px; } /* PC 화면 버튼 위치 보정 */
     .tab-menu { gap: 55px; } .tab-item { font-size: 16px; }
     .filter-tag-btn { font-size: 11px; padding: 5px 15px; }
-    .tab-content { padding: 15px 40px 40px 40px; display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 25px; }
+    
+    /* 🔥 [사용자 요청 반영] 간격 최적화:
+       - gap 25px -> 상하(16px) 좌우(20px)로 좁혀 밀도감 확보
+       - minmax(360px) -> minmax(340px)로 줄여 좌우 간격을 적당히 유지하면서 가독성 높임
+    */
+    .tab-content { padding: 15px 40px 40px 40px; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px 20px; }
+    
     .card { height: 175px; } 
     .au-card { height: 280px; } 
     .card-bottom-left-group { bottom: 20px; left: 22px; width: 55%; }

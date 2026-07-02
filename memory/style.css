@@ -218,7 +218,7 @@ header {
        - gap 25px -> 상하(16px) 좌우(20px)로 좁혀 밀도감 확보
        - minmax(360px) -> minmax(340px)로 줄여 좌우 간격을 적당히 유지하면서 가독성 높임
     */
-    .tab-content { padding: 15px 40px 40px 40px; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px 20px; }
+    .tab-content { padding: 15px 40px 40px 40px; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px 12px; }
     
     .card { height: 175px; } 
     .au-card { height: 280px; } 

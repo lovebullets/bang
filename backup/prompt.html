@@ -12,6 +12,42 @@
 </head>
 <body>
 
+<!-- [추가된 영역] 카드 스타일의 부드러운 팝업(라이트박스) 스크립트 -->
+<script>
+    window.openImagePopup = window.openImagePopup || function(src) {
+        let popup = document.getElementById('tistory-image-popup');
+        if (!popup) {
+            popup = document.createElement('div');
+            popup.id = 'tistory-image-popup';
+            // Apple iCloud 스타일의 부드러운 블러 배경
+            popup.style.cssText = 'display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 999999; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; cursor: pointer;';
+            
+            const img = document.createElement('img');
+            img.id = 'tistory-popup-img';
+            // 원본 카드처럼 보이도록 하얀 배경(padding)과 모서리 둥글기, 그림자 추가
+            img.style.cssText = 'max-width: 90vw; max-height: 85vh; object-fit: contain; background-color: #ffffff; padding: 12px; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); transform: scale(0.95); transition: transform 0.3s ease; box-sizing: border-box;';
+            
+            popup.appendChild(img);
+            document.body.appendChild(popup);
+
+            popup.onclick = function() {
+                popup.style.opacity = '0';
+                img.style.transform = 'scale(0.95)';
+                setTimeout(() => popup.style.display = 'none', 300);
+            };
+        }
+        
+        const img = document.getElementById('tistory-popup-img');
+        img.src = src;
+        popup.style.display = 'flex';
+        
+        setTimeout(() => {
+            popup.style.opacity = '1';
+            img.style.transform = 'scale(1)';
+        }, 10);
+    };
+</script>
+
 <style>
 /* 폰트 및 전체 스타일 일괄 설정 */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=swap');
@@ -101,7 +137,8 @@
         };
     </script>
 
-    <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);" open="">
+    <!-- 수정: open="" 제거 -->
+    <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);">
         <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #3a3a3c; display: flex; align-items: center; justify-content: space-between; user-select: none; outline: none;">
             <span style="outline: none; word-break: break-all; color: #1c1c1e;">기본</span>
             <div class="toggle-btn-icon" style="background-color: #f2f2f7; padding: 6px 12px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 70%; color: #8e8e93; transition: transform 0.2s ease;">▼</div>
@@ -154,7 +191,8 @@
         };
     </script>
 
-    <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);" open="">
+    <!-- 수정: open="" 제거 -->
+    <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);">
         <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #3a3a3c; display: flex; align-items: center; justify-content: space-between; user-select: none; outline: none;">
             <span style="outline: none; word-break: break-all; color: #1c1c1e;">반묶음</span>
             <div class="toggle-btn-icon" style="background-color: #f2f2f7; padding: 6px 12px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 70%; color: #8e8e93; transition: transform 0.2s ease;">▼</div>
@@ -208,7 +246,8 @@
         };
     </script>
 
-    <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);" open="">
+    <!-- 수정: open="" 제거 -->
+    <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);">
         <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #3a3a3c; display: flex; align-items: center; justify-content: space-between; user-select: none; outline: none;">
             <span style="outline: none; word-break: break-all; color: #1c1c1e;">땋은 머리 리본</span>
             <div class="toggle-btn-icon" style="background-color: #f2f2f7; padding: 6px 12px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 70%; color: #8e8e93; transition: transform 0.2s ease;">▼</div>
@@ -265,6 +304,7 @@
         };
     </script>
 
+    <!-- 수정: open="" 제거 -->
     <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);">
         <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #3a3a3c; display: flex; align-items: center; justify-content: space-between; user-select: none; outline: none;">
             <span style="outline: none; word-break: break-all; color: #1c1c1e;">검은색 제복</span>
@@ -319,6 +359,7 @@
         };
     </script>
 
+    <!-- 수정: open="" 제거 -->
     <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);">
         <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #3a3a3c; display: flex; align-items: center; justify-content: space-between; user-select: none; outline: none;">
             <span style="outline: none; word-break: break-all; color: #1c1c1e;">오피스룩</span>
@@ -396,7 +437,8 @@
         };
     </script>
 
-    <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);" open="">
+    <!-- 수정: open="" 제거 -->
+    <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);">
         <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #3a3a3c; display: flex; align-items: center; justify-content: space-between; user-select: none; outline: none;">
             <span style="outline: none; word-break: break-all; color: #1c1c1e;">기본</span>
             <div class="toggle-btn-icon" style="background-color: #f2f2f7; padding: 6px 12px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 70%; color: #8e8e93; transition: transform 0.2s ease;">▼</div>
@@ -456,6 +498,7 @@
         };
     </script>
 
+    <!-- 수정: open="" 제거 -->
     <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);">
         <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #3a3a3c; display: flex; align-items: center; justify-content: space-between; user-select: none; outline: none;">
             <span style="outline: none; word-break: break-all; color: #1c1c1e;">전투복 </span>
@@ -527,7 +570,8 @@
         };
     </script>
 
-    <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);" open="">
+    <!-- 수정: open="" 제거 -->
+    <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);">
         <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #3a3a3c; display: flex; align-items: center; justify-content: space-between; user-select: none; outline: none;">
             <span style="outline: none; word-break: break-all; color: #1c1c1e;">기본</span>
             <div class="toggle-btn-icon" style="background-color: #f2f2f7; padding: 6px 12px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 70%; color: #8e8e93; transition: transform 0.2s ease;">▼</div>
@@ -582,7 +626,8 @@
         };
     </script>
 
-    <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);" open="">
+    <!-- 수정: open="" 제거 -->
+    <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);">
         <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #3a3a3c; display: flex; align-items: center; justify-content: space-between; user-select: none; outline: none;">
             <span style="outline: none; word-break: break-all; color: #1c1c1e;">오피스룩</span>
             <div class="toggle-btn-icon" style="background-color: #f2f2f7; padding: 6px 12px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 70%; color: #8e8e93; transition: transform 0.2s ease;">▼</div>
@@ -656,6 +701,7 @@
         };
     </script>
 
+    <!-- 수정: open="" 제거 -->
     <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);">
         <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #3a3a3c; display: flex; align-items: center; justify-content: space-between; user-select: none; outline: none;">
             <span style="outline: none; word-break: break-all; color: #1c1c1e;">기본</span>
@@ -708,6 +754,7 @@
         };
     </script>
 
+    <!-- 수정: open="" 제거 -->
     <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);">
         <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #3a3a3c; display: flex; align-items: center; justify-content: space-between; user-select: none; outline: none;">
             <span style="outline: none; word-break: break-all; color: #1c1c1e;">전투복</span>

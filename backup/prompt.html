@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐇</title>
+<style>
+    body { margin: 0; padding: 0; background-color: transparent; overflow-x: hidden; }
+    #content-wrapper { padding-top: 15px; padding-bottom: 50px; }
+
+</style>
+</head>
+<body>
+
+<style>
+/* 폰트 및 전체 스타일 일괄 설정 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+
+.tistory-post-wrapper {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    word-break: keep-all;
+    padding: 0 25px;
+    box-sizing: border-box;
+    max-width: 600px;
+    margin: 0 auto;
+    
+}
+.tistory-post-wrapper * { box-sizing: border-box; }
+/*나레이션 간격*/
+[data-type="narration"] {
+    margin-bottom: 3px !important;
+    word-break: break-all !important;
+}
+/* 포스트잇 내부 내용 길어질 때 스크롤 */
+.postit-scroll {
+    max-height: 350px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 8px;
+}
+.postit-scroll::-webkit-scrollbar { width: 5px; }
+.postit-scroll::-webkit-scrollbar-track { background: transparent; }
+.postit-scroll::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 4px; }
+</style>
+
+<div id="content-wrapper" class="tistory-post-wrapper">
+<div data-type="title" style="width: 100%; margin: 15px 0 0; padding: 10px 0; box-sizing: border-box; font-size: 18pt; font-weight: bold; text-align: left; color: #1c1c1e; word-break: keep-all;">
+                PROMPT
+</div>
+<div data-type="polaroid" style="margin: 45px auto 25px; max-width: 380px; background: #FFFFFF; border: 1px solid #E5E5EA; box-shadow: 0 4px 12px rgba(0,0,0,0.04); padding: 16px 16px 24px 16px; border-radius: 1px; display: flex; flex-direction: column; gap: 14px; transform: rotate(1.5deg); position: relative;">
+    <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-2deg); width: 80px; height: 20px; background: rgba(235, 235, 240, 0.7); border-left: 1px dashed rgba(0,0,0,0.04); border-right: 1px dashed rgba(0,0,0,0.04); pointer-events: none;"></div>
+    <div style="width: 100%; overflow: hidden; background-color: #F2F2F7; display: flex; justify-content: center; align-items: center;">
+        <img src="https://i.ibb.co/5h78LNnz/IMG-2635.jpg" style="width: 100%; height: auto; display: block; object-fit: contain;" alt="Polaroid Photo">
+    </div>
+</div>
+<div data-type="postit" style="margin: 25px auto 40px; max-width: 450px; background: #FAFAFA; color: #333333; padding: 24px 24px 20px; box-shadow: 2px 3px 8px rgba(0,0,0,0.04); border-radius: 1px; transform: rotate(-1.5deg); position: relative; border-top: 1px solid #E5E5EA; word-break: break-all; ">
+    <div style="position: absolute; left: 50%; top: -12px; width: 70px; height: 22px; transform: translateX(-50%) rotate(1deg); background: rgba(229, 229, 234, 0.6); border-left: 1px dashed rgba(0,0,0,0.05); border-right: 1px dashed rgba(0,0,0,0.05); pointer-events: none;"></div>
+    <div class="postit-scroll" style="line-height: 1.7; font-size: 14px;">    편하게 수정하셔도 괜찮습니다.<br><span style="color: rgb(208, 73, 120); background-color: rgb(253, 237, 244); padding: 0px 2px; border-radius: 3px;"> 0.7::mature female::</span>, <span style="color: rgb(14, 134, 94); background-color: rgb(225, 249, 241); padding: 0px 2px; border-radius: 3px;">1.0::mature male </span>&lt;작태에 따라서 성숙한 얼굴 수치 조절 해주세요!</div>
+</div>
+<div data-type="narration" style="width: 100%; margin: 15px 0 0; padding: 5px 0; box-sizing: border-box; color: #2c2c2e; font-style: normal; word-break: keep-all; text-align: left; line-height: 1.6;">
+                    <b><br>    <span style="font-size: 14px;"><span style="font-size: 15px;"><span style="font-size: 16px;"><span style="font-size: 17px;">유이</span></span></span></span><br></b>
+</div>
+<div data-type="html">
+
+
+<!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
+<div style="font-size: 100%; line-height: 1.6; word-break: keep-all; width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
+    
+    <style>
+        details[data-style="panel"][open] .toggle-btn-icon { transform: rotate(180deg); }
+        details[data-type="toggle"] summary::-webkit-details-marker { display: none; }
+        details[data-type="toggle"] summary { list-style: none; }
+        .copy-btn:hover { background-color: #f2f2f7 !important; color: #1c1c1e !important; }
+    </style>
+    <script>
+        window.copyToggleText = window.copyToggleText || function(button) {
+            const targetDiv = button.parentElement.querySelector('.copy-target');
+            if(!targetDiv) return;
+            const textToCopy = targetDiv.innerText || targetDiv.textContent;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '✓ 복사완료';
+                button.style.color = '#34c759'; button.style.borderColor = '#34c759';
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.style.color = '#8e8e93'; button.style.borderColor = '#e5e5ea';
+                }, 2000);
+            }).catch(err => console.error('복사 실패', err));
+        };
+    </script>
+
+    <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);">
+        <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #3a3a3c; display: flex; align-items: center; justify-content: space-between; user-select: none; outline: none;">
+            <span style="outline: none; word-break: break-all; color: #1c1c1e;">기본</span>
+            <div class="toggle-btn-icon" style="background-color: #f2f2f7; padding: 6px 12px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 70%; color: #8e8e93; transition: transform 0.2s ease;">▼</div>
+        </summary>
+        <div class="toggle-content" style="position: relative; padding-top: 14px; margin-top: 12px; border-top: 1px dashed #e5e5ea; box-sizing: border-box;">
+            <button class="copy-btn" onclick="window.copyToggleText(this)" style="position: absolute; top: 12px; right: 0; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 6px; padding: 4px 8px; font-size: 80%; color: #8e8e93; font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                복사
+            </button>
+            <div class="copy-target" style="color: #444444; font-size: 100%; line-height: 1.6; padding-right: 50px;">
+                girl, 0.7::mature female::, 160cm, pretty, beautiful delicate girl, 1.5::shy face::, innocent, 0.4:: calm smile::, gentle,  dark brown eyes, loving eyes , lowered eyebrows, rosy cheeks, milky-white skin, long hair,  brown hair, side locks, swept bangs, soft hair, medium breast,-1:: earring ::,<br>highly detailed
+            </div>
+        </div>
+    </details>
+</div>
+
+
+</div>
+<div data-type="html">
+
+
+
+<!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
+<div style="font-size: 100%; line-height: 1.6; word-break: keep-all; width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
+    
+    <style>
+        details[data-style="panel"][open] .toggle-btn-icon { transform: rotate(180deg); }
+        details[data-type="toggle"] summary::-webkit-details-marker { display: none; }
+        details[data-type="toggle"] summary { list-style: none; }
+        .copy-btn:hover { background-color: #f2f2f7 !important; color: #1c1c1e !important; }
+    </style>
+    <script>
+        window.copyToggleText = window.copyToggleText || function(button) {
+            const targetDiv = button.parentElement.querySelector('.copy-target');
+            if(!targetDiv) return;
+            const textToCopy = targetDiv.innerText || targetDiv.textContent;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '✓ 복사완료';
+                button.style.color = '#34c759'; button.style.borderColor = '#34c759';
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.style.color = '#8e8e93'; button.style.borderColor = '#e5e5ea';
+                }, 2000);
+            }).catch(err => console.error('복사 실패', err));
+        };
+    </script>
+
+    <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);">
+        <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #3a3a3c; display: flex; align-items: center; justify-content: space-between; user-select: none; outline: none;">
+            <span style="outline: none; word-break: break-all; color: #1c1c1e;">반묶음</span>
+            <div class="toggle-btn-icon" style="background-color: #f2f2f7; padding: 6px 12px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 70%; color: #8e8e93; transition: transform 0.2s ease;">▼</div>
+        </summary>
+        <div class="toggle-content" style="position: relative; padding-top: 14px; margin-top: 12px; border-top: 1px dashed #e5e5ea; box-sizing: border-box;">
+            <button class="copy-btn" onclick="window.copyToggleText(this)" style="position: absolute; top: 12px; right: 0; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 6px; padding: 4px 8px; font-size: 80%; color: #8e8e93; font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                복사
+            </button>
+            <div class="copy-target" style="color: #444444; font-size: 100%; line-height: 1.6; padding-right: 50px;">
+                 girl, 0.7::mature female::, 160cm, pretty, beautiful delicate girl, 1.5::shy face::, innocent, 0.4:: calm smile::, gentle,  dark brown eyes, loving eyes , lowered eyebrows, rosy cheeks, milky-white skin, long hair, brown hair, side locks, swept bangs, half updo, one hair ribbon, soft hair, medium breast,highly detailed 
+            </div>
+        </div>
+    </details>
+</div>
+
+
+
+</div>
+<div data-type="html">
+
+
+
+<!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
+<div style="font-size: 100%; line-height: 1.6; word-break: keep-all; width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
+    
+    <style>
+        details[data-style="panel"][open] .toggle-btn-icon { transform: rotate(180deg); }
+        details[data-type="toggle"] summary::-webkit-details-marker { display: none; }
+        details[data-type="toggle"] summary { list-style: none; }
+        .copy-btn:hover { background-color: #f2f2f7 !important; color: #1c1c1e !important; }
+    </style>
+    <script>
+        window.copyToggleText = window.copyToggleText || function(button) {
+            const targetDiv = button.parentElement.querySelector('.copy-target');
+            if(!targetDiv) return;
+            const textToCopy = targetDiv.innerText || targetDiv.textContent;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '✓ 복사완료';
+                button.style.color = '#34c759'; button.style.borderColor = '#34c759';
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.style.color = '#8e8e93'; button.style.borderColor = '#e5e5ea';
+                }, 2000);
+            }).catch(err => console.error('복사 실패', err));
+        };
+    </script>
+
+    <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);">
+        <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #3a3a3c; display: flex; align-items: center; justify-content: space-between; user-select: none; outline: none;">
+            <span style="outline: none; word-break: break-all; color: #1c1c1e;">땋은 머리 리본</span>
+            <div class="toggle-btn-icon" style="background-color: #f2f2f7; padding: 6px 12px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 70%; color: #8e8e93; transition: transform 0.2s ease;">▼</div>
+        </summary>
+        <div class="toggle-content" style="position: relative; padding-top: 14px; margin-top: 12px; border-top: 1px dashed #e5e5ea; box-sizing: border-box;">
+            <button class="copy-btn" onclick="window.copyToggleText(this)" style="position: absolute; top: 12px; right: 0; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 6px; padding: 4px 8px; font-size: 80%; color: #8e8e93; font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                복사
+            </button>
+            <div class="copy-target" style="color: #444444; font-size: 100%; line-height: 1.6; padding-right: 50px;">
+                 girl, 0.7::mature female::, 160cm, pretty, beautiful delicate girl, 1.5::shy face::, innocent, 0.4:: calm smile::, gentle,  dark brown eyes, loving eyes , lowered eyebrows, rosy cheeks, milky-white skin, long hair, brown hair, side locks, swept bangs, low side front braid, one hair ribbon, soft hair, medium breast,highly detailed
+            </div>
+        </div>
+    </details>
+</div>
+
+
+
+</div>
+<div data-type="divider" data-style="dots" style="width: 100%; margin: 30px 0; padding: 0; box-sizing: border-box; display: flex; justify-content: center; align-items: center;">
+    <div style="display: flex; gap: 16px; align-items: center; justify-content: center;"><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div></div>
+</div>
+<div data-type="html">
+
+
+
+<!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
+<div style="font-size: 100%; line-height: 1.6; word-break: keep-all; width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
+    
+    <style>
+        details[data-style="panel"][open] .toggle-btn-icon { transform: rotate(180deg); }
+        details[data-type="toggle"] summary::-webkit-details-marker { display: none; }
+        details[data-type="toggle"] summary { list-style: none; }
+        .copy-btn:hover { background-color: #f2f2f7 !important; color: #1c1c1e !important; }
+    </style>
+    <script>
+        window.copyToggleText = window.copyToggleText || function(button) {
+            const targetDiv = button.parentElement.querySelector('.copy-target');
+            if(!targetDiv) return;
+            const textToCopy = targetDiv.innerText || targetDiv.textContent;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '✓ 복사완료';
+                button.style.color = '#34c759'; button.style.borderColor = '#34c759';
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.style.color = '#8e8e93'; button.style.borderColor = '#e5e5ea';
+                }, 2000);
+            }).catch(err => console.error('복사 실패', err));
+        };
+    </script>
+
+    <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);">
+        <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #3a3a3c; display: flex; align-items: center; justify-content: space-between; user-select: none; outline: none;">
+            <span style="outline: none; word-break: break-all; color: #1c1c1e;">검은색 제복</span>
+            <div class="toggle-btn-icon" style="background-color: #f2f2f7; padding: 6px 12px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 70%; color: #8e8e93; transition: transform 0.2s ease;">▼</div>
+        </summary>
+        <div class="toggle-content" style="position: relative; padding-top: 14px; margin-top: 12px; border-top: 1px dashed #e5e5ea; box-sizing: border-box;">
+            <button class="copy-btn" onclick="window.copyToggleText(this)" style="position: absolute; top: 12px; right: 0; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 6px; padding: 4px 8px; font-size: 80%; color: #8e8e93; font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                복사
+            </button>
+            <div class="copy-target" style="color: #444444; font-size: 100%; line-height: 1.6; padding-right: 50px;">
+                black military uniform,black Straight lowleg skirt, translucent over kneehighs, garter belt, pumps, 
+            </div>
+        </div>
+    </details>
+</div>
+
+
+
+</div>
+<div data-type="html">
+
+
+
+<!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
+<div style="font-size: 100%; line-height: 1.6; word-break: keep-all; width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
+    
+    <style>
+        details[data-style="panel"][open] .toggle-btn-icon { transform: rotate(180deg); }
+        details[data-type="toggle"] summary::-webkit-details-marker { display: none; }
+        details[data-type="toggle"] summary { list-style: none; }
+        .copy-btn:hover { background-color: #f2f2f7 !important; color: #1c1c1e !important; }
+    </style>
+    <script>
+        window.copyToggleText = window.copyToggleText || function(button) {
+            const targetDiv = button.parentElement.querySelector('.copy-target');
+            if(!targetDiv) return;
+            const textToCopy = targetDiv.innerText || targetDiv.textContent;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '✓ 복사완료';
+                button.style.color = '#34c759'; button.style.borderColor = '#34c759';
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.style.color = '#8e8e93'; button.style.borderColor = '#e5e5ea';
+                }, 2000);
+            }).catch(err => console.error('복사 실패', err));
+        };
+    </script>
+
+    <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);">
+        <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #3a3a3c; display: flex; align-items: center; justify-content: space-between; user-select: none; outline: none;">
+            <span style="outline: none; word-break: break-all; color: #1c1c1e;">오피스룩</span>
+            <div class="toggle-btn-icon" style="background-color: #f2f2f7; padding: 6px 12px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 70%; color: #8e8e93; transition: transform 0.2s ease;">▼</div>
+        </summary>
+        <div class="toggle-content" style="position: relative; padding-top: 14px; margin-top: 12px; border-top: 1px dashed #e5e5ea; box-sizing: border-box;">
+            <button class="copy-btn" onclick="window.copyToggleText(this)" style="position: absolute; top: 12px; right: 0; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 6px; padding: 4px 8px; font-size: 80%; color: #8e8e93; font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                복사
+            </button>
+            <div class="copy-target" style="color: #444444; font-size: 100%; line-height: 1.6; padding-right: 50px;">
+                dress shirt, white blouse, white chiffon ribbon, large bow on chest, long sleeves, sheer sleeves, black pencil skirt, short skirt, black sheer pantyhose,
+            </div>
+        </div>
+    </details>
+</div>
+
+
+
+</div>
+<div data-type="divider" data-style="solid-gray" style="width: 100%; margin: 30px 0; padding: 0; box-sizing: border-box; display: flex; justify-content: center; align-items: center;">
+    <div style="width: 100%; height: 1px; background-color: #e5e5ea;"></div>
+</div>
+<div data-type="narration" style="width: 100%; margin: 4px 0 0; padding: 5px 0; box-sizing: border-box; color: #2c2c2e; font-style: normal; word-break: keep-all; text-align: left; line-height: 1.6;">
+                    <b><br>    <span style="font-size: 14px;"><span style="font-size: 15px;"><span style="font-size: 16px;"><span style="font-size: 17px;">뱅</span></span></span></span><br></b>
+</div>
+<div data-type="html">
+<!-- 1행 3열 이미지 그리드 (여백/라운드 없음, 호버 효과 및 팝업 기능 유지) -->
+<div style="display: flex; width: 100%;">
+    <!-- 첫 번째 이미지 (가로 33.333%) -->
+    <img src="https://i.ibb.co/MyhJQVqS/IMG-2619.jpg" 
+         alt="참고자료 1" 
+         onclick="window.openImagePopup(this.src)" 
+         style="width: 33.333%; object-fit: cover; cursor: pointer; transition: opacity 0.2s ease;" 
+         onmouseover="this.style.opacity='0.85'" 
+         onmouseout="this.style.opacity='1'">
+    
+    <!-- 두 번째 이미지 (가로 33.333%) -->
+    <img src="https://i.ibb.co/xQ1M8Vt/IMG-2314.webp" 
+         alt="참고자료 2" 
+         onclick="window.openImagePopup(this.src)" 
+         style="width: 33.333%; object-fit: cover; cursor: pointer; transition: opacity 0.2s ease;" 
+         onmouseover="this.style.opacity='0.85'" 
+         onmouseout="this.style.opacity='1'">
+         
+    <!-- 세 번째 이미지 (가로 33.333%) -->
+    <img src="https://i.ibb.co/27bV2JXC/IMG-2355.jpg" 
+         alt="참고자료 3" 
+         onclick="window.openImagePopup(this.src)" 
+         style="width: 33.333%; object-fit: cover; cursor: pointer; transition: opacity 0.2s ease;" 
+         onmouseover="this.style.opacity='0.85'" 
+         onmouseout="this.style.opacity='1'">
+</div>
+</div>
+<div data-type="html">
+
+
+
+<!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
+<div style="font-size: 100%; line-height: 1.6; word-break: keep-all; width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
+    
+    <style>
+        details[data-style="panel"][open] .toggle-btn-icon { transform: rotate(180deg); }
+        details[data-type="toggle"] summary::-webkit-details-marker { display: none; }
+        details[data-type="toggle"] summary { list-style: none; }
+        .copy-btn:hover { background-color: #f2f2f7 !important; color: #1c1c1e !important; }
+    </style>
+    <script>
+        window.copyToggleText = window.copyToggleText || function(button) {
+            const targetDiv = button.parentElement.querySelector('.copy-target');
+            if(!targetDiv) return;
+            const textToCopy = targetDiv.innerText || targetDiv.textContent;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '✓ 복사완료';
+                button.style.color = '#34c759'; button.style.borderColor = '#34c759';
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.style.color = '#8e8e93'; button.style.borderColor = '#e5e5ea';
+                }, 2000);
+            }).catch(err => console.error('복사 실패', err));
+        };
+    </script>
+
+    <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);" open="">
+        <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #3a3a3c; display: flex; align-items: center; justify-content: space-between; user-select: none; outline: none;">
+            <span style="outline: none; word-break: break-all; color: #1c1c1e;">기본</span>
+            <div class="toggle-btn-icon" style="background-color: #f2f2f7; padding: 6px 12px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 70%; color: #8e8e93; transition: transform 0.2s ease;">▼</div>
+        </summary>
+        <div class="toggle-content" style="position: relative; padding-top: 14px; margin-top: 12px; border-top: 1px dashed #e5e5ea; box-sizing: border-box;">
+            <button class="copy-btn" onclick="window.copyToggleText(this)" style="position: absolute; top: 12px; right: 0; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 6px; padding: 4px 8px; font-size: 80%; color: #8e8e93; font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                복사
+            </button>
+            <div class="copy-target" style="color: #444444; font-size: 100%; line-height: 1.6; padding-right: 50px;">
+                boy, mature male, dominant, tall man, fit body, v-taper ,handsome, calm smile, cool expression, smirk, -1.5::blush::, 1.5::straight eyebrows, colored eyebrows::, -1::thick eyebrows::, 1.5::sharp grey eyes::, no highlights, 1.7:: half-closed eyes::, short hair, 1.4::<span style="color: rgb(14, 134, 94); background-color: rgb(225, 249, 241); padding: 0px 2px; border-radius: 3px;"> grey hair, very subtle pale mint tint</span>:: , 2:8 ::asymmetrical parted bangs::, pixie cut , natural flow hair, 0.4::straight hair::, textured hair, -1.0::spiked hair, under cut, wolf cut, wave hair,center part bangs,hair behind ear ::,
+            </div>
+        </div>
+    </details>
+</div>
+
+
+
+</div>
+<div data-type="postit" style="margin: 25px auto 40px; max-width: 450px; background: #FAFAFA; color: #333333; padding: 24px 24px 20px; box-shadow: 2px 3px 8px rgba(0,0,0,0.04); border-radius: 1px; transform: rotate(-1.5deg); position: relative; border-top: 1px solid #E5E5EA; word-break: break-all; ">
+    <div style="position: absolute; left: 50%; top: -12px; width: 70px; height: 22px; transform: translateX(-50%) rotate(1deg); background: rgba(229, 229, 234, 0.6); border-left: 1px dashed rgba(0,0,0,0.05); border-right: 1px dashed rgba(0,0,0,0.05); pointer-events: none;"></div>
+    <div class="postit-scroll" style="line-height: 1.7; font-size: 14px;">진한 민트: <span style="color: rgb(14, 134, 94); background-color: rgb(225, 249, 241); padding: 0px 2px; border-radius: 3px;">pale mint grey hair</span><br>상단에 적힌 것보다 민트가 옅은 머리색은 하단에 있는 걸로 수정 추천! 작태에 따라 차이 많이 나더라고요ㅠ.ㅠ <br>옅은 민트: <span style="color: rgb(14, 134, 94); background-color: rgb(225, 249, 241); padding: 0px 2px; border-radius: 3px;">grey hair, faint pale mint undertone</span></div>
+</div>
+<div data-type="divider" data-style="dots" style="width: 100%; margin: 30px 0; padding: 0; box-sizing: border-box; display: flex; justify-content: center; align-items: center;">
+    <div style="display: flex; gap: 16px; align-items: center; justify-content: center;"><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div></div>
+</div>
+<div data-type="html">
+
+
+<!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
+<div style="font-size: 100%; line-height: 1.6; word-break: keep-all; width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
+    
+    <style>
+        details[data-style="panel"][open] .toggle-btn-icon { transform: rotate(180deg); }
+        details[data-type="toggle"] summary::-webkit-details-marker { display: none; }
+        details[data-type="toggle"] summary { list-style: none; }
+        .copy-btn:hover { background-color: #f2f2f7 !important; color: #1c1c1e !important; }
+    </style>
+    <script>
+        window.copyToggleText = window.copyToggleText || function(button) {
+            const targetDiv = button.parentElement.querySelector('.copy-target');
+            if(!targetDiv) return;
+            const textToCopy = targetDiv.innerText || targetDiv.textContent;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '✓ 복사완료';
+                button.style.color = '#34c759'; button.style.borderColor = '#34c759';
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.style.color = '#8e8e93'; button.style.borderColor = '#e5e5ea';
+                }, 2000);
+            }).catch(err => console.error('복사 실패', err));
+        };
+    </script>
+
+    <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);">
+        <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #3a3a3c; display: flex; align-items: center; justify-content: space-between; user-select: none; outline: none;">
+            <span style="outline: none; word-break: break-all; color: #1c1c1e;">전투복 </span>
+            <div class="toggle-btn-icon" style="background-color: #f2f2f7; padding: 6px 12px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 70%; color: #8e8e93; transition: transform 0.2s ease;">▼</div>
+        </summary>
+        <div class="toggle-content" style="position: relative; padding-top: 14px; margin-top: 12px; border-top: 1px dashed #e5e5ea; box-sizing: border-box;">
+            <button class="copy-btn" onclick="window.copyToggleText(this)" style="position: absolute; top: 12px; right: 0; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 6px; padding: 4px 8px; font-size: 80%; color: #8e8e93; font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                복사
+            </button>
+            <div class="copy-target" style="color: #444444; font-size: 100%; line-height: 1.6; padding-right: 50px;">
+                technical gear, ballistic harness, black tactical jacket, military style, plain black gloves, cargo pants
+            </div>
+        </div>
+    </details>
+</div>
+
+
+</div>
+<div data-type="divider" data-style="solid-gray" style="width: 100%; margin: 30px 0; padding: 0; box-sizing: border-box; display: flex; justify-content: center; align-items: center;">
+    <div style="width: 100%; height: 1px; background-color: #e5e5ea;"></div>
+</div>
+<div data-type="polaroid" style="margin: 45px auto 25px; max-width: 380px; background: #FFFFFF; border: 1px solid #E5E5EA; box-shadow: 0 4px 12px rgba(0,0,0,0.04); padding: 16px 16px 24px 16px; border-radius: 1px; display: flex; flex-direction: column; gap: 14px; transform: rotate(1.5deg); position: relative;">
+    <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-2deg); width: 80px; height: 20px; background: rgba(235, 235, 240, 0.7); border-left: 1px dashed rgba(0,0,0,0.04); border-right: 1px dashed rgba(0,0,0,0.04); pointer-events: none;"></div>
+    <div style="width: 100%; overflow: hidden; background-color: #F2F2F7; display: flex; justify-content: center; align-items: center;">
+        <img src="https://i.ibb.co/rG3S07SN/IMG-1974.jpg" style="width: 100%; height: auto; display: block; object-fit: contain;" alt="Polaroid Photo">
+    </div>
+</div>
+<div data-type="narration" style="width: 100%; margin: 15px 0 0; padding: 5px 0; box-sizing: border-box; color: #2c2c2e; font-style: normal; word-break: keep-all; text-align: left; line-height: 1.6;">
+                    <b><br>    <span style="font-size: 14px;"><span style="font-size: 15px;"><span style="font-size: 16px;"><span style="font-size: 17px;">클로이</span></span></span></span><br></b>
+</div>
+<div data-type="image" style="width: 100%; margin: 15px 0; text-align: center; box-sizing: border-box;">
+    <img src="https://i.ibb.co/cKYhmXnk/IMG-1795.jpg" style="max-width: 100%; border-radius: 8px;" alt="image">
+</div>
+<div data-type="html">
+
+
+<!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
+<div style="font-size: 100%; line-height: 1.6; word-break: keep-all; width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
+    
+    <style>
+        details[data-style="panel"][open] .toggle-btn-icon { transform: rotate(180deg); }
+        details[data-type="toggle"] summary::-webkit-details-marker { display: none; }
+        details[data-type="toggle"] summary { list-style: none; }
+        .copy-btn:hover { background-color: #f2f2f7 !important; color: #1c1c1e !important; }
+    </style>
+    <script>
+        window.copyToggleText = window.copyToggleText || function(button) {
+            const targetDiv = button.parentElement.querySelector('.copy-target');
+            if(!targetDiv) return;
+            const textToCopy = targetDiv.innerText || targetDiv.textContent;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '✓ 복사완료';
+                button.style.color = '#34c759'; button.style.borderColor = '#34c759';
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.style.color = '#8e8e93'; button.style.borderColor = '#e5e5ea';
+                }, 2000);
+            }).catch(err => console.error('복사 실패', err));
+        };
+    </script>
+
+    <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);" open="">
+        <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #3a3a3c; display: flex; align-items: center; justify-content: space-between; user-select: none; outline: none;">
+            <span style="outline: none; word-break: break-all; color: #1c1c1e;">기본</span>
+            <div class="toggle-btn-icon" style="background-color: #f2f2f7; padding: 6px 12px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 70%; color: #8e8e93; transition: transform 0.2s ease;">▼</div>
+        </summary>
+        <div class="toggle-content" style="position: relative; padding-top: 14px; margin-top: 12px; border-top: 1px dashed #e5e5ea; box-sizing: border-box;">
+            <button class="copy-btn" onclick="window.copyToggleText(this)" style="position: absolute; top: 12px; right: 0; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 6px; padding: 4px 8px; font-size: 80%; color: #8e8e93; font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                복사
+            </button>
+            <div class="copy-target" style="color: #444444; font-size: 100%; line-height: 1.6; padding-right: 50px;">
+                girl, age up, 160cm, submissive, pretty, beautiful delicate girl, 1.5::shy face::, innocent, 0.4:: calm smile::, gentle, brown eyes, half-closed eyes, 1.5::tareme::, loving eyes , lowered eyebrows, colored eyebrows, rosy cheeks, pale skin,<span style="color: rgb(14, 134, 94); background-color: rgb(225, 249, 241); padding: 0px 2px; border-radius: 3px;">a single faint linear scar on the inner left wrist</span>, long hair,  ash ivory hair, side locks, swept bangs, soft hair, one white lace ribbon earring, medium breast, wedding ring, highly detailed,
+            </div>
+        </div>
+    </details>
+</div>
+
+
+</div>
+<div data-type="divider" data-style="dots" style="width: 100%; margin: 30px 0; padding: 0; box-sizing: border-box; display: flex; justify-content: center; align-items: center;">
+    <div style="display: flex; gap: 16px; align-items: center; justify-content: center;"><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div></div>
+</div>
+<div data-type="html">
+
+
+<!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
+<div style="font-size: 100%; line-height: 1.6; word-break: keep-all; width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
+    
+    <style>
+        details[data-style="panel"][open] .toggle-btn-icon { transform: rotate(180deg); }
+        details[data-type="toggle"] summary::-webkit-details-marker { display: none; }
+        details[data-type="toggle"] summary { list-style: none; }
+        .copy-btn:hover { background-color: #f2f2f7 !important; color: #1c1c1e !important; }
+    </style>
+    <script>
+        window.copyToggleText = window.copyToggleText || function(button) {
+            const targetDiv = button.parentElement.querySelector('.copy-target');
+            if(!targetDiv) return;
+            const textToCopy = targetDiv.innerText || targetDiv.textContent;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '✓ 복사완료';
+                button.style.color = '#34c759'; button.style.borderColor = '#34c759';
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.style.color = '#8e8e93'; button.style.borderColor = '#e5e5ea';
+                }, 2000);
+            }).catch(err => console.error('복사 실패', err));
+        };
+    </script>
+
+    <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);" open="">
+        <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #3a3a3c; display: flex; align-items: center; justify-content: space-between; user-select: none; outline: none;">
+            <span style="outline: none; word-break: break-all; color: #1c1c1e;">오피스룩</span>
+            <div class="toggle-btn-icon" style="background-color: #f2f2f7; padding: 6px 12px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 70%; color: #8e8e93; transition: transform 0.2s ease;">▼</div>
+        </summary>
+        <div class="toggle-content" style="position: relative; padding-top: 14px; margin-top: 12px; border-top: 1px dashed #e5e5ea; box-sizing: border-box;">
+            <button class="copy-btn" onclick="window.copyToggleText(this)" style="position: absolute; top: 12px; right: 0; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 6px; padding: 4px 8px; font-size: 80%; color: #8e8e93; font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                복사
+            </button>
+            <div class="copy-target" style="color: #444444; font-size: 100%; line-height: 1.6; padding-right: 50px;">
+                military uniform, 2::black dress, lapels,:: v-neck, double breasted suit, long sleeves, dress shirt, white blouse, white chiffon ribbon, 1.2::large bow on chest::,  {wide fabric black belt}, large square buckle, coat dress, black pencil mini skirt, slightly side slit, black translucent over kneehighs, garter belt, pumps, <span style="color: rgb(208, 73, 120); background-color: rgb(253, 237, 244); padding: 0px 2px; border-radius: 3px;">wristwatch</span>
+            </div>
+        </div>
+    </details>
+</div>
+
+
+</div>
+<div data-type="postit" style="margin: 25px auto 40px; max-width: 450px; background: #FAFAFA; color: #333333; padding: 24px 24px 20px; box-shadow: 2px 3px 8px rgba(0,0,0,0.04); border-radius: 1px; transform: rotate(-1.5deg); position: relative; border-top: 1px solid #E5E5EA; word-break: break-all; ">
+    <div style="position: absolute; left: 50%; top: -12px; width: 70px; height: 22px; transform: translateX(-50%) rotate(1deg); background: rgba(229, 229, 234, 0.6); border-left: 1px dashed rgba(0,0,0,0.05); border-right: 1px dashed rgba(0,0,0,0.05); pointer-events: none;"></div>
+    <div class="postit-scroll" style="line-height: 1.7; font-size: 14px;"><span style="color: rgb(208, 73, 120); background-color: rgb(253, 237, 244); padding: 0px 2px; border-radius: 3px;">wristwatch</span> 추가할 경우 <span style="color: rgb(14, 134, 94); background-color: rgb(225, 249, 241); padding: 0px 2px; border-radius: 3px;">a single faint linear scar on the inner left wrist</span> &lt; 프롬에서 빼는 거 추천</div>
+</div>
+<div data-type="narration" style="width: 100%; margin: 15px 0 0; padding: 5px 0; box-sizing: border-box; color: #2c2c2e; font-style: normal; word-break: keep-all; text-align: left; line-height: 1.6;">
+                    <b><br>    <span style="font-size: 14px;"><span style="font-size: 15px;"><span style="font-size: 16px;"><span style="font-size: 17px;">4</span></span></span></span><br></b>
+</div>
+<div data-type="html">
+
+<!-- 1행 2열 이미지 그리드 (여백/라운드 없음, 호버 효과 및 팝업 기능 유지) -->
+<div style="display: flex; width: 100%;">
+    <!-- 첫 번째 이미지 (가로 50%) -->
+    <img src="https://blog.kakaocdn.net/dna/dCjtcz/dJMcaii8uuP/AAAAAAAAAAAAAAAAAAAAAJ8O6oKCPyZYVMHv99WtJ1Tk4osP0-hdmpUQ6O7-hLwf/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&amp;expires=1785509999&amp;allow_ip=&amp;allow_referer=&amp;signature=8sCH67TSlJx5ImRlULTgwrDZ0aU%3D" alt="참고자료 1" onclick="window.openImagePopup(this.src)" style="width: 50%; object-fit: cover; cursor: pointer; transition: opacity 0.2s; opacity: 1;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+    
+    <!-- 두 번째 이미지 (가로 50%) -->
+    <img src="https://blog.kakaocdn.net/dna/FYrby/dJMcaii8uuO/AAAAAAAAAAAAAAAAAAAAAKIhc56ZfunJUrRIS7QzgWzn2Lsa7wEE4ig8fBP5E8OT/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&amp;expires=1785509999&amp;allow_ip=&amp;allow_referer=&amp;signature=B%2FsbTpOIAt0adHizpYnfITz7fLw%3D" alt="참고자료 2" onclick="window.openImagePopup(this.src)" style="width: 50%; object-fit: cover; cursor: pointer; transition: opacity 0.2s ease;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+</div>
+
+</div>
+<div data-type="html">
+
+<!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
+<div style="font-size: 100%; line-height: 1.6; word-break: keep-all; width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
+    
+    <style>
+        details[data-style="panel"][open] .toggle-btn-icon { transform: rotate(180deg); }
+        details[data-type="toggle"] summary::-webkit-details-marker { display: none; }
+        details[data-type="toggle"] summary { list-style: none; }
+        .copy-btn:hover { background-color: #f2f2f7 !important; color: #1c1c1e !important; }
+    </style>
+    <script>
+        window.copyToggleText = window.copyToggleText || function(button) {
+            const targetDiv = button.parentElement.querySelector('.copy-target');
+            if(!targetDiv) return;
+            const textToCopy = targetDiv.innerText || targetDiv.textContent;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '✓ 복사완료';
+                button.style.color = '#34c759'; button.style.borderColor = '#34c759';
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.style.color = '#8e8e93'; button.style.borderColor = '#e5e5ea';
+                }, 2000);
+            }).catch(err => console.error('복사 실패', err));
+        };
+    </script>
+
+    <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);">
+        <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #3a3a3c; display: flex; align-items: center; justify-content: space-between; user-select: none; outline: none;">
+            <span style="outline: none; word-break: break-all; color: #1c1c1e;">기본</span>
+            <div class="toggle-btn-icon" style="background-color: #f2f2f7; padding: 6px 12px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 70%; color: #8e8e93; transition: transform 0.2s ease;">▼</div>
+        </summary>
+        <div class="toggle-content" style="position: relative; padding-top: 14px; margin-top: 12px; border-top: 1px dashed #e5e5ea; box-sizing: border-box;">
+            <button class="copy-btn" onclick="window.copyToggleText(this)" style="position: absolute; top: 12px; right: 0; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 6px; padding: 4px 8px; font-size: 80%; color: #8e8e93; font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                복사
+            </button>
+            <div class="copy-target" style="color: #444444; font-size: 100%; line-height: 1.6; padding-right: 50px;">
+                boy, 1.4::aged up::, 183cm, 0.6::bishounen::, gray hair, short hair, 2::messy hair::, 3::straight hair::, 2.0::parted bang::, 1.5::no smile, expressionless::, 1.2::annoyed::, pale skin, jitome, half closed eyes, pale turquoise eyes, -3::long hair::,<br>
+            </div>
+        </div>
+    </details>
+</div>
+
+</div>
+<div data-type="divider" data-style="dots" style="width: 100%; margin: 30px 0; padding: 0; box-sizing: border-box; display: flex; justify-content: center; align-items: center;">
+    <div style="display: flex; gap: 16px; align-items: center; justify-content: center;"><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div></div>
+</div>
+<div data-type="html">
+<!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
+<div style="font-size: 100%; line-height: 1.6; word-break: keep-all; width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
+    
+    <style>
+        details[data-style="panel"][open] .toggle-btn-icon { transform: rotate(180deg); }
+        details[data-type="toggle"] summary::-webkit-details-marker { display: none; }
+        details[data-type="toggle"] summary { list-style: none; }
+        .copy-btn:hover { background-color: #f2f2f7 !important; color: #1c1c1e !important; }
+    </style>
+    <script>
+        window.copyToggleText = window.copyToggleText || function(button) {
+            const targetDiv = button.parentElement.querySelector('.copy-target');
+            if(!targetDiv) return;
+            const textToCopy = targetDiv.innerText || targetDiv.textContent;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '✓ 복사완료';
+                button.style.color = '#34c759'; button.style.borderColor = '#34c759';
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.style.color = '#8e8e93'; button.style.borderColor = '#e5e5ea';
+                }, 2000);
+            }).catch(err => console.error('복사 실패', err));
+        };
+    </script>
+
+    <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);">
+        <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #3a3a3c; display: flex; align-items: center; justify-content: space-between; user-select: none; outline: none;">
+            <span style="outline: none; word-break: break-all; color: #1c1c1e;">전투복</span>
+            <div class="toggle-btn-icon" style="background-color: #f2f2f7; padding: 6px 12px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 70%; color: #8e8e93; transition: transform 0.2s ease;">▼</div>
+        </summary>
+        <div class="toggle-content" style="position: relative; padding-top: 14px; margin-top: 12px; border-top: 1px dashed #e5e5ea; box-sizing: border-box;">
+            <button class="copy-btn" onclick="window.copyToggleText(this)" style="position: absolute; top: 12px; right: 0; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 6px; padding: 4px 8px; font-size: 80%; color: #8e8e93; font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                복사
+            </button>
+            <div class="copy-target" style="color: #444444; font-size: 100%; line-height: 1.6; padding-right: 50px;">
+                black technical utility jacket, zipped jacket, protective pads on elbows,black tactical gloves::,
+            </div>
+        </div>
+    </details>
+</div>
+</div>
+<div data-type="postit" style="margin: 25px auto 40px; max-width: 450px; background: #FAFAFA; color: #333333; padding: 24px 24px 20px; box-shadow: 2px 3px 8px rgba(0,0,0,0.04); border-radius: 1px; transform: rotate(-1.5deg); position: relative; border-top: 1px solid #E5E5EA; word-break: break-all; ">
+    <div style="position: absolute; left: 50%; top: -12px; width: 70px; height: 22px; transform: translateX(-50%) rotate(1deg); background: rgba(229, 229, 234, 0.6); border-left: 1px dashed rgba(0,0,0,0.05); border-right: 1px dashed rgba(0,0,0,0.05); pointer-events: none;"></div>
+    <div class="postit-scroll" style="line-height: 1.7; font-size: 14px;">사복일 경우 <span style="color: rgb(14, 134, 94); background-color: rgb(225, 249, 241); padding: 0px 2px; border-radius: 3px;">wedding ring </span>추가</div>
+</div>
+
+</div>
+</body>
+</html>

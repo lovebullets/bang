@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Memory Text Archive</title>
+    <!-- 고급스러운 세리프체 유지 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;900&display=swap" rel="stylesheet">
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <style>
+        /* =======================================
+           🔥 CSS: 흰색 배경(Light Theme) 오토메 감성 설정
+           ======================================= */
+        * { 
+            margin: 0; padding: 0; box-sizing: border-box; user-select: none; 
+            -webkit-tap-highlight-color: transparent; 
+            font-family: 'Noto Serif KR', serif !important;
+        }
+
+        body, html {
+            width: 100%; height: 100dvh; overflow: hidden;
+            background-color: #FAFAFA; /* 지정하신 페일 웜화이트 */
+            color: #1B1B1B; /* 기본 텍스트는 선명한 검정 */
+        }
+
+        @keyframes pageFadeIn {
+            from { opacity: 0; transform: translateY(10px); filter: blur(5px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        #archive-container {
+            width: 100vw; height: 100dvh; display: flex; flex-direction: column;
+            animation: pageFadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        /* === 헤더 및 검색창 (밝은 테마에 맞춤) === */
+        header {
+            width: 100%; padding: max(15px, env(safe-area-inset-top)) 20px 10px 20px;
+            display: flex; flex-direction: column; gap: 15px;
+            background: rgba(250, 250, 250, 0.85);
+            backdrop-filter: blur(10px); /* iCloud 스타일 블러 */
+            z-index: 50; position: relative;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .header-top {
+            display: flex; align-items: center; justify-content: space-between; height: 35px;
+        }
+        .back-btn {
+            color: #1B1B1B; text-decoration: none; font-size: 24px;
+            display: flex; align-items: center; transition: transform 0.2s;
+        }
+        .back-btn:active { transform: scale(0.85) translateX(-3px); }
+
+        .search-box-wrapper {
+            display: flex; align-items: center;
+            background: rgba(0, 0, 0, 0.04); border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 20px; padding: 4px 12px; width: 140px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .search-box-wrapper:focus-within {
+            width: 180px; background: #FFF; border-color: rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .search-box-wrapper iconify-icon {
+            font-size: 16px; color: rgba(27, 27, 27, 0.5); margin-right: 6px;
+        }
+        .search-input {
+            width: 100%; background: none; border: none; outline: none;
+            color: #1B1B1B; font-size: 11px; font-weight: 600;
+        }
+        .search-input::placeholder { color: rgba(27, 27, 27, 0.4); }
+
+        /* === 카테고리 탭 === */
+        .tab-menu { display: flex; justify-content: center; gap: 35px; width: 100%; }
+        .tab-item {
+            font-size: 13px; font-weight: 700; color: rgba(27, 27, 27, 0.3);
+            cursor: pointer; padding-bottom: 6px; position: relative; letter-spacing: 1.5px;
+            transition: all 0.3s;
+        }
+        .tab-item.active { color: #1B1B1B; font-weight: 900; }
+        .tab-item::after {
+            content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px;
+            background-color: #1B1B1B; transition: all 0.3s; transform: translateX(-50%);
+        }
+        .tab-item.active::after { width: 100%; }
+
+        /* === 태그 필터 (라이트 모드) === */
+        .tag-filter-container-wrapper { position: relative; padding: 12px 45px 12px 20px; }
+        .tag-filter-pool {
+            display: none; justify-content: center; gap: 8px; flex-wrap: wrap; 
+            max-height: 26px; overflow: hidden; transition: max-height 0.4s;
+        }
+        .tag-filter-pool.active { display: flex; }
+        .tag-filter-pool.expanded { max-height: 300px; }
+        
+        .filter-tag-btn {
+            background: #FFF; border: 1px solid rgba(0,0,0,0.1);
+            padding: 4px 12px; border-radius: 20px;
+            font-size: 10px; font-weight: 700; color: rgba(27,27,27,0.6);
+            cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+        .filter-tag-btn.active {
+            background: #1B1B1B; color: #FFF; border-color: #1B1B1B;
+        }
+        .tag-expand-btn {
+            position: absolute; top: 11px; right: 15px; width: 26px; height: 26px;
+            display: none; align-items: center; justify-content: center;
+            background: rgba(0,0,0,0.05); border-radius: 50%; color: #1B1B1B;
+            cursor: pointer; transition: all 0.3s;
+        }
+        .tag-expand-btn.active iconify-icon { transform: rotate(180deg); }
+
+        /* === 리스트 컨테이너 === */
+        .slider-wrapper { flex: 1; width: 100%; overflow: hidden; position: relative; }
+        .slider-track {
+            display: flex; width: 400%; height: 100%; /* 4개 탭 (DAILY, EVENT, AU, OOC) */
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .tab-content {
+            width: 25%; height: 100%; overflow-y: auto;
+            padding: 10px 20px max(40px, env(safe-area-inset-bottom)) 20px;
+            display: flex; flex-direction: column; gap: 20px;
+        }
+        .tab-content::-webkit-scrollbar { display: none; }
+
+        /* =======================================
+           🔥 기억의 파편(텍스트 아카이브) 뷰포트 디자인
+           ======================================= */
+        .text-card {
+            width: 100%; display: flex; flex-direction: column; gap: 8px;
+            padding-bottom: 20px; border-bottom: 1px solid rgba(0,0,0,0.05);
+            opacity: 0; transform: translateY(15px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .text-card.show { opacity: 1; transform: translateY(0); }
+        
+        .card-header {
+            display: flex; justify-content: space-between; align-items: baseline; width: 100%;
+        }
+        .text-title {
+            font-size: 15px; font-weight: 900; color: #1B1B1B;
+            letter-spacing: -0.3px; flex: 1;
+        }
+        .text-date {
+            font-size: 11px; color: rgba(27,27,27,0.4); font-weight: 600;
+            white-space: nowrap; margin-left: 10px;
+        }
+        .text-summary {
+            font-size: 12px; color: rgba(27,27,27,0.6); line-height: 1.4;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; 
+            overflow: hidden;
+        }
+
+        /* 형광펜 대사 스레드 연출 ('ㄴ' 디자인) */
+        .highlight-thread-box {
+            display: flex; flex-direction: column; gap: 6px;
+            margin-top: 6px; padding-left: 16px;
+            border-left: 2px solid rgba(0,0,0,0.08); /* 좌측 연결선 */
+        }
+        .highlight-item {
+            position: relative; font-size: 13px; line-height: 1.6;
+            word-break: keep-all; color: #1B1B1B;
+        }
+        /* 대사 앞의 작은 꺾쇠/점 연출 */
+        .highlight-item::before {
+            content: ''; position: absolute; left: -18px; top: 8px;
+            width: 10px; height: 1px; background: rgba(0,0,0,0.15);
+        }
+        
+        /* 다이얼로그 본문에서 가져온 span(형광펜) 태그가 덮어씌워질 때의 기본 여백 */
+        .highlight-item span {
+            display: inline-block; padding: 2px 4px; border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        /* PC 반응형 */
+        @media (min-width: 768px) {
+            .tab-content { padding: 20px 40px 40px; max-width: 800px; margin: 0 auto; }
+            .text-title { font-size: 17px; }
+            .highlight-item { font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="archive-container">
+    <header>
+        <div class="header-top">
+            <a href="../memory/" class="back-btn"><iconify-icon icon="solar:alt-arrow-left-linear"></iconify-icon></a>
+            <div class="search-box-wrapper">
+                <iconify-icon icon="solar:magnifer-linear"></iconify-icon>
+                <input type="text" id="memory-search-input" class="search-input" placeholder="대사 검색..." autocomplete="off">
+            </div>
+        </div>
+        <div class="tab-menu">
+            <div class="tab-item active" onclick="switchTab(0)">DAILY</div>
+            <div class="tab-item" onclick="switchTab(1)">EVENT</div>
+            <div class="tab-item" onclick="switchTab(2)">AU</div>
+            <div class="tab-item" onclick="switchTab(3)">OOC</div>
+        </div>
+    </header>
+
+    <div class="tag-filter-container-wrapper">
+        <div class="tag-filter-pool active" id="tag-pool-daily"><div class="filter-tag-btn active" onclick="filterByTag('all')">ALL</div></div>
+        <div class="tag-filter-pool" id="tag-pool-event"><div class="filter-tag-btn active" onclick="filterByTag('all')">ALL</div></div>
+        <div class="tag-filter-pool" id="tag-pool-au"><div class="filter-tag-btn active" onclick="filterByTag('all')">ALL</div></div>
+        <div class="tag-filter-pool" id="tag-pool-ooc"><div class="filter-tag-btn active" onclick="filterByTag('all')">ALL</div></div>
+        
+        <div class="tag-expand-btn" id="tag-expand-btn" onclick="toggleTags()">
+            <iconify-icon icon="solar:alt-arrow-down-linear"></iconify-icon>
+        </div>
+    </div>
+
+    <div class="slider-wrapper">
+        <div class="slider-track" id="slider-track">
+            <div class="tab-content" id="list-daily"></div>
+            <div class="tab-content" id="list-event"></div>
+            <div class="tab-content" id="list-au"></div>
+            <div class="tab-content" id="list-ooc"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // =======================================
+    // 🔥 JavaScript: 로직 및 데이터 파싱
+    // =======================================
+    let activeCategoryIndex = 0;
+    let selectedTag = 'all';
+    let searchQueryStr = '';
+    let tagsExpanded = false;
+
+    const track = document.getElementById('slider-track');
+    const tabs = document.querySelectorAll('.tab-item');
+    const tagPools = document.querySelectorAll('.tag-filter-pool');
+    const tagExpandBtn = document.getElementById('tag-expand-btn');
+    const searchInput = document.getElementById('memory-search-input');
+    
+    let allCardDataElements = [];
+
+    // 스크롤 시 부드럽게 나타나는 옵저버
+    const cardObserver = new IntersectionObserver((entries) => {
+        let delayCount = 0;
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const card = entry.target;
+                if (!card.classList.contains('show')) {
+                    setTimeout(() => { card.classList.add('show'); }, delayCount * 50);
+                    delayCount++;
+                }
+            }
+        });
+    }, { threshold: 0.05 });
+
+    function toggleTags() {
+        tagsExpanded = !tagsExpanded;
+        const activePool = tagPools[activeCategoryIndex];
+        if(tagsExpanded) {
+            activePool.classList.add('expanded');
+            tagExpandBtn.classList.add('active');
+        } else {
+            activePool.classList.remove('expanded');
+            tagExpandBtn.classList.remove('active');
+        }
+    }
+
+    function checkTagWrap() {
+        const activePool = tagPools[activeCategoryIndex];
+        if (!activePool) return;
+        activePool.style.maxHeight = 'none';
+        const isWrapping = activePool.scrollHeight > 35;
+        activePool.style.maxHeight = '';
+        tagExpandBtn.style.display = isWrapping ? 'flex' : 'none';
+    }
+    window.addEventListener('resize', checkTagWrap);
+
+    function switchTab(index) {
+        if (activeCategoryIndex === index) return;
+        activeCategoryIndex = index;
+        
+        tabs.forEach(tab => tab.classList.remove('active'));
+        tabs[index].classList.add('active');
+        
+        tagPools.forEach(pool => { pool.classList.remove('active'); pool.classList.remove('expanded'); });
+        tagPools[index].classList.add('active');
+        
+        tagsExpanded = false; tagExpandBtn.classList.remove('active');
+        checkTagWrap();
+        
+        // 4개 탭이므로 25%씩 이동
+        track.style.transform = `translateX(-${index * 25}%)`;
+        
+        selectedTag = 'all'; searchInput.value = ''; searchQueryStr = '';
+        executeMasterFilter();
+    }
+
+    function filterByTag(tagName) {
+        selectedTag = tagName;
+        executeMasterFilter();
+    }
+
+    function getCategoryKeyByIndex(index) {
+        if(index === 0) return 'daily';
+        if(index === 1) return 'event';
+        if(index === 2) return 'au';
+        return 'ooc';
+    }
+
+    function executeMasterFilter() {
+        const currentActivePool = tagPools[activeCategoryIndex];
+        const buttons = currentActivePool.querySelectorAll('.filter-tag-btn');
+        buttons.forEach(btn => {
+            const btnText = btn.textContent.replace('#', '').trim();
+            if(btnText === selectedTag.toUpperCase()) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
+
+        allCardDataElements.forEach(cardPack => {
+            const el = cardPack.domElement;
+            const categoryMatch = (cardPack.category === getCategoryKeyByIndex(activeCategoryIndex));
+            const tagMatch = (selectedTag === 'all' || cardPack.tags.includes(selectedTag));
+            
+            // 검색은 제목, 요약, 그리고 추출된 형광펜 대사 내용까지 모두 포함하여 서치
+            const searchMatch = (searchQueryStr === '' || cardPack.searchBlob.includes(searchQueryStr));
+
+            if(categoryMatch && tagMatch && searchMatch) {
+                if (el.style.display === 'none') {
+                    el.style.display = 'flex';
+                    // 리플로우 트릭으로 애니메이션 재발동
+                    el.classList.remove('show');
+                    setTimeout(() => el.classList.add('show'), 10);
+                }
+            } else {
+                el.style.display = 'none';
+                el.classList.remove('show');
+            }
+        });
+    }
+
+    searchInput.addEventListener('input', (e) => {
+        searchQueryStr = e.target.value.toLowerCase().trim();
+        executeMasterFilter();
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const tagsTracker = { daily: {}, event: {}, au: {}, ooc: {} };
+
+        // 1. 기존 메모리의 list.html을 긁어와 기본 정보(제목, 날짜, 요약) 세팅
+        fetch('../memory/list.html')
+            .then(res => res.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const items = doc.querySelectorAll('.memory-data');
+
+                items.forEach((item) => {
+                    const id = item.getAttribute('data-id');
+                    const category = item.getAttribute('data-category') || 'daily';
+                    const rawTags = item.getAttribute('data-tag') || '';
+                    const date = item.getAttribute('data-date') || '';
+                    
+                    const title = item.querySelector('.memory-title').innerHTML;
+                    const summaryEl = item.querySelector('.memory-summary');
+                    const summary = summaryEl ? summaryEl.innerHTML.trim() : '';
+
+                    const processedTagsArray = [];
+                    if(rawTags.trim() !== "") {
+                        rawTags.split(',').forEach(t => {
+                            const cleaned = t.trim();
+                            if(cleaned) {
+                                // OOC 태그가 있으면 카테고리를 강제로 ooc로 분류하는 로직 등 원하시면 추가 가능
+                                // 현재는 data-category 속성 기반으로 분류합니다.
+                                if(tagsTracker[category]) {
+                                    tagsTracker[category][cleaned] = (tagsTracker[category][cleaned] || 0) + 1;
+                                    processedTagsArray.push(cleaned);
+                                }
+                            }
+                        });
+                    }
+
+                    // 리스트 껍데기 생성
+                    const card = document.createElement('div');
+                    card.className = 'text-card';
+                    card.innerHTML = `
+                        <div class="card-header">
+                            <div class="text-title">${title}</div>
+                            ${date ? `<div class="text-date">${date}</div>` : ''}
+                        </div>
+                        ${summary ? `<div class="text-summary">${summary}</div>` : ''}
+                        <div class="highlight-thread-box" id="thread-${id}">
+                            <!-- 여기에 fetch된 형광펜 대사들이 들어갑니다 -->
+                        </div>
+                    `;
+
+                    const cardPack = {
+                        id: id,
+                        category: category, 
+                        tags: processedTagsArray, 
+                        searchBlob: `${title} ${summary} ${date} ${processedTagsArray.join(' ')}`.toLowerCase(), 
+                        domElement: card
+                    };
+                    allCardDataElements.push(cardPack);
+
+                    const targetContainer = document.getElementById(`list-${category}`);
+                    if(targetContainer) {
+                        targetContainer.appendChild(card);
+                        cardObserver.observe(card);
+                    }
+
+                    // 2. 다이얼로그 본문을 Fetch하여 형광펜 텍스트 추출 (핵심 로직)
+                    fetch(`../memory/dialog/${id}.html`)
+                        .then(res => { if(res.ok) return res.text(); return ''; })
+                        .then(dialogHtml => {
+                            if(!dialogHtml) return;
+                            
+                            const dialogDoc = parser.parseFromString(dialogHtml, 'text/html');
+                            // 인라인 스타일로 배경색(형광펜)이 칠해진 span 태그를 모두 찾음
+                            const highlightSpans = dialogDoc.querySelectorAll('span[style*="background-color"]');
+                            
+                            const threadBox = document.getElementById(`thread-${id}`);
+                            let extractedTextForSearch = '';
+
+                            if(highlightSpans.length > 0) {
+                                highlightSpans.forEach(span => {
+                                    const text = span.textContent.trim();
+                                    if(text) {
+                                        extractedTextForSearch += text + ' ';
+                                        const highlightItem = document.createElement('div');
+                                        highlightItem.className = 'highlight-item';
+                                        // span 태그 통째로 넣어서 유저가 설정한 색상(background, color) 완벽 유지
+                                        highlightItem.innerHTML = span.outerHTML; 
+                                        threadBox.appendChild(highlightItem);
+                                    }
+                                });
+                            } else {
+                                // 형광펜 대사가 없으면 스레드 박스 자체를 숨김
+                                threadBox.style.display = 'none'; 
+                            }
+                            
+                            // 추출된 텍스트를 검색 데이터에 추가 병합
+                            cardPack.searchBlob += ` ${extractedTextForSearch.toLowerCase()}`;
+                        }).catch(() => {
+                            document.getElementById(`thread-${id}`).style.display = 'none';
+                        });
+                });
+
+                // 태그 버튼 생성
+                Object.keys(tagsTracker).forEach(catKey => {
+                    const poolContainer = document.getElementById(`tag-pool-${catKey}`);
+                    if(!poolContainer) return;
+                    const sortedTags = Object.keys(tagsTracker[catKey]).sort((a, b) => {
+                        return tagsTracker[catKey][b] - tagsTracker[catKey][a];
+                    });
+
+                    sortedTags.forEach(tagName => {
+                        const btn = document.createElement('div');
+                        btn.className = 'filter-tag-btn';
+                        btn.textContent = `#${tagName.toUpperCase()}`;
+                        btn.onclick = () => filterByTag(tagName);
+                        poolContainer.appendChild(btn);
+                    });
+                });
+
+                setTimeout(checkTagWrap, 150); 
+            })
+            .catch(err => console.error('텍스트 리스트 로드 실패:', err));
+    });
+</script>
+</body>
+</html>

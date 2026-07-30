@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Memory Text Archive</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <style>
         /* =======================================
-           🔥 CSS: 흰색 배경(Light Theme) 오토메 감성 설정
+           🔥 CSS: 페일 웜화이트(Light Theme) 오토메 감성
            ======================================= */
         * { 
             margin: 0; padding: 0; box-sizing: border-box; user-select: none; 
@@ -26,20 +26,25 @@
             from { opacity: 0; filter: blur(5px); }
             to { opacity: 1; filter: blur(0); }
         }
+        @keyframes fadeOutZoom {
+            to { opacity: 0; transform: scale(0.98); filter: blur(4px); }
+        }
 
         #archive-container {
             width: 100vw; height: 100dvh; display: flex; flex-direction: column;
             animation: pageFadeIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
+        .page-exit {
+            animation: fadeOutZoom 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
+        }
 
         /* === 헤더 및 검색창 === */
         header {
-            width: 100%; padding: max(15px, env(safe-area-inset-top)) 20px 10px 20px;
+            width: 100%; padding: max(15px, env(safe-area-inset-top)) 20px 15px 20px;
             display: flex; flex-direction: column; gap: 15px;
             background: rgba(250, 250, 250, 0.85);
             backdrop-filter: blur(12px); 
             z-index: 50; position: relative;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.03);
         }
         .header-top { display: flex; align-items: center; justify-content: space-between; height: 35px; }
         .back-btn {
@@ -79,8 +84,8 @@
         }
         .tab-item.active::after { width: 100%; }
 
-        /* === 태그 필터 (포인트 컬러 적용) === */
-        .tag-filter-container-wrapper { position: relative; padding: 12px 45px 12px 20px; }
+        /* === 태그 필터 & 포스트 카운트 (유저 요청 반영) === */
+        .tag-filter-container-wrapper { position: relative; padding: 5px 45px 5px 20px; }
         .tag-filter-pool {
             display: none; justify-content: center; gap: 8px; flex-wrap: wrap; 
             max-height: 26px; overflow: hidden; transition: max-height 0.4s;
@@ -91,21 +96,30 @@
         .filter-tag-btn {
             background: #FFF; border: 1px solid rgba(0,0,0,0.08);
             padding: 4px 12px; border-radius: 20px;
-            font-size: 11px; font-weight: 600; /* 너무 두껍지 않게 조절 */
+            font-size: 11px; font-weight: 500; /* 볼드체 해제, 얇게 */
             color: rgba(27,27,27,0.5); letter-spacing: 0.3px;
             cursor: pointer; transition: all 0.25s ease; 
         }
-        /* 🔥 유저 요청: 태그 활성화 시 뱅의 민트 포인트 컬러 */
-        .filter-tag-btn.active {
-            background: #E1F9F1; color: #46A982; border-color: #E1F9F1;
-        }
+        .filter-tag-btn.active { background: #E1F9F1; color: #46A982; border-color: #E1F9F1; }
+        
         .tag-expand-btn {
-            position: absolute; top: 11px; right: 15px; width: 26px; height: 26px;
+            position: absolute; top: 4px; right: 15px; width: 26px; height: 26px;
             display: none; align-items: center; justify-content: center;
             background: rgba(0,0,0,0.03); border-radius: 50%; color: #1B1B1B;
             cursor: pointer; transition: all 0.3s;
         }
         .tag-expand-btn.active iconify-icon { transform: rotate(180deg); }
+
+        /* 🔥 N개의 포스트 구분선 UI 추가 */
+        .post-count-wrapper {
+            padding: 10px 20px; 
+            display: flex; flex-direction: column; gap: 8px;
+        }
+        .post-count-line { width: 100%; height: 1px; background: rgba(0,0,0,0.05); }
+        .post-count-text {
+            font-size: 10px; color: rgba(27,27,27,0.4); 
+            font-weight: 500; letter-spacing: 0.3px; text-align: left;
+        }
 
         /* === 리스트 컨테이너 === */
         .slider-wrapper { flex: 1; width: 100%; overflow: hidden; position: relative; }
@@ -115,13 +129,13 @@
         }
         .tab-content {
             width: 25%; height: 100%; overflow-y: auto;
-            padding: 15px 20px max(50px, env(safe-area-inset-bottom)) 20px;
-            display: flex; flex-direction: column; gap: 24px; /* 카드 사이 간격 미세 확장 */
+            padding: 0 20px max(50px, env(safe-area-inset-bottom)) 20px;
+            display: flex; flex-direction: column; gap: 24px;
         }
         .tab-content::-webkit-scrollbar { display: none; }
 
         /* =======================================
-           🔥 기억의 파편(텍스트 아카이브) - 접은 글 UI
+           🔥 텍스트 아카이브 접은 글 (우아한 타이포그래피)
            ======================================= */
         .text-card {
             width: 100%; display: flex; flex-direction: column; 
@@ -129,63 +143,52 @@
             opacity: 0; transform: translateY(15px);
             transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
         }
-        /* 애니메이션 충돌 방지를 위해 한번 나타나면 고정 */
         .text-card.show { opacity: 1; transform: translateY(0); }
         
         .card-header {
             display: flex; justify-content: space-between; align-items: baseline; width: 100%;
-            cursor: pointer; padding: 4px 0;
-            transition: opacity 0.2s;
+            cursor: pointer; padding: 4px 0; transition: opacity 0.2s;
         }
         .card-header:active { opacity: 0.6; }
         
+        /* 🔥 제목 텍스트 크기 및 굵기 감소 */
         .text-title {
-            font-size: 15px; font-weight: 700; color: #1B1B1B; /* 볼드 굵기 완화 */
+            font-size: 14px; font-weight: 600; color: #1B1B1B; 
             letter-spacing: 0.2px; flex: 1; line-height: 1.4;
             transition: color 0.3s;
         }
-        .text-card.open .text-title { color: #46A982; /* 열렸을 때 민트색 포인트 */ }
+        .text-card.open .text-title { color: #46A982; }
         
+        /* 🔥 날짜 텍스트 크기 및 굵기 감소 */
         .text-date {
-            font-size: 11px; color: rgba(27,27,27,0.4); font-weight: 600;
-            white-space: nowrap; margin-left: 12px; letter-spacing: 0.5px;
+            font-size: 10px; color: rgba(27,27,27,0.4); font-weight: 500;
+            white-space: nowrap; margin-left: 12px; letter-spacing: 0.3px;
         }
 
-        /* 🔥 스르륵 열리는 아코디언 애니메이션을 위한 Grid 트릭 */
         .card-body {
-            display: grid;
-            grid-template-rows: 0fr;
+            display: grid; grid-template-rows: 0fr;
             transition: grid-template-rows 0.4s cubic-bezier(0.25, 1, 0.5, 1);
             overflow: hidden;
         }
-        .text-card.open .card-body {
-            grid-template-rows: 1fr;
-        }
+        .text-card.open .card-body { grid-template-rows: 1fr; }
         .card-body-inner {
-            min-height: 0; display: flex; flex-direction: column; gap: 16px; /* 내부 간격 확장 */
-            opacity: 0; padding-top: 0;
-            transition: opacity 0.4s ease, padding 0.4s ease;
+            min-height: 0; display: flex; flex-direction: column; gap: 16px;
+            opacity: 0; padding-top: 0; transition: opacity 0.4s ease, padding 0.4s ease;
         }
-        .text-card.open .card-body-inner {
-            opacity: 1; padding-top: 14px; padding-bottom: 4px;
-        }
+        .text-card.open .card-body-inner { opacity: 1; padding-top: 14px; padding-bottom: 4px; }
 
         .text-summary {
             font-size: 12px; color: rgba(27,27,27,0.6); 
-            line-height: 1.6; letter-spacing: 0.3px; /* 자간 및 줄간격 확장 */
-            word-break: keep-all;
+            line-height: 1.6; letter-spacing: 0.3px; word-break: keep-all;
         }
 
-        /* 형광펜 대사 스레드 연출 */
         .highlight-thread-box {
-            display: flex; flex-direction: column; gap: 12px; /* 대사 간격 넓힘 */
-            padding-left: 20px;
+            display: flex; flex-direction: column; gap: 12px; padding-left: 20px;
             border-left: 2px solid rgba(0,0,0,0.06); 
         }
         .highlight-item {
-            position: relative; font-size: 13px; 
-            line-height: 1.7; letter-spacing: 0.4px; /* 대사 가독성 극대화 */
-            word-break: keep-all; color: #1B1B1B;
+            position: relative; font-size: 13px; line-height: 1.7; 
+            letter-spacing: 0.4px; word-break: keep-all; color: #1B1B1B;
         }
         .highlight-item::before {
             content: ''; position: absolute; left: -20px; top: 11px;
@@ -196,9 +199,23 @@
             box-shadow: 0 1px 4px rgba(0,0,0,0.03);
         }
 
+        /* 🔥 본문 이동 버튼 (우측 하단 작은 화살표) */
+        .post-link-wrapper {
+            display: flex; justify-content: flex-end; margin-top: 4px;
+        }
+        .post-link-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 30px; height: 30px; border-radius: 50%;
+            background: rgba(0,0,0,0.03); color: rgba(27,27,27,0.5); font-size: 16px;
+            text-decoration: none; transition: all 0.25s ease;
+        }
+        .post-link-btn:active {
+            background: #E1F9F1; color: #46A982; transform: scale(0.9);
+        }
+
         @media (min-width: 768px) {
-            .tab-content { padding: 25px 40px 50px; max-width: 800px; margin: 0 auto; }
-            .text-title { font-size: 16px; }
+            .tab-content { padding: 0 40px 50px; max-width: 800px; margin: 0 auto; }
+            .text-title { font-size: 15px; }
             .highlight-item { font-size: 14px; }
         }
     </style>
@@ -232,6 +249,12 @@
             <iconify-icon icon="solar:alt-arrow-down-linear"></iconify-icon>
         </div>
     </div>
+    
+    <!-- 🔥 태그 밑 N개의 포스트 UI -->
+    <div class="post-count-wrapper">
+        <div class="post-count-line"></div>
+        <div class="post-count-text" id="post-count-display">0개의 포스트</div>
+    </div>
 
     <div class="slider-wrapper">
         <div class="slider-track" id="slider-track">
@@ -254,10 +277,10 @@
     const tagPools = document.querySelectorAll('.tag-filter-pool');
     const tagExpandBtn = document.getElementById('tag-expand-btn');
     const searchInput = document.getElementById('memory-search-input');
+    const postCountDisplay = document.getElementById('post-count-display');
     
     let allCardDataElements = [];
 
-    // 스크롤 시 부드럽게 나타나는 옵저버 (애니메이션 충돌 방지)
     const cardObserver = new IntersectionObserver((entries) => {
         let delayCount = 0;
         entries.forEach(entry => {
@@ -293,7 +316,6 @@
     }
     window.addEventListener('resize', checkTagWrap);
 
-    // 🔥 탭 변경 시 리스트 튀는 현상 제거 (수직 이동 없이 가로 슬라이드만)
     function switchTab(index) {
         if (activeCategoryIndex === index) return;
         activeCategoryIndex = index;
@@ -334,6 +356,8 @@
             else btn.classList.remove('active');
         });
 
+        let visibleCount = 0; // 🔥 보여지는 포스트 개수 카운팅
+
         allCardDataElements.forEach(cardPack => {
             const el = cardPack.domElement;
             const categoryMatch = (cardPack.category === getCategoryKeyByIndex(activeCategoryIndex));
@@ -341,28 +365,37 @@
             const searchMatch = (searchQueryStr === '' || cardPack.searchBlob.includes(searchQueryStr));
 
             if(categoryMatch && tagMatch && searchMatch) {
+                visibleCount++;
                 if (el.style.display === 'none') {
                     el.style.display = 'flex';
-                    // 가로 슬라이드 중 애니메이션 충돌을 막기 위해 튀지 않게 처리
                     if(!el.classList.contains('show')) el.classList.add('show');
                 }
             } else {
                 el.style.display = 'none';
             }
         });
+        
+        // 포스트 개수 업데이트
+        postCountDisplay.textContent = `${visibleCount}개의 포스트`;
     }
 
-    // 🔥 아코디언(접은 글) 토글 함수
+    // 🔥 여러 개의 다중 아코디언 허용
     window.toggleAccordion = function(id) {
         allCardDataElements.forEach(pack => {
-            const el = pack.domElement;
             if(pack.id === id) {
-                el.classList.toggle('open');
-            } else {
-                // 다른 카드가 열리면 기존에 열려있던 카드는 닫히게 (깔끔한 UI 유지)
-                el.classList.remove('open');
+                pack.domElement.classList.toggle('open');
             }
+            // 기존처럼 다른 탭을 닫는 로직(else remove 'open')을 삭제하여 다중 오픈 가능하게 수정
         });
+    }
+
+    // 🔥 본문 이동 애니메이션 
+    window.goToPost = function(id) {
+        const container = document.getElementById('archive-container');
+        container.classList.add('page-exit');
+        setTimeout(() => {
+            window.location.href = `../memory/dialog/${id}.html`;
+        }, 380);
     }
 
     searchInput.addEventListener('input', (e) => {
@@ -407,7 +440,6 @@
                     card.className = 'text-card';
                     card.setAttribute('data-card-id', id);
                     
-                    // 🔥 접은 글 UI 구조 반영 (card-body와 card-body-inner 추가)
                     card.innerHTML = `
                         <div class="card-header" onclick="toggleAccordion('${id}')">
                             <div class="text-title">${title}</div>
@@ -417,6 +449,13 @@
                             <div class="card-body-inner">
                                 ${summary ? `<div class="text-summary">${summary}</div>` : ''}
                                 <div class="highlight-thread-box" id="thread-${id}"></div>
+                                
+                                <!-- 🔥 화살표 아이콘 (본문 진입 버튼) -->
+                                <div class="post-link-wrapper">
+                                    <a href="javascript:goToPost('${id}')" class="post-link-btn" title="다이얼로그 열람">
+                                        <iconify-icon icon="solar:alt-arrow-right-linear"></iconify-icon>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     `;
@@ -482,7 +521,11 @@
                     });
                 });
 
-                setTimeout(checkTagWrap, 150); 
+                // 첫 로드 후 개수 초기화 실행
+                setTimeout(() => {
+                    checkTagWrap(); 
+                    executeMasterFilter(); 
+                }, 150); 
             })
             .catch(err => console.error('텍스트 리스트 로드 실패:', err));
     });

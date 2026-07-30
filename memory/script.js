@@ -12,22 +12,56 @@ const tagExpandBtn = document.getElementById('tag-expand-btn');
 
 let allCardDataElements = [];
 
-// 🔥 딥 서치(본문 검색) 애니메이션 및 하이라이트 스타일을 JS에서 동적으로 주입
+// 🔥 딥 서치(본문 검색) 발동 시 UI 덮어쓰기를 위한 동적 스타일 주입
 const dynamicStyle = document.createElement('style');
 dynamicStyle.innerHTML = `
     @keyframes snippetFade {
         from { opacity: 0; transform: translateY(4px); }
         to { opacity: 1; transform: translateY(0); }
     }
+    
+    /* 1. 배경 그라데이션 제거 및 전체 블러 처리 */
+    .card.snippet-active .card-scenery-overlay {
+        background: rgba(249, 249, 248, 0.85) !important; /* 기존 그라데이션 덮어쓰고 밝은 반투명 배경 */
+        backdrop-filter: blur(12px) !important; /* 애플 특유의 고급스러운 블러 효과 */
+    }
+
+    /* 2. 하단 구석에 몰려있던 텍스트 그룹 제한 해제 */
+    .card.snippet-active .card-inner-info {
+        justify-content: center !important; 
+        padding: 20px !important;
+    }
+    .card.snippet-active .card-bottom-left-group {
+        position: relative !important;
+        width: 100% !important; /* 카드 가로 전체 사용 */
+        bottom: auto !important; left: auto !important;
+        display: flex; flex-direction: column; gap: 8px;
+    }
+
+    /* 3. 제목은 서브로 밀어내어 흐리게 처리 */
+    .card.snippet-active .card-title {
+        color: rgba(27, 27, 27, 0.4) !important;
+        font-size: 13px !important;
+    }
+
+    /* 4. 검색된 다이얼로그 본문 텍스트 (검정색으로 뚜렷하게) */
     .snippet-mode {
         animation: snippetFade 0.4s ease forwards !important;
-        color: #EAEAEA !important;
-        font-style: italic;
+        color: #1B1B1B !important; /* 뚜렷한 검정 텍스트 */
+        font-size: 13px !important;
+        line-height: 1.6 !important;
+        font-style: normal !important;
+        -webkit-line-clamp: 4 !important; /* 최대 4줄까지 넓게 표시 */
     }
+
+    /* 검색어 하이라이트 (시선이 확 꽂히도록 반전) */
     .snippet-highlight {
-        color: #F9F9F8; font-weight: 900; 
-        background: rgba(255, 255, 255, 0.15); 
-        padding: 0 4px; border-radius: 4px;
+        color: #F9F9F8 !important; 
+        font-weight: 900 !important; 
+        background: #1B1B1B !important; 
+        padding: 2px 6px !important; 
+        border-radius: 4px !important;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
 `;
 document.head.appendChild(dynamicStyle);
@@ -151,7 +185,6 @@ function executeMasterFilter() {
         else btn.classList.remove('active');
     });
 
-    // 🔥 딥 서치 여부 판단
     const isDeepSearch = searchQueryStr.startsWith('/본문');
     let deepSearchKeyword = '';
     if (isDeepSearch) {
@@ -168,17 +201,17 @@ function executeMasterFilter() {
 
         if (isDeepSearch) {
             if (deepSearchKeyword === '') {
-                searchMatch = true; // /본문 만 쳤을 땐 일단 다 띄움
+                searchMatch = true; 
             } else if (cardPack.isFetched && cardPack.fullText.includes(deepSearchKeyword)) {
                 searchMatch = true;
                 
-                // 검색어 주변 텍스트 긁어오기 (Snippet 생성)
+                // 검색어 주변 문맥을 더 넓게 가져옴 (위아래 텍스트)
                 const idx = cardPack.fullText.indexOf(deepSearchKeyword);
-                const start = Math.max(0, idx - 15);
-                const end = Math.min(cardPack.fullTextOriginal.length, idx + deepSearchKeyword.length + 30);
+                const start = Math.max(0, idx - 40);
+                const end = Math.min(cardPack.fullTextOriginal.length, idx + deepSearchKeyword.length + 50);
                 let snippet = cardPack.fullTextOriginal.substring(start, end).replace(/\n/g, ' ');
                 
-                // 대소문자 구분 없이 검색어 하이라이트
+                // 정규식으로 대소문자 무시하고 검색어 래핑
                 const regex = new RegExp(deepSearchKeyword, 'gi');
                 snippet = snippet.replace(regex, `<span class="snippet-highlight">$&</span>`);
                 snippetToDisplay = `...${snippet}...`;
@@ -193,19 +226,22 @@ function executeMasterFilter() {
                 el.classList.remove('show');
             }
             
-            // 🔥 요약 텍스트 변경 로직 (부드러운 교체)
             const summaryEl = el.querySelector('.card-summary');
             if (summaryEl) {
                 if (isDeepSearch && deepSearchKeyword && snippetToDisplay) {
+                    // 🔥 본문 검색 매칭 시 카드 스타일 통째로 변경
+                    el.classList.add('snippet-active');
+                    
                     if (!summaryEl.classList.contains('snippet-mode') || summaryEl.innerHTML !== snippetToDisplay) {
                         summaryEl.innerHTML = snippetToDisplay;
                         summaryEl.classList.add('snippet-mode');
-                        // 리플로우를 통한 애니메이션 재시작
                         summaryEl.style.animation = 'none';
                         summaryEl.offsetHeight; 
                         summaryEl.style.animation = null; 
                     }
                 } else {
+                    // 검색 취소 시 원래 상태로 복구
+                    el.classList.remove('snippet-active');
                     const originalHTML = summaryEl.getAttribute('data-original');
                     if (summaryEl.innerHTML !== originalHTML) {
                         summaryEl.innerHTML = originalHTML;
@@ -216,6 +252,7 @@ function executeMasterFilter() {
         } else {
             el.style.display = 'none';
             el.classList.remove('show');
+            el.classList.remove('snippet-active'); // 안 보이는 애들도 리셋
         }
     });
 }
@@ -276,10 +313,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     ? `<img src="${imgUrl}" class="card-img" alt="${title}" style="object-position: ${imgX}% ${imgY}%; transform-origin: ${imgX}% ${imgY}%; transform: scale(${imgScale});">` 
                     : `<div class="card-no-img-placeholder">FEARLESS</div>`;
 
-                // 🔥 사용자 요청 1: 날짜 데이터가 없으면 date 태그 자체를 생성하지 않음 (회색 흔적 원천 차단)
                 let dateHtml = (date && date.trim() !== "") ? `<div class="card-date">${date}</div>` : '';
                 
-                // 원본 요약을 저장해두어 본문 검색 모드 해제 시 복구할 수 있게 세팅
                 let summarySafeStr = summary.replace(/"/g, '&quot;');
                 let summaryHtml = `<div class="card-summary" data-original="${summarySafeStr}">${summary}</div>`;
                 
@@ -302,15 +337,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const searchBlob = `${title} ${summary} ${auSetting} ${date} ${processedTagsArray.join(' ')}`.toLowerCase();
 
-                // 💡 카드 팩 데이터 구성
                 const cardPack = {
                     id: id,
                     category: category, 
                     tags: processedTagsArray, 
                     searchBlob: searchBlob, 
                     domElement: card,
-                    fullTextOriginal: '', // 원본 본문 (Snippet 출력용)
-                    fullText: '',         // 소문자 변환 본문 (검색용)
+                    fullTextOriginal: '', 
+                    fullText: '',         
                     isFetched: false
                 };
                 allCardDataElements.push(cardPack);
@@ -321,22 +355,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     cardObserver.observe(card);
                 }
 
-                // 🔥 사용자 요청 2: 백그라운드에서 dialog 안의 본문을 조용히 로드하여 메모리에 저장 (딥 서치 대비)
+                // 백그라운드 텍스트 프리페치
                 fetch(`dialog/${id}.html`)
                     .then(res => { if(res.ok) return res.text(); return ''; })
                     .then(dialogHtml => {
                         const tempDiv = document.createElement('div');
                         tempDiv.innerHTML = dialogHtml;
-                        // HTML 태그는 모두 버리고 순수 텍스트(대사)만 추출
                         const pureText = tempDiv.textContent || tempDiv.innerText || '';
                         cardPack.fullTextOriginal = pureText;
                         cardPack.fullText = pureText.toLowerCase();
                         cardPack.isFetched = true;
                         
-                        // 사용자가 페이지 로딩 중에 이미 검색어를 치고 있었다면 즉시 리렌더링
                         if (searchQueryStr.startsWith('/본문')) executeMasterFilter();
-                    }).catch(() => {}); // 파일이 없더라도 에러를 내지 않고 조용히 무시
-
+                    }).catch(() => {}); 
             });
 
             Object.keys(tagsTracker).forEach(catKey => {

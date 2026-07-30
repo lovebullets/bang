@@ -2,15 +2,35 @@ let activeCategoryIndex = 0;
 let selectedTag = 'all';
 let searchQueryStr = '';
 let isSliding = false;
-let tagsExpanded = false; // 🔥 태그 더보기 상태 변수
+let tagsExpanded = false; 
 
 const track = document.getElementById('slider-track');
 const tabs = document.querySelectorAll('.tab-item');
 const tagPools = document.querySelectorAll('.tag-filter-pool');
 const searchInput = document.getElementById('memory-search-input');
-const tagExpandBtn = document.getElementById('tag-expand-btn'); // 🔥 더보기 버튼
+const tagExpandBtn = document.getElementById('tag-expand-btn'); 
 
 let allCardDataElements = [];
+
+// 🔥 딥 서치(본문 검색) 애니메이션 및 하이라이트 스타일을 JS에서 동적으로 주입
+const dynamicStyle = document.createElement('style');
+dynamicStyle.innerHTML = `
+    @keyframes snippetFade {
+        from { opacity: 0; transform: translateY(4px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .snippet-mode {
+        animation: snippetFade 0.4s ease forwards !important;
+        color: #EAEAEA !important;
+        font-style: italic;
+    }
+    .snippet-highlight {
+        color: #F9F9F8; font-weight: 900; 
+        background: rgba(255, 255, 255, 0.15); 
+        padding: 0 4px; border-radius: 4px;
+    }
+`;
+document.head.appendChild(dynamicStyle);
 
 const cardObserver = new IntersectionObserver((entries) => {
     let delayCount = 0;
@@ -25,7 +45,6 @@ const cardObserver = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.05 });
 
-// 🔥 태그 더보기/접기 토글 함수
 function toggleTags() {
     tagsExpanded = !tagsExpanded;
     const activePool = tagPools[activeCategoryIndex];
@@ -38,15 +57,13 @@ function toggleTags() {
     }
 }
 
-// 🔥 태그가 1줄(약 30px)을 넘는지 체크해서 더보기 버튼을 띄울지 말지 결정하는 센서
 function checkTagWrap() {
     const activePool = tagPools[activeCategoryIndex];
     if (!activePool) return;
 
-    // 높이 제한을 잠시 풀어서 진짜 줄이 넘어가는지 체크
     activePool.style.maxHeight = 'none';
-    const isWrapping = activePool.scrollHeight > 35; // 35px 이상이면 무조건 2줄 이상임
-    activePool.style.maxHeight = ''; // 다시 원상 복구
+    const isWrapping = activePool.scrollHeight > 35; 
+    activePool.style.maxHeight = ''; 
 
     if (isWrapping) {
         tagExpandBtn.style.display = 'flex';
@@ -55,7 +72,6 @@ function checkTagWrap() {
     }
 }
 
-// 윈도우 크기가 변해서 태그 줄바꿈이 바뀔 때도 실시간으로 센서 작동
 window.addEventListener('resize', checkTagWrap);
 
 function switchTab(index) {
@@ -67,14 +83,13 @@ function switchTab(index) {
     
     tagPools.forEach(pool => {
         pool.classList.remove('active');
-        pool.classList.remove('expanded'); // 탭 바꿀 때 무조건 접어두기
+        pool.classList.remove('expanded'); 
     });
     tagPools[index].classList.add('active');
     
-    // 상태 초기화
     tagsExpanded = false;
     tagExpandBtn.classList.remove('active');
-    checkTagWrap(); // 탭 바뀐 후 태그 줄 수 다시 체크!
+    checkTagWrap(); 
     
     const targetCat = getCategoryKeyByIndex(index);
     const targetCards = document.querySelectorAll(`#list-${targetCat} .card`);
@@ -136,16 +151,67 @@ function executeMasterFilter() {
         else btn.classList.remove('active');
     });
 
+    // 🔥 딥 서치 여부 판단
+    const isDeepSearch = searchQueryStr.startsWith('/본문');
+    let deepSearchKeyword = '';
+    if (isDeepSearch) {
+        deepSearchKeyword = searchQueryStr.replace('/본문', '').trim().toLowerCase();
+    }
+
     allCardDataElements.forEach(cardPack => {
         const el = cardPack.domElement;
         const categoryMatch = (cardPack.category === getCategoryKeyByIndex(activeCategoryIndex));
         const tagMatch = (selectedTag === 'all' || cardPack.tags.includes(selectedTag));
-        const searchMatch = (searchQueryStr === '' || cardPack.searchBlob.includes(searchQueryStr));
+        
+        let searchMatch = false;
+        let snippetToDisplay = '';
+
+        if (isDeepSearch) {
+            if (deepSearchKeyword === '') {
+                searchMatch = true; // /본문 만 쳤을 땐 일단 다 띄움
+            } else if (cardPack.isFetched && cardPack.fullText.includes(deepSearchKeyword)) {
+                searchMatch = true;
+                
+                // 검색어 주변 텍스트 긁어오기 (Snippet 생성)
+                const idx = cardPack.fullText.indexOf(deepSearchKeyword);
+                const start = Math.max(0, idx - 15);
+                const end = Math.min(cardPack.fullTextOriginal.length, idx + deepSearchKeyword.length + 30);
+                let snippet = cardPack.fullTextOriginal.substring(start, end).replace(/\n/g, ' ');
+                
+                // 대소문자 구분 없이 검색어 하이라이트
+                const regex = new RegExp(deepSearchKeyword, 'gi');
+                snippet = snippet.replace(regex, `<span class="snippet-highlight">$&</span>`);
+                snippetToDisplay = `...${snippet}...`;
+            }
+        } else {
+            searchMatch = (searchQueryStr === '' || cardPack.searchBlob.includes(searchQueryStr));
+        }
 
         if(categoryMatch && tagMatch && searchMatch) {
             if (el.style.display === 'none') {
                 el.style.display = 'flex';
                 el.classList.remove('show');
+            }
+            
+            // 🔥 요약 텍스트 변경 로직 (부드러운 교체)
+            const summaryEl = el.querySelector('.card-summary');
+            if (summaryEl) {
+                if (isDeepSearch && deepSearchKeyword && snippetToDisplay) {
+                    if (!summaryEl.classList.contains('snippet-mode') || summaryEl.innerHTML !== snippetToDisplay) {
+                        summaryEl.innerHTML = snippetToDisplay;
+                        summaryEl.classList.add('snippet-mode');
+                        // 리플로우를 통한 애니메이션 재시작
+                        summaryEl.style.animation = 'none';
+                        summaryEl.offsetHeight; 
+                        summaryEl.style.animation = null; 
+                    }
+                } else {
+                    const originalHTML = summaryEl.getAttribute('data-original');
+                    if (summaryEl.innerHTML !== originalHTML) {
+                        summaryEl.innerHTML = originalHTML;
+                        summaryEl.classList.remove('snippet-mode');
+                    }
+                }
             }
         } else {
             el.style.display = 'none';
@@ -161,7 +227,7 @@ function getCategoryKeyByIndex(index) {
 }
 
 searchInput.addEventListener('input', (e) => {
-    searchQueryStr = e.target.value.toLowerCase().trim();
+    searchQueryStr = e.target.value.toLowerCase();
     executeMasterFilter();
 });
 
@@ -210,7 +276,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     ? `<img src="${imgUrl}" class="card-img" alt="${title}" style="object-position: ${imgX}% ${imgY}%; transform-origin: ${imgX}% ${imgY}%; transform: scale(${imgScale});">` 
                     : `<div class="card-no-img-placeholder">FEARLESS</div>`;
 
-                let summaryHtml = summary ? `<div class="card-summary">${summary}</div>` : '';
+                // 🔥 사용자 요청 1: 날짜 데이터가 없으면 date 태그 자체를 생성하지 않음 (회색 흔적 원천 차단)
+                let dateHtml = (date && date.trim() !== "") ? `<div class="card-date">${date}</div>` : '';
+                
+                // 원본 요약을 저장해두어 본문 검색 모드 해제 시 복구할 수 있게 세팅
+                let summarySafeStr = summary.replace(/"/g, '&quot;');
+                let summaryHtml = `<div class="card-summary" data-original="${summarySafeStr}">${summary}</div>`;
+                
                 let auSettingHtml = (category === 'au' && auSetting) ? `<div class="au-setting-text">[ ${auSetting} ]</div>` : '';
 
                 card.innerHTML = `
@@ -218,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="card-scenery-overlay"></div>
                     <div class="card-inner-info">
                         <div class="card-top-right-group">
-                            <div class="card-date">${date}</div>
+                            ${dateHtml}
                         </div>
                         <div class="card-bottom-left-group">
                             ${auSettingHtml}
@@ -230,15 +302,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const searchBlob = `${title} ${summary} ${auSetting} ${date} ${processedTagsArray.join(' ')}`.toLowerCase();
 
-                allCardDataElements.push({
-                    category: category, tags: processedTagsArray, searchBlob: searchBlob, domElement: card
-                });
+                // 💡 카드 팩 데이터 구성
+                const cardPack = {
+                    id: id,
+                    category: category, 
+                    tags: processedTagsArray, 
+                    searchBlob: searchBlob, 
+                    domElement: card,
+                    fullTextOriginal: '', // 원본 본문 (Snippet 출력용)
+                    fullText: '',         // 소문자 변환 본문 (검색용)
+                    isFetched: false
+                };
+                allCardDataElements.push(cardPack);
 
                 const targetContainer = document.getElementById(`list-${category}`);
                 if(targetContainer) {
                     targetContainer.appendChild(card);
                     cardObserver.observe(card);
                 }
+
+                // 🔥 사용자 요청 2: 백그라운드에서 dialog 안의 본문을 조용히 로드하여 메모리에 저장 (딥 서치 대비)
+                fetch(`dialog/${id}.html`)
+                    .then(res => { if(res.ok) return res.text(); return ''; })
+                    .then(dialogHtml => {
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = dialogHtml;
+                        // HTML 태그는 모두 버리고 순수 텍스트(대사)만 추출
+                        const pureText = tempDiv.textContent || tempDiv.innerText || '';
+                        cardPack.fullTextOriginal = pureText;
+                        cardPack.fullText = pureText.toLowerCase();
+                        cardPack.isFetched = true;
+                        
+                        // 사용자가 페이지 로딩 중에 이미 검색어를 치고 있었다면 즉시 리렌더링
+                        if (searchQueryStr.startsWith('/본문')) executeMasterFilter();
+                    }).catch(() => {}); // 파일이 없더라도 에러를 내지 않고 조용히 무시
+
             });
 
             Object.keys(tagsTracker).forEach(catKey => {
@@ -256,7 +354,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
 
-            // 🔥 모든 데이터를 불러오고 태그를 버튼으로 다 구운 뒤에, 태그가 넘치는지 확인!
             setTimeout(checkTagWrap, 100); 
         })
         .catch(err => console.error('기억 보관소 로드 실패:', err));

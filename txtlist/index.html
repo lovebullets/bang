@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Memory Text Archive</title>
-    <!-- 고급스러운 세리프체 유지 -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <style>
         /* =======================================
@@ -19,32 +18,30 @@
 
         body, html {
             width: 100%; height: 100dvh; overflow: hidden;
-            background-color: #FAFAFA; /* 지정하신 페일 웜화이트 */
-            color: #1B1B1B; /* 기본 텍스트는 선명한 검정 */
+            background-color: #FAFAFA; 
+            color: #1B1B1B; 
         }
 
         @keyframes pageFadeIn {
-            from { opacity: 0; transform: translateY(10px); filter: blur(5px); }
-            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+            from { opacity: 0; filter: blur(5px); }
+            to { opacity: 1; filter: blur(0); }
         }
 
         #archive-container {
             width: 100vw; height: 100dvh; display: flex; flex-direction: column;
-            animation: pageFadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            animation: pageFadeIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
-        /* === 헤더 및 검색창 (밝은 테마에 맞춤) === */
+        /* === 헤더 및 검색창 === */
         header {
             width: 100%; padding: max(15px, env(safe-area-inset-top)) 20px 10px 20px;
             display: flex; flex-direction: column; gap: 15px;
             background: rgba(250, 250, 250, 0.85);
-            backdrop-filter: blur(10px); /* iCloud 스타일 블러 */
+            backdrop-filter: blur(12px); 
             z-index: 50; position: relative;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.03);
         }
-        .header-top {
-            display: flex; align-items: center; justify-content: space-between; height: 35px;
-        }
+        .header-top { display: flex; align-items: center; justify-content: space-between; height: 35px; }
         .back-btn {
             color: #1B1B1B; text-decoration: none; font-size: 24px;
             display: flex; align-items: center; transition: transform 0.2s;
@@ -58,12 +55,10 @@
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         .search-box-wrapper:focus-within {
-            width: 180px; background: #FFF; border-color: rgba(0, 0, 0, 0.2);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            width: 180px; background: #FFF; border-color: rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
         }
-        .search-box-wrapper iconify-icon {
-            font-size: 16px; color: rgba(27, 27, 27, 0.5); margin-right: 6px;
-        }
+        .search-box-wrapper iconify-icon { font-size: 16px; color: rgba(27, 27, 27, 0.5); margin-right: 6px; }
         .search-input {
             width: 100%; background: none; border: none; outline: none;
             color: #1B1B1B; font-size: 11px; font-weight: 600;
@@ -73,18 +68,18 @@
         /* === 카테고리 탭 === */
         .tab-menu { display: flex; justify-content: center; gap: 35px; width: 100%; }
         .tab-item {
-            font-size: 13px; font-weight: 700; color: rgba(27, 27, 27, 0.3);
+            font-size: 13px; font-weight: 600; color: rgba(27, 27, 27, 0.3);
             cursor: pointer; padding-bottom: 6px; position: relative; letter-spacing: 1.5px;
             transition: all 0.3s;
         }
-        .tab-item.active { color: #1B1B1B; font-weight: 900; }
+        .tab-item.active { color: #1B1B1B; font-weight: 700; }
         .tab-item::after {
             content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px;
             background-color: #1B1B1B; transition: all 0.3s; transform: translateX(-50%);
         }
         .tab-item.active::after { width: 100%; }
 
-        /* === 태그 필터 (라이트 모드) === */
+        /* === 태그 필터 (포인트 컬러 적용) === */
         .tag-filter-container-wrapper { position: relative; padding: 12px 45px 12px 20px; }
         .tag-filter-pool {
             display: none; justify-content: center; gap: 8px; flex-wrap: wrap; 
@@ -94,18 +89,20 @@
         .tag-filter-pool.expanded { max-height: 300px; }
         
         .filter-tag-btn {
-            background: #FFF; border: 1px solid rgba(0,0,0,0.1);
+            background: #FFF; border: 1px solid rgba(0,0,0,0.08);
             padding: 4px 12px; border-radius: 20px;
-            font-size: 10px; font-weight: 700; color: rgba(27,27,27,0.6);
-            cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            font-size: 11px; font-weight: 600; /* 너무 두껍지 않게 조절 */
+            color: rgba(27,27,27,0.5); letter-spacing: 0.3px;
+            cursor: pointer; transition: all 0.25s ease; 
         }
+        /* 🔥 유저 요청: 태그 활성화 시 뱅의 민트 포인트 컬러 */
         .filter-tag-btn.active {
-            background: #1B1B1B; color: #FFF; border-color: #1B1B1B;
+            background: #E1F9F1; color: #46A982; border-color: #E1F9F1;
         }
         .tag-expand-btn {
             position: absolute; top: 11px; right: 15px; width: 26px; height: 26px;
             display: none; align-items: center; justify-content: center;
-            background: rgba(0,0,0,0.05); border-radius: 50%; color: #1B1B1B;
+            background: rgba(0,0,0,0.03); border-radius: 50%; color: #1B1B1B;
             cursor: pointer; transition: all 0.3s;
         }
         .tag-expand-btn.active iconify-icon { transform: rotate(180deg); }
@@ -113,70 +110,95 @@
         /* === 리스트 컨테이너 === */
         .slider-wrapper { flex: 1; width: 100%; overflow: hidden; position: relative; }
         .slider-track {
-            display: flex; width: 400%; height: 100%; /* 4개 탭 (DAILY, EVENT, AU, OOC) */
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            display: flex; width: 400%; height: 100%;
+            transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
         }
         .tab-content {
             width: 25%; height: 100%; overflow-y: auto;
-            padding: 10px 20px max(40px, env(safe-area-inset-bottom)) 20px;
-            display: flex; flex-direction: column; gap: 20px;
+            padding: 15px 20px max(50px, env(safe-area-inset-bottom)) 20px;
+            display: flex; flex-direction: column; gap: 24px; /* 카드 사이 간격 미세 확장 */
         }
         .tab-content::-webkit-scrollbar { display: none; }
 
         /* =======================================
-           🔥 기억의 파편(텍스트 아카이브) 뷰포트 디자인
+           🔥 기억의 파편(텍스트 아카이브) - 접은 글 UI
            ======================================= */
         .text-card {
-            width: 100%; display: flex; flex-direction: column; gap: 8px;
-            padding-bottom: 20px; border-bottom: 1px solid rgba(0,0,0,0.05);
+            width: 100%; display: flex; flex-direction: column; 
+            padding-bottom: 16px; border-bottom: 1px solid rgba(0,0,0,0.04);
             opacity: 0; transform: translateY(15px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
         }
+        /* 애니메이션 충돌 방지를 위해 한번 나타나면 고정 */
         .text-card.show { opacity: 1; transform: translateY(0); }
         
         .card-header {
             display: flex; justify-content: space-between; align-items: baseline; width: 100%;
+            cursor: pointer; padding: 4px 0;
+            transition: opacity 0.2s;
         }
+        .card-header:active { opacity: 0.6; }
+        
         .text-title {
-            font-size: 15px; font-weight: 900; color: #1B1B1B;
-            letter-spacing: -0.3px; flex: 1;
+            font-size: 15px; font-weight: 700; color: #1B1B1B; /* 볼드 굵기 완화 */
+            letter-spacing: 0.2px; flex: 1; line-height: 1.4;
+            transition: color 0.3s;
         }
+        .text-card.open .text-title { color: #46A982; /* 열렸을 때 민트색 포인트 */ }
+        
         .text-date {
             font-size: 11px; color: rgba(27,27,27,0.4); font-weight: 600;
-            white-space: nowrap; margin-left: 10px;
+            white-space: nowrap; margin-left: 12px; letter-spacing: 0.5px;
         }
-        .text-summary {
-            font-size: 12px; color: rgba(27,27,27,0.6); line-height: 1.4;
-            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; 
+
+        /* 🔥 스르륵 열리는 아코디언 애니메이션을 위한 Grid 트릭 */
+        .card-body {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.4s cubic-bezier(0.25, 1, 0.5, 1);
             overflow: hidden;
         }
+        .text-card.open .card-body {
+            grid-template-rows: 1fr;
+        }
+        .card-body-inner {
+            min-height: 0; display: flex; flex-direction: column; gap: 16px; /* 내부 간격 확장 */
+            opacity: 0; padding-top: 0;
+            transition: opacity 0.4s ease, padding 0.4s ease;
+        }
+        .text-card.open .card-body-inner {
+            opacity: 1; padding-top: 14px; padding-bottom: 4px;
+        }
 
-        /* 형광펜 대사 스레드 연출 ('ㄴ' 디자인) */
+        .text-summary {
+            font-size: 12px; color: rgba(27,27,27,0.6); 
+            line-height: 1.6; letter-spacing: 0.3px; /* 자간 및 줄간격 확장 */
+            word-break: keep-all;
+        }
+
+        /* 형광펜 대사 스레드 연출 */
         .highlight-thread-box {
-            display: flex; flex-direction: column; gap: 6px;
-            margin-top: 6px; padding-left: 16px;
-            border-left: 2px solid rgba(0,0,0,0.08); /* 좌측 연결선 */
+            display: flex; flex-direction: column; gap: 12px; /* 대사 간격 넓힘 */
+            padding-left: 20px;
+            border-left: 2px solid rgba(0,0,0,0.06); 
         }
         .highlight-item {
-            position: relative; font-size: 13px; line-height: 1.6;
+            position: relative; font-size: 13px; 
+            line-height: 1.7; letter-spacing: 0.4px; /* 대사 가독성 극대화 */
             word-break: keep-all; color: #1B1B1B;
         }
-        /* 대사 앞의 작은 꺾쇠/점 연출 */
         .highlight-item::before {
-            content: ''; position: absolute; left: -18px; top: 8px;
-            width: 10px; height: 1px; background: rgba(0,0,0,0.15);
+            content: ''; position: absolute; left: -20px; top: 11px;
+            width: 12px; height: 1px; background: rgba(0,0,0,0.12);
         }
-        
-        /* 다이얼로그 본문에서 가져온 span(형광펜) 태그가 덮어씌워질 때의 기본 여백 */
         .highlight-item span {
-            display: inline-block; padding: 2px 4px; border-radius: 4px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            display: inline-block; padding: 2px 6px; border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.03);
         }
 
-        /* PC 반응형 */
         @media (min-width: 768px) {
-            .tab-content { padding: 20px 40px 40px; max-width: 800px; margin: 0 auto; }
-            .text-title { font-size: 17px; }
+            .tab-content { padding: 25px 40px 50px; max-width: 800px; margin: 0 auto; }
+            .text-title { font-size: 16px; }
             .highlight-item { font-size: 14px; }
         }
     </style>
@@ -222,9 +244,6 @@
 </div>
 
 <script>
-    // =======================================
-    // 🔥 JavaScript: 로직 및 데이터 파싱
-    // =======================================
     let activeCategoryIndex = 0;
     let selectedTag = 'all';
     let searchQueryStr = '';
@@ -238,7 +257,7 @@
     
     let allCardDataElements = [];
 
-    // 스크롤 시 부드럽게 나타나는 옵저버
+    // 스크롤 시 부드럽게 나타나는 옵저버 (애니메이션 충돌 방지)
     const cardObserver = new IntersectionObserver((entries) => {
         let delayCount = 0;
         entries.forEach(entry => {
@@ -274,6 +293,7 @@
     }
     window.addEventListener('resize', checkTagWrap);
 
+    // 🔥 탭 변경 시 리스트 튀는 현상 제거 (수직 이동 없이 가로 슬라이드만)
     function switchTab(index) {
         if (activeCategoryIndex === index) return;
         activeCategoryIndex = index;
@@ -287,7 +307,6 @@
         tagsExpanded = false; tagExpandBtn.classList.remove('active');
         checkTagWrap();
         
-        // 4개 탭이므로 25%씩 이동
         track.style.transform = `translateX(-${index * 25}%)`;
         
         selectedTag = 'all'; searchInput.value = ''; searchQueryStr = '';
@@ -319,20 +338,29 @@
             const el = cardPack.domElement;
             const categoryMatch = (cardPack.category === getCategoryKeyByIndex(activeCategoryIndex));
             const tagMatch = (selectedTag === 'all' || cardPack.tags.includes(selectedTag));
-            
-            // 검색은 제목, 요약, 그리고 추출된 형광펜 대사 내용까지 모두 포함하여 서치
             const searchMatch = (searchQueryStr === '' || cardPack.searchBlob.includes(searchQueryStr));
 
             if(categoryMatch && tagMatch && searchMatch) {
                 if (el.style.display === 'none') {
                     el.style.display = 'flex';
-                    // 리플로우 트릭으로 애니메이션 재발동
-                    el.classList.remove('show');
-                    setTimeout(() => el.classList.add('show'), 10);
+                    // 가로 슬라이드 중 애니메이션 충돌을 막기 위해 튀지 않게 처리
+                    if(!el.classList.contains('show')) el.classList.add('show');
                 }
             } else {
                 el.style.display = 'none';
-                el.classList.remove('show');
+            }
+        });
+    }
+
+    // 🔥 아코디언(접은 글) 토글 함수
+    window.toggleAccordion = function(id) {
+        allCardDataElements.forEach(pack => {
+            const el = pack.domElement;
+            if(pack.id === id) {
+                el.classList.toggle('open');
+            } else {
+                // 다른 카드가 열리면 기존에 열려있던 카드는 닫히게 (깔끔한 UI 유지)
+                el.classList.remove('open');
             }
         });
     }
@@ -345,7 +373,6 @@
     document.addEventListener('DOMContentLoaded', () => {
         const tagsTracker = { daily: {}, event: {}, au: {}, ooc: {} };
 
-        // 1. 기존 메모리의 list.html을 긁어와 기본 정보(제목, 날짜, 요약) 세팅
         fetch('../memory/list.html')
             .then(res => res.text())
             .then(html => {
@@ -368,8 +395,6 @@
                         rawTags.split(',').forEach(t => {
                             const cleaned = t.trim();
                             if(cleaned) {
-                                // OOC 태그가 있으면 카테고리를 강제로 ooc로 분류하는 로직 등 원하시면 추가 가능
-                                // 현재는 data-category 속성 기반으로 분류합니다.
                                 if(tagsTracker[category]) {
                                     tagsTracker[category][cleaned] = (tagsTracker[category][cleaned] || 0) + 1;
                                     processedTagsArray.push(cleaned);
@@ -378,24 +403,26 @@
                         });
                     }
 
-                    // 리스트 껍데기 생성
                     const card = document.createElement('div');
                     card.className = 'text-card';
+                    card.setAttribute('data-card-id', id);
+                    
+                    // 🔥 접은 글 UI 구조 반영 (card-body와 card-body-inner 추가)
                     card.innerHTML = `
-                        <div class="card-header">
+                        <div class="card-header" onclick="toggleAccordion('${id}')">
                             <div class="text-title">${title}</div>
                             ${date ? `<div class="text-date">${date}</div>` : ''}
                         </div>
-                        ${summary ? `<div class="text-summary">${summary}</div>` : ''}
-                        <div class="highlight-thread-box" id="thread-${id}">
-                            <!-- 여기에 fetch된 형광펜 대사들이 들어갑니다 -->
+                        <div class="card-body">
+                            <div class="card-body-inner">
+                                ${summary ? `<div class="text-summary">${summary}</div>` : ''}
+                                <div class="highlight-thread-box" id="thread-${id}"></div>
+                            </div>
                         </div>
                     `;
 
                     const cardPack = {
-                        id: id,
-                        category: category, 
-                        tags: processedTagsArray, 
+                        id: id, category: category, tags: processedTagsArray, 
                         searchBlob: `${title} ${summary} ${date} ${processedTagsArray.join(' ')}`.toLowerCase(), 
                         domElement: card
                     };
@@ -407,14 +434,12 @@
                         cardObserver.observe(card);
                     }
 
-                    // 2. 다이얼로그 본문을 Fetch하여 형광펜 텍스트 추출 (핵심 로직)
                     fetch(`../memory/dialog/${id}.html`)
                         .then(res => { if(res.ok) return res.text(); return ''; })
                         .then(dialogHtml => {
                             if(!dialogHtml) return;
                             
                             const dialogDoc = parser.parseFromString(dialogHtml, 'text/html');
-                            // 인라인 스타일로 배경색(형광펜)이 칠해진 span 태그를 모두 찾음
                             const highlightSpans = dialogDoc.querySelectorAll('span[style*="background-color"]');
                             
                             const threadBox = document.getElementById(`thread-${id}`);
@@ -427,24 +452,20 @@
                                         extractedTextForSearch += text + ' ';
                                         const highlightItem = document.createElement('div');
                                         highlightItem.className = 'highlight-item';
-                                        // span 태그 통째로 넣어서 유저가 설정한 색상(background, color) 완벽 유지
                                         highlightItem.innerHTML = span.outerHTML; 
                                         threadBox.appendChild(highlightItem);
                                     }
                                 });
                             } else {
-                                // 형광펜 대사가 없으면 스레드 박스 자체를 숨김
                                 threadBox.style.display = 'none'; 
                             }
                             
-                            // 추출된 텍스트를 검색 데이터에 추가 병합
                             cardPack.searchBlob += ` ${extractedTextForSearch.toLowerCase()}`;
                         }).catch(() => {
                             document.getElementById(`thread-${id}`).style.display = 'none';
                         });
                 });
 
-                // 태그 버튼 생성
                 Object.keys(tagsTracker).forEach(catKey => {
                     const poolContainer = document.getElementById(`tag-pool-${catKey}`);
                     if(!poolContainer) return;

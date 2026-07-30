@@ -12,7 +12,7 @@ const tagExpandBtn = document.getElementById('tag-expand-btn');
 
 let allCardDataElements = [];
 
-// 🔥 딥 서치(본문 검색) 발동 시 UI 덮어쓰기를 위한 동적 스타일 주입
+// 🔥 딥 서치 발동 시 감성 연출을 위한 동적 스타일 주입
 const dynamicStyle = document.createElement('style');
 dynamicStyle.innerHTML = `
     @keyframes snippetFade {
@@ -20,48 +20,54 @@ dynamicStyle.innerHTML = `
         to { opacity: 1; transform: translateY(0); }
     }
     
-    /* 1. 배경 그라데이션 제거 및 전체 블러 처리 */
+    /* 1. 배경 일러스트 살리기: 블러를 제거하고 원본 이미지가 돋보이게 얇은 그림자만 얹음 */
     .card.snippet-active .card-scenery-overlay {
-        background: rgba(249, 249, 248, 0.85) !important; /* 기존 그라데이션 덮어쓰고 밝은 반투명 배경 */
-        backdrop-filter: blur(12px) !important; /* 애플 특유의 고급스러운 블러 효과 */
+        background: rgba(20, 20, 20, 0.25) !important; 
+        backdrop-filter: none !important; 
     }
 
-    /* 2. 하단 구석에 몰려있던 텍스트 그룹 제한 해제 */
+    /* 2. 텍스트 박스를 중앙에 배치하기 위한 정렬 */
     .card.snippet-active .card-inner-info {
         justify-content: center !important; 
-        padding: 20px !important;
+        padding: 16px !important;
     }
+
+    /* 3. 유저 지정 컬러 텍스트 박스 연출 (우아한 핑크 편지 느낌) */
     .card.snippet-active .card-bottom-left-group {
         position: relative !important;
-        width: 100% !important; /* 카드 가로 전체 사용 */
+        width: 100% !important; 
         bottom: auto !important; left: auto !important;
-        display: flex; flex-direction: column; gap: 8px;
+        display: flex; flex-direction: column; gap: 6px;
+        background: #fdf2f6 !important; /* 지정하신 페일 로즈 핑크 */
+        padding: 16px !important;
+        border-radius: 12px !important;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.35) !important;
     }
 
-    /* 3. 제목은 서브로 밀어내어 흐리게 처리 */
+    /* 4. 제목 텍스트 (텍스트 박스 안에서 서브로 어우러지게) */
     .card.snippet-active .card-title {
-        color: rgba(27, 27, 27, 0.4) !important;
-        font-size: 13px !important;
+        color: rgba(155, 62, 97, 0.55) !important; 
+        font-size: 11px !important;
     }
 
-    /* 4. 검색된 다이얼로그 본문 텍스트 (검정색으로 뚜렷하게) */
+    /* 5. 뱅의 다이얼로그 본문 텍스트 */
     .snippet-mode {
         animation: snippetFade 0.4s ease forwards !important;
-        color: #1B1B1B !important; /* 뚜렷한 검정 텍스트 */
+        color: #9b3e61 !important; /* 지정하신 로즈 와인 컬러 */
         font-size: 13px !important;
         line-height: 1.6 !important;
         font-style: normal !important;
-        -webkit-line-clamp: 4 !important; /* 최대 4줄까지 넓게 표시 */
+        -webkit-line-clamp: 3 !important; 
+        word-break: keep-all !important;
     }
 
-    /* 검색어 하이라이트 (시선이 확 꽂히도록 반전) */
+    /* 6. 검색어 하이라이트 (색상 반전으로 세련된 시선 집중) */
     .snippet-highlight {
-        color: #F9F9F8 !important; 
+        color: #fdf2f6 !important; 
+        background: #9b3e61 !important; 
         font-weight: 900 !important; 
-        background: #1B1B1B !important; 
-        padding: 2px 6px !important; 
+        padding: 2px 5px !important; 
         border-radius: 4px !important;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
 `;
 document.head.appendChild(dynamicStyle);
@@ -205,13 +211,11 @@ function executeMasterFilter() {
             } else if (cardPack.isFetched && cardPack.fullText.includes(deepSearchKeyword)) {
                 searchMatch = true;
                 
-                // 검색어 주변 문맥을 더 넓게 가져옴 (위아래 텍스트)
                 const idx = cardPack.fullText.indexOf(deepSearchKeyword);
-                const start = Math.max(0, idx - 40);
-                const end = Math.min(cardPack.fullTextOriginal.length, idx + deepSearchKeyword.length + 50);
+                const start = Math.max(0, idx - 30);
+                const end = Math.min(cardPack.fullTextOriginal.length, idx + deepSearchKeyword.length + 40);
                 let snippet = cardPack.fullTextOriginal.substring(start, end).replace(/\n/g, ' ');
                 
-                // 정규식으로 대소문자 무시하고 검색어 래핑
                 const regex = new RegExp(deepSearchKeyword, 'gi');
                 snippet = snippet.replace(regex, `<span class="snippet-highlight">$&</span>`);
                 snippetToDisplay = `...${snippet}...`;
@@ -229,7 +233,6 @@ function executeMasterFilter() {
             const summaryEl = el.querySelector('.card-summary');
             if (summaryEl) {
                 if (isDeepSearch && deepSearchKeyword && snippetToDisplay) {
-                    // 🔥 본문 검색 매칭 시 카드 스타일 통째로 변경
                     el.classList.add('snippet-active');
                     
                     if (!summaryEl.classList.contains('snippet-mode') || summaryEl.innerHTML !== snippetToDisplay) {
@@ -240,7 +243,6 @@ function executeMasterFilter() {
                         summaryEl.style.animation = null; 
                     }
                 } else {
-                    // 검색 취소 시 원래 상태로 복구
                     el.classList.remove('snippet-active');
                     const originalHTML = summaryEl.getAttribute('data-original');
                     if (summaryEl.innerHTML !== originalHTML) {
@@ -252,7 +254,7 @@ function executeMasterFilter() {
         } else {
             el.style.display = 'none';
             el.classList.remove('show');
-            el.classList.remove('snippet-active'); // 안 보이는 애들도 리셋
+            el.classList.remove('snippet-active'); 
         }
     });
 }
@@ -355,7 +357,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     cardObserver.observe(card);
                 }
 
-                // 백그라운드 텍스트 프리페치
                 fetch(`dialog/${id}.html`)
                     .then(res => { if(res.ok) return res.text(); return ''; })
                     .then(dialogHtml => {

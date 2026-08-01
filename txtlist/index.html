@@ -143,8 +143,8 @@
 <div id="archive-container">
     <header>
         <div class="header-top">
-            <!-- 🔥 뒤로가기 시 홈 화면으로 완벽 복귀 -->
-            <a href="../../index.html" class="back-btn"><iconify-icon icon="solar:alt-arrow-left-linear"></iconify-icon></a>
+            <!-- 🔥 유저 요청: 뒤로가기 링크 정확하게 수정 -->
+            <a href="https://lovebullets.github.io/bang" class="back-btn"><iconify-icon icon="solar:alt-arrow-left-linear"></iconify-icon></a>
             <div class="search-box-wrapper">
                 <iconify-icon icon="solar:magnifer-linear"></iconify-icon>
                 <input type="text" id="memory-search-input" class="search-input" placeholder="대사 검색..." autocomplete="off">
@@ -310,8 +310,8 @@
         });
     }
 
-    // 🔥 메신저 파싱용 템플릿
-    function createMessengerBubble(type, text) {
+    // 🔥 메신저 파싱용 템플릿 (인자로 원본 색상과 폰트 크기를 받음)
+    function createMessengerBubble(type, text, origColor, origFontSize) {
         let align = 'left', name = '', color = '', bg = '', avatar = '';
 
         if(type === 'mint') {
@@ -330,13 +330,17 @@
         const avPos = isRight ? 'right: 0;' : 'left: 0;';
         const tailPos = isRight ? `right: -6px; border-left: 10px solid ${bg};` : `left: -6px; border-right: 10px solid ${bg};`;
 
+        // 원본 본문에서 추출한 색상과 폰트 크기가 있으면 적용, 없으면 기본값 유지
+        const finalColor = origColor ? origColor : color;
+        const finalFontSize = origFontSize ? origFontSize : '12px';
+
         return `
         <div class="scroll-msg-box" style="position: relative; ${paddingStr} margin-top: 8px; display: flex; flex-direction: column; align-items: ${flexAlign}; max-width: 80%; ${isRight ? 'margin-left: auto;' : ''}">
             <div class="av" style="position: absolute; ${avPos} top: 0; width: 34px; height: 34px; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 2px solid ${bg}; box-sizing: border-box;">
                 <img src="${avatar}" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; display: block; background-color: #f0f0f0;">
             </div>
             <div class="m-name" style="font-size: 10.5px; font-weight: 600; margin: 0 4px 4px; color: ${color};">${name}</div>
-            <div class="m-bubble" style="position: relative; background-color: ${bg}; color: ${color}; padding: 10px 14px; border-radius: 14px; width: fit-content; font-size: 12px; line-height: 1.6; word-break: keep-all; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+            <div class="m-bubble" style="position: relative; background-color: ${bg}; color: ${finalColor}; font-size: ${finalFontSize}; padding: 10px 14px; border-radius: 14px; width: fit-content; line-height: 1.6; word-break: keep-all; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
                 <div class="bubble-tail" style="position: absolute; top: 10px; ${tailPos} border-top: 2px solid transparent; border-bottom: 12px solid transparent; z-index: -1;"></div>
                 ${text}
             </div>
@@ -393,7 +397,6 @@
                                 <div class="viewer-box messenger-thread-box" id="thread-messenger-${id}" style="display: none;"></div>
                                 <div class="viewer-box full-document-box tistory-post-wrapper" id="thread-full-${id}" style="display: none;"></div>
                                 
-                                <!-- 🔥 직접 a태그를 사용하여 Bfcache 이슈 해결 및 화살표 크기 축소 -->
                                 <div class="post-link-wrapper">
                                     <a href="../memory/dialog/${id}.html" class="post-link-btn" title="다이얼로그 열람"><iconify-icon icon="solar:alt-arrow-right-linear"></iconify-icon></a>
                                 </div>
@@ -424,7 +427,7 @@
                             const boxMessenger = document.getElementById(`thread-messenger-${id}`);
                             const boxFull = document.getElementById(`thread-full-${id}`);
 
-                            // 1. 형광펜 파싱 (버전 1)
+                            // 1. 형광펜 파싱
                             const highlightSpans = dialogDoc.querySelectorAll('span[style*="background-color"]');
                             if(highlightSpans.length > 0) {
                                 highlightSpans.forEach(span => {
@@ -441,7 +444,7 @@
                                 boxHighlight.innerHTML = '<div style="font-size:12px; color:#AAB2B9;">형광펜 대사가 없습니다.</div>';
                             }
 
-                            // 2. 메신저 데이터 파싱 (버전 2) - 지정된 타입만 추출
+                            // 2. 메신저 데이터 파싱 - 원본 폰트/사이즈 추출 및 큰따옴표 제거 로직 추가
                             const validTypes = ['mint', 'pink', 'mob', 'custom'];
                             const messengerDivs = dialogDoc.querySelectorAll('div[data-type]');
                             let msgFound = false;
@@ -452,6 +455,10 @@
                                     msgFound = true;
                                     let innerContent = div.innerHTML.trim();
                                     
+                                    // 🔥 원본 본문 div의 인라인 스타일(색상, 폰트크기) 추출
+                                    let origColor = div.style.color || '';
+                                    let origFontSize = div.style.fontSize || '';
+                                    
                                     // 기존 템플릿(m-bubble)이 씌워져 있다면 텍스트만 빼내기
                                     if(div.querySelector('.m-bubble')) {
                                         let clone = div.cloneNode(true);
@@ -460,15 +467,19 @@
                                         innerContent = clone.querySelector('.m-bubble').innerHTML.trim();
                                     }
                                     
+                                    // 🔥 유저 요청: 모든 형태의 큰따옴표 일괄 제거
+                                    innerContent = innerContent.replace(/["“”]/g, '');
+                                    
                                     if(innerContent) {
                                         cardPack.deepText += innerContent.toLowerCase() + ' ';
-                                        boxMessenger.insertAdjacentHTML('beforeend', createMessengerBubble(type, innerContent));
+                                        // 추출한 원본 스타일을 함께 전달
+                                        boxMessenger.insertAdjacentHTML('beforeend', createMessengerBubble(type, innerContent, origColor, origFontSize));
                                     }
                                 }
                             });
                             if(!msgFound) boxMessenger.innerHTML = '<div style="font-size:12px; color:#AAB2B9;">추출할 대사가 없습니다.</div>';
 
-                            // 3. 전체 문서 파싱 (버전 3) - content-wrapper 내부 혹은 body 전체
+                            // 3. 전체 문서 파싱 
                             const contentWrapper = dialogDoc.getElementById('content-wrapper') || dialogDoc.body;
                             if(contentWrapper) {
                                 boxFull.innerHTML = contentWrapper.innerHTML;

@@ -2,36 +2,35 @@
 <html lang="ko">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>BANG</title>
+    <!-- 모바일/PC 반응형 뷰포트 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=10.0, user-scalable=yes">
+    <title>BANG - 채팅방 정리</title>
     
+    <!-- 프리텐다드 폰트 적용 (가독성 최우선) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 
     <style>
         /* =========================================
-           [디자인] 극강의 심플함 (여백과 타이포그래피 중심)
+           [디자인] iCloud 감성의 심플한 브라운 톤
            ========================================= */
         body {
-            background-color: #e6f7f4; 
-            background-image: radial-gradient(rgba(74, 50, 36, 0.08) 12%, transparent 12%), radial-gradient(rgba(74, 50, 36, 0.08) 12%, transparent 12%);
-            background-size: 20px 20px;
-            background-position: 0 0, 10px 10px;
+            background-color: #fafafa; /* 눈이 편안한 깔끔한 화이트/그레이 */
             font-family: 'Pretendard', sans-serif;
-            margin: 0; padding: 20px;
-            color: #4a3224; 
+            margin: 0; 
+            padding: 20px;
+            color: #3e2723; /* 딥 브라운 */
             box-sizing: border-box;
+            letter-spacing: -0.02em;
         }
 
         .roomlist-wrapper {
             max-width: 600px; 
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95); 
-            border: 1px solid rgba(74, 50, 36, 0.15); 
-            border-radius: 12px; 
+            background: #ffffff; 
+            border-radius: 16px; 
             padding: 30px 24px;
-            box-shadow: 0 4px 20px rgba(74, 50, 36, 0.08);
-            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03); /* 아주 옅은 그림자 */
         }
 
         /* 상단 헤더 */
@@ -40,15 +39,14 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 24px;
-            border-bottom: 1px solid rgba(74, 50, 36, 0.1); 
+            border-bottom: 1px solid rgba(121, 85, 72, 0.15); /* 톤다운된 밀크 초코 하단선 */
             padding-bottom: 16px;
         }
 
         .rl-header-title {
             font-size: 20px;
             font-weight: 700;
-            color: #4a3224;
-            letter-spacing: -0.02em;
+            color: #3e2723;
             margin: 0;
         }
 
@@ -63,104 +61,102 @@
             appearance: none; -webkit-appearance: none;
             background: transparent;
             border: none;
-            font-family: 'Pretendard', sans-serif;
+            font-family: inherit;
             font-size: 13px; font-weight: 600;
-            color: #795d4d;
+            color: #795548; /* 차분한 브라운 */
             cursor: pointer;
             padding-right: 14px; outline: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23795d4d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23795548' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
             background-repeat: no-repeat; background-position: right center;
             transition: color 0.2s;
         }
-        .rl-month-select:hover, .rl-month-select:focus { color: #6bb0a0; }
+        .rl-month-select:hover, .rl-month-select:focus { color: #3e2723; }
 
         /* 확장형 검색창 */
         .rl-search-box { position: relative; display: flex; align-items: center; justify-content: flex-end; }
         .rl-search {
             width: 0; opacity: 0;
             padding: 4px 24px 4px 4px; 
-            border: none; border-bottom: 1px solid #6bb0a0; 
+            border: none; border-bottom: 1px solid #795548; 
             font-size: 13px; 
             background: transparent; 
-            color: #4a3224; 
-            font-family: 'Pretendard', sans-serif; 
+            color: #3e2723; 
+            font-family: inherit; 
             transition: width 0.4s ease, opacity 0.4s ease;
             outline: none;
         }
         .rl-search.active { width: 120px; opacity: 1; }
-        .rl-search-icon { position: absolute; right: 0; cursor: pointer; color: #795d4d; font-size: 16px; z-index: 2; transition: color 0.2s; }
-        .rl-search-icon:hover { color: #6bb0a0; }
+        .rl-search-icon { position: absolute; right: 0; cursor: pointer; color: #a1887f; font-size: 16px; z-index: 2; transition: color 0.2s; }
+        .rl-search-icon:hover { color: #3e2723; }
 
         /* 카테고리 필터 탭 */
         .rl-filters {
             display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap;
         }
         .rl-filter-btn {
-            background: transparent; border: none; color: #795d4d;
+            background: transparent; border: none; color: #a1887f;
             font-size: 13px; font-weight: 600; cursor: pointer; padding: 0; transition: color 0.2s;
         }
-        .rl-filter-btn.active, .rl-filter-btn:hover { color: #6bb0a0; }
+        .rl-filter-btn.active, .rl-filter-btn:hover { color: #3e2723; }
 
         /* =========================================
-           [리스트 디자인]
+           [리스트 디자인] 가독성 중심의 심플한 여백
            ========================================= */
         .rl-list-container { display: flex; flex-direction: column; }
+        
+        /* 로딩 메시지 */
+        .rl-loading { text-align: center; padding: 40px; color: #a1887f; font-size: 13px; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+
         .rl-date-group { display: flex; flex-direction: column; margin-bottom: 24px; animation: fadeIn 0.4s ease forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* 1. 날짜 (풀 날짜 노출) */
+        /* 1. 날짜 텍스트 (풀 날짜 노출, 딥 브라운) */
         .rl-date { 
-            color: #6bb0a0; 
-            font-size: 12.5px; 
+            color: #3e2723; 
+            font-size: 13px; 
             font-weight: 700; 
-            margin-bottom: 6px; 
+            margin-bottom: 8px; 
             letter-spacing: 0.5px; 
         }
         
         /* 2. 아이템 리스트 */
         .rl-item {
             padding: 10px 0; 
-            border-bottom: 1px solid rgba(74, 50, 36, 0.06); 
+            border-bottom: 1px solid rgba(121, 85, 72, 0.1); /* 은은한 선 */
             display: flex; flex-direction: column; gap: 4px; 
             transition: background-color 0.2s;
         }
         .rl-item:last-child { border-bottom: none; }
-        .rl-item:hover { background-color: rgba(230, 247, 244, 0.3); } 
+        .rl-item:hover { background-color: rgba(121, 85, 72, 0.03); } /* 아주 옅은 갈색 호버 */
         
-        .rl-primary { font-size: 14.5px; line-height: 1.6; letter-spacing: -0.015em; word-break: keep-all; display: flex; align-items: center; flex-wrap: wrap; gap: 4px;}
+        .rl-primary { 
+            font-size: 14.5px; line-height: 1.6; word-break: keep-all; 
+            display: flex; align-items: center; flex-wrap: wrap; gap: 4px;
+        }
         
-        /* 3. OOC 번호 (파스텔 민트 둥근 뱃지) */
-        .rl-ooc-badge { 
-            background-color: #6bb0a0; 
-            color: #ffffff; 
-            font-size: 11px; 
+        /* 3. OOC 번호 (볼드 갈색 + 숫자 앞 띄어쓰기) */
+        .rl-ooc { 
             font-weight: 700; 
-            padding: 2px 8px; 
-            border-radius: 12px; 
-            display: inline-block; 
+            color: #4e342e; /* 진한 브라운 포인트 */
             margin-right: 2px;
-            letter-spacing: 0;
-            box-shadow: 0 1px 3px rgba(107, 176, 160, 0.3);
         } 
         
         /* 4. 괄호 내용 */
-        .rl-paren { color: #795d4d; font-size: 13.5px; margin-left: 2px;}
+        .rl-paren { color: #8d6e63; font-size: 13.5px; margin-left: 2px;}
 
         /* 상태 (完, 休) */
-        .rl-status { font-size: 11px; color: #8a7062; border: 1px solid #e8ddd6; border-radius: 4px; padding: 1px 4px; font-weight: bold; margin: 0 2px; display: inline-block; }
+        .rl-status { font-size: 11px; color: #8d6e63; border: 1px solid #d7ccc8; border-radius: 4px; padding: 1px 4px; font-weight: bold; margin: 0 2px; display: inline-block; }
         
         /* 5. 콜론(:) 설명 */
         .rl-colon { 
             padding-left: 12px; 
-            border-left: 2px solid rgba(107, 176, 160, 0.4); 
-            color: #795d4d; 
+            border-left: 2px solid rgba(141, 110, 99, 0.3); /* 옅은 갈색 좌측선 */
+            color: #6d4c41; 
             font-size: 13.5px; 
             line-height: 1.6; 
-            letter-spacing: -0.02em; 
             margin-top: 2px;
         }
-
-        #raw-data-wrapper { display: none; }
     </style>
 </head>
 <body>
@@ -189,109 +185,114 @@
         </div>
 
         <div class="rl-list-container" id="rl-list-container">
-            <!-- 렌더링 영역 -->
+            <!-- 데이터 로딩 중 표시 -->
+            <div class="rl-loading">데이터를 불러오는 중입니다...</div>
         </div>
-    </div>
-
-    <!-- 원본 데이터 영역 -->
-    <div id="raw-data-wrapper">
-        <div data-type="dday"><span style="font-size: 13px; color: #999999; font-weight: 600;">   26.08.04</span></div>
-        <div data-type="narration">26.01.03<br>OOC1</div>
-        <div data-type="narration">26.01.05<br>OOC3 (학생 AU) 完 : 소친, 폐급 교사</div>
-        <div data-type="narration">26.01.06<br>OOC4 (평행세계 AU) 休 :일처다부제 <br>🤍 결혼하러 갑니다</div>
-        <div data-type="narration">26.01.07<br>OOC5 (빌런 AU) 完</div>
-        <div data-type="narration">26.01.08<br>OOC6 (반복되는 크리스마스 AU)<br>OOC8 (캠퍼스 AU) 休<br>OOC10 (이상형NTR) 休: 나구모랑 잠 </div>
-        <div data-type="narration">26.01.09<br>OOC12 : 질투유발<br>OOC13 (아이돌 AU 2)<br>OOC13 (이상한 나라의 엘리스 AU) 完</div>
-        <div data-type="narration">26.01.10<br>OOC14 ( 유이 회귀, 선생님, 파트너)</div>
-        <div data-type="narration">26.01.12<br>夫婦♡OOC1<br>夫婦♡OOC3 : 성별 반전<br>OOC14 (오메가버스 AU)</div>
-        <div data-type="narration">26.01.13<br>夫婦♡OOC4 : 기억상실<br>夫婦♡OOC5</div>
-        <div data-type="narration">26.01.14<br>🗨️첫 눈에 반해서 짝사랑하던 유이</div>
-        <div data-type="narration">26.01.15<br>OOC6</div>
-        <div data-type="narration">26.01.17<br>OOC8 (센티넬-가이드 역할반전 AU)<br>OOC9 (인어 AU)</div>
-        <div data-type="narration">26.01.18<br>OOC 10 (인어 환생 AU)<br>OOC 12 (지금 만나러 갑니다 AU)</div>
-        <div data-type="narration">26.01.19<br>OOC17 (인큐버스 AU)<br>OOC18 (요시와라 AU)<br>OOC20 (센티넬-가이드 역할반전 AU 2)</div>
-        <div data-type="narration">26.01.20<br>OOC19 (인큐버스 x 대학생 AU)</div>
-        <div data-type="narration">26.01.21<br>OOC21 (천사악마 AU)</div>
-        <div data-type="narration">26.01.24<br>OOC23 (캠퍼스-&gt;환승연애 AU)</div>
-        <div data-type="narration">26.01.26<br>🗨️ 아자토이 유이<br>OOC25 (로판 AU)</div>
-        <div data-type="narration">26.01.27<br>OOC26 (エロ) : 동거 직후<br>OOC27 (괴담 AU) : 동거 직후</div>
-        <div data-type="narration">26.01.28<br>OOC 29<br>OOC30 (구룡성채 AU)<br>OOC33 (쌍둥이 AU)<br>OOC33 (쌍둥이 AU 2)</div>
-        <div data-type="narration">26.01.30<br>OOC36 (교도관 AU) 完 : 구원<br>OOC37 (애아빠 x 어린이집 선생님 AU)</div>
-        <div data-type="narration">26.01.31<br>OOC38 (나의 마녀 AU)<br>OOC39 (포켓몬스터 AU)</div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const rawItems = document.querySelectorAll('#raw-data-wrapper [data-type="narration"]');
             const parsedData = [];
             const monthsSet = new Set(); 
+            const container = document.getElementById('rl-list-container');
+            const monthSelect = document.getElementById('rl-month-select');
+            const searchInput = document.getElementById('rl-search-input');
 
-            rawItems.forEach(el => {
-                const htmlStr = el.innerHTML;
-                const lines = htmlStr.split('<br>');
-                if (lines.length < 2) return;
-
-                // 1. 전체 날짜(fullDate)와 드롭다운용 월(monthDate) 분리 추출
-                const fullDate = lines[0].trim();
-                const dateParts = fullDate.split('.');
-                let monthDate = fullDate;
-                if (dateParts.length >= 2) {
-                    monthDate = dateParts[0] + '.' + dateParts[1]; // 예: 26.01
-                }
-                monthsSet.add(monthDate);
-                
-                for(let i = 1; i < lines.length; i++) {
-                    let text = lines[i].trim();
-                    if(!text) continue;
-
-                    let category = 'OOC';
-                    if (text.includes('🤍')) category = 'MAIN';
-                    else if (text.includes('AU')) category = 'AU';
-                    else if (text.startsWith('🗨️') || text.includes('🗨️')) category = 'start';
-
-                    let cleanText = text.replace(/🤍/g, '').replace(/🗨️/g, '').trim();
-
-                    let mainText = cleanText;
-                    let colonText = '';
-                    const colonIdx = cleanText.indexOf(':');
+            // 1. Fetch API를 통한 원격 데이터 직통 연동
+            async function fetchRoomListData() {
+                try {
+                    const response = await fetch('https://lovebullets.github.io/bang/category/chatroom/roomlist.html');
+                    if (!response.ok) throw new Error('네트워크 응답이 실패했습니다.');
                     
-                    if (colonIdx !== -1) {
-                        mainText = cleanText.substring(0, colonIdx).trim();
-                        colonText = cleanText.substring(colonIdx + 1).trim();
+                    const htmlText = await response.text();
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(htmlText, 'text/html');
+                    
+                    // 원본 페이지의 data-type="narration" 요소들만 긁어옵니다.
+                    const rawItems = doc.querySelectorAll('[data-type="narration"]');
+                    
+                    if(rawItems.length === 0) {
+                        container.innerHTML = '<div style="text-align:center; padding: 40px; color: #a1887f; font-size:13px;">가져올 데이터가 없습니다.</div>';
+                        return;
                     }
 
-                    // 2. 괄호, 상태 태그 씌우기
-                    mainText = mainText.replace(/\((.*?)\)/g, '<span class="rl-paren">($1)</span>');
-                    mainText = mainText.replace(/(完|休)/g, '<span class="rl-status">$1</span>');
-
-                    // 3. OOC 글자와 숫자 분리하여 '민트색 동그라미 뱃지' & '띄어쓰기' 동시 적용
-                    mainText = mainText.replace(/(OOC|夫婦♡OOC)\s*(\d+)/gi, function(match, p1, p2) {
-                        return `<span class="rl-ooc-badge">${p1} ${p2}</span>`;
-                    });
-
-                    parsedData.push({
-                        fullDate: fullDate,     // 화면에 보여줄 전체 날짜
-                        monthDate: monthDate,   // 필터용 월
-                        category: category,
-                        mainHtml: mainText,
-                        colonHtml: colonText,
-                        rawSearch: cleanText.toLowerCase() 
-                    });
+                    parseData(rawItems);
+                    renderList();
+                    
+                } catch (error) {
+                    console.error('데이터를 불러오는데 실패했습니다:', error);
+                    container.innerHTML = '<div style="text-align:center; padding: 40px; color: #a1887f; font-size:13px;">데이터를 불러오는 중 오류가 발생했습니다. 원본 URL을 확인해주세요.</div>';
                 }
-            });
+            }
 
-            const monthSelect = document.getElementById('rl-month-select');
-            monthsSet.forEach(m => {
-                const opt = document.createElement('option');
-                opt.value = m;
-                opt.textContent = m;
-                monthSelect.appendChild(opt);
-            });
+            // 2. 파싱 로직
+            function parseData(rawItems) {
+                rawItems.forEach(el => {
+                    const htmlStr = el.innerHTML;
+                    const lines = htmlStr.split('<br>');
+                    if (lines.length < 2) return;
 
+                    const fullDate = lines[0].trim();
+                    const dateParts = fullDate.split('.');
+                    let monthDate = fullDate;
+                    if (dateParts.length >= 2) {
+                        monthDate = dateParts[0] + '.' + dateParts[1]; // 예: 26.01
+                    }
+                    monthsSet.add(monthDate);
+                    
+                    for(let i = 1; i < lines.length; i++) {
+                        let text = lines[i].trim();
+                        if(!text) continue;
+
+                        let category = 'OOC';
+                        if (text.includes('🤍')) category = 'MAIN';
+                        else if (text.includes('AU')) category = 'AU';
+                        else if (text.startsWith('🗨️') || text.includes('🗨️')) category = 'start';
+
+                        // 불필요 기호 삭제
+                        let cleanText = text.replace(/🤍/g, '').replace(/🗨️/g, '').trim();
+
+                        let mainText = cleanText;
+                        let colonText = '';
+                        const colonIdx = cleanText.indexOf(':');
+                        
+                        if (colonIdx !== -1) {
+                            mainText = cleanText.substring(0, colonIdx).trim();
+                            colonText = cleanText.substring(colonIdx + 1).trim();
+                        }
+
+                        // 디자인 태그 적용
+                        mainText = mainText.replace(/\((.*?)\)/g, '<span class="rl-paren">($1)</span>');
+                        mainText = mainText.replace(/(完|休)/g, '<span class="rl-status">$1</span>');
+
+                        // OOC 숫자 앞에 강제 띄어쓰기 적용 (OOC1 -> OOC 1) 
+                        mainText = mainText.replace(/(OOC|夫婦♡OOC)\s*(\d+)/gi, function(match, p1, p2) {
+                            return `<span class="rl-ooc">${p1} ${p2}</span>`;
+                        });
+
+                        parsedData.push({
+                            fullDate: fullDate,     
+                            monthDate: monthDate,   
+                            category: category,
+                            mainHtml: mainText,
+                            colonHtml: colonText,
+                            rawSearch: cleanText.toLowerCase() 
+                        });
+                    }
+                });
+
+                // 추출한 '월' 데이터 드롭다운에 추가
+                monthsSet.forEach(m => {
+                    const opt = document.createElement('option');
+                    opt.value = m;
+                    opt.textContent = m;
+                    monthSelect.appendChild(opt);
+                });
+            }
+
+            // 3. 화면 렌더링 로직
             let currentFilter = 'ALL';
             let currentMonth = 'ALL';
-            const searchInput = document.getElementById('rl-search-input');
-            const container = document.getElementById('rl-list-container');
             
             function renderList() {
                 const keyword = searchInput.value.toLowerCase();
@@ -302,12 +303,12 @@
                 let count = 0;
 
                 parsedData.forEach(item => {
-                    // 드롭다운 필터는 monthDate 기준
+                    // 필터링 적용
                     if (currentFilter !== 'ALL' && item.category !== currentFilter) return;
                     if (currentMonth !== 'ALL' && item.monthDate !== currentMonth) return;
                     if (keyword && !item.rawSearch.includes(keyword) && !item.fullDate.includes(keyword)) return;
 
-                    // 화면 노출 및 그룹화는 fullDate 기준
+                    // 화면 노출은 fullDate(전체 날짜) 기준
                     if (item.fullDate !== currentDateGroup) {
                         currentDateGroup = item.fullDate;
                         currentGroup = document.createElement('div');
@@ -329,10 +330,11 @@
                 });
 
                 if(count === 0) {
-                    container.innerHTML = '<div style="text-align:center; padding: 40px; color: #795d4d; font-size:14px;">일치하는 로그가 없습니다.</div>';
+                    container.innerHTML = '<div style="text-align:center; padding: 40px; color: #a1887f; font-size:13px;">일치하는 로그가 없습니다.</div>';
                 }
             }
 
+            // 4. 이벤트 리스너 세팅
             const filterBtns = document.querySelectorAll('.rl-filter-btn');
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', (e) => {
@@ -356,7 +358,8 @@
 
             searchInput.addEventListener('input', renderList);
 
-            renderList();
+            // 초기 실행: 원본 데이터를 가져오기
+            fetchRoomListData();
         });
     </script>
 </body>

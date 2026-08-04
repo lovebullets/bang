@@ -1,272 +1,295 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=10.0, user-scalable=yes">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
-    <title>토끼굴</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>BANG</title>
     
-    <link rel="apple-touch-icon" href="https://i.ibb.co/tTdNpX19/IMG-2904.jpg">
-    <link rel="icon" href="https://i.ibb.co/tTdNpX19/IMG-2904.jpg">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="mobile-web-app-capable" content="yes">
-    
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&display=swap" />
-    <!-- 프리텐다드 폰트 추가 -->
+    <!-- [수정] Noto Serif 제거, 프리텐다드 100% 적용 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
-    
-    <link rel="stylesheet" href="style.css" />
-    
-    <!-- =======================================================
-         [추가] 채팅방 정리(roomlist) 데이터를 감싸는 iCloud 감성 심플 껍데기 CSS
-         ======================================================= -->
+
     <style>
-        .mint-choco-shell {
-            font-family: 'Pretendard', sans-serif;
-            color: var(--main-color);
-            margin-top: 20px;
+        /* =========================================
+           [디자인] 극강의 심플함 (여백과 타이포그래피 중심)
+           ========================================= */
+        body {
+            /* 옅은 민트 바탕에 은은한 초코 도트 패턴 유지 */
+            background-color: #e6f7f4; 
+            background-image: radial-gradient(rgba(74, 50, 36, 0.1) 12%, transparent 12%), radial-gradient(rgba(74, 50, 36, 0.1) 12%, transparent 12%);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            font-family: 'Pretendard', sans-serif; /* 전체 폰트 통일 */
+            margin: 0; padding: 20px;
+            color: #4a3224; 
+            box-sizing: border-box;
         }
 
-        /* 상단 헤더 영역 (타이틀, 드롭다운, 검색) */
-        .rl-header {
+        .roomlist-wrapper {
+            max-width: 600px; 
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95); 
+            border: 1px solid rgba(74, 50, 36, 0.15); /* 연한 초코 테두리로 단정하게 */
+            border-radius: 12px; 
+            padding: 30px 24px;
+            box-shadow: 0 4px 20px rgba(74, 50, 36, 0.08);
+            backdrop-filter: blur(5px);
+        }
+
+        /* [수정] 상단 헤더 (타이틀 + 드롭다운 + 검색) */
+        .rl-header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--divider-bg);
-            padding-bottom: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid rgba(74, 50, 36, 0.1); /* 얇고 깔끔한 하단선 */
+            padding-bottom: 16px;
         }
-        .rl-title { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; }
-        .rl-controls { display: flex; align-items: center; gap: 14px; }
 
-        /* 월별 필터 드롭다운 */
+        .rl-header-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #4a3224;
+            letter-spacing: -0.02em;
+            margin: 0;
+        }
+
+        .rl-controls {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        /* [추가] 월별 필터 드롭다운 (선택지 A) */
         .rl-month-select {
-            appearance: none;
-            -webkit-appearance: none;
+            appearance: none; -webkit-appearance: none;
             background: transparent;
             border: none;
             font-family: 'Pretendard', sans-serif;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--sub-color);
+            font-size: 13px; font-weight: 600;
+            color: #795d4d;
             cursor: pointer;
-            padding-right: 14px;
-            outline: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%238e8e93' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right center;
+            padding-right: 14px; outline: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23795d4d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right center;
             transition: color 0.2s;
         }
-        .rl-month-select:hover, .rl-month-select:focus { color: var(--point-color); }
+        .rl-month-select:hover, .rl-month-select:focus { color: #358873; }
 
-        /* 확장형 검색창 */
-        .rl-search-wrapper { position: relative; display: flex; align-items: center; justify-content: flex-end; }
-        .rl-search-input {
-            width: 0;
-            opacity: 0;
-            border: none;
-            border-bottom: 1px solid var(--point-color);
-            background: transparent;
-            font-family: 'Pretendard', sans-serif;
-            font-size: 13px;
-            padding: 4px 24px 4px 4px;
-            color: var(--main-color);
+        /* [수정] 우측 상단 확장형 검색창 */
+        .rl-search-box { position: relative; display: flex; align-items: center; justify-content: flex-end; }
+        .rl-search {
+            width: 0; opacity: 0;
+            padding: 4px 24px 4px 4px; 
+            border: none; border-bottom: 1px solid #358873; 
+            font-size: 13px; 
+            background: transparent; 
+            color: #4a3224; 
+            font-family: 'Pretendard', sans-serif; 
             transition: width 0.4s ease, opacity 0.4s ease;
             outline: none;
         }
-        .rl-search-input.active { width: 130px; opacity: 1; }
-        .rl-search-icon {
-            position: absolute;
-            right: 0;
-            cursor: pointer;
-            color: var(--sub-color);
-            font-size: 16px;
-            transition: color 0.2s;
-            z-index: 2;
-        }
-        .rl-search-icon:hover { color: var(--point-color); }
+        .rl-search.active { width: 120px; opacity: 1; }
+        .rl-search-icon { position: absolute; right: 0; cursor: pointer; color: #795d4d; font-size: 16px; z-index: 2; transition: color 0.2s; }
+        .rl-search-icon:hover { color: #358873; }
 
-        /* 카테고리 필터 (텍스트형) */
-        .rl-filters { display: flex; gap: 16px; margin-bottom: 30px; flex-wrap: wrap; }
+        /* [수정] 카테고리 필터 (텍스트만 남김) */
+        .rl-filters {
+            display: flex; gap: 16px; margin-bottom: 30px; flex-wrap: wrap;
+        }
         .rl-filter-btn {
-            background: transparent; border: none; color: var(--sub-color);
-            font-size: 12.5px; font-weight: 600; cursor: pointer; padding: 0; transition: color 0.2s;
+            background: transparent; border: none; color: #795d4d;
+            font-size: 13px; font-weight: 600; cursor: pointer; padding: 0; transition: color 0.2s;
         }
-        .rl-filter-btn.active, .rl-filter-btn:hover { color: var(--point-color); }
+        .rl-filter-btn.active, .rl-filter-btn:hover { color: #358873; }
 
-        /* 리스트 아이템 디자인 (선과 여백 위주) */
+        /* =========================================
+           [리스트 디자인] 덜어냄의 미학
+           ========================================= */
         .rl-list-container { display: flex; flex-direction: column; }
-        .rl-date-group { margin-bottom: 30px; }
+        .rl-date-group { display: flex; flex-direction: column; margin-bottom: 30px; animation: fadeIn 0.4s ease forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* 민트색 날짜 텍스트 (박스 제거) */
-        .rl-date {
-            color: var(--point-color);
-            font-size: 13px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            letter-spacing: 0.5px;
+        /* 1. 날짜 (투박한 뱃지 제거, 텍스트 컬러 포인트) */
+        .rl-date { 
+            color: #358873; /* 청량한 민트 그린 */
+            font-size: 14px; 
+            font-weight: 700; 
+            margin-bottom: 12px; 
+            letter-spacing: 0.5px; 
         }
-
+        
+        /* 2. 아이템 리스트 (테두리/박스 제거, 얇은 하단선) */
         .rl-item {
-            padding: 12px 0;
-            border-bottom: 1px solid var(--divider-bg);
-            display: flex; flex-direction: column; gap: 4px;
+            padding: 12px 0; 
+            border-bottom: 1px solid rgba(74, 50, 36, 0.08); /* 얇은 초코 구분선 */
+            display: flex; flex-direction: column; gap: 6px; 
+            transition: background-color 0.2s;
         }
         .rl-item:last-child { border-bottom: none; }
+        .rl-item:hover { background-color: rgba(230, 247, 244, 0.3); } /* 아주 미세한 민트빛 호버 효과 */
         
         .rl-primary { font-size: 14.5px; line-height: 1.6; letter-spacing: -0.015em; word-break: keep-all; }
-        .rl-ooc { font-weight: 700; } 
-        .rl-paren { color: var(--sub-color); font-size: 13.5px; }
-        .rl-colon { padding-left: 12px; color: var(--sub-color); font-size: 13.5px; line-height: 1.6; }
+        
+        /* 3. OOC 번호 (박스 없이 볼드체 + 짙은 색) */
+        .rl-ooc { font-weight: 700; color: #4a3224; } 
+        
+        /* 4. 괄호 내용 (칩 제거, 서브 컬러 텍스트) */
+        .rl-paren { color: #795d4d; font-size: 13.5px; margin-left: 4px;}
+
+        /* 상태 (完, 休) */
+        .rl-status { font-size: 11px; color: #8a7062; border: 1px solid #e8ddd6; border-radius: 4px; padding: 1px 4px; font-weight: bold; margin: 0 4px; display: inline-block; }
+        
+        /* 5. 콜론(:) 설명 (옅은 민트 좌측 선과 서브 컬러) */
+        .rl-colon { 
+            padding-left: 14px; 
+            border-left: 2px solid rgba(53, 136, 115, 0.3); 
+            color: #795d4d; 
+            font-size: 13.5px; 
+            line-height: 1.6; 
+            letter-spacing: -0.02em; 
+        }
+
+        /* 유저 원본 텍스트 숨기기 */
+        #raw-data-wrapper { display: none; }
     </style>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-
 <body>
-    <div id="wrap">
-        <div id="container">
-            
-            <header id="header">
-                <div class="inner_header">
-                    <button id="btn-login" class="nav-icon-btn" title="로그인"><i class="xi-log-in"></i></button>
-                    <button id="btn-logout" class="nav-icon-btn" title="로그아웃" style="display: none;"><i class="xi-log-out"></i></button>
 
-                    <button id="btn-theme" class="nav-icon-btn" onclick="toggleTheme()" title="테마 변경">
-                        <i id="theme-icon" class="xi-toggle-off"></i>
-                    </button>
-
-                    <div class="dropdown">
-                        <div class="dropdown-bars" title="메뉴 열기">
-                            <i id="menu-icon" class="xi-bars"></i>
-                        </div>
-                        <div class="dropdown-inner" id="dropdown-menu"></div>
-                    </div>
+    <div class="roomlist-wrapper">
+        
+        <!-- 타이틀, 드롭다운, 검색창 통합 헤더 -->
+        <div class="rl-header-top">
+            <h1 class="rl-header-title">BANG</h1>
+            <div class="rl-controls">
+                <select id="rl-month-select" class="rl-month-select">
+                    <option value="ALL">ALL</option>
+                    <!-- 날짜 옵션이 자바스크립트로 자동 생성됩니다 -->
+                </select>
+                <div class="rl-search-box">
+                    <input type="text" id="rl-search-input" class="rl-search" placeholder="검색" autocomplete="off">
+                    <i class="xi-search rl-search-icon" id="rl-search-btn"></i>
                 </div>
-            </header>
+            </div>
+        </div>
+        
+        <!-- 기호가 빠지고 심플해진 필터 탭 -->
+        <div class="rl-filters" id="rl-filters">
+            <button class="rl-filter-btn active" data-cat="ALL">ALL</button>
+            <button class="rl-filter-btn" data-cat="MAIN">MAIN</button>
+            <button class="rl-filter-btn" data-cat="OOC">OOC</button>
+            <button class="rl-filter-btn" data-cat="AU">AU</button>
+            <button class="rl-filter-btn" data-cat="start">start</button>
+        </div>
 
-            <main id="main">
-                <div class="inner_index">
-                    <div id="content-area"></div>
-                </div>
-            </main>
-
+        <div class="rl-list-container" id="rl-list-container">
+            <!-- 렌더링 영역 -->
         </div>
     </div>
 
+    <!-- =======================================================
+         원본 데이터 영역 (단 하나도 훼손하지 않음)
+         ======================================================= -->
+    <div id="raw-data-wrapper">
+        <div data-type="dday"><span style="font-size: 13px; color: #999999; font-weight: 600;">   26.08.04</span></div>
+        <div data-type="narration">26.01.03<br>OOC1</div>
+        <div data-type="narration">26.01.05<br>OOC3 (학생 AU) 完 : 소친, 폐급 교사</div>
+        <div data-type="narration">26.01.06<br>OOC4 (평행세계 AU) 休 :일처다부제 <br>🤍 결혼하러 갑니다</div>
+        <div data-type="narration">26.01.07<br>OOC5 (빌런 AU) 完</div>
+        <div data-type="narration">26.01.08<br>OOC6 (반복되는 크리스마스 AU)<br>OOC8 (캠퍼스 AU) 休<br>OOC10 (이상형NTR) 休: 나구모랑 잠 </div>
+        <div data-type="narration">26.01.09<br>OOC12 : 질투유발<br>OOC13 (아이돌 AU 2)<br>OOC13 (이상한 나라의 엘리스 AU) 完</div>
+        <div data-type="narration">26.01.10<br>OOC14 ( 유이 회귀, 선생님, 파트너)</div>
+        <div data-type="narration">26.01.12<br>夫婦♡OOC1<br>夫婦♡OOC3 : 성별 반전<br>OOC14 (오메가버스 AU)</div>
+        <div data-type="narration">26.01.13<br>夫婦♡OOC4 : 기억상실<br>夫婦♡OOC5</div>
+        <div data-type="narration">26.01.14<br>🗨️첫 눈에 반해서 짝사랑하던 유이</div>
+        <div data-type="narration">26.01.15<br>OOC6</div>
+        <div data-type="narration">26.01.17<br>OOC8 (센티넬-가이드 역할반전 AU)<br>OOC9 (인어 AU)</div>
+        <div data-type="narration">26.01.18<br>OOC 10 (인어 환생 AU)<br>OOC 12 (지금 만나러 갑니다 AU)</div>
+        <div data-type="narration">26.01.19<br>OOC17 (인큐버스 AU)<br>OOC18 (요시와라 AU)<br>OOC20 (센티넬-가이드 역할반전 AU 2)</div>
+        <div data-type="narration">26.01.20<br>OOC19 (인큐버스 x 대학생 AU)</div>
+        <div data-type="narration">26.01.21<br>OOC21 (천사악마 AU)</div>
+        <div data-type="narration">26.01.24<br>OOC23 (캠퍼스-&gt;환승연애 AU)</div>
+        <div data-type="narration">26.01.26<br>🗨️ 아자토이 유이<br>OOC25 (로판 AU)</div>
+        <div data-type="narration">26.01.27<br>OOC26 (エロ) : 동거 직후<br>OOC27 (괴담 AU) : 동거 직후</div>
+        <div data-type="narration">26.01.28<br>OOC 29<br>OOC30 (구룡성채 AU)<br>OOC33 (쌍둥이 AU)<br>OOC33 (쌍둥이 AU 2)</div>
+        <div data-type="narration">26.01.30<br>OOC36 (교도관 AU) 完 : 구원<br>OOC37 (애아빠 x 어린이집 선생님 AU)</div>
+        <div data-type="narration">26.01.31<br>OOC38 (나의 마녀 AU)<br>OOC39 (포켓몬스터 AU)</div>
+    </div>
+
+    <!-- 파싱 및 렌더링 스크립트 -->
     <script>
-        const CATEGORIES = [
-            { hash: 'home',     name: '토끼굴',     path: 'category/home.html',     active: true },
-            { hash: 'notice',   name: '읽지 않은 문장',   path: 'category/notice.html',   active: false },
-            { hash: 'oneline',  name: '손 끝에 남는 것', path: 'category/oneline.html',  active: true },
-            { hash: 'hasion',   name: '이름을 부르는 법',    path: 'category/hasion.html',    active: true },
-            { hash: 'archive',  name: '빛이 꺾이는 각도',  path: 'category/archive.html',  active: true },
-            { hash: 'memo',     name: '감각의 잔여물',     path: 'category/memo.html',     active: true },
-            { hash: 'daily',    name: '영원이라 쓰고, 오늘이라 읽는다.',    path: 'category/daily.html',    active: true },
-            { hash: 'log',      name: 'Log',      path: 'category/log.html',      active: false },
-            { hash: 'list',     name: 'List',     path: 'category/list.html',     active: false },
-            { hash: 'todo',     name: 'Todo',     path: 'category/todo/',     active: true },
-            { hash: 'playlist', name: 'Playlist', path: 'category/playlist.html', active: false },
-            { hash: 'record',   name: '흐린 날의 고백',   path: 'category/record/',   active: true },
-            { hash: 'check',    name: 'Check',    path: 'category/check.html',    active: false },
-            { hash: 'chatroom', name: '채팅방 정리', path: 'category/chatroom/roomlist.html', active: true }
-        ];
-
-        // =========================================================================
-        // [추가] roomlist.html 데이터를 파싱하여 심플한 UI로 조립하는 로직
-        // =========================================================================
-        function initRoomListParser() {
-            const rawWrapper = document.querySelector('.tistory-post-wrapper');
-            if (!rawWrapper || document.getElementById('roomlist-shell')) return; 
-            
-            const rawItems = rawWrapper.querySelectorAll('[data-type="narration"]');
+        document.addEventListener('DOMContentLoaded', () => {
+            const rawItems = document.querySelectorAll('#raw-data-wrapper [data-type="narration"]');
             const parsedData = [];
-            const datesSet = new Set(); // 월별 드롭다운을 위한 날짜 수집
+            const datesSet = new Set(); // 날짜 수집용
 
-            // 1. 데이터 파싱
             rawItems.forEach(el => {
-                const lines = el.innerHTML.split('<br>');
+                const htmlStr = el.innerHTML;
+                const lines = htmlStr.split('<br>');
                 if (lines.length < 2) return;
 
                 const dateText = lines[0].trim();
                 datesSet.add(dateText);
-
+                
                 for(let i = 1; i < lines.length; i++) {
                     let text = lines[i].trim();
                     if(!text) continue;
 
+                    // 카테고리 자동 분류 (🤍는 MAIN, 🗨️는 start로 매핑)
                     let category = 'OOC';
                     if (text.includes('🤍')) category = 'MAIN';
                     else if (text.includes('AU')) category = 'AU';
-                    else if (text.startsWith('🗨️') || text.includes('🗨️')) category = '🗨️';
+                    else if (text.startsWith('🗨️') || text.includes('🗨️')) category = 'start';
 
-                    // 콜론 분리
-                    let mainText = text;
+                    // 텍스트 내 불필요 기호(🤍) 스크립트 단에서 완벽 삭제
+                    let cleanText = text.replace(/🤍/g, '').trim();
+
+                    let mainText = cleanText;
                     let colonText = '';
-                    const colonIdx = text.indexOf(':');
+                    const colonIdx = cleanText.indexOf(':');
+                    
                     if (colonIdx !== -1) {
-                        mainText = text.substring(0, colonIdx).trim();
-                        colonText = text.substring(colonIdx + 1).trim();
+                        mainText = cleanText.substring(0, colonIdx).trim();
+                        colonText = cleanText.substring(colonIdx + 1).trim();
                     }
 
-                    // 불필요한 기호 제거 및 타이포그래피 태그 처리
-                    mainText = mainText.replace(/🤍/g, ''); // 하트 삭제
+                    // 투박한 박스 대신 타이포그래피 강조 태그 씌우기
                     mainText = mainText.replace(/\((.*?)\)/g, '<span class="rl-paren">($1)</span>');
-                    mainText = mainText.replace(/(OOC\s*\d+|夫婦♡OOC\s*\d+|🗨️)/gi, '<span class="rl-ooc">$1</span>');
+                    mainText = mainText.replace(/(OOC\s*\d+|夫婦♡OOC\s*\d+|🗨️)/gi, '<strong class="rl-ooc">$1</strong>');
+                    mainText = mainText.replace(/(完|休)/g, '<span class="rl-status">$1</span>');
 
-                    parsedData.push({ date: dateText, category: category, mainHtml: mainText, colonHtml: colonText, rawSearch: text.toLowerCase() });
+                    parsedData.push({
+                        date: dateText,
+                        category: category,
+                        mainHtml: mainText,
+                        colonHtml: colonText,
+                        rawSearch: cleanText.toLowerCase() 
+                    });
                 }
             });
 
-            // 2. 껍데기 UI 생성
-            rawWrapper.style.display = 'none';
-            const shell = document.createElement('div');
-            shell.id = 'roomlist-shell';
-            shell.className = 'mint-choco-shell fade-in-element';
-            
-            // 날짜 드롭다운 옵션 생성
-            let monthOptions = `<option value="ALL">ALL</option>`;
-            Array.from(datesSet).forEach(d => {
-                monthOptions += `<option value="${d}">${d}</option>`;
+            // 드롭다운에 수집된 날짜 주입
+            const monthSelect = document.getElementById('rl-month-select');
+            datesSet.forEach(d => {
+                const opt = document.createElement('option');
+                opt.value = d;
+                opt.textContent = d;
+                monthSelect.appendChild(opt);
             });
 
-            shell.innerHTML = `
-                <div class="rl-header">
-                    <div class="rl-title">BANG</div>
-                    <div class="rl-controls">
-                        <select id="rl-month-select" class="rl-month-select">${monthOptions}</select>
-                        <div class="rl-search-wrapper">
-                            <input type="text" id="rl-search-input" class="rl-search-input" placeholder="검색" autocomplete="off">
-                            <i class="xi-search rl-search-icon" id="rl-search-btn"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="rl-filters" id="rl-filters">
-                    <button class="rl-filter-btn active" data-cat="ALL">ALL</button>
-                    <button class="rl-filter-btn" data-cat="MAIN">MAIN</button>
-                    <button class="rl-filter-btn" data-cat="OOC">OOC</button>
-                    <button class="rl-filter-btn" data-cat="AU">AU</button>
-                    <button class="rl-filter-btn" data-cat="🗨️">start</button>
-                </div>
-                <div class="rl-list-container" id="rl-list-container"></div>
-            `;
-            
-            rawWrapper.parentNode.appendChild(shell);
-
-            // 3. 렌더링 엔진
+            // 렌더링 로직
             let currentFilter = 'ALL';
             let currentMonth = 'ALL';
-            const container = document.getElementById('rl-list-container');
             const searchInput = document.getElementById('rl-search-input');
-
+            const container = document.getElementById('rl-list-container');
+            
             function renderList() {
                 const keyword = searchInput.value.toLowerCase();
                 container.innerHTML = '';
+                
                 let currentDate = '';
                 let currentGroup = null;
+                let count = 0;
 
                 parsedData.forEach(item => {
                     if (currentFilter !== 'ALL' && item.category !== currentFilter) return;
@@ -277,58 +300,57 @@
                         currentDate = item.date;
                         currentGroup = document.createElement('div');
                         currentGroup.className = 'rl-date-group';
-                        currentGroup.innerHTML = `<div class="rl-date">${currentDate}</div>`;
+                        currentGroup.innerHTML = `<div class="rl-date">${currentDate}</div>`; // 민트색 텍스트로만 표시
                         container.appendChild(currentGroup);
                     }
 
                     const itemEl = document.createElement('div');
                     itemEl.className = 'rl-item';
-                    itemEl.innerHTML = `<div class="rl-primary">${item.mainHtml}</div>` + (item.colonHtml ? `<div class="rl-colon">${item.colonHtml}</div>` : '');
+                    
+                    let innerHTML = `<div class="rl-primary">${item.mainHtml}</div>`;
+                    if (item.colonHtml) {
+                        innerHTML += `<div class="rl-colon">${item.colonHtml}</div>`;
+                    }
+                    itemEl.innerHTML = innerHTML;
                     currentGroup.appendChild(itemEl);
+                    count++;
                 });
+
+                if(count === 0) {
+                    container.innerHTML = '<div style="text-align:center; padding: 40px; color: #795d4d; font-size:14px;">일치하는 로그가 없습니다.</div>';
+                }
             }
 
-            // 이벤트: 카테고리 탭
-            shell.querySelectorAll('.rl-filter-btn').forEach(btn => {
+            // 카테고리 탭 이벤트
+            const filterBtns = document.querySelectorAll('.rl-filter-btn');
+            filterBtns.forEach(btn => {
                 btn.addEventListener('click', (e) => {
-                    shell.querySelectorAll('.rl-filter-btn').forEach(b => b.classList.remove('active'));
+                    filterBtns.forEach(b => b.classList.remove('active'));
                     e.target.classList.add('active');
                     currentFilter = e.target.getAttribute('data-cat');
                     renderList();
                 });
             });
 
-            // 이벤트: 월별 드롭다운
-            document.getElementById('rl-month-select').addEventListener('change', (e) => {
+            // 드롭다운 월별 필터 이벤트
+            monthSelect.addEventListener('change', (e) => {
                 currentMonth = e.target.value;
                 renderList();
             });
 
-            // 이벤트: 검색창 열림 애니메이션 및 검색
+            // 돋보기 버튼 클릭 시 검색창 확장 이벤트
             const searchBtn = document.getElementById('rl-search-btn');
             searchBtn.addEventListener('click', () => {
                 searchInput.classList.toggle('active');
-                if (searchInput.classList.contains('active')) searchInput.focus();
+                if(searchInput.classList.contains('active')) searchInput.focus();
             });
+
+            // 타이핑 실시간 검색
             searchInput.addEventListener('input', renderList);
 
+            // 초기 렌더링
             renderList();
-        }
-
-        // MutationObserver: 페이지 전환 시 roomlist 로드 감지
-        window.addEventListener('DOMContentLoaded', () => {
-            const contentArea = document.getElementById('content-area');
-            if(contentArea) {
-                const observer = new MutationObserver((mutations) => {
-                    mutations.forEach((mutation) => {
-                        if (mutation.addedNodes.length) initRoomListParser();
-                    });
-                });
-                observer.observe(contentArea, { childList: true });
-            }
         });
     </script>
-
-    <script src="script.js"></script>
 </body>
 </html>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>BANG</title>
     
-    <!-- [수정] Noto Serif 제거, 프리텐다드 100% 적용 -->
+    <!-- 프리텐다드 폰트 적용 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 
@@ -14,12 +14,11 @@
            [디자인] 극강의 심플함 (여백과 타이포그래피 중심)
            ========================================= */
         body {
-            /* 옅은 민트 바탕에 은은한 초코 도트 패턴 유지 */
             background-color: #e6f7f4; 
-            background-image: radial-gradient(rgba(74, 50, 36, 0.1) 12%, transparent 12%), radial-gradient(rgba(74, 50, 36, 0.1) 12%, transparent 12%);
+            background-image: radial-gradient(rgba(74, 50, 36, 0.08) 12%, transparent 12%), radial-gradient(rgba(74, 50, 36, 0.08) 12%, transparent 12%);
             background-size: 20px 20px;
             background-position: 0 0, 10px 10px;
-            font-family: 'Pretendard', sans-serif; /* 전체 폰트 통일 */
+            font-family: 'Pretendard', sans-serif;
             margin: 0; padding: 20px;
             color: #4a3224; 
             box-sizing: border-box;
@@ -29,20 +28,20 @@
             max-width: 600px; 
             margin: 0 auto;
             background: rgba(255, 255, 255, 0.95); 
-            border: 1px solid rgba(74, 50, 36, 0.15); /* 연한 초코 테두리로 단정하게 */
+            border: 1px solid rgba(74, 50, 36, 0.15); 
             border-radius: 12px; 
             padding: 30px 24px;
             box-shadow: 0 4px 20px rgba(74, 50, 36, 0.08);
             backdrop-filter: blur(5px);
         }
 
-        /* [수정] 상단 헤더 (타이틀 + 드롭다운 + 검색) */
+        /* 상단 헤더 */
         .rl-header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 24px;
-            border-bottom: 1px solid rgba(74, 50, 36, 0.1); /* 얇고 깔끔한 하단선 */
+            border-bottom: 1px solid rgba(74, 50, 36, 0.1); 
             padding-bottom: 16px;
         }
 
@@ -60,7 +59,7 @@
             gap: 14px;
         }
 
-        /* [추가] 월별 필터 드롭다운 (선택지 A) */
+        /* 월별 드롭다운 필터 */
         .rl-month-select {
             appearance: none; -webkit-appearance: none;
             background: transparent;
@@ -74,14 +73,14 @@
             background-repeat: no-repeat; background-position: right center;
             transition: color 0.2s;
         }
-        .rl-month-select:hover, .rl-month-select:focus { color: #358873; }
+        .rl-month-select:hover, .rl-month-select:focus { color: #6bb0a0; /* 부드러운 파스텔 민트 */ }
 
-        /* [수정] 우측 상단 확장형 검색창 */
+        /* 확장형 검색창 */
         .rl-search-box { position: relative; display: flex; align-items: center; justify-content: flex-end; }
         .rl-search {
             width: 0; opacity: 0;
             padding: 4px 24px 4px 4px; 
-            border: none; border-bottom: 1px solid #358873; 
+            border: none; border-bottom: 1px solid #6bb0a0; 
             font-size: 13px; 
             background: transparent; 
             color: #4a3224; 
@@ -91,66 +90,65 @@
         }
         .rl-search.active { width: 120px; opacity: 1; }
         .rl-search-icon { position: absolute; right: 0; cursor: pointer; color: #795d4d; font-size: 16px; z-index: 2; transition: color 0.2s; }
-        .rl-search-icon:hover { color: #358873; }
+        .rl-search-icon:hover { color: #6bb0a0; }
 
-        /* [수정] 카테고리 필터 (텍스트만 남김) */
+        /* 카테고리 필터 탭 */
         .rl-filters {
-            display: flex; gap: 16px; margin-bottom: 30px; flex-wrap: wrap;
+            display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap;
         }
         .rl-filter-btn {
             background: transparent; border: none; color: #795d4d;
             font-size: 13px; font-weight: 600; cursor: pointer; padding: 0; transition: color 0.2s;
         }
-        .rl-filter-btn.active, .rl-filter-btn:hover { color: #358873; }
+        .rl-filter-btn.active, .rl-filter-btn:hover { color: #6bb0a0; }
 
         /* =========================================
            [리스트 디자인] 덜어냄의 미학
            ========================================= */
         .rl-list-container { display: flex; flex-direction: column; }
-        .rl-date-group { display: flex; flex-direction: column; margin-bottom: 30px; animation: fadeIn 0.4s ease forwards; }
+        .rl-date-group { display: flex; flex-direction: column; margin-bottom: 24px; animation: fadeIn 0.4s ease forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* 1. 날짜 (투박한 뱃지 제거, 텍스트 컬러 포인트) */
+        /* 1. 날짜 (크기 축소 및 간격 최소화) */
         .rl-date { 
-            color: #358873; /* 청량한 민트 그린 */
-            font-size: 14px; 
+            color: #6bb0a0; /* 부드러운 파스텔 민트 */
+            font-size: 12px; 
             font-weight: 700; 
-            margin-bottom: 12px; 
+            margin-bottom: 4px; /* 여백 쫀쫀하게 축소 */
             letter-spacing: 0.5px; 
         }
         
-        /* 2. 아이템 리스트 (테두리/박스 제거, 얇은 하단선) */
+        /* 2. 아이템 리스트 */
         .rl-item {
-            padding: 12px 0; 
-            border-bottom: 1px solid rgba(74, 50, 36, 0.08); /* 얇은 초코 구분선 */
-            display: flex; flex-direction: column; gap: 6px; 
+            padding: 10px 0; 
+            border-bottom: 1px solid rgba(74, 50, 36, 0.06); /* 은은한 초코 구분선 */
+            display: flex; flex-direction: column; gap: 4px; 
             transition: background-color 0.2s;
         }
         .rl-item:last-child { border-bottom: none; }
-        .rl-item:hover { background-color: rgba(230, 247, 244, 0.3); } /* 아주 미세한 민트빛 호버 효과 */
+        .rl-item:hover { background-color: rgba(230, 247, 244, 0.3); } 
         
         .rl-primary { font-size: 14.5px; line-height: 1.6; letter-spacing: -0.015em; word-break: keep-all; }
         
-        /* 3. OOC 번호 (박스 없이 볼드체 + 짙은 색) */
+        /* 3. OOC 번호 */
         .rl-ooc { font-weight: 700; color: #4a3224; } 
         
-        /* 4. 괄호 내용 (칩 제거, 서브 컬러 텍스트) */
+        /* 4. 괄호 내용 */
         .rl-paren { color: #795d4d; font-size: 13.5px; margin-left: 4px;}
 
         /* 상태 (完, 休) */
         .rl-status { font-size: 11px; color: #8a7062; border: 1px solid #e8ddd6; border-radius: 4px; padding: 1px 4px; font-weight: bold; margin: 0 4px; display: inline-block; }
         
-        /* 5. 콜론(:) 설명 (옅은 민트 좌측 선과 서브 컬러) */
+        /* 5. 콜론(:) 설명 */
         .rl-colon { 
-            padding-left: 14px; 
-            border-left: 2px solid rgba(53, 136, 115, 0.3); 
+            padding-left: 12px; 
+            border-left: 2px solid rgba(107, 176, 160, 0.4); 
             color: #795d4d; 
             font-size: 13.5px; 
             line-height: 1.6; 
             letter-spacing: -0.02em; 
         }
 
-        /* 유저 원본 텍스트 숨기기 */
         #raw-data-wrapper { display: none; }
     </style>
 </head>
@@ -158,13 +156,12 @@
 
     <div class="roomlist-wrapper">
         
-        <!-- 타이틀, 드롭다운, 검색창 통합 헤더 -->
         <div class="rl-header-top">
             <h1 class="rl-header-title">BANG</h1>
             <div class="rl-controls">
                 <select id="rl-month-select" class="rl-month-select">
                     <option value="ALL">ALL</option>
-                    <!-- 날짜 옵션이 자바스크립트로 자동 생성됩니다 -->
+                    <!-- 월별 옵션이 자바스크립트로 자동 생성됩니다 -->
                 </select>
                 <div class="rl-search-box">
                     <input type="text" id="rl-search-input" class="rl-search" placeholder="검색" autocomplete="off">
@@ -173,7 +170,6 @@
             </div>
         </div>
         
-        <!-- 기호가 빠지고 심플해진 필터 탭 -->
         <div class="rl-filters" id="rl-filters">
             <button class="rl-filter-btn active" data-cat="ALL">ALL</button>
             <button class="rl-filter-btn" data-cat="MAIN">MAIN</button>
@@ -187,9 +183,7 @@
         </div>
     </div>
 
-    <!-- =======================================================
-         원본 데이터 영역 (단 하나도 훼손하지 않음)
-         ======================================================= -->
+    <!-- 원본 데이터 영역 -->
     <div id="raw-data-wrapper">
         <div data-type="dday"><span style="font-size: 13px; color: #999999; font-weight: 600;">   26.08.04</span></div>
         <div data-type="narration">26.01.03<br>OOC1</div>
@@ -216,33 +210,37 @@
         <div data-type="narration">26.01.31<br>OOC38 (나의 마녀 AU)<br>OOC39 (포켓몬스터 AU)</div>
     </div>
 
-    <!-- 파싱 및 렌더링 스크립트 -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const rawItems = document.querySelectorAll('#raw-data-wrapper [data-type="narration"]');
             const parsedData = [];
-            const datesSet = new Set(); // 날짜 수집용
+            const monthsSet = new Set(); // 월별 추출용 Set
 
             rawItems.forEach(el => {
                 const htmlStr = el.innerHTML;
                 const lines = htmlStr.split('<br>');
                 if (lines.length < 2) return;
 
-                const dateText = lines[0].trim();
-                datesSet.add(dateText);
+                // 1. 날짜에서 '월'만 쏙 빼오기 (예: 26.01.03 -> 26.01)
+                const fullDate = lines[0].trim();
+                const dateParts = fullDate.split('.');
+                let monthDate = fullDate;
+                if (dateParts.length >= 2) {
+                    monthDate = dateParts[0] + '.' + dateParts[1]; 
+                }
+                monthsSet.add(monthDate);
                 
                 for(let i = 1; i < lines.length; i++) {
                     let text = lines[i].trim();
                     if(!text) continue;
 
-                    // 카테고리 자동 분류 (🤍는 MAIN, 🗨️는 start로 매핑)
                     let category = 'OOC';
                     if (text.includes('🤍')) category = 'MAIN';
                     else if (text.includes('AU')) category = 'AU';
                     else if (text.startsWith('🗨️') || text.includes('🗨️')) category = 'start';
 
-                    // 텍스트 내 불필요 기호(🤍) 스크립트 단에서 완벽 삭제
-                    let cleanText = text.replace(/🤍/g, '').trim();
+                    // 2. 텍스트 내 불필요 기호 완벽 삭제
+                    let cleanText = text.replace(/🤍/g, '').replace(/🗨️/g, '').trim();
 
                     let mainText = cleanText;
                     let colonText = '';
@@ -253,13 +251,12 @@
                         colonText = cleanText.substring(colonIdx + 1).trim();
                     }
 
-                    // 투박한 박스 대신 타이포그래피 강조 태그 씌우기
                     mainText = mainText.replace(/\((.*?)\)/g, '<span class="rl-paren">($1)</span>');
-                    mainText = mainText.replace(/(OOC\s*\d+|夫婦♡OOC\s*\d+|🗨️)/gi, '<strong class="rl-ooc">$1</strong>');
+                    mainText = mainText.replace(/(OOC\s*\d+|夫婦♡OOC\s*\d+)/gi, '<strong class="rl-ooc">$1</strong>');
                     mainText = mainText.replace(/(完|休)/g, '<span class="rl-status">$1</span>');
 
                     parsedData.push({
-                        date: dateText,
+                        month: monthDate,
                         category: category,
                         mainHtml: mainText,
                         colonHtml: colonText,
@@ -268,16 +265,15 @@
                 }
             });
 
-            // 드롭다운에 수집된 날짜 주입
+            // 추출한 '월' 데이터 드롭다운에 추가
             const monthSelect = document.getElementById('rl-month-select');
-            datesSet.forEach(d => {
+            monthsSet.forEach(m => {
                 const opt = document.createElement('option');
-                opt.value = d;
-                opt.textContent = d;
+                opt.value = m;
+                opt.textContent = m;
                 monthSelect.appendChild(opt);
             });
 
-            // 렌더링 로직
             let currentFilter = 'ALL';
             let currentMonth = 'ALL';
             const searchInput = document.getElementById('rl-search-input');
@@ -287,20 +283,21 @@
                 const keyword = searchInput.value.toLowerCase();
                 container.innerHTML = '';
                 
-                let currentDate = '';
+                let currentMonthGroup = '';
                 let currentGroup = null;
                 let count = 0;
 
                 parsedData.forEach(item => {
                     if (currentFilter !== 'ALL' && item.category !== currentFilter) return;
-                    if (currentMonth !== 'ALL' && item.date !== currentMonth) return;
-                    if (keyword && !item.rawSearch.includes(keyword) && !item.date.includes(keyword)) return;
+                    if (currentMonth !== 'ALL' && item.month !== currentMonth) return;
+                    if (keyword && !item.rawSearch.includes(keyword) && !item.month.includes(keyword)) return;
 
-                    if (item.date !== currentDate) {
-                        currentDate = item.date;
+                    // 3. 월 단위로 묶어주기
+                    if (item.month !== currentMonthGroup) {
+                        currentMonthGroup = item.month;
                         currentGroup = document.createElement('div');
                         currentGroup.className = 'rl-date-group';
-                        currentGroup.innerHTML = `<div class="rl-date">${currentDate}</div>`; // 민트색 텍스트로만 표시
+                        currentGroup.innerHTML = `<div class="rl-date">${currentMonthGroup}</div>`;
                         container.appendChild(currentGroup);
                     }
 
@@ -321,7 +318,7 @@
                 }
             }
 
-            // 카테고리 탭 이벤트
+            // 이벤트 리스너들
             const filterBtns = document.querySelectorAll('.rl-filter-btn');
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', (e) => {
@@ -332,23 +329,19 @@
                 });
             });
 
-            // 드롭다운 월별 필터 이벤트
             monthSelect.addEventListener('change', (e) => {
                 currentMonth = e.target.value;
                 renderList();
             });
 
-            // 돋보기 버튼 클릭 시 검색창 확장 이벤트
             const searchBtn = document.getElementById('rl-search-btn');
             searchBtn.addEventListener('click', () => {
                 searchInput.classList.toggle('active');
                 if(searchInput.classList.contains('active')) searchInput.focus();
             });
 
-            // 타이핑 실시간 검색
             searchInput.addEventListener('input', renderList);
 
-            // 초기 렌더링
             renderList();
         });
     </script>

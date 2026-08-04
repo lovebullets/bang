@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>BANG</title>
     
-    <!-- 프리텐다드 폰트 적용 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 
@@ -73,7 +72,7 @@
             background-repeat: no-repeat; background-position: right center;
             transition: color 0.2s;
         }
-        .rl-month-select:hover, .rl-month-select:focus { color: #6bb0a0; /* 부드러운 파스텔 민트 */ }
+        .rl-month-select:hover, .rl-month-select:focus { color: #6bb0a0; }
 
         /* 확장형 검색창 */
         .rl-search-box { position: relative; display: flex; align-items: center; justify-content: flex-end; }
@@ -103,41 +102,52 @@
         .rl-filter-btn.active, .rl-filter-btn:hover { color: #6bb0a0; }
 
         /* =========================================
-           [리스트 디자인] 덜어냄의 미학
+           [리스트 디자인]
            ========================================= */
         .rl-list-container { display: flex; flex-direction: column; }
         .rl-date-group { display: flex; flex-direction: column; margin-bottom: 24px; animation: fadeIn 0.4s ease forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* 1. 날짜 (크기 축소 및 간격 최소화) */
+        /* 1. 날짜 (풀 날짜 노출) */
         .rl-date { 
-            color: #6bb0a0; /* 부드러운 파스텔 민트 */
-            font-size: 12px; 
+            color: #6bb0a0; 
+            font-size: 12.5px; 
             font-weight: 700; 
-            margin-bottom: 4px; /* 여백 쫀쫀하게 축소 */
+            margin-bottom: 6px; 
             letter-spacing: 0.5px; 
         }
         
         /* 2. 아이템 리스트 */
         .rl-item {
             padding: 10px 0; 
-            border-bottom: 1px solid rgba(74, 50, 36, 0.06); /* 은은한 초코 구분선 */
+            border-bottom: 1px solid rgba(74, 50, 36, 0.06); 
             display: flex; flex-direction: column; gap: 4px; 
             transition: background-color 0.2s;
         }
         .rl-item:last-child { border-bottom: none; }
         .rl-item:hover { background-color: rgba(230, 247, 244, 0.3); } 
         
-        .rl-primary { font-size: 14.5px; line-height: 1.6; letter-spacing: -0.015em; word-break: keep-all; }
+        .rl-primary { font-size: 14.5px; line-height: 1.6; letter-spacing: -0.015em; word-break: keep-all; display: flex; align-items: center; flex-wrap: wrap; gap: 4px;}
         
-        /* 3. OOC 번호 */
-        .rl-ooc { font-weight: 700; color: #4a3224; } 
+        /* 3. OOC 번호 (파스텔 민트 둥근 뱃지) */
+        .rl-ooc-badge { 
+            background-color: #6bb0a0; 
+            color: #ffffff; 
+            font-size: 11px; 
+            font-weight: 700; 
+            padding: 2px 8px; 
+            border-radius: 12px; 
+            display: inline-block; 
+            margin-right: 2px;
+            letter-spacing: 0;
+            box-shadow: 0 1px 3px rgba(107, 176, 160, 0.3);
+        } 
         
         /* 4. 괄호 내용 */
-        .rl-paren { color: #795d4d; font-size: 13.5px; margin-left: 4px;}
+        .rl-paren { color: #795d4d; font-size: 13.5px; margin-left: 2px;}
 
         /* 상태 (完, 休) */
-        .rl-status { font-size: 11px; color: #8a7062; border: 1px solid #e8ddd6; border-radius: 4px; padding: 1px 4px; font-weight: bold; margin: 0 4px; display: inline-block; }
+        .rl-status { font-size: 11px; color: #8a7062; border: 1px solid #e8ddd6; border-radius: 4px; padding: 1px 4px; font-weight: bold; margin: 0 2px; display: inline-block; }
         
         /* 5. 콜론(:) 설명 */
         .rl-colon { 
@@ -147,6 +157,7 @@
             font-size: 13.5px; 
             line-height: 1.6; 
             letter-spacing: -0.02em; 
+            margin-top: 2px;
         }
 
         #raw-data-wrapper { display: none; }
@@ -161,7 +172,6 @@
             <div class="rl-controls">
                 <select id="rl-month-select" class="rl-month-select">
                     <option value="ALL">ALL</option>
-                    <!-- 월별 옵션이 자바스크립트로 자동 생성됩니다 -->
                 </select>
                 <div class="rl-search-box">
                     <input type="text" id="rl-search-input" class="rl-search" placeholder="검색" autocomplete="off">
@@ -214,19 +224,19 @@
         document.addEventListener('DOMContentLoaded', () => {
             const rawItems = document.querySelectorAll('#raw-data-wrapper [data-type="narration"]');
             const parsedData = [];
-            const monthsSet = new Set(); // 월별 추출용 Set
+            const monthsSet = new Set(); 
 
             rawItems.forEach(el => {
                 const htmlStr = el.innerHTML;
                 const lines = htmlStr.split('<br>');
                 if (lines.length < 2) return;
 
-                // 1. 날짜에서 '월'만 쏙 빼오기 (예: 26.01.03 -> 26.01)
+                // 1. 전체 날짜(fullDate)와 드롭다운용 월(monthDate) 분리 추출
                 const fullDate = lines[0].trim();
                 const dateParts = fullDate.split('.');
                 let monthDate = fullDate;
                 if (dateParts.length >= 2) {
-                    monthDate = dateParts[0] + '.' + dateParts[1]; 
+                    monthDate = dateParts[0] + '.' + dateParts[1]; // 예: 26.01
                 }
                 monthsSet.add(monthDate);
                 
@@ -239,7 +249,6 @@
                     else if (text.includes('AU')) category = 'AU';
                     else if (text.startsWith('🗨️') || text.includes('🗨️')) category = 'start';
 
-                    // 2. 텍스트 내 불필요 기호 완벽 삭제
                     let cleanText = text.replace(/🤍/g, '').replace(/🗨️/g, '').trim();
 
                     let mainText = cleanText;
@@ -251,12 +260,18 @@
                         colonText = cleanText.substring(colonIdx + 1).trim();
                     }
 
+                    // 2. 괄호, 상태 태그 씌우기
                     mainText = mainText.replace(/\((.*?)\)/g, '<span class="rl-paren">($1)</span>');
-                    mainText = mainText.replace(/(OOC\s*\d+|夫婦♡OOC\s*\d+)/gi, '<strong class="rl-ooc">$1</strong>');
                     mainText = mainText.replace(/(完|休)/g, '<span class="rl-status">$1</span>');
 
+                    // 3. OOC 글자와 숫자 분리하여 '민트색 동그라미 뱃지' & '띄어쓰기' 동시 적용
+                    mainText = mainText.replace(/(OOC|夫婦♡OOC)\s*(\d+)/gi, function(match, p1, p2) {
+                        return `<span class="rl-ooc-badge">${p1} ${p2}</span>`;
+                    });
+
                     parsedData.push({
-                        month: monthDate,
+                        fullDate: fullDate,     // 화면에 보여줄 전체 날짜
+                        monthDate: monthDate,   // 필터용 월
                         category: category,
                         mainHtml: mainText,
                         colonHtml: colonText,
@@ -265,7 +280,6 @@
                 }
             });
 
-            // 추출한 '월' 데이터 드롭다운에 추가
             const monthSelect = document.getElementById('rl-month-select');
             monthsSet.forEach(m => {
                 const opt = document.createElement('option');
@@ -283,21 +297,22 @@
                 const keyword = searchInput.value.toLowerCase();
                 container.innerHTML = '';
                 
-                let currentMonthGroup = '';
+                let currentDateGroup = '';
                 let currentGroup = null;
                 let count = 0;
 
                 parsedData.forEach(item => {
+                    // 드롭다운 필터는 monthDate 기준
                     if (currentFilter !== 'ALL' && item.category !== currentFilter) return;
-                    if (currentMonth !== 'ALL' && item.month !== currentMonth) return;
-                    if (keyword && !item.rawSearch.includes(keyword) && !item.month.includes(keyword)) return;
+                    if (currentMonth !== 'ALL' && item.monthDate !== currentMonth) return;
+                    if (keyword && !item.rawSearch.includes(keyword) && !item.fullDate.includes(keyword)) return;
 
-                    // 3. 월 단위로 묶어주기
-                    if (item.month !== currentMonthGroup) {
-                        currentMonthGroup = item.month;
+                    // 화면 노출 및 그룹화는 fullDate 기준
+                    if (item.fullDate !== currentDateGroup) {
+                        currentDateGroup = item.fullDate;
                         currentGroup = document.createElement('div');
                         currentGroup.className = 'rl-date-group';
-                        currentGroup.innerHTML = `<div class="rl-date">${currentMonthGroup}</div>`;
+                        currentGroup.innerHTML = `<div class="rl-date">${currentDateGroup}</div>`;
                         container.appendChild(currentGroup);
                     }
 
@@ -318,7 +333,6 @@
                 }
             }
 
-            // 이벤트 리스너들
             const filterBtns = document.querySelectorAll('.rl-filter-btn');
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', (e) => {

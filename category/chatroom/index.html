@@ -2,9 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="utf-8" />
-    <!-- 최대 10배까지 수동 줌인을 허용하도록 수정 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=10.0, user-scalable=yes">
-
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     <title>토끼굴</title>
     
@@ -15,10 +13,115 @@
     <meta name="mobile-web-app-capable" content="yes">
     
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&display=swap" />
+    <!-- 프리텐다드 폰트 추가 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
     
     <link rel="stylesheet" href="style.css" />
     
+    <!-- =======================================================
+         [추가] 채팅방 정리(roomlist) 데이터를 감싸는 iCloud 감성 심플 껍데기 CSS
+         ======================================================= -->
+    <style>
+        .mint-choco-shell {
+            font-family: 'Pretendard', sans-serif;
+            color: var(--main-color);
+            margin-top: 20px;
+        }
+
+        /* 상단 헤더 영역 (타이틀, 드롭다운, 검색) */
+        .rl-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--divider-bg);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .rl-title { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; }
+        .rl-controls { display: flex; align-items: center; gap: 14px; }
+
+        /* 월별 필터 드롭다운 */
+        .rl-month-select {
+            appearance: none;
+            -webkit-appearance: none;
+            background: transparent;
+            border: none;
+            font-family: 'Pretendard', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--sub-color);
+            cursor: pointer;
+            padding-right: 14px;
+            outline: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%238e8e93' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right center;
+            transition: color 0.2s;
+        }
+        .rl-month-select:hover, .rl-month-select:focus { color: var(--point-color); }
+
+        /* 확장형 검색창 */
+        .rl-search-wrapper { position: relative; display: flex; align-items: center; justify-content: flex-end; }
+        .rl-search-input {
+            width: 0;
+            opacity: 0;
+            border: none;
+            border-bottom: 1px solid var(--point-color);
+            background: transparent;
+            font-family: 'Pretendard', sans-serif;
+            font-size: 13px;
+            padding: 4px 24px 4px 4px;
+            color: var(--main-color);
+            transition: width 0.4s ease, opacity 0.4s ease;
+            outline: none;
+        }
+        .rl-search-input.active { width: 130px; opacity: 1; }
+        .rl-search-icon {
+            position: absolute;
+            right: 0;
+            cursor: pointer;
+            color: var(--sub-color);
+            font-size: 16px;
+            transition: color 0.2s;
+            z-index: 2;
+        }
+        .rl-search-icon:hover { color: var(--point-color); }
+
+        /* 카테고리 필터 (텍스트형) */
+        .rl-filters { display: flex; gap: 16px; margin-bottom: 30px; flex-wrap: wrap; }
+        .rl-filter-btn {
+            background: transparent; border: none; color: var(--sub-color);
+            font-size: 12.5px; font-weight: 600; cursor: pointer; padding: 0; transition: color 0.2s;
+        }
+        .rl-filter-btn.active, .rl-filter-btn:hover { color: var(--point-color); }
+
+        /* 리스트 아이템 디자인 (선과 여백 위주) */
+        .rl-list-container { display: flex; flex-direction: column; }
+        .rl-date-group { margin-bottom: 30px; }
+        
+        /* 민트색 날짜 텍스트 (박스 제거) */
+        .rl-date {
+            color: var(--point-color);
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .rl-item {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--divider-bg);
+            display: flex; flex-direction: column; gap: 4px;
+        }
+        .rl-item:last-child { border-bottom: none; }
+        
+        .rl-primary { font-size: 14.5px; line-height: 1.6; letter-spacing: -0.015em; word-break: keep-all; }
+        .rl-ooc { font-weight: 700; } 
+        .rl-paren { color: var(--sub-color); font-size: 13.5px; }
+        .rl-colon { padding-left: 12px; color: var(--sub-color); font-size: 13.5px; line-height: 1.6; }
+    </style>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -55,7 +158,6 @@
     </div>
 
     <script>
-        // 🚨 기존 구조는 완벽히 유지하고, roomlist.html 연동을 위해 'chatroom' 항목만 핀셋 추가했습니다.
         const CATEGORIES = [
             { hash: 'home',     name: '토끼굴',     path: 'category/home.html',     active: true },
             { hash: 'notice',   name: '읽지 않은 문장',   path: 'category/notice.html',   active: false },
@@ -72,6 +174,159 @@
             { hash: 'check',    name: 'Check',    path: 'category/check.html',    active: false },
             { hash: 'chatroom', name: '채팅방 정리', path: 'category/chatroom/roomlist.html', active: true }
         ];
+
+        // =========================================================================
+        // [추가] roomlist.html 데이터를 파싱하여 심플한 UI로 조립하는 로직
+        // =========================================================================
+        function initRoomListParser() {
+            const rawWrapper = document.querySelector('.tistory-post-wrapper');
+            if (!rawWrapper || document.getElementById('roomlist-shell')) return; 
+            
+            const rawItems = rawWrapper.querySelectorAll('[data-type="narration"]');
+            const parsedData = [];
+            const datesSet = new Set(); // 월별 드롭다운을 위한 날짜 수집
+
+            // 1. 데이터 파싱
+            rawItems.forEach(el => {
+                const lines = el.innerHTML.split('<br>');
+                if (lines.length < 2) return;
+
+                const dateText = lines[0].trim();
+                datesSet.add(dateText);
+
+                for(let i = 1; i < lines.length; i++) {
+                    let text = lines[i].trim();
+                    if(!text) continue;
+
+                    let category = 'OOC';
+                    if (text.includes('🤍')) category = 'MAIN';
+                    else if (text.includes('AU')) category = 'AU';
+                    else if (text.startsWith('🗨️') || text.includes('🗨️')) category = '🗨️';
+
+                    // 콜론 분리
+                    let mainText = text;
+                    let colonText = '';
+                    const colonIdx = text.indexOf(':');
+                    if (colonIdx !== -1) {
+                        mainText = text.substring(0, colonIdx).trim();
+                        colonText = text.substring(colonIdx + 1).trim();
+                    }
+
+                    // 불필요한 기호 제거 및 타이포그래피 태그 처리
+                    mainText = mainText.replace(/🤍/g, ''); // 하트 삭제
+                    mainText = mainText.replace(/\((.*?)\)/g, '<span class="rl-paren">($1)</span>');
+                    mainText = mainText.replace(/(OOC\s*\d+|夫婦♡OOC\s*\d+|🗨️)/gi, '<span class="rl-ooc">$1</span>');
+
+                    parsedData.push({ date: dateText, category: category, mainHtml: mainText, colonHtml: colonText, rawSearch: text.toLowerCase() });
+                }
+            });
+
+            // 2. 껍데기 UI 생성
+            rawWrapper.style.display = 'none';
+            const shell = document.createElement('div');
+            shell.id = 'roomlist-shell';
+            shell.className = 'mint-choco-shell fade-in-element';
+            
+            // 날짜 드롭다운 옵션 생성
+            let monthOptions = `<option value="ALL">ALL</option>`;
+            Array.from(datesSet).forEach(d => {
+                monthOptions += `<option value="${d}">${d}</option>`;
+            });
+
+            shell.innerHTML = `
+                <div class="rl-header">
+                    <div class="rl-title">BANG</div>
+                    <div class="rl-controls">
+                        <select id="rl-month-select" class="rl-month-select">${monthOptions}</select>
+                        <div class="rl-search-wrapper">
+                            <input type="text" id="rl-search-input" class="rl-search-input" placeholder="검색" autocomplete="off">
+                            <i class="xi-search rl-search-icon" id="rl-search-btn"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="rl-filters" id="rl-filters">
+                    <button class="rl-filter-btn active" data-cat="ALL">ALL</button>
+                    <button class="rl-filter-btn" data-cat="MAIN">MAIN</button>
+                    <button class="rl-filter-btn" data-cat="OOC">OOC</button>
+                    <button class="rl-filter-btn" data-cat="AU">AU</button>
+                    <button class="rl-filter-btn" data-cat="🗨️">start</button>
+                </div>
+                <div class="rl-list-container" id="rl-list-container"></div>
+            `;
+            
+            rawWrapper.parentNode.appendChild(shell);
+
+            // 3. 렌더링 엔진
+            let currentFilter = 'ALL';
+            let currentMonth = 'ALL';
+            const container = document.getElementById('rl-list-container');
+            const searchInput = document.getElementById('rl-search-input');
+
+            function renderList() {
+                const keyword = searchInput.value.toLowerCase();
+                container.innerHTML = '';
+                let currentDate = '';
+                let currentGroup = null;
+
+                parsedData.forEach(item => {
+                    if (currentFilter !== 'ALL' && item.category !== currentFilter) return;
+                    if (currentMonth !== 'ALL' && item.date !== currentMonth) return;
+                    if (keyword && !item.rawSearch.includes(keyword) && !item.date.includes(keyword)) return;
+
+                    if (item.date !== currentDate) {
+                        currentDate = item.date;
+                        currentGroup = document.createElement('div');
+                        currentGroup.className = 'rl-date-group';
+                        currentGroup.innerHTML = `<div class="rl-date">${currentDate}</div>`;
+                        container.appendChild(currentGroup);
+                    }
+
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'rl-item';
+                    itemEl.innerHTML = `<div class="rl-primary">${item.mainHtml}</div>` + (item.colonHtml ? `<div class="rl-colon">${item.colonHtml}</div>` : '');
+                    currentGroup.appendChild(itemEl);
+                });
+            }
+
+            // 이벤트: 카테고리 탭
+            shell.querySelectorAll('.rl-filter-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    shell.querySelectorAll('.rl-filter-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentFilter = e.target.getAttribute('data-cat');
+                    renderList();
+                });
+            });
+
+            // 이벤트: 월별 드롭다운
+            document.getElementById('rl-month-select').addEventListener('change', (e) => {
+                currentMonth = e.target.value;
+                renderList();
+            });
+
+            // 이벤트: 검색창 열림 애니메이션 및 검색
+            const searchBtn = document.getElementById('rl-search-btn');
+            searchBtn.addEventListener('click', () => {
+                searchInput.classList.toggle('active');
+                if (searchInput.classList.contains('active')) searchInput.focus();
+            });
+            searchInput.addEventListener('input', renderList);
+
+            renderList();
+        }
+
+        // MutationObserver: 페이지 전환 시 roomlist 로드 감지
+        window.addEventListener('DOMContentLoaded', () => {
+            const contentArea = document.getElementById('content-area');
+            if(contentArea) {
+                const observer = new MutationObserver((mutations) => {
+                    mutations.forEach((mutation) => {
+                        if (mutation.addedNodes.length) initRoomListParser();
+                    });
+                });
+                observer.observe(contentArea, { childList: true });
+            }
+        });
     </script>
 
     <script src="script.js"></script>

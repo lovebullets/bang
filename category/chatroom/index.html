@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <!-- 최대 10배까지 수동 줌인을 허용하도록 수정 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=10.0, user-scalable=yes">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <title>토끼굴</title>
+    
+    <link rel="apple-touch-icon" href="https://i.ibb.co/tTdNpX19/IMG-2904.jpg">
+    <link rel="icon" href="https://i.ibb.co/tTdNpX19/IMG-2904.jpg">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&display=swap" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    
+    <link rel="stylesheet" href="style.css" />
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+    <div id="wrap">
+        <div id="container">
+            
+            <header id="header">
+                <div class="inner_header">
+                    <button id="btn-login" class="nav-icon-btn" title="로그인"><i class="xi-log-in"></i></button>
+                    <button id="btn-logout" class="nav-icon-btn" title="로그아웃" style="display: none;"><i class="xi-log-out"></i></button>
+
+                    <button id="btn-theme" class="nav-icon-btn" onclick="toggleTheme()" title="테마 변경">
+                        <i id="theme-icon" class="xi-toggle-off"></i>
+                    </button>
+
+                    <div class="dropdown">
+                        <div class="dropdown-bars" title="메뉴 열기">
+                            <i id="menu-icon" class="xi-bars"></i>
+                        </div>
+                        <div class="dropdown-inner" id="dropdown-menu"></div>
+                    </div>
+                </div>
+            </header>
+
+            <main id="main">
+                <div class="inner_index">
+                    <div id="content-area"></div>
+                </div>
+            </main>
+
+        </div>
+    </div>
+
+    <script>
+        // 🚨 기존 구조는 완벽히 유지하고, roomlist.html 연동을 위해 'chatroom' 항목만 핀셋 추가했습니다.
+        const CATEGORIES = [
+            { hash: 'home',     name: '토끼굴',     path: 'category/home.html',     active: true },
+            { hash: 'notice',   name: '읽지 않은 문장',   path: 'category/notice.html',   active: false },
+            { hash: 'oneline',  name: '손 끝에 남는 것', path: 'category/oneline.html',  active: true },
+            { hash: 'hasion',   name: '이름을 부르는 법',    path: 'category/hasion.html',    active: true },
+            { hash: 'archive',  name: '빛이 꺾이는 각도',  path: 'category/archive.html',  active: true },
+            { hash: 'memo',     name: '감각의 잔여물',     path: 'category/memo.html',     active: true },
+            { hash: 'daily',    name: '영원이라 쓰고, 오늘이라 읽는다.',    path: 'category/daily.html',    active: true },
+            { hash: 'log',      name: 'Log',      path: 'category/log.html',      active: false },
+            { hash: 'list',     name: 'List',     path: 'category/list.html',     active: false },
+            { hash: 'todo',     name: 'Todo',     path: 'category/todo/',     active: true },
+            { hash: 'playlist', name: 'Playlist', path: 'category/playlist.html', active: false },
+            { hash: 'record',   name: '흐린 날의 고백',   path: 'category/record/',   active: true },
+            { hash: 'check',    name: 'Check',    path: 'category/check.html',    active: false },
+            { hash: 'chatroom', name: '채팅방 정리', path: 'category/chatroom/roomlist.html', active: true }
+        ];
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -103,7 +103,7 @@
 
         /* 카테고리 필터 탭 */
         .rl-filters {
-            display: flex; gap: 16px; margin-bottom: 8px; flex-wrap: wrap; /* margin-bottom 약간 축소하여 정렬버튼과 어우러지게 조정 */
+            display: flex; gap: 16px; margin-bottom: 8px; flex-wrap: wrap; 
         }
         .rl-filter-btn {
             background: transparent; border: none; color: #795d4d;
@@ -111,7 +111,7 @@
         }
         .rl-filter-btn.active, .rl-filter-btn:hover { color: #6bb0a0; }
 
-        /* [추가됨] 정렬 버튼 */
+        /* 정렬 버튼 */
         .rl-sort-wrap {
             display: flex;
             justify-content: flex-end;
@@ -173,7 +173,7 @@
         
         .rl-primary { font-size: 14.5px; line-height: 1.6; word-break: keep-all; display: flex; align-items: center; flex-wrap: wrap; gap: 4px;}
         
-        /* 3. OOC 텍스트 (이모지 ❤︎ 포함) */
+        /* 3. OOC 텍스트 */
         .rl-ooc { 
             color: #4a3224; 
             font-size: 14.5px; 
@@ -248,7 +248,6 @@
             <button class="rl-filter-btn" data-cat="start">start</button>
         </div>
 
-        <!-- [추가됨] 정렬 변경 버튼 -->
         <div class="rl-sort-wrap">
             <button id="rl-sort-btn" class="rl-sort-btn" title="정렬 변경">
                 <i class="xi-sort-desc" id="rl-sort-icon"></i> <span id="rl-sort-text">최신순</span>
@@ -269,7 +268,6 @@
             const searchInput = document.getElementById('rl-search-input');
             const postCountEl = document.getElementById('rl-post-count');
 
-            // [추가됨] 기본 정렬 상태 변수 (true: 최신순, false: 과거순)
             let isSortDesc = true; 
 
             async function fetchRoomListData() {
@@ -305,7 +303,8 @@
                     if (lines.length < 2) return;
 
                     let fullDate = lines[0].trim();
-                    fullDate = fullDate.replace(/^(\d{2})\.?(\d{2})\.?(\d{2})$/, '$1.$2.$3');
+                    // [수정됨] 260202, 26 02 02 등 공백이나 점이 없어도 26.02.02로 유연하게 치환
+                    fullDate = fullDate.replace(/^(\d{2})[\.\s]*(\d{2})[\.\s]*(\d{2})$/, '$1.$2.$3');
                     
                     const dateParts = fullDate.split('.');
                     let monthDate = fullDate;
@@ -339,19 +338,18 @@
                             return '';
                         }).trim();
 
-                        // [수정됨] 스마트 파싱 로직: 입력된 형태를 강제 치환 없이 그대로 유지하며 구조화
-                        let matchCustomAU = mainText.match(/^(\d+)\s+(.+?)\s+au$/i); // 64 동양풍 판타지 au 인식
+                        // [수정됨] 대소문자, 띄어쓰기, 괄호 여부 상관없이 [선택적 ooc] + [숫자] + [텍스트] + [au] 구조를 모두 잡아내는 강력한 정규식
+                        let matchCustomAU = mainText.match(/^(?:ooc)?\s*(\d+)\s*[\(]?\s*(.+?)\s*au\s*[\)]?$/i);
                         let matchFufu = mainText.match(/^夫婦\s*(\d*)\s*♡\s*(OOC)?\s*(\d*)\s*(.*)$/i);
                         let matchOOC = mainText.match(/^OOC\s*(\d+)\s*(.*)$/i);
                         
                         if (matchCustomAU) {
-                            // "64 동양풍 판타지 au" -> "OOC 64 (동양풍 판타지 AU)"
+                            // 어떠한 폼으로 입력하든 일관된 포맷으로 예쁘게 렌더링 (예: OOC 46 (단편 AU))
                             let num = matchCustomAU[1];
                             let sub = matchCustomAU[2].trim();
                             mainText = `<span class="rl-ooc">OOC ${num}</span> <span class="rl-paren">(${sub} AU)</span>`;
                             
                         } else if (matchFufu) {
-                            // "夫婦 2 ♡ OOC 8" 등 있는 그대로 파싱
                             let num1 = matchFufu[1];
                             let hasOOC = matchFufu[2];
                             let num2 = matchFufu[3];
@@ -388,7 +386,7 @@
                         mainText += statusHtml;
 
                         parsedData.push({
-                            originalIndex: parsedData.length, // 정렬 보조를 위한 인덱스 추가
+                            originalIndex: parsedData.length,
                             fullDate: fullDate,     
                             monthDate: monthDate,   
                             category: category,
@@ -399,7 +397,6 @@
                     }
                 });
 
-                // 월별 옵션 세팅 (최신순 정렬에 맞추어 역순 정렬 권장)
                 const sortedMonths = Array.from(monthsSet).sort().reverse();
                 sortedMonths.forEach(m => {
                     const opt = document.createElement('option');
@@ -423,17 +420,14 @@
                 let renderedMonth = null;
                 let count = 0;
 
-                // [추가됨] 정렬 처리 배열 복사본 생성 및 정렬
                 let displayData = [...parsedData];
                 
                 if (isSortDesc) {
-                    // 최신순 (날짜 내림차순, 같은 날짜일 경우 원본 역순)
                     displayData.sort((a, b) => {
                         if (a.fullDate !== b.fullDate) return a.fullDate < b.fullDate ? 1 : -1;
                         return b.originalIndex - a.originalIndex;
                     });
                 } else {
-                    // 과거순 (날짜 오름차순, 같은 날짜일 경우 원본 순)
                     displayData.sort((a, b) => {
                         if (a.fullDate !== b.fullDate) return a.fullDate > b.fullDate ? 1 : -1;
                         return a.originalIndex - b.originalIndex;
@@ -489,13 +483,12 @@
                 }
             }
 
-            // [추가됨] 정렬 버튼 이벤트 리스너
             const sortBtn = document.getElementById('rl-sort-btn');
             const sortIcon = document.getElementById('rl-sort-icon');
             const sortText = document.getElementById('rl-sort-text');
 
             sortBtn.addEventListener('click', () => {
-                isSortDesc = !isSortDesc; // 상태 토글
+                isSortDesc = !isSortDesc; 
                 if (isSortDesc) {
                     sortIcon.className = 'xi-sort-desc';
                     sortText.textContent = '최신순';

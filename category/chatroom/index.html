@@ -51,10 +51,9 @@
             color: #4a3224;
             margin: 0;
             display: flex;
-            align-items: baseline; /* 텍스트 하단 정렬 */
+            align-items: baseline;
         }
 
-        /* [추가] 포스트 개수 표시 (아주 작고 단정하게) */
         .rl-post-count {
             font-size: 11px;
             font-weight: 400;
@@ -117,14 +116,21 @@
            ========================================= */
         .rl-list-container { display: flex; flex-direction: column; }
         
-        /* 로딩 메시지 */
         .rl-loading { text-align: center; padding: 40px; color: #795d4d; font-size: 13px; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
 
         .rl-date-group { display: flex; flex-direction: column; margin-bottom: 24px; animation: fadeIn 0.4s ease forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* 1. 날짜 텍스트 (파스텔 민트 복구) */
+        /* 월 변경 구분선 */
+        .rl-month-divider {
+            height: 1px;
+            background-color: rgba(74, 50, 36, 0.12);
+            margin: 12px 0 32px 0;
+            width: 100%;
+        }
+
+        /* 1. 날짜 텍스트 */
         .rl-date { 
             color: #6bb0a0; 
             font-size: 12.5px; 
@@ -145,17 +151,39 @@
         
         .rl-primary { font-size: 14.5px; line-height: 1.6; word-break: keep-all; display: flex; align-items: center; flex-wrap: wrap; gap: 4px;}
         
-        /* 3. OOC 텍스트 (배경 제거, 단정한 딥 초코 컬러 적용) */
+        /* 3. OOC 텍스트 */
         .rl-ooc { 
-            color: #4a3224; /* 딥 초콜릿 */
+            color: #4a3224; 
             font-size: 14.5px; 
             font-weight: 700; 
             display: inline-block; 
             margin-right: 2px;
         } 
         
-        /* 4. 괄호 내용 */
-        .rl-paren { color: #795d4d; font-size: 13.5px; margin-left: 2px;}
+        /* 4. 괄호 내용 (연핑크 형광펜 효과) */
+        .rl-paren { 
+            position: relative;
+            display: inline-block;
+            color: #795d4d; 
+            font-size: 13.5px; 
+            margin-left: 2px;
+            padding: 0 4px;
+            z-index: 1;
+            cursor: default;
+        }
+        .rl-paren::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 2px;
+            width: 100%;
+            height: 45%; 
+            background-color: #ffd1dc; 
+            z-index: -1;
+            transition: height 0.25s ease-in-out;
+            border-radius: 2px;
+        }
+        .rl-paren:hover::after { height: 90%; }
 
         /* 상태 (完, 休) */
         .rl-status { font-size: 11px; color: #8a7062; border: 1px solid #e8ddd6; border-radius: 4px; padding: 1px 4px; font-weight: bold; margin: 0 2px; display: inline-block; }
@@ -174,12 +202,9 @@
 <body>
 
     <div class="roomlist-wrapper">
-        
         <div class="rl-header-top">
             <h1 class="rl-header-title">
-                BANG
-                <!-- 필터링 시 실시간으로 숫자가 바뀝니다 -->
-                <span class="rl-post-count" id="rl-post-count"></span>
+                BANG <span class="rl-post-count" id="rl-post-count"></span>
             </h1>
             <div class="rl-controls">
                 <select id="rl-month-select" class="rl-month-select">
@@ -212,9 +237,8 @@
             const container = document.getElementById('rl-list-container');
             const monthSelect = document.getElementById('rl-month-select');
             const searchInput = document.getElementById('rl-search-input');
-            const postCountEl = document.getElementById('rl-post-count'); // 카운트 요소
+            const postCountEl = document.getElementById('rl-post-count');
 
-            // 1. Fetch API 원격 데이터 연동
             async function fetchRoomListData() {
                 try {
                     const response = await fetch('https://lovebullets.github.io/bang/category/chatroom/roomlist.html');
@@ -223,7 +247,6 @@
                     const htmlText = await response.text();
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(htmlText, 'text/html');
-                    
                     const rawItems = doc.querySelectorAll('[data-type="narration"]');
                     
                     if(rawItems.length === 0) {
@@ -241,19 +264,19 @@
                 }
             }
 
-            // 2. 파싱 로직
             function parseData(rawItems) {
                 rawItems.forEach(el => {
                     const htmlStr = el.innerHTML;
                     const lines = htmlStr.split('<br>');
                     if (lines.length < 2) return;
 
-                    const fullDate = lines[0].trim();
+                    // [스마트 로직 1] 날짜 자동 변환 (260202 -> 26.02.02)
+                    let fullDate = lines[0].trim();
+                    fullDate = fullDate.replace(/^(\d{2})\.?(\d{2})\.?(\d{2})$/, '$1.$2.$3');
+                    
                     const dateParts = fullDate.split('.');
                     let monthDate = fullDate;
-                    if (dateParts.length >= 2) {
-                        monthDate = dateParts[0] + '.' + dateParts[1]; // 예: 26.01
-                    }
+                    if (dateParts.length >= 2) monthDate = dateParts[0] + '.' + dateParts[1];
                     monthsSet.add(monthDate);
                     
                     for(let i = 1; i < lines.length; i++) {
@@ -262,10 +285,9 @@
 
                         let category = 'OOC';
                         if (text.includes('🤍')) category = 'MAIN';
-                        else if (text.includes('AU')) category = 'AU';
+                        else if (text.toUpperCase().includes('AU')) category = 'AU';
                         else if (text.startsWith('🗨️') || text.includes('🗨️')) category = 'start';
 
-                        // 불필요 기호 삭제
                         let cleanText = text.replace(/🤍/g, '').replace(/🗨️/g, '').trim();
 
                         let mainText = cleanText;
@@ -277,14 +299,41 @@
                             colonText = cleanText.substring(colonIdx + 1).trim();
                         }
 
-                        // 디자인 태그 적용
-                        mainText = mainText.replace(/\((.*?)\)/g, '<span class="rl-paren">($1)</span>');
-                        mainText = mainText.replace(/(完|休)/g, '<span class="rl-status">$1</span>');
+                        // [스마트 로직 2] OOC, 괄호, 숫자를 찰떡같이 분리해서 디자인 입히기
+                        
+                        // 먼저 상태 태그(完, 休) 분리
+                        let statusHtml = '';
+                        mainText = mainText.replace(/\(?(完|休)\)?/g, function(match, p1) {
+                            statusHtml += ` <span class="rl-status">${p1}</span>`;
+                            return '';
+                        }).trim();
 
-                        // [핵심] 뱃지 제거 및 띄어쓰기(OOC 1) 초코색 텍스트로 적용
-                        mainText = mainText.replace(/(OOC|夫婦♡OOC)\s*(\d+)/gi, function(match, p1, p2) {
-                            return `<span class="rl-ooc">${p1} ${p2}</span>`;
-                        });
+                        // OOC, 숫자, 부제(AU 등) 텍스트 덩어리를 스마트하게 분해
+                        // ex: "ooc46단편au", "46 (단편 AU)", "OOC46단편AU" 모두 완벽하게 매칭
+                        let match = mainText.match(/^(OOC|夫婦♡OOC)?\s*(\d+)\s*(.*)$/i);
+                        
+                        if (match) {
+                            let oocType = match[1] ? match[1].toUpperCase() : 'OOC';
+                            if (match[1] === '夫婦♡OOC') oocType = '夫婦♡OOC';
+                            
+                            let num = match[2];
+                            let sub = match[3].trim();
+                            
+                            // 부제 앞뒤에 괄호가 있다면 제거 (형광펜을 깔끔하게 치기 위해)
+                            sub = sub.replace(/^\((.*?)\)$/, '$1').trim();
+
+                            let rebuilt = `<span class="rl-ooc">${oocType} ${num}</span>`;
+                            if (sub) {
+                                rebuilt += ` <span class="rl-paren">${sub}</span>`;
+                            }
+                            mainText = rebuilt;
+                        } else {
+                            // 숫자 없이 (학생 AU) 처럼 괄호만 쓴 경우
+                            mainText = mainText.replace(/\((.*?)\)/g, '<span class="rl-paren">$1</span>');
+                        }
+
+                        // 상태 태그 다시 붙여주기
+                        mainText += statusHtml;
 
                         parsedData.push({
                             fullDate: fullDate,     
@@ -292,7 +341,7 @@
                             category: category,
                             mainHtml: mainText,
                             colonHtml: colonText,
-                            rawSearch: cleanText.toLowerCase() 
+                            rawSearch: cleanText // 원본 텍스트 백업
                         });
                     }
                 });
@@ -305,22 +354,47 @@
                 });
             }
 
-            // 3. 화면 렌더링 로직 (포스트 개수 카운트 포함)
             let currentFilter = 'ALL';
             let currentMonth = 'ALL';
             
             function renderList() {
-                const keyword = searchInput.value.toLowerCase();
+                // [스마트 로직 3] 무적의 검색 기능
+                // 사용자가 입력한 검색어에서 띄어쓰기, 괄호, 점 등 모든 방해물을 제거
+                const keywordRaw = searchInput.value;
+                const keyword = keywordRaw.toLowerCase().replace(/[\s\.\(\)\:♡]/g, '');
+                
                 container.innerHTML = '';
                 
                 let currentDateGroup = '';
                 let currentGroup = null;
+                let renderedMonth = null;
                 let count = 0;
 
                 parsedData.forEach(item => {
                     if (currentFilter !== 'ALL' && item.category !== currentFilter) return;
                     if (currentMonth !== 'ALL' && item.monthDate !== currentMonth) return;
-                    if (keyword && !item.rawSearch.includes(keyword) && !item.fullDate.includes(keyword)) return;
+                    
+                    // 검색 필터링 적용
+                    if (keyword) {
+                        // 아이템 텍스트도 방해물 싹 제거 (ex: 260202ooc46단편au내용)
+                        let target = (item.fullDate + item.rawSearch).toLowerCase().replace(/[\s\.\(\)\:♡]/g, '');
+                        // ooc를 검색어에서 뺐을 경우를 대비해 ooc를 제거한 버전도 생성 (ex: 26020246단편au내용)
+                        let targetNoOOC = target.replace(/ooc/g, '').replace(/夫婦/g, ''); 
+                        
+                        // 두 타겟 중 하나라도 포함하지 않으면 리스트에서 제외
+                        if (!target.includes(keyword) && !targetNoOOC.includes(keyword)) {
+                            return; 
+                        }
+                    }
+
+                    if (item.monthDate !== renderedMonth) {
+                        if (renderedMonth !== null) {
+                            const divider = document.createElement('div');
+                            divider.className = 'rl-month-divider';
+                            container.appendChild(divider);
+                        }
+                        renderedMonth = item.monthDate;
+                    }
 
                     if (item.fullDate !== currentDateGroup) {
                         currentDateGroup = item.fullDate;
@@ -342,7 +416,6 @@
                     count++;
                 });
 
-                // 실시간 포스트 개수 표시
                 postCountEl.textContent = `(${count})`;
 
                 if(count === 0) {
@@ -350,7 +423,6 @@
                 }
             }
 
-            // 4. 이벤트 리스너 세팅
             const filterBtns = document.querySelectorAll('.rl-filter-btn');
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', (e) => {
@@ -374,7 +446,6 @@
 
             searchInput.addEventListener('input', renderList);
 
-            // 데이터 호출 시작
             fetchRoomListData();
         });
     </script>

@@ -103,13 +103,35 @@
 
         /* 카테고리 필터 탭 */
         .rl-filters {
-            display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap;
+            display: flex; gap: 16px; margin-bottom: 8px; flex-wrap: wrap; /* margin-bottom 약간 축소하여 정렬버튼과 어우러지게 조정 */
         }
         .rl-filter-btn {
             background: transparent; border: none; color: #795d4d;
             font-size: 13px; font-weight: 600; cursor: pointer; padding: 0; transition: color 0.2s;
         }
         .rl-filter-btn.active, .rl-filter-btn:hover { color: #6bb0a0; }
+
+        /* [추가됨] 정렬 버튼 */
+        .rl-sort-wrap {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 24px;
+        }
+        .rl-sort-btn {
+            background: transparent;
+            border: none;
+            color: #8a7062;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 0;
+            font-family: inherit;
+            transition: color 0.2s;
+        }
+        .rl-sort-btn:hover { color: #6bb0a0; }
 
         /* =========================================
            [리스트 디자인] 여백과 타이포그래피
@@ -226,6 +248,13 @@
             <button class="rl-filter-btn" data-cat="start">start</button>
         </div>
 
+        <!-- [추가됨] 정렬 변경 버튼 -->
+        <div class="rl-sort-wrap">
+            <button id="rl-sort-btn" class="rl-sort-btn" title="정렬 변경">
+                <i class="xi-sort-desc" id="rl-sort-icon"></i> <span id="rl-sort-text">최신순</span>
+            </button>
+        </div>
+
         <div class="rl-list-container" id="rl-list-container">
             <div class="rl-loading">데이터를 불러오는 중입니다...</div>
         </div>
@@ -240,9 +269,11 @@
             const searchInput = document.getElementById('rl-search-input');
             const postCountEl = document.getElementById('rl-post-count');
 
+            // [추가됨] 기본 정렬 상태 변수 (true: 최신순, false: 과거순)
+            let isSortDesc = true; 
+
             async function fetchRoomListData() {
                 try {
-                    // 실시간 데이터를 강제 호출 (캐시 방지)
                     const fetchUrl = `https://lovebullets.github.io/bang/category/chatroom/roomlist.html?t=${new Date().getTime()}`;
                     const response = await fetch(fetchUrl);
                     if (!response.ok) throw new Error('네트워크 응답이 실패했습니다.');
@@ -285,7 +316,6 @@
                         let text = lines[i].trim();
                         if(!text) continue;
 
-                        // [카테고리 자동 분류]
                         let category = 'OOC';
                         if (text.match(/夫婦\s*\d*\s*♡\s*ooc/i)) category = 'OOC';
                         else if (text.match(/夫婦\s*\d*\s*♡/i)) category = 'MAIN';
@@ -294,7 +324,6 @@
                         else if (text.startsWith('🗨️') || text.includes('🗨️')) category = 'start';
 
                         let cleanText = text.replace(/🤍/g, '').replace(/🗨️/g, '').trim();
-
                         let mainText = cleanText;
                         let colonText = '';
                         const colonIdx = cleanText.indexOf(':');
@@ -310,33 +339,31 @@
                             return '';
                         }).trim();
 
-                        // [스마트 파싱 로직] 夫婦, 숫자, ♡, OOC 순서를 자유롭게 인식
-                        // match[1]: 앞쪽 숫자 (ex: 夫婦4♡)
-                        // match[2]: OOC 존재 여부
-                        // match[3]: 뒤쪽 숫자 (ex: 夫婦♡ 4)
-                        // match[4]: 나머지 부제 등 텍스트
+                        // [수정됨] 스마트 파싱 로직: 입력된 형태를 강제 치환 없이 그대로 유지하며 구조화
+                        let matchCustomAU = mainText.match(/^(\d+)\s+(.+?)\s+au$/i); // 64 동양풍 판타지 au 인식
                         let matchFufu = mainText.match(/^夫婦\s*(\d*)\s*♡\s*(OOC)?\s*(\d*)\s*(.*)$/i);
                         let matchOOC = mainText.match(/^OOC\s*(\d+)\s*(.*)$/i);
                         
-                        if (matchFufu) {
+                        if (matchCustomAU) {
+                            // "64 동양풍 판타지 au" -> "OOC 64 (동양풍 판타지 AU)"
+                            let num = matchCustomAU[1];
+                            let sub = matchCustomAU[2].trim();
+                            mainText = `<span class="rl-ooc">OOC ${num}</span> <span class="rl-paren">(${sub} AU)</span>`;
+                            
+                        } else if (matchFufu) {
+                            // "夫婦 2 ♡ OOC 8" 등 있는 그대로 파싱
                             let num1 = matchFufu[1];
                             let hasOOC = matchFufu[2];
                             let num2 = matchFufu[3];
                             let sub = matchFufu[4].trim();
                             
-                            // 숫자가 앞이든 뒤든 하나라도 있으면 추출
-                            let num = num1 || num2 || '';
-                            
-                            let rebuilt = '';
-                            if (hasOOC) {
-                                // 夫婦4♡ OOC ➡️ ❤︎4 OOC
-                                rebuilt = `<span class="rl-ooc">❤︎${num ? num + ' ' : ''}OOC</span>`;
-                            } else {
-                                // 夫婦4♡, 夫婦♡ 4 ➡️ 夫婦 4 ♡
-                                rebuilt = `<span class="rl-ooc">夫婦 ${num ? num + ' ' : ''}♡</span>`;
-                            }
+                            let rebuilt = `<span class="rl-ooc">夫婦`;
+                            if(num1) rebuilt += ` ${num1}`;
+                            rebuilt += ` ♡`;
+                            if(hasOOC) rebuilt += ` OOC`;
+                            if(num2) rebuilt += ` ${num2}`;
+                            rebuilt += `</span>`;
 
-                            // 괄호가 쳐져있다면 깔끔하게 지우고 형광펜 처리
                             sub = sub.replace(/^\((.*?)\)$/, '$1').trim();
                             if (sub) {
                                 rebuilt += ` <span class="rl-paren">${sub}</span>`;
@@ -344,12 +371,10 @@
                             mainText = rebuilt;
                             
                         } else if (matchOOC) {
-                            // 일반적인 OOC 4 (단편) 등의 처리
                             let num = matchOOC[1];
                             let sub = matchOOC[2].trim();
                             
                             sub = sub.replace(/^\((.*?)\)$/, '$1').trim();
-
                             let rebuilt = `<span class="rl-ooc">OOC ${num}</span>`;
                             if (sub) {
                                 rebuilt += ` <span class="rl-paren">${sub}</span>`;
@@ -357,14 +382,13 @@
                             mainText = rebuilt;
                             
                         } else {
-                            // 숫자가 없는 특이 케이스의 괄호 처리 (ex: (학생 AU))
                             mainText = mainText.replace(/\((.*?)\)/g, '<span class="rl-paren">$1</span>');
                         }
 
-                        // 뽑아두었던 (完, 休) 태그 맨 뒤로 원상복구
                         mainText += statusHtml;
 
                         parsedData.push({
+                            originalIndex: parsedData.length, // 정렬 보조를 위한 인덱스 추가
                             fullDate: fullDate,     
                             monthDate: monthDate,   
                             category: category,
@@ -375,7 +399,9 @@
                     }
                 });
 
-                monthsSet.forEach(m => {
+                // 월별 옵션 세팅 (최신순 정렬에 맞추어 역순 정렬 권장)
+                const sortedMonths = Array.from(monthsSet).sort().reverse();
+                sortedMonths.forEach(m => {
                     const opt = document.createElement('option');
                     opt.value = m;
                     opt.textContent = m;
@@ -397,7 +423,24 @@
                 let renderedMonth = null;
                 let count = 0;
 
-                parsedData.forEach(item => {
+                // [추가됨] 정렬 처리 배열 복사본 생성 및 정렬
+                let displayData = [...parsedData];
+                
+                if (isSortDesc) {
+                    // 최신순 (날짜 내림차순, 같은 날짜일 경우 원본 역순)
+                    displayData.sort((a, b) => {
+                        if (a.fullDate !== b.fullDate) return a.fullDate < b.fullDate ? 1 : -1;
+                        return b.originalIndex - a.originalIndex;
+                    });
+                } else {
+                    // 과거순 (날짜 오름차순, 같은 날짜일 경우 원본 순)
+                    displayData.sort((a, b) => {
+                        if (a.fullDate !== b.fullDate) return a.fullDate > b.fullDate ? 1 : -1;
+                        return a.originalIndex - b.originalIndex;
+                    });
+                }
+
+                displayData.forEach(item => {
                     if (currentFilter !== 'ALL' && item.category !== currentFilter) return;
                     if (currentMonth !== 'ALL' && item.monthDate !== currentMonth) return;
                     
@@ -445,6 +488,23 @@
                     container.innerHTML = '<div style="text-align:center; padding: 40px; color: #795d4d; font-size:13px;">일치하는 로그가 없습니다.</div>';
                 }
             }
+
+            // [추가됨] 정렬 버튼 이벤트 리스너
+            const sortBtn = document.getElementById('rl-sort-btn');
+            const sortIcon = document.getElementById('rl-sort-icon');
+            const sortText = document.getElementById('rl-sort-text');
+
+            sortBtn.addEventListener('click', () => {
+                isSortDesc = !isSortDesc; // 상태 토글
+                if (isSortDesc) {
+                    sortIcon.className = 'xi-sort-desc';
+                    sortText.textContent = '최신순';
+                } else {
+                    sortIcon.className = 'xi-sort-asc';
+                    sortText.textContent = '과거순';
+                }
+                renderList();
+            });
 
             const filterBtns = document.querySelectorAll('.rl-filter-btn');
             filterBtns.forEach(btn => {

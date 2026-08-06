@@ -151,7 +151,7 @@
         
         .rl-primary { font-size: 14.5px; line-height: 1.6; word-break: keep-all; display: flex; align-items: center; flex-wrap: wrap; gap: 4px;}
         
-        /* 3. OOC 텍스트 (이모지 🩷 포함) */
+        /* 3. OOC 텍스트 (이모지 ❤︎ 포함) */
         .rl-ooc { 
             color: #4a3224; 
             font-size: 14.5px; 
@@ -329,8 +329,8 @@
                             
                             let rebuilt = '';
                             if (hasOOC) {
-                                // 夫婦4♡ OOC ➡️ 🩷4 OOC
-                                rebuilt = `<span class="rl-ooc">🩷${num ? num + ' ' : ''}OOC</span>`;
+                                // 夫婦4♡ OOC ➡️ ❤︎4 OOC
+                                rebuilt = `<span class="rl-ooc">❤︎${num ? num + ' ' : ''}OOC</span>`;
                             } else {
                                 // 夫婦4♡, 夫婦♡ 4 ➡️ 夫婦 4 ♡
                                 rebuilt = `<span class="rl-ooc">夫婦 ${num ? num + ' ' : ''}♡</span>`;
@@ -402,7 +402,7 @@
                     if (currentMonth !== 'ALL' && item.monthDate !== currentMonth) return;
                     
                     if (keyword) {
-                        let target = (item.fullDate + item.rawSearch).toLowerCase().replace(/[\s\.\(\)\:♡🩷]/g, '');
+                        let target = (item.fullDate + item.rawSearch).toLowerCase().replace(/[\s\.\(\)\:♡❤︎]/g, '');
                         let targetNoOOC = target.replace(/ooc/g, '').replace(/夫婦/g, ''); 
                         
                         if (!target.includes(keyword) && !targetNoOOC.includes(keyword)) {

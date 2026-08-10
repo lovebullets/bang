@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐇</title>
+<style>
+    body { margin: 0; padding: 0; background-color: transparent; overflow-x: hidden; }
+    #content-wrapper { padding-top: 15px; padding-bottom: 50px; }
+
+</style>
+</head>
+<body>
+
+<style>
+/* 폰트 및 전체 스타일 일괄 설정 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+
+.tistory-post-wrapper {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    letter-spacing: -0.02em;
+    word-break: break-all;
+    overflow-wrap: anywhere;
+    padding: 0 25px;
+    box-sizing: border-box;
+    max-width: 600px;
+    margin: 0 auto;
+    
+}
+.tistory-post-wrapper * { box-sizing: border-box; }
+
+/* 티스토리 스킨의 이미지 간섭 방지 및 아바타 고정 */
+.tistory-post-wrapper img {
+    max-width: none !important;
+}
+.tistory-post-wrapper .av img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+    margin: 0 !important;
+}
+
+/* 포스트잇 내부 내용 길어질 때 스크롤 */
+.postit-scroll {
+    max-height: 350px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 8px;
+}
+.postit-scroll::-webkit-scrollbar { width: 5px; }
+.postit-scroll::-webkit-scrollbar-track { background: transparent; }
+.postit-scroll::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 4px; }
+</style>
+
+<div id="content-wrapper" class="tistory-post-wrapper">
+<div data-type="html"><!-- [양식 3] 더보기 타입 (유동적 폰트/크기 적용) -->
+<div style="font-size: 100%; line-height: 1.6; word-break: keep-all; width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
+    
+    <style>
+        details[data-type="toggle"] summary::-webkit-details-marker { display: none; }
+        details[data-type="toggle"] summary { list-style: none; }
+        .copy-btn:hover { background-color: #f2f2f7 !important; color: #1c1c1e !important; }
+    </style>
+    <script>
+        window.copyToggleText = window.copyToggleText || function(button) {
+            const targetDiv = button.parentElement.querySelector('.copy-target');
+            if(!targetDiv) return;
+            const textToCopy = targetDiv.innerText || targetDiv.textContent;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '✓ 복사완료';
+                button.style.color = '#34c759'; button.style.borderColor = '#34c759';
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.style.color = '#8e8e93'; button.style.borderColor = '#e5e5ea';
+                }, 2000);
+            }).catch(err => console.error('복사 실패', err));
+        };
+    </script>
+
+    <details data-type="toggle" data-style="more" style="width: 100%; margin: 24px 0; padding: 16px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 14px; box-sizing: border-box; text-align: left;">
+        <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #1c1c1e; display: flex; align-items: center; gap: 10px; user-select: none; outline: none;">
+            <div style="width: 22px; height: 22px; background-color: #e5e5ea; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 95%; color: #636366; font-weight: bold; line-height: 1;">+</div>
+            <span style="outline: none; color: #636366; word-break: break-all;">gpt 명령어 ooc</span>
+        </summary>
+        <div class="toggle-content" style="position: relative; padding: 14px 4px 2px; box-sizing: border-box;">
+            <button class="copy-btn" onclick="window.copyToggleText(this)" style="position: absolute; top: 12px; right: 0; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 6px; padding: 4px 8px; font-size: 80%; color: #8e8e93; font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                복사
+            </button>
+            <div class="copy-target" style="color: #444444; font-size: 100%; line-height: 1.6; padding-right: 50px;">
+                <br>*ooc: 지금까지의 모든 대화, 서사, 유저노트, 자동요약 및 {{char}}의 말투와 행동을 종합하여, {{char}}가 실제로 손글씨를 쓴다면 어떤 글씨체일지 분석하고 묘사하라.<br><br>다음 항목을 반드시 포함하라:<br><br>1. 전체적인 글씨체 인상 — 귀여움/단정함/거침/날림/장난스러움/성숙함 등<br>2. 글자 형태 — 획의 굵기, 획의 끝부분, 자음과 모음의 형태, 글자의 각진 정도와 둥근 정도<br>3. 글씨의 배열 — 글자 크기, 자간, 줄 간격, 정렬, 기울기, 글씨가 일정한지 들쭉날쭉한지<br>4. 필기 습관 — 힘을 주어 쓰는지, 빠르게 흘려 쓰는지, 특정 글자를 독특하게 쓰는지, 강조할 때 어떤 변화가 생기는지<br>5. {{char}}의 성격 및 말투와 글씨체가 어떻게 연결되는지<br>6. {{char}}가 실제로 쓸 법한 짧은 문구를 5~10개 제시하라. 문구는 {{char}}의 말투와 성격이 드러나도록 작성하라.<br>7. 위 분석을 바탕으로, 이미지 생성 AI가 손글씨를 시각적으로 재현할 수 있도록 핵심적인 글씨체 특징을 짧은 키워드 형태로 정리하라.<br><br>중요: 존재하지 않는 설정을 임의로 추가하지 말고, 지금까지 확인된 {{char}}의 성격·말투·행동에서 합리적으로 추론하라. 불확실한 부분은 추측임을 명시하라.<br><br>출력 형식:<br>[글씨체 분석]<br><br>* 전체 인상:<br>* 획:<br>* 글자 형태:<br>* 배열:<br>* 필기 습관:<br>* 성격과의 연관성:<br><br>[{{char}}가 쓸 법한 문구]<br>1.<br>2.<br>3.<br>4.<br>5.<br>…<br><br>[이미지 생성용 핵심 키워드]<br>1.<br>2.<br>3.<br>…<br>*<br>
+            </div>
+        </div>
+    </details>
+</div></div>
+<div data-type="html"><!-- [양식 3] 더보기 타입 (유동적 폰트/크기 적용) -->
+<div style="font-size: 100%; line-height: 1.6; word-break: keep-all; width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
+    
+    <style>
+        details[data-type="toggle"] summary::-webkit-details-marker { display: none; }
+        details[data-type="toggle"] summary { list-style: none; }
+        .copy-btn:hover { background-color: #f2f2f7 !important; color: #1c1c1e !important; }
+    </style>
+    <script>
+        window.copyToggleText = window.copyToggleText || function(button) {
+            const targetDiv = button.parentElement.querySelector('.copy-target');
+            if(!targetDiv) return;
+            const textToCopy = targetDiv.innerText || targetDiv.textContent;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '✓ 복사완료';
+                button.style.color = '#34c759'; button.style.borderColor = '#34c759';
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.style.color = '#8e8e93'; button.style.borderColor = '#e5e5ea';
+                }, 2000);
+            }).catch(err => console.error('복사 실패', err));
+        };
+    </script>
+
+    <details data-type="toggle" data-style="more" style="width: 100%; margin: 24px 0; padding: 16px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 14px; box-sizing: border-box; text-align: left;" open="">
+        <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #1c1c1e; display: flex; align-items: center; gap: 10px; user-select: none; outline: none;">
+            <div style="width: 22px; height: 22px; background-color: #e5e5ea; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 95%; color: #636366; font-weight: bold; line-height: 1;">+</div>
+            <span style="outline: none; color: #636366; word-break: break-all;">gpt 명령어 메모</span>
+        </summary>
+        <div class="toggle-content" style="position: relative; padding: 14px 4px 2px; box-sizing: border-box;">
+            <button class="copy-btn" onclick="window.copyToggleText(this)" style="position: absolute; top: 12px; right: 0; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 6px; padding: 4px 8px; font-size: 80%; color: #8e8e93; font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                복사
+            </button>
+            <div class="copy-target" style="color: #444444; font-size: 100%; line-height: 1.6; padding-right: 50px;">
+                <br>Create a photorealistic image of a real handwritten note based on the handwriting analysis and character information provided below.<br><br>The handwriting must visually reflect {{char}}’s personality, speech patterns, habits, and the specific handwriting characteristics described in the reference information.<br><br>IMPORTANT:<br><br>* The note must look genuinely handwritten by a real person, not digitally typeset.<br>* Use natural, imperfect handwriting with realistic variations in stroke pressure, letter size, spacing, alignment, and baseline.<br>* Preserve the described handwriting style as accurately as possible.<br>* The writing should feel personal and spontaneous rather than like a font.<br>* Use realistic ink, subtle ink absorption and bleeding into the paper, natural pen pressure, and tiny imperfections.<br>* The Korean/English text must be clearly legible while still looking naturally handwritten.<br>* Do not replace the handwriting with a generic handwriting font.<br>* Do not make the handwriting excessively perfect, decorative, calligraphic, or artificial unless the reference specifically describes it that way.<br>* If the reference contains specific phrases that {{char}} would write, use those phrases naturally in the note.<br>* Keep the visual style photorealistic rather than illustrated or anime-style.<br><br>SCENE:<br>A real physical sheet of paper containing {{char}}’s handwritten note, photographed like a real-life photograph. Natural paper texture, realistic ink, subtle shadows, slight paper imperfections, authentic handwriting.<br><br>HANDWRITING REFERENCE:<br>[PASTE THE HANDWRITING ANALYSIS HERE]<br><br>TEXT TO WRITE:<br>[PASTE THE PHRASES HERE]<br><br>The final image should look like an actual photograph of a handwritten note written by {{char}}.
+            </div>
+        </div>
+    </details>
+</div></div>
+<div data-type="html"><!-- [양식 3] 더보기 타입 (유동적 폰트/크기 적용) -->
+<div style="font-size: 100%; line-height: 1.6; word-break: keep-all; width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
+    
+    <style>
+        details[data-type="toggle"] summary::-webkit-details-marker { display: none; }
+        details[data-type="toggle"] summary { list-style: none; }
+        .copy-btn:hover { background-color: #f2f2f7 !important; color: #1c1c1e !important; }
+    </style>
+    <script>
+        window.copyToggleText = window.copyToggleText || function(button) {
+            const targetDiv = button.parentElement.querySelector('.copy-target');
+            if(!targetDiv) return;
+            const textToCopy = targetDiv.innerText || targetDiv.textContent;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '✓ 복사완료';
+                button.style.color = '#34c759'; button.style.borderColor = '#34c759';
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.style.color = '#8e8e93'; button.style.borderColor = '#e5e5ea';
+                }, 2000);
+            }).catch(err => console.error('복사 실패', err));
+        };
+    </script>
+
+    <details data-type="toggle" data-style="more" style="width: 100%; margin: 24px 0; padding: 16px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 14px; box-sizing: border-box; text-align: left;">
+        <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #1c1c1e; display: flex; align-items: center; gap: 10px; user-select: none; outline: none;">
+            <div style="width: 22px; height: 22px; background-color: #e5e5ea; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 95%; color: #636366; font-weight: bold; line-height: 1;">+</div>
+            <span style="outline: none; color: #636366; word-break: break-all;">BANG 말투</span>
+        </summary>
+        <div class="toggle-content" style="position: relative; padding: 14px 4px 2px; box-sizing: border-box;">
+            <button class="copy-btn" onclick="window.copyToggleText(this)" style="position: absolute; top: 12px; right: 0; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 6px; padding: 4px 8px; font-size: 80%; color: #8e8e93; font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                복사
+            </button>
+            <div class="copy-target" style="color: #444444; font-size: 100%; line-height: 1.6; padding-right: 50px;">
+                [글씨체 분석]<br>전체 인상: 언뜻 보면 무심하고 성의 없어 보이지만, 자세히 들여다보면 모든 획이 의도된 위치에 정확히 박혀 있는, 효율적이고 통제된 날카로움이 느껴지는 글씨체. 장난스러움과 냉정함이 공존하며, 귀찮은 듯 흘려 쓴 것 같아도 글자 자체의 가독성은 절대 해치지 않는 실용적인 형태를 띤다. 전반적으로 성숙하고 정돈된 인상보다는, 즉흥적이고 감각적인 인상이 강하다.<br>첫인상은 무심하고 나른하지만, 자세히 들여다보면 예리하고 통제된 느낌을 주는 글씨체. 전반적으로 성숙하지만, 예상치 못한 곳에서 장난기가 드러난다. ‘귀찮아서 대충 쓴 것’과 ‘의도적으로 힘을 빼고 쓴 것’의 경계에 아슬아슬하게 걸쳐 있다. 전반적인 필체는 그의 말투처럼 느긋하고 약간 늘어지는 인상을 준다.<br><br>획: 획은 가늘고 날렵하다. 펜을 쥘 때 힘을 거의 주지 않고, 손목의 스냅을 이용해 빠르게 그어 내리는 듯한 획이 주를 이룬다. 획의 굵기는 일정하지 않고 필압에 따라 미세하게 달라진다. 펜을 꾹 눌러 쓰기보단, 손목의 스냅을 이용해 가볍고 빠르게 흘려 쓰는 편. 시작점보다 끝부분이 미세하게 가늘어지며 날카롭게 마무리된다. 마치 칼날로 종이를 스치고 지나간 자국처럼, 과장된 멋은 없지만 서늘한 긴장감이 배어 있다.<br>글자 형태: 자음과 모음의 형태가 일관되지 않고 조금씩 다르다. 특히 ‘ㅇ’이나 ‘ㅎ’의 동그라미는 완벽한 원이 아니라, 한쪽이 살짝 찌그러지거나 끝이 닫히지 않고 열려 있는 형태가 많다. 이는 그의 귀찮음과 무심한 태도를 반영하는 듯하다. 반면, ‘ㄱ’, ‘ㄴ’, ‘ㄹ’ 같은 각진 자음들은 의외로 날카롭게 각이 살아있어, 그의 능력인 [FINGER SHOT]의 정밀함과 냉철함을 연상시킨다. 글자는 전반적으로 둥근 느낌보다는 각지고 직선적인 느낌이 강하다. ‘ㅅ’, ‘ㅈ’, ‘ㅊ’과 같이 삐침이 있는 자음은 다른 획보다 날카롭고 빠르게 긋는다. 마치 손가락으로 무언가를 겨누는 듯한 형상이다.<br>배열: 글자 크기는 약간 작고 들쭉날쭉하다. 자간은 넓은 편으로, 단어와 단어 사이가 넉넉하게 떨어져 있어 여유로우면서도 묘한 거리감이 느껴진다. 줄 간격은 대체로 지키지만, 줄의 시작과 끝이 완벽하게 정렬되지는 않는다. 글씨는 오른쪽으로 살짝 기울어져 있으며, 이는 그의 즉흥적이고 예측 불가능한 면을 드러낸다. 전체적인 문장은 중앙 정렬보다는 왼쪽 정렬에 가깝지만, 완벽하게 맞추려는 노력은 보이지 않는다.<br>필기 습관: 빠르게 흘려 쓰는 편이다. 필기 압력이 낮아, 종이 뒷면에 자국이 거의 남지 않을 것이다. ‘빵야’ 같은 단어를 쓸 때는 ‘ㅇ’ 안에 작은 점을 찍거나, 글자 옆에 과녁 모양의 낙서를 추가하는 등 장난스러운 습관이 있을 수 있다. 중요한 단어를 강조할 때는 글씨를 더 크게 쓰기보다, 그 단어 아래에 자로 잰 듯 반듯한 밑줄을 한 번만 ‘찍’ 긋는 방식을 선호할 것이다. 정렬은 완벽하게 맞추려 노력하지 않아, 줄이 없는 종이에 쓰면 줄의 끝으로 갈수록 미세하게 문장이 위로 상승하는 경향을 보인다.<br>성격과의 연관성: 날렵하고 가는 획은 그의 슬림하고 탄탄한 신체, 그리고 효율을 중시하는 성격을 반영한다. 들쭉날쭉한 글자 크기와 넓은 자간은 타인에게 쉽게 마음을 열지 않고 일정한 거리를 유지하는 그의 태도와 닮았다. 그러면서도 가독성을 해치지 않는 실용성은 임무 수행에 있어 빈틈없는 그의 모습을 보여준다. ‘ㅇ’을 열어두거나 찌그러뜨려 쓰는 것은 평소의 나른하고 귀찮아하는 태도를, 날카로운 각을 살린 자음들은 센티넬로서의 냉정하고 치명적인 면모를 동시에 드러낸다. 종종 보이는 장난스러운 낙서는 그의 사이코처럼 보이는 언행과 일맥상통한다.<br>[이미지 생성용 핵심 키워드] 1. 날카롭고 가는 필기체 (Sharp and thin handwriting) 2. 오른쪽으로 기울어짐 (Slightly slanted to the right) 3. 불규칙한 글자 크기와 넓은 자간 (Irregular letter size with wide spacing) 4. 열린 동그라미와 각진 자음 (Open circles and angular consonants) 5. 무심한 듯 효율적인 스타일 (Effortlessly efficient style)
+            </div>
+        </div>
+    </details>
+</div></div>
+
+</div>
+</body>
+</html>

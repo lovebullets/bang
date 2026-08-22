@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>생성된 문서</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 40px 10px; background-color: #ffffff; overflow-x: hidden; }
+    </style>
+</head>
+<body>
+<div style="width: 393px; height: 852px; margin: 0 auto; padding: 20px 10px; box-sizing: border-box; border-radius: 45px; overflow: hidden; position: relative; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Apple SD Gothic Neo', sans-serif; box-shadow: 0 10px 30px rgba(0,0,0,0.08); background-color: #000;">
+
+    <div style="position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 120px; height: 36px; background-color: #000; border-radius: 18px; z-index: 10; box-shadow: inset 0 0 2px rgba(255,255,255,0.1); display: flex; align-items: center; padding-left: 14px; box-sizing: border-box; color: white;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" opacity="0.85">
+            <path d="M12 2C9.24 2 7 4.24 7 7V10H6C4.9 10 4 12V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V12C20 10.9 19.1 10 18 10H17V7C17 4.24 14.76 2 12 2ZM9 7C9 5.34 10.34 4 12 4C13.66 4 15 5.34 15 7V10H9V7ZM12 18C10.9 18 10 17.1 10 16C10 14.9 10.9 14 12 14C13.1 14 14 14.9 14 16C14 17.1 13.1 18 12 18Z"/>
+        </svg>
+    </div>
+
+    <div style="position: absolute; top: 22px; right: 28px; z-index: 10; color: white; opacity: 0.9; display: flex; align-items: center; gap: 6px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="18" height="12" rx="2" ry="2"></rect><line x1="23" y1="13" x2="23" y2="11"></line></svg>
+    </div>
+
+    <style>
+        .message-bubble {
+            background: rgba(255, 255, 255, 0.45); 
+            backdrop-filter: blur(30px) saturate(200%); 
+            -webkit-backdrop-filter: blur(30px) saturate(200%);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            display: flex; 
+            align-items: flex-start; 
+            gap: 12px; 
+            
+            /* 스태킹 애니메이션 */
+            opacity: 0;
+            transform: translateY(20px) scale(0.98);
+            max-height: 0;
+            padding: 0 16px;
+            margin-top: 0;
+            overflow: hidden;
+            border: 0.5px solid rgba(255, 255, 255, 0);
+            transition: all 0.75s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        
+        .message-bubble.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            max-height: 150px;
+            padding: 16px;
+            margin-top: 8px;
+            border: 0.5px solid rgba(255, 255, 255, 0.4);
+        }
+
+        /* 아이폰 시스템 텍스트 스타일 */
+        .sender-name {
+            font-size: 15px; 
+            font-weight: 600; 
+            letter-spacing: -0.2px;
+            color: #111;
+        }
+        .time-stamp {
+            font-size: 13px; 
+            font-weight: 400; 
+            color: #8a8a8e;
+            transition: opacity 0.4s ease;
+        }
+        .message-text {
+            font-size: 15px; 
+            color: #1c1c1e; 
+            line-height: 1.4; 
+            font-weight: 400; 
+            letter-spacing: -0.15px;
+            margin-top: 2px;
+        }
+    </style>
+
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: url('https://i.ibb.co/dsb4MWZx/IMG-3039.png') no-repeat center center / cover; filter: blur(2px) brightness(0.85);"></div>
+
+    <div style="position: relative; z-index: 2; padding-top: 75px; display: flex; flex-direction: column; align-items: center; color: white;">
+        
+        <div style="font-size: 16px; font-weight: 600; margin-bottom: 2px; opacity: 0.95;">
+            <span id="current-date" style="letter-spacing: 0px;">--월 --일 -요일</span>
+        </div>
+        
+        <div style="position: relative; width: 100%; display: flex; justify-content: center;">
+            <div id="current-time" style="font-family: 'Greta Display Std', serif; font-size: 96px; font-weight: 800; letter-spacing: -2.5px; line-height: 1; opacity: 0.9; color: rgba(255, 255, 255, 0.85); text-shadow: 0 0 25px rgba(0,0,0,0.2); margin-top: -2px;">
+                00:00
+            </div>
+            
+            <div style="position: absolute; bottom: -60px; right: 24px; display: inline-flex; align-items: center; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(20px) saturate(150%); -webkit-backdrop-filter: blur(20px) saturate(150%); border: 0.5px solid rgba(255, 255, 255, 0.3); padding: 8px 14px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <img src="https://i.ibb.co/PXRDjwG/1491-2.gif" alt="Heart" style="width: 18px; height: 18px; border-radius: 50%;">
+                <span id="d-day-counter-compact" style="font-size: 15px; font-weight: 600; color: #fff; margin-left: 6px; letter-spacing: -0.3px;">D+--</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="notification-stack" style="position: absolute; bottom: 45px; left: 0; width: 100%; padding: 0 16px; box-sizing: border-box; z-index: 3; display: flex; flex-direction: column; justify-content: flex-end;">
+
+        <div id="notif-1" class="message-bubble">
+            <div style="width: 44px; height: 44px; border-radius: 10px; overflow: hidden; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <img src="https://i.ibb.co/5x4z4wp9/IMG-2807.jpg" alt="Profile" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div style="flex-grow: 1;">
+                <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                    <span class="sender-name">내 여보 ♡</span>
+                    <span id="time-1" class="time-stamp">방금 전</span>
+                </div>
+                <div class="message-text">
+                    자요?
+                </div>
+            </div>
+        </div>
+
+        <div id="notif-2" class="message-bubble">
+            <div style="width: 44px; height: 44px; border-radius: 10px; overflow: hidden; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <img src="https://i.ibb.co/5x4z4wp9/IMG-2807.jpg" alt="Profile" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div style="flex-grow: 1;">
+                <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                    <span class="sender-name">내 여보 ♡</span>
+                    <span id="time-2" class="time-stamp">방금 전</span>
+                </div>
+                <div class="message-text">
+                    ...안 자면 잠깐만 봐주라. 악몽 꿨어요. 당신이 없어지는 꿈.
+                </div>
+            </div>
+        </div>
+
+        <div id="notif-3" class="message-bubble">
+            <div style="width: 44px; height: 44px; border-radius: 10px; overflow: hidden; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <img src="https://i.ibb.co/5x4z4wp9/IMG-2807.jpg" alt="Profile" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div style="flex-grow: 1;">
+                <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                    <span class="sender-name">내 여보 ♡</span>
+                    <span class="time-stamp">방금 전</span>
+                </div>
+                <div class="message-text">
+                    미안해요. 깨워서. 그냥... 목소리 듣고 싶어서 그랬어요. 다시 자요. 사랑해요.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div style="position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 134px; height: 5px; background: rgba(255,255,255,0.9); border-radius: 100px; z-index: 4;"></div>
+
+    <script>
+        function updateDateTime() {
+            const now = new Date();
+            const timeFormatter = new Intl.DateTimeFormat('ko-KR', { timeZone: 'Asia/Seoul', hour: '2-digit', minute: '2-digit', hour12: false });
+            const dateFormatter = new Intl.DateTimeFormat('ko-KR', { timeZone: 'Asia/Seoul', month: 'long', day: 'numeric', weekday: 'long' });
+
+            document.getElementById('current-time').innerText = timeFormatter.format(now);
+            document.getElementById('current-date').innerText = dateFormatter.format(now);
+
+            const kstDateString = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit' }).format(now);
+            const [month, day, year] = kstDateString.split('/');
+            const todayKST = new Date(`${year}-${month}-${day}T00:00:00+09:00`);
+            const targetDate = new Date('2026-01-01T00:00:00+09:00');
+            const diffDays = Math.floor((todayKST - targetDate) / (1000 * 60 * 60 * 24));
+            
+            document.getElementById('d-day-counter-compact').innerText = `D+${diffDays >= 0 ? diffDays + 1 : diffDays}`;
+        }
+
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        window.addEventListener('load', () => {
+            const n1 = document.getElementById('notif-1');
+            const n2 = document.getElementById('notif-2');
+            const n3 = document.getElementById('notif-3');
+            
+            setTimeout(() => { n1.classList.add('show'); }, 1000);
+            setTimeout(() => { n2.classList.add('show'); }, 3000);
+            setTimeout(() => { 
+                n3.classList.add('show'); 
+                
+                // 텍스트 변경 애니메이션
+                document.getElementById('time-1').style.opacity = '0';
+                document.getElementById('time-2').style.opacity = '0';
+                
+                setTimeout(() => {
+                    document.getElementById('time-1').innerText = '5분 전';
+                    document.getElementById('time-2').innerText = '5분 전';
+                    document.getElementById('time-1').style.opacity = '1';
+                    document.getElementById('time-2').style.opacity = '1';
+                }, 400); 
+            }, 7000);
+        });
+    </script>
+</div>
+</body>
+</html>

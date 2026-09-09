@@ -12,52 +12,19 @@
 </head>
 <body>
 
-<!-- [추가된 영역] 카드 스타일의 부드러운 팝업(라이트박스) 스크립트 -->
-<script>
-    window.openImagePopup = window.openImagePopup || function(src) {
-        let popup = document.getElementById('tistory-image-popup');
-        if (!popup) {
-            popup = document.createElement('div');
-            popup.id = 'tistory-image-popup';
-            // Apple iCloud 스타일의 부드러운 블러 배경
-            popup.style.cssText = 'display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 999999; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; cursor: pointer;';
-            
-            const img = document.createElement('img');
-            img.id = 'tistory-popup-img';
-            // 원본 카드처럼 보이도록 하얀 배경(padding)과 모서리 둥글기, 그림자 추가
-            img.style.cssText = 'max-width: 90vw; max-height: 85vh; object-fit: contain; background-color: #ffffff; padding: 12px; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); transform: scale(0.95); transition: transform 0.3s ease; box-sizing: border-box;';
-            
-            popup.appendChild(img);
-            document.body.appendChild(popup);
-
-            popup.onclick = function() {
-                popup.style.opacity = '0';
-                img.style.transform = 'scale(0.95)';
-                setTimeout(() => popup.style.display = 'none', 300);
-            };
-        }
-        
-        const img = document.getElementById('tistory-popup-img');
-        img.src = src;
-        popup.style.display = 'flex';
-        
-        setTimeout(() => {
-            popup.style.opacity = '1';
-            img.style.transform = 'scale(1)';
-        }, 10);
-    };
-</script>
-
 <style>
 /* 폰트 및 전체 스타일 일괄 설정 */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600&display=swap');
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 
 .tistory-post-wrapper {
     font-family: 'Pretendard', sans-serif;
     font-size: 14px;
     line-height: 1.6;
-    word-break: keep-all;
+    letter-spacing: -0.02em;
+    word-break: break-all;
+    overflow-wrap: anywhere;
     padding: 0 25px;
     box-sizing: border-box;
     max-width: 600px;
@@ -65,11 +32,19 @@
     
 }
 .tistory-post-wrapper * { box-sizing: border-box; }
-/*나레이션 간격*/
-[data-type="narration"] {
-    margin-bottom: 3px !important;
-    word-break: break-all !important;
+
+/* 티스토리 스킨의 이미지 간섭 방지 및 아바타 고정 */
+.tistory-post-wrapper img {
+    max-width: none !important;
 }
+.tistory-post-wrapper .av img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+    margin: 0 !important;
+}
+
 /* 포스트잇 내부 내용 길어질 때 스크롤 */
 .postit-scroll {
     max-height: 350px;
@@ -83,35 +58,13 @@
 </style>
 
 <div id="content-wrapper" class="tistory-post-wrapper">
-<div data-type="title" style="width: 100%; margin: 15px 0 0; padding: 10px 0; box-sizing: border-box; font-size: 18pt; font-weight: bold; text-align: left; color: #1c1c1e; word-break: keep-all;">
-                        PROMPT
-</div>
-<div data-type="polaroid" style="margin: 45px auto 25px; max-width: 380px; background: #FFFFFF; border: 1px solid #E5E5EA; box-shadow: 0 4px 12px rgba(0,0,0,0.04); padding: 16px 16px 24px 16px; border-radius: 1px; display: flex; flex-direction: column; gap: 14px; transform: rotate(1.5deg); position: relative;">
-    <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-2deg); width: 80px; height: 20px; background: rgba(235, 235, 240, 0.7); border-left: 1px dashed rgba(0,0,0,0.04); border-right: 1px dashed rgba(0,0,0,0.04); pointer-events: none;"></div>
-    <div style="width: 100%; overflow: hidden; background-color: #F2F2F7; display: flex; justify-content: center; align-items: center;">
-        <img src="https://i.ibb.co/5h78LNnz/IMG-2635.jpg" style="width: 100%; height: auto; display: block; object-fit: contain;" alt="Polaroid Photo">
-    </div>
-    <div style="display: flex; flex-direction: column; gap: 5px; padding: 2px 4px 0;">
-        <div style="font-size: 11px; color: #AFAFB4; font-weight: 600; letter-spacing: 0.02em;">2026.01.02 ~ ing</div>
-        <div style="font-size: 13px; color: #1C1C1E; line-height: 1.5; font-style: italic; word-break: break-all;">BANG ♡ YUI</div>
-    </div>
-</div>
-<div data-type="dday" style="width: 100%; margin: 20px 0; text-align: left; padding: 0; box-sizing: border-box;">
-    <span style="font-size: 13px; color: #999999; font-weight: 600;">       편하게 수정하셔도 괜찮습니다.
-<span style="color: rgb(208, 73, 120); background-color: rgb(253, 237, 244); padding: 0px 2px; border-radius: 3px;"> 0.7::mature female::</span>, <span style="color: rgb(14, 134, 94); background-color: rgb(225, 249, 241); padding: 0px 2px; border-radius: 3px;">1.0::mature male </span>&lt;작태에 따라서 성숙한 얼굴 수치 조절 해주세요!</span>
-</div>
-<div data-type="narration" style="width: 100%; margin: 15px 0 0; padding: 5px 0; box-sizing: border-box; color: #2c2c2e; font-style: normal; word-break: keep-all; text-align: left; line-height: 1.6;">
-                            <b><br>    <span style="font-size: 14px;"><span style="font-size: 15px;"><span style="font-size: 16px;"><span style="font-size: 17px;">유이</span></span></span></span><br></b>
-</div>
-<div data-type="image" style="width: 100%; margin: 15px 0; text-align: center; box-sizing: border-box;">
-    <img src="https://i.ibb.co/RGQdwsy8/IMG-1907.jpg" style="max-width: 100%; border-radius: 8px;" alt="image">
-</div>
-<div data-type="html">
-
-
-
-
-<!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
+<div data-type="title" style="width: 100%; margin: 0px 0 0; padding: 10px 0; box-sizing: border-box; font-size: 18pt; font-weight: bold; text-align: left; color: #1c1c1e; word-break: inherit;">PROMPT</div>
+<div data-type="polaroid" style="margin: 45px auto 25px; max-width: 380px; background: #FFFFFF; border: 1px solid #E5E5EA; box-shadow: 0 4px 12px rgba(0,0,0,0.04); padding: 16px 16px 24px 16px; border-radius: 1px; display: flex; flex-direction: column; gap: 14px; transform: rotate(1.5deg); position: relative;"><div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-2deg); width: 80px; height: 20px; background: rgba(235, 235, 240, 0.7); border-left: 1px dashed rgba(0,0,0,0.04); border-right: 1px dashed rgba(0,0,0,0.04); pointer-events: none;"></div><div style="width: 100%; overflow: hidden; background-color: #F2F2F7; display: flex; justify-content: center; align-items: center;"><img src="https://i.ibb.co/5h78LNnz/IMG-2635.jpg" style="width: 100%; height: auto; display: block; object-fit: contain;" alt="Polaroid Photo"></div><div style="display: flex; flex-direction: column; gap: 5px; padding: 2px 4px 0;"><div style="font-size: 11px; color: #AFAFB4; font-weight: 600; letter-spacing: 0.02em;">2026.01.02 ~ ing</div><div style="font-size: 13px; color: #1C1C1E; line-height: 1.5; font-style: italic; word-break: break-all;">BANG ♡ YUI</div></div></div>
+<div data-type="dday" style="width: 100%; margin: 20px 0; text-align: left; padding: 0; box-sizing: border-box;"><span style="font-size: 13px; color: #999999; font-weight: 600;"> 편하게 수정하셔도 괜찮습니다.
+ 0.7::mature female::, 1.0::mature male <작태에 따라서 성숙한 얼굴 수치 조절 해주세요!</span></div>
+<div data-type="narration" style="width: 100%; margin: 16px 0 0; padding: 5px 0; box-sizing: border-box; color: #2C2C2E; font-style: normal; word-break: inherit; text-align: left; line-height: inherit;">                            <b><br>    <span style="font-size: 14px;"><span style="font-size: 15px;"><span style="font-size: 16px;"><span style="font-size: 17px;">유이</span></span></span></span><br></b></div>
+<div data-type="image" style="width: 100%; margin: 15px 0; text-align: center; box-sizing: border-box;"><img src="https://i.ibb.co/RGQdwsy8/IMG-1907.jpg" style="max-width: 100%; border-radius: 8px;" alt="image"></div>
+<div data-type="html"><!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
 <div style="font-size: 100%; line-height: 1.6; word-break: keep-all; width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
     
     <style>
@@ -149,21 +102,12 @@
                 복사
             </button>
             <div class="copy-target" style="color: #444444; font-size: 100%; line-height: 1.6; padding-right: 50px;">
-                girl,<span style="color: rgb(208, 73, 120); background-color: rgb(253, 237, 244); padding: 0px 2px; border-radius: 3px;"> 0.7::mature female::</span>, 160cm, pretty, beautiful delicate girl, 1.5::shy face::, innocent, 0.4:: calm smile::, gentle,  dark brown eyes, loving eyes , lowered eyebrows, rosy cheeks, milky-white skin, long hair,  brown hair, side locks, swept bangs, soft hair, medium breast,-1:: earring ::,<br>highly detailed
+                girl,<span style="color: rgb(208, 73, 120); background-color: rgb(253, 237, 244); padding: 0px 2px; border-radius: 3px;"> 0.7::mature female::</span>, 160cm, pretty, beautiful delicate girl, 1.5::shy face::, innocent, 0.4:: calm smile::, gentle,  dark brown eyes, loving eyes , lowered eyebrows, rosy cheeks, pale skin, long hair,  brown hair, side locks, swept bangs, soft hair, medium breast,-1:: earring ::,<br>highly detailed
             </div>
         </div>
     </details>
-</div>
-
-</div>
-<div data-type="html">
-
-
-
-
-
-
-<!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
+</div></div>
+<div data-type="html"><!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
 <div style="font-size: 100%; line-height: 1.6; word-break: keep-all; width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
     
     <style>
@@ -205,23 +149,9 @@
             </div>
         </div>
     </details>
-</div>
-
-
-
-
-
-</div>
-<div data-type="divider" data-style="dots" style="width: 100%; margin: 30px 0; padding: 0; box-sizing: border-box; display: flex; justify-content: center; align-items: center;">
-    <div style="display: flex; gap: 16px; align-items: center; justify-content: center;"><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div></div>
-</div>
-<div data-type="html">
-
-
-
-
-
-<!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
+</div></div>
+<div data-type="divider" data-style="dots" style="width: 100%; margin: 30px 0; padding: 0; box-sizing: border-box; display: flex; justify-content: center; align-items: center;"><div style="display: flex; gap: 16px; align-items: center; justify-content: center;"><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div></div></div>
+<div data-type="html"><!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
 <div style="font-size: 100%; line-height: 1.6; word-break: keep-all; width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
     
     <style>
@@ -263,20 +193,8 @@
             </div>
         </div>
     </details>
-</div>
-
-
-
-
-
-</div>
-<div data-type="html">
-
-
-
-
-
-<!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
+</div></div>
+<div data-type="html"><!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
 <div style="font-size: 100%; line-height: 1.6; word-break: keep-all; width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
     
     <style>
@@ -318,23 +236,10 @@
             </div>
         </div>
     </details>
-</div>
-
-
-
-
-
-</div>
-<div data-type="divider" data-style="solid-gray" style="width: 100%; margin: 30px 0; padding: 0; box-sizing: border-box; display: flex; justify-content: center; align-items: center;">
-    <div style="width: 100%; height: 1px; background-color: #e5e5ea;"></div>
-</div>
-<div data-type="narration" style="width: 100%; margin: 15px 0 0; padding: 5px 0; box-sizing: border-box; color: #2c2c2e; font-style: normal; word-break: keep-all; text-align: left; line-height: 1.6;">
-                            <b><br>    <span style="font-size: 14px;"><span style="font-size: 15px;"><span style="font-size: 16px;"><span style="font-size: 17px;">뱅</span></span></span></span><br></b>
-</div>
-<div data-type="html">
-
-
-<!-- 1행 3열 이미지 그리드 (여백/라운드 없음, 호버 효과 및 팝업 기능 유지) -->
+</div></div>
+<div data-type="divider" data-style="solid-gray" style="width: 100%; margin: 30px 0; padding: 0; box-sizing: border-box; display: flex; justify-content: center; align-items: center;"><div style="width: 100%; height: 1px; background-color: #e5e5ea;"></div></div>
+<div data-type="narration" style="width: 100%; margin: 16px 0 0; padding: 5px 0; box-sizing: border-box; color: #2C2C2E; font-style: normal; word-break: inherit; text-align: left; line-height: inherit;">                            <b><br>    <span style="font-size: 14px;"><span style="font-size: 15px;"><span style="font-size: 16px;"><span style="font-size: 17px;">뱅</span></span></span></span><br></b></div>
+<div data-type="html"><!-- 1행 3열 이미지 그리드 (여백/라운드 없음, 호버 효과 및 팝업 기능 유지) -->
 <div style="display: flex; width: 100%;">
     <!-- 첫 번째 이미지 (가로 33.333%) -->
     <img src="https://i.ibb.co/MyhJQVqS/IMG-2619.jpg" alt="참고자료 1" onclick="window.openImagePopup(this.src)" style="width: 33.333%; object-fit: cover; cursor: pointer; transition: opacity 0.2s; opacity: 1;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
@@ -344,17 +249,50 @@
          
     <!-- 세 번째 이미지 (가로 33.333%) -->
     <img src="https://i.ibb.co/27bV2JXC/IMG-2355.jpg" alt="참고자료 3" onclick="window.openImagePopup(this.src)" style="width: 33.333%; object-fit: cover; cursor: pointer; transition: opacity 0.2s; opacity: 1;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
-</div>
+</div></div>
+<div data-type="html"><!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
+<div style="font-size: 100%; line-height: 1.6; word-break: keep-all; width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
+    
+    <style>
+        details[data-style="panel"][open] .toggle-btn-icon { transform: rotate(180deg); }
+        details[data-type="toggle"] summary::-webkit-details-marker { display: none; }
+        details[data-type="toggle"] summary { list-style: none; }
+        .copy-btn:hover { background-color: #f2f2f7 !important; color: #1c1c1e !important; }
+    </style>
+    <script>
+        window.copyToggleText = window.copyToggleText || function(button) {
+            const targetDiv = button.parentElement.querySelector('.copy-target');
+            if(!targetDiv) return;
+            const textToCopy = targetDiv.innerText || targetDiv.textContent;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '✓ 복사완료';
+                button.style.color = '#34c759'; button.style.borderColor = '#34c759';
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.style.color = '#8e8e93'; button.style.borderColor = '#e5e5ea';
+                }, 2000);
+            }).catch(err => console.error('복사 실패', err));
+        };
+    </script>
 
-
-</div>
-<div data-type="html">
-
-
-
-
-
-<!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
+    <details data-type="toggle" data-style="panel" style="width: 100%; margin: 24px 0; padding: 14px 20px; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 16px; box-sizing: border-box; text-align: left; box-shadow: 0 1px 3px rgba(0,0,0,0.01);">
+        <summary style="cursor: pointer; font-size: 100%; font-weight: 600; color: #3a3a3c; display: flex; align-items: center; justify-content: space-between; user-select: none; outline: none;">
+            <span style="outline: none; word-break: break-all; color: #1c1c1e;">V5 전용 (기본)</span>
+            <div class="toggle-btn-icon" style="background-color: #f2f2f7; padding: 6px 12px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 70%; color: #8e8e93; transition: transform 0.2s ease;">▼</div>
+        </summary>
+        <div class="toggle-content" style="position: relative; padding-top: 14px; margin-top: 12px; border-top: 1px dashed #e5e5ea; box-sizing: border-box;">
+            <button class="copy-btn" onclick="window.copyToggleText(this)" style="position: absolute; top: 12px; right: 0; background-color: #ffffff; border: 1px solid #e5e5ea; border-radius: 6px; padding: 4px 8px; font-size: 80%; color: #8e8e93; font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                복사
+            </button>
+            <div class="copy-target" style="color: #444444; font-size: 100%; line-height: 1.6; padding-right: 50px;">
+                boy, mature male, dominant, tall man, fit body, v-taper ,2::pale skin::, handsome, calm smile, cool expression, smirk, -1.5::blush::, 1.5::straight eyebrows, colored eyebrows::, -1::thick eyebrows::, 1.5::sharp gray eyes::, no highlights, 1.7:: half-closed eyes::, short hair, 1.4::  mint grey hair, grey hair:: ,2:8 ::asymmetrical parted bangs::, pixie cut , natural flow hair, 0.4::straight hair::, textured hair, -1.0::spiked hair, under cut, wolf cut, wave hair,center part bangs,hair behind ear ::,
+            </div>
+        </div>
+    </details>
+</div></div>
+<div data-type="html"><!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
 <div style="font-size: 100%; line-height: 1.6; word-break: keep-all; width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
     
     <style>
@@ -396,26 +334,10 @@
             </div>
         </div>
     </details>
-</div>
-
-
-
-
-
-</div>
-<div data-type="postit" style="margin: 25px auto 40px; max-width: 450px; background: #FAFAFA; color: #333333; padding: 24px 24px 20px; box-shadow: 2px 3px 8px rgba(0,0,0,0.04); border-radius: 1px; transform: rotate(-1.5deg); position: relative; border-top: 1px solid #E5E5EA; word-break: break-all; ">
-    <div style="position: absolute; left: 50%; top: -12px; width: 70px; height: 22px; transform: translateX(-50%) rotate(1deg); background: rgba(229, 229, 234, 0.6); border-left: 1px dashed rgba(0,0,0,0.05); border-right: 1px dashed rgba(0,0,0,0.05); pointer-events: none;"></div>
-    <div class="postit-scroll" style="line-height: 1.7; font-size: 14px;">진한 민트: <span style="color: rgb(14, 134, 94); background-color: rgb(225, 249, 241); padding: 0px 2px; border-radius: 3px;">pale mint gray hair</span><br>상단에 적힌 것보다 민트가 옅은 머리색은 하단에 있는 걸로 수정 추천! 작태에 따라 차이 많이 나더라고요ㅠ.ㅠ <br>옅은 민트: <span style="color: rgb(14, 134, 94); background-color: rgb(225, 249, 241); padding: 0px 2px; border-radius: 3px;">gray hair, faint pale mint undertone</span></div>
-</div>
-<div data-type="divider" data-style="dots" style="width: 100%; margin: 30px 0; padding: 0; box-sizing: border-box; display: flex; justify-content: center; align-items: center;">
-    <div style="display: flex; gap: 16px; align-items: center; justify-content: center;"><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div></div>
-</div>
-<div data-type="html">
-
-
-
-
-<!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
+</div></div>
+<div data-type="postit" style="margin: 25px auto 40px; max-width: 450px; background: #FAFAFA; color: #333333; padding: 24px 24px 20px; box-shadow: 2px 3px 8px rgba(0,0,0,0.04); border-radius: 1px; transform: rotate(-1.5deg); position: relative; border-top: 1px solid #E5E5EA; word-break: break-all; "><div style="position: absolute; left: 50%; top: -12px; width: 70px; height: 22px; transform: translateX(-50%) rotate(1deg); background: rgba(229, 229, 234, 0.6); border-left: 1px dashed rgba(0,0,0,0.05); border-right: 1px dashed rgba(0,0,0,0.05); pointer-events: none;"></div><div class="postit-scroll" style="line-height: 1.7; font-size: 14px;">진한 민트: pale mint gray hair<br>상단에 적힌 것보다 민트가 옅은 머리색은 하단에 있는 걸로 수정 추천! 작태에 따라 차이 많이 나더라고요ㅠ.ㅠ <br>옅은 민트: gray hair, faint pale mint undertone</div></div>
+<div data-type="divider" data-style="dots" style="width: 100%; margin: 30px 0; padding: 0; box-sizing: border-box; display: flex; justify-content: center; align-items: center;"><div style="display: flex; gap: 16px; align-items: center; justify-content: center;"><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div></div></div>
+<div data-type="html"><!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
 <div style="font-size: 100%; line-height: 1.6; word-break: keep-all; width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
     
     <style>
@@ -457,37 +379,12 @@
             </div>
         </div>
     </details>
-</div>
-
-
-
-
-</div>
-<div data-type="divider" data-style="solid-gray" style="width: 100%; margin: 30px 0; padding: 0; box-sizing: border-box; display: flex; justify-content: center; align-items: center;">
-    <div style="width: 100%; height: 1px; background-color: #e5e5ea;"></div>
-</div>
-<div data-type="polaroid" style="margin: 45px auto 25px; max-width: 380px; background: #FFFFFF; border: 1px solid #E5E5EA; box-shadow: 0 4px 12px rgba(0,0,0,0.04); padding: 16px 16px 24px 16px; border-radius: 1px; display: flex; flex-direction: column; gap: 14px; transform: rotate(1.5deg); position: relative;">
-    <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-2deg); width: 80px; height: 20px; background: rgba(235, 235, 240, 0.7); border-left: 1px dashed rgba(0,0,0,0.04); border-right: 1px dashed rgba(0,0,0,0.04); pointer-events: none;"></div>
-    <div style="width: 100%; overflow: hidden; background-color: #F2F2F7; display: flex; justify-content: center; align-items: center;">
-        <img src="https://i.ibb.co/N6Rd5n3N/IMG-5693.png" style="width: 100%; height: auto; display: block; object-fit: contain;" alt="Polaroid Photo">
-    </div>
-    <div style="display: flex; flex-direction: column; gap: 5px; padding: 2px 4px 0;">
-        <div style="font-size: 11px; color: #AFAFB4; font-weight: 600; letter-spacing: 0.02em;">2026.04.30 ~ ing</div>
-        <div style="font-size: 13px; color: #1C1C1E; line-height: 1.5; font-style: italic; word-break: break-all;">Dieter ♡ chloe</div>
-    </div>
-</div>
-<div data-type="narration" style="width: 100%; margin: 15px 0 0; padding: 5px 0; box-sizing: border-box; color: #2c2c2e; font-style: normal; word-break: keep-all; text-align: left; line-height: 1.6;">
-                            <b><br>    <span style="font-size: 14px;"><span style="font-size: 15px;"><span style="font-size: 16px;"><span style="font-size: 17px;">클로이</span></span></span></span><br></b>
-</div>
-<div data-type="image" style="width: 100%; margin: 15px 0; text-align: center; box-sizing: border-box;">
-    <img src="https://i.ibb.co/cKYhmXnk/IMG-1795.jpg" style="max-width: 100%; border-radius: 8px;" alt="image">
-</div>
-<div data-type="html">
-
-
-
-
-<!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
+</div></div>
+<div data-type="divider" data-style="solid-gray" style="width: 100%; margin: 30px 0; padding: 0; box-sizing: border-box; display: flex; justify-content: center; align-items: center;"><div style="width: 100%; height: 1px; background-color: #e5e5ea;"></div></div>
+<div data-type="polaroid" style="margin: 45px auto 25px; max-width: 380px; background: #FFFFFF; border: 1px solid #E5E5EA; box-shadow: 0 4px 12px rgba(0,0,0,0.04); padding: 16px 16px 24px 16px; border-radius: 1px; display: flex; flex-direction: column; gap: 14px; transform: rotate(1.5deg); position: relative;"><div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-2deg); width: 80px; height: 20px; background: rgba(235, 235, 240, 0.7); border-left: 1px dashed rgba(0,0,0,0.04); border-right: 1px dashed rgba(0,0,0,0.04); pointer-events: none;"></div><div style="width: 100%; overflow: hidden; background-color: #F2F2F7; display: flex; justify-content: center; align-items: center;"><img src="https://i.ibb.co/N6Rd5n3N/IMG-5693.png" style="width: 100%; height: auto; display: block; object-fit: contain;" alt="Polaroid Photo"></div><div style="display: flex; flex-direction: column; gap: 5px; padding: 2px 4px 0;"><div style="font-size: 11px; color: #AFAFB4; font-weight: 600; letter-spacing: 0.02em;">2026.04.30 ~ ing</div><div style="font-size: 13px; color: #1C1C1E; line-height: 1.5; font-style: italic; word-break: break-all;">Dieter ♡ chloe</div></div></div>
+<div data-type="narration" style="width: 100%; margin: 16px 0 0; padding: 5px 0; box-sizing: border-box; color: #2C2C2E; font-style: normal; word-break: inherit; text-align: left; line-height: inherit;">                            <b><br>    <span style="font-size: 14px;"><span style="font-size: 15px;"><span style="font-size: 16px;"><span style="font-size: 17px;">클로이</span></span></span></span><br></b></div>
+<div data-type="image" style="width: 100%; margin: 15px 0; text-align: center; box-sizing: border-box;"><img src="https://i.ibb.co/cKYhmXnk/IMG-1795.jpg" style="max-width: 100%; border-radius: 8px;" alt="image"></div>
+<div data-type="html"><!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
 <div style="font-size: 100%; line-height: 1.6; word-break: keep-all; width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
     
     <style>
@@ -529,21 +426,9 @@
             </div>
         </div>
     </details>
-</div>
-
-
-
-
-</div>
-<div data-type="divider" data-style="dots" style="width: 100%; margin: 30px 0; padding: 0; box-sizing: border-box; display: flex; justify-content: center; align-items: center;">
-    <div style="display: flex; gap: 16px; align-items: center; justify-content: center;"><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div></div>
-</div>
-<div data-type="html">
-
-
-
-
-<!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
+</div></div>
+<div data-type="divider" data-style="dots" style="width: 100%; margin: 30px 0; padding: 0; box-sizing: border-box; display: flex; justify-content: center; align-items: center;"><div style="display: flex; gap: 16px; align-items: center; justify-content: center;"><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div></div></div>
+<div data-type="html"><!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
 <div style="font-size: 100%; line-height: 1.6; word-break: keep-all; width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
     
     <style>
@@ -585,40 +470,18 @@
             </div>
         </div>
     </details>
-</div>
-
-
-
-
-</div>
-<div data-type="postit" style="margin: 25px auto 40px; max-width: 450px; background: #FAFAFA; color: #333333; padding: 24px 24px 20px; box-shadow: 2px 3px 8px rgba(0,0,0,0.04); border-radius: 1px; transform: rotate(-1.5deg); position: relative; border-top: 1px solid #E5E5EA; word-break: break-all; ">
-    <div style="position: absolute; left: 50%; top: -12px; width: 70px; height: 22px; transform: translateX(-50%) rotate(1deg); background: rgba(229, 229, 234, 0.6); border-left: 1px dashed rgba(0,0,0,0.05); border-right: 1px dashed rgba(0,0,0,0.05); pointer-events: none;"></div>
-    <div class="postit-scroll" style="line-height: 1.7; font-size: 14px;"><span style="color: rgb(208, 73, 120); background-color: rgb(253, 237, 244); padding: 0px 2px; border-radius: 3px;">wristwatch</span> 추가할 경우 <span style="color: rgb(14, 134, 94); background-color: rgb(225, 249, 241); padding: 0px 2px; border-radius: 3px;">a single faint linear scar on the inner left wrist</span> &lt; 프롬에서 빼는 거 추천</div>
-</div>
-<div data-type="narration" style="width: 100%; margin: 15px 0 0; padding: 5px 0; box-sizing: border-box; color: #2c2c2e; font-style: normal; word-break: keep-all; text-align: left; line-height: 1.6;">
-                            <b><br>    <span style="font-size: 14px;"><span style="font-size: 15px;"><span style="font-size: 16px;"><span style="font-size: 17px;">4</span></span></span></span><br></b>
-</div>
-<div data-type="html">
-
-
-
-<!-- 1행 2열 이미지 그리드 (여백/라운드 없음, 호버 효과 및 팝업 기능 유지) -->
+</div></div>
+<div data-type="postit" style="margin: 25px auto 40px; max-width: 450px; background: #FAFAFA; color: #333333; padding: 24px 24px 20px; box-shadow: 2px 3px 8px rgba(0,0,0,0.04); border-radius: 1px; transform: rotate(-1.5deg); position: relative; border-top: 1px solid #E5E5EA; word-break: break-all; "><div style="position: absolute; left: 50%; top: -12px; width: 70px; height: 22px; transform: translateX(-50%) rotate(1deg); background: rgba(229, 229, 234, 0.6); border-left: 1px dashed rgba(0,0,0,0.05); border-right: 1px dashed rgba(0,0,0,0.05); pointer-events: none;"></div><div class="postit-scroll" style="line-height: 1.7; font-size: 14px;">wristwatch 추가할 경우 a single faint linear scar on the inner left wrist &lt; 프롬에서 빼는 거 추천</div></div>
+<div data-type="narration" style="width: 100%; margin: 16px 0 0; padding: 5px 0; box-sizing: border-box; color: #2C2C2E; font-style: normal; word-break: inherit; text-align: left; line-height: inherit;">                            <b><br>    <span style="font-size: 14px;"><span style="font-size: 15px;"><span style="font-size: 16px;"><span style="font-size: 17px;">4</span></span></span></span><br></b></div>
+<div data-type="html"><!-- 1행 2열 이미지 그리드 (여백/라운드 없음, 호버 효과 및 팝업 기능 유지) -->
 <div style="display: flex; width: 100%;">
     <!-- 첫 번째 이미지 (가로 50%) -->
     <img src="https://i.ibb.co/S45CCKF4/6.png" alt="참고자료 1" onclick="window.openImagePopup(this.src)" style="width: 50%; object-fit: cover; cursor: pointer; transition: opacity 0.2s; opacity: 1;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
     
     <!-- 두 번째 이미지 (가로 50%) -->
     <img src="https://i.ibb.co/ZRjpBrz2/image.png" alt="참고자료 2" onclick="window.openImagePopup(this.src)" style="width: 50%; object-fit: cover; cursor: pointer; transition: opacity 0.2s ease;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
-</div>
-
-
-
-</div>
-<div data-type="html">
-
-
-
-<!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
+</div></div>
+<div data-type="html"><!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
 <div style="font-size: 100%; line-height: 1.6; word-break: keep-all; width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
     
     <style>
@@ -660,18 +523,9 @@
             </div>
         </div>
     </details>
-</div>
-
-
-
-</div>
-<div data-type="divider" data-style="dots" style="width: 100%; margin: 30px 0; padding: 0; box-sizing: border-box; display: flex; justify-content: center; align-items: center;">
-    <div style="display: flex; gap: 16px; align-items: center; justify-content: center;"><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div></div>
-</div>
-<div data-type="html">
-
-
-<!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
+</div></div>
+<div data-type="divider" data-style="dots" style="width: 100%; margin: 30px 0; padding: 0; box-sizing: border-box; display: flex; justify-content: center; align-items: center;"><div style="display: flex; gap: 16px; align-items: center; justify-content: center;"><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div><div style="width: 4px; height: 4px; background-color: #aeaeb2; border-radius: 50%;"></div></div></div>
+<div data-type="html"><!-- [양식 2] 패널 타입 (유동적 폰트/크기 적용) -->
 <div style="font-size: 100%; line-height: 1.6; word-break: keep-all; width: 100%; margin: 0; padding: 0; box-sizing: border-box;">
     
     <style>
@@ -713,14 +567,8 @@
             </div>
         </div>
     </details>
-</div>
-
-
-</div>
-<div data-type="postit" style="margin: 25px auto 40px; max-width: 450px; background: #FAFAFA; color: #333333; padding: 24px 24px 20px; box-shadow: 2px 3px 8px rgba(0,0,0,0.04); border-radius: 1px; transform: rotate(-1.5deg); position: relative; border-top: 1px solid #E5E5EA; word-break: break-all; ">
-    <div style="position: absolute; left: 50%; top: -12px; width: 70px; height: 22px; transform: translateX(-50%) rotate(1deg); background: rgba(229, 229, 234, 0.6); border-left: 1px dashed rgba(0,0,0,0.05); border-right: 1px dashed rgba(0,0,0,0.05); pointer-events: none;"></div>
-    <div class="postit-scroll" style="line-height: 1.7; font-size: 14px;">사복일 경우 <span style="color: rgb(14, 134, 94); background-color: rgb(225, 249, 241); padding: 0px 2px; border-radius: 3px;">wedding ring </span>추가</div>
-</div>
+</div></div>
+<div data-type="postit" style="margin: 25px auto 40px; max-width: 450px; background: #FAFAFA; color: #333333; padding: 24px 24px 20px; box-shadow: 2px 3px 8px rgba(0,0,0,0.04); border-radius: 1px; transform: rotate(-1.5deg); position: relative; border-top: 1px solid #E5E5EA; word-break: break-all; "><div style="position: absolute; left: 50%; top: -12px; width: 70px; height: 22px; transform: translateX(-50%) rotate(1deg); background: rgba(229, 229, 234, 0.6); border-left: 1px dashed rgba(0,0,0,0.05); border-right: 1px dashed rgba(0,0,0,0.05); pointer-events: none;"></div><div class="postit-scroll" style="line-height: 1.7; font-size: 14px;">사복일 경우 wedding ring 추가</div></div>
 
 </div>
 </body>

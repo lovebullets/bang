@@ -9,7 +9,7 @@
 :root{
   --bg:#0b0b0d;--p1:#131317;--p2:#1b1b21;--p3:#25252d;--ln:rgba(255,255,255,.07);
   --tx:#ecebef;--sub:#8f8d98;--cr:#b3263a;--cr2:#6d1220;--crg:rgba(179,38,58,.38);
-  --cream:#f4e7da;--pink:#f2b8c6;
+  --cream:#f4e7da;--pink:#f2b8c6;--me:#a01d33;--them:#26262e;
   --sbh:calc(34px + env(safe-area-inset-top));
   --nbh:calc(48px + env(safe-area-inset-bottom));
 }
@@ -166,21 +166,28 @@ button,input{font:inherit;color:inherit;background:none;border:0;outline:0}
 .chk.on .mid .t1{color:var(--sub);text-decoration:line-through}
 
 /* messenger */
-.msgs{padding:12px 12px 18px;display:flex;flex-direction:column;gap:4px}
-.dv{align-self:center;font-size:11.5px;color:var(--sub);background:var(--p1);padding:5px 12px;border-radius:12px;margin:12px 0 8px}
-.ln{display:flex;align-items:flex-end;gap:6px;max-width:100%}
-.ln.me{flex-direction:row-reverse}
-.bub{max-width:74%;padding:9px 13px;border-radius:18px;font-size:14.5px;line-height:1.45;white-space:pre-wrap}
-.ln.them .bub{background:var(--p2);border-bottom-left-radius:6px}
-.ln.me .bub{background:linear-gradient(135deg,#8a1b2c,#5e1220);border-bottom-right-radius:6px}
-.tm{font-size:10.5px;color:var(--sub);flex:0 0 auto;padding-bottom:2px}
-.ln .sav{width:32px;height:32px;border-radius:50%;background:var(--p3);display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto;align-self:flex-start}
-.ln.them.cont .sav{visibility:hidden}
-.cname{font-size:11.5px;color:var(--sub);margin:6px 0 2px 40px}
-.inbar{flex:0 0 auto;display:flex;gap:8px;padding:8px 10px;border-top:1px solid var(--ln);background:var(--p1)}
-.inbar input{flex:1;min-width:0;height:44px;border-radius:22px;background:var(--p2);padding:0 16px;font-size:16px}
-.inbar button{width:44px;height:44px;border-radius:50%;background:var(--cr);display:flex;align-items:center;justify-content:center}
-.inbar svg{width:20px;height:20px;fill:#fff}
+.msgs{padding:6px 10px 20px;display:flex;flex-direction:column}
+.dv{align-self:center;text-align:center;font-size:11px;color:var(--sub);margin:18px 0 10px;font-weight:500;letter-spacing:.2px}
+.dv b{font-weight:700;color:#bdbbc6}
+.ln{display:flex;margin-bottom:3px}
+.ln.last{margin-bottom:10px}
+.ln.me{justify-content:flex-end;padding-right:10px}
+.ln.them{justify-content:flex-start;padding-left:10px}
+.bw{position:relative;max-width:78%;z-index:0}
+.bub{position:relative;z-index:1;padding:8px 14px;border-radius:18px;font-size:14.5px;line-height:1.5;white-space:pre-wrap;letter-spacing:-.01em;word-break:break-word}
+.ln.me .bub{background:var(--me);color:#fff}
+.ln.them .bub{background:var(--them);color:var(--tx)}
+.ln.me.last .bw::before{content:"";position:absolute;right:-6px;bottom:0;width:20px;height:20px;background:var(--me);border-bottom-left-radius:15px;z-index:-1}
+.ln.me.last .bw::after{content:"";position:absolute;right:-10px;bottom:0;width:10px;height:20px;background:var(--bg);border-bottom-left-radius:10px;z-index:0}
+.ln.them.last .bw::before{content:"";position:absolute;left:-6px;bottom:0;width:20px;height:20px;background:var(--them);border-bottom-right-radius:15px;z-index:-1}
+.ln.them.last .bw::after{content:"";position:absolute;left:-10px;bottom:0;width:10px;height:20px;background:var(--bg);border-bottom-right-radius:10px;z-index:0}
+.inbar{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:8px 10px;border-top:1px solid var(--ln);background:var(--p1)}
+.inbar .plus{width:44px;height:44px;border-radius:50%;background:var(--p3);color:var(--sub);font-size:26px;line-height:1;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.inbar .pill{flex:1;min-width:0;display:flex;align-items:center;height:48px;border-radius:24px;border:1px solid var(--ln);background:var(--p2);padding:0 2px 0 16px}
+.inbar input{flex:1;min-width:0;height:100%;font-size:16px;background:none;padding:0}
+.inbar .sendb{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.inbar .sendb i{display:flex;width:32px;height:32px;border-radius:50%;background:var(--me);align-items:center;justify-content:center}
+.inbar svg{width:17px;height:17px;fill:#fff}
 
 /* calls */
 .tabs{display:flex;gap:8px;padding:12px 16px 4px}
@@ -516,54 +523,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var DOCK = ['phone', 'sms', 'camera', 'messenger'];
 
   var CHATS = {
-    rabbit: { name: '내 토끼', av: '🐰', pinned: true, msgs: [
-      ['d', '11월 22일 일요일'],
-      ['t', '12:01', '여보 나 일어났어'],
-      ['t', '12:01', '몇 시에 와?'],
-      ['m', '12:02', '저녁 전에'],
-      ['m', '12:02', '밥 먹어. 전복죽 문 앞에 뒀어'],
-      ['t', '12:05', '헐 언제 놓고 갔어??'],
-      ['m', '12:05', '나가면서'],
-      ['t', '14:16', '토끼가 내 발 위에서 자 ㅠㅠ 못 움직여'],
-      ['m', '14:17', '전화할게'],
-      ['d', '11월 23일 월요일'],
-      ['t', '13:02', '여보 점심 먹었어?'],
-      ['m', '13:02', '먹었어. 너는'],
-      ['t', '13:03', '아직… 졸려서 누워있었어'],
-      ['m', '13:03', '죽 시켰어. 소고기 야채죽. 25분'],
-      ['t', '13:04', '언제 시켰어??'],
-      ['m', '13:04', '방금'],
-      ['t', '13:04', '고마워 🥺'],
-      ['m', '13:05', '다 먹고 자'],
-      ['t', '16:40', '낮잠 너무 오래 잤다…'],
-      ['m', '16:40', '2시간 10분. 한 번 뒤척였고'],
-      ['t', '16:41', '그걸 어떻게 알아??'],
-      ['m', '16:41', '앱'],
-      ['t', '16:41', '몰래 보는 거 반칙이야 😤'],
-      ['m', '16:42', '몰래 안 봐. 대놓고 봐'],
-      ['t', '19:55', '토끼가 건초를 안 먹어 ㅠ'],
-      ['m', '19:56', '새 건초 내일 와. 사과나무 스틱 줘봐'],
-      ['m', '19:56', '신발장 옆 서랍 맨 위'],
-      ['t', '20:03', '오 먹는다!!'],
-      ['t', '23:20', '언제 와…'],
-      ['m', '23:21', '정비 끝나고 바로 가. 전화할게'],
-      ['d', '11월 24일 화요일'],
-      ['t', '09:13', '깨니까 옆에 없어서 놀랐잖아'],
-      ['m', '09:13', '욕실이라고 했잖아'],
-      ['m', '09:13', '더 자'],
-      ['t', '09:14', '응… 오늘 나가?'],
-      ['m', '09:15', '오후에 잠깐. 금방 와'],
-      ['t', '12:31', '배 아파…'],
-      ['m', '12:31', '진통제 서랍 두 번째 칸'],
-      ['m', '12:32', '온열팩은 전자레인지 30초'],
-      ['t', '12:33', '어떻게 다 알아?'],
-      ['m', '12:33', '달력 봤어'],
-      ['m', '12:34', '복숭아 푸딩도 시켰어. 40분'],
-      ['t', '12:34', '사랑해 ♡'],
-      ['m', '12:34', '응. 나도'],
-      ['t', '14:58', '푸딩 먹었더니 졸려…'],
-      ['m', '14:58', '자. 깨면 연락해']
-    ] },
+    rabbit: { name: '내 토끼', av: '🐰', pinned: true, msgs: [] },
     leader: { name: '팀장', av: '팀', msgs: [
       ['d', '11월 23일 월요일'],
       ['t', '17:12', '하시온. 전화 받아라.'],
@@ -578,6 +538,26 @@ document.addEventListener('DOMContentLoaded', function () {
       ['t', '22:47', '야간 정비 마무리됐습니다. 수고하셨습니다.']
     ] }
   };
+  var RABBIT_LOG = [["2026-10-02 08:30","m","아침."],["2026-10-02 08:32","t","네, 여보. 벌써 일어나셨어요? 어제 늦게 들어오셨는데…. 조금 더 주무시지 그러셨어요."],["2026-10-02 08:33","m","…당신이 없는데 잠이 와요? 시끄러우니까 그냥 나와요. 얼굴 보게."],["2026-10-05 13:00","t","여보, 오늘 날씨가 정말 좋아요. 창밖 한번 보세요!"],["2026-10-05 13:02","m","날씨 좋은 거랑 나랑 무슨 상관인데요. 당신이나 많이 봐둬요. 어차피 저녁엔 내 얼굴만 볼 텐데."],["2026-10-05 13:05","t","못 살아요, 정말. 그래도 좋아요. 얼른 저녁이 됐으면 좋겠네요. ㅎㅎ."],["2026-10-09 19:50","m","훈련 끝났어요. 가는 중."],["2026-10-09 19:52","t","고생 많으셨어요, 여보. 오는 길에 위험하진 않았어요? 저녁은 뭐 드시고 싶으세요?"],["2026-10-09 19:53","m","위험할 게 뭐가 있다고. …저녁은 됐고, 당신이면 충분한데."],["2026-10-12 15:00","t","여보, 저 보고 싶지 않아요? 저는 여보가 너무너무 보고 싶은데…."],["2026-10-12 15:01","m","…지금 그 말, 책임질 수 있어요?"],["2026-10-12 15:02","m","가지 말라는 말 한마디면 되는데. 왜 말을 안 해요."],["2026-10-12 15:05","t","…가지 마세요, 여보. 오늘 저랑 같이 있어주세요. 네?"],["2026-10-12 15:06","m","진작 그렇게 말했어야죠. …어디 가지 말고 딱 기다려요. 금방 갈 테니까."],["2026-10-17 21:10","m","뭐해요."],["2026-10-17 21:11","t","토끼랑 놀아주고 있었어요. 여보는요?"],["2026-10-17 21:13","m","토끼 말고 나랑 놀아줘야죠. 이제 그만하고 침실로 와요. 할 거 있으니까."],["2026-10-21 11:45","t","여보, 오늘따라 유난히 피곤해 보여요. 무슨 일 있었어요? 괜찮으세요?"],["2026-10-21 12:20","m","…신경 꺼요. 별일 아니니까."],["2026-10-21 12:22","t","거짓말. 얼굴에 다 쓰여 있는걸요. 제가 꼭 안아줄게요. 얼른 와요."],["2026-10-21 12:25","m","…진짜 귀찮게 구네. 그래도 뭐, 당신이 안아준다면 나쁘지 않고."],["2026-10-25 23:50","m","자요?"],["2026-10-25 23:51","t","아니요. 여보 생각하고 있었어요. ♡"],["2026-10-25 23:52","m","…."],["2026-10-25 23:53","m","사람 미치게 하는 재주가 있네, 진짜. 당장 갈게요."],["2026-10-28 16:30","t","여보, 오늘 저녁은 외식하는 거 어때요? 가끔은 나가서 먹는 것도 좋잖아요."],["2026-10-28 16:32","m","귀찮은데. …당신이 가고 싶으면, 뭐. 못 가줄 것도 없죠. 어디 가고 싶은데요."],["2026-10-28 16:35","t","정말요? 그럼 우리 지난번에 갔던 파스타 집 가요! 거기 정말 맛있었는데!"],["2026-10-28 16:36","m","알았어요. 준비하고 나와요. 데리러 갈 테니까."],["2026-10-31 07:00","m","오늘, 그거라면서요. 할로윈."],["2026-10-31 07:02","t","네, 맞아요! 길거리에 재밌는 분장한 사람들 많을 것 같아요. 구경하는 것도 재미있겠어요."],["2026-10-31 07:05","m","그런 건 됐고. …집에서, 나랑만 놀아요. 사탕보다 더 단 거 줄 테니까."],["2026-11-01 09:15","m","일어났어요?"],["2026-11-01 09:17","t","네, 여보. 좋은 아침이에요. 여보는요?"],["2026-11-01 09:18","m","…진작에요. 배고플 텐데, 나와요. 밥 해놨으니까."],["2026-11-03 14:20","m","오늘따라 유독 보고 싶네."],["2026-11-03 14:21","m","지금 갈까요?"],["2026-11-03 14:25","t","어머, 갑자기요? 저 지금 임무 때문에 센터에 있는데… 괜찮으세요?"],["2026-11-03 14:26","m","당신 보고 싶다는데, 뭐가 안 괜찮아요. 기다려요."],["2026-11-05 22:40","t","여보, 오늘 훈련은 괜찮았어요? 다친 데는 없구요?"],["2026-11-05 22:43","m","별거 없었어요. 지루하기만 했지. …내 걱정했어요?"],["2026-11-05 22:45","t","당연하죠…. 항상 걱정되는걸요. 얼른 들어오세요, 보고 싶어요."],["2026-11-05 22:46","m","예쁜 말만 하네, 진짜. …거의 다 왔어요. 문 열어줘요."],["2026-11-10 18:05","m","저녁 뭐 먹고 싶어요?"],["2026-11-10 18:06","t","음… 저는 여보가 해주는 건 다 좋은데. 굳이 고르자면 따뜻한 수프가 먹고 싶어요!"],["2026-11-10 18:08","m","알았어요. 장 봐서 들어갈 테니까, 조금만 기다려요. 내 토끼."],["2026-11-15 11:30","t","여보, 점심은 챙겨 먹었어요?"],["2026-11-15 12:10","m","이제 먹으려고요. …당신은. 제때 챙겨 먹고 있어요?"],["2026-11-15 12:12","t","그럼요. 여보가 걱정할까 봐 잘 챙겨 먹고 있어요. 오후에도 힘내세요! ♡"],["2026-11-15 12:13","m","…하트, 함부로 보내지 마요. 지금 당장 보러 가고 싶으니까."],["2026-11-20 00:30","m","아직 안 자요?"],["2026-11-20 00:31","t","잠이 안 와서요…. 여보 기다리고 있었어요."],["2026-11-20 00:33","m","착하네. 그럼 내가 재워줘야겠다. 침대에서 기다려요. 금방 갈게."],["2026-11-23 20:00","t","여보, 오늘따라 늦네요. 무슨 일 있어요?"],["2026-11-23 20:15","m","귀찮은 게 좀 붙어서. 정리하고 가느라. …걱정했어요?"],["2026-11-23 20:16","t","네, 많이요…. 어서 오세요. 맛있는 저녁 해놓고 기다릴게요."],["2026-11-23 20:17","m","저녁은 됐고, 당신이나 먹어야겠는데."]];
+  function buildLog(rows) {
+    var out = [], lastT = null, lastD = '';
+    var WD = ['일', '월', '화', '수', '목', '금', '토'];
+    rows.forEach(function (r) {
+      var p = r[0].split(' '), dp = p[0].split('-'), tp = p[1].split(':');
+      var y = parseInt(dp[0], 10), mo = parseInt(dp[1], 10), d = parseInt(dp[2], 10);
+      var h = parseInt(tp[0], 10), mi = parseInt(tp[1], 10);
+      var t = new Date(y, mo - 1, d, h, mi).getTime();
+      if (lastT === null || p[0] !== lastD || t - lastT > 3600000) {
+        var ds = p[0] !== lastD ? mo + '월 ' + d + '일 (' + WD[new Date(y, mo - 1, d).getDay()] + ')' : '';
+        var hh = h % 12 === 0 ? 12 : h % 12;
+        out.push(['d', ds, (h < 12 ? '오전 ' : '오후 ') + hh + ':' + pad2(mi)]);
+      }
+      lastD = p[0]; lastT = t;
+      out.push([r[1], pad2(h) + ':' + pad2(mi), r[2]]);
+    });
+    return out;
+  }
+  CHATS.rabbit.msgs = buildLog(RABBIT_LOG);
   var CHAT_ORDER = ['rabbit', 'leader', 'mech'];
 
   var SMS = {
@@ -824,18 +804,18 @@ document.addEventListener('DOMContentLoaded', function () {
   function renderMsgs() {
     if (!curChat) return;
     var c = (curChat.src === 's' ? SMS : CHATS)[curChat.id];
-    var h = '<div class="msgs">', prev = '';
-    c.msgs.forEach(function (m) {
-      if (m[0] === 'd') { h += '<div class="dv">' + esc(m[1]) + '</div>'; prev = 'd'; return; }
-      if (m[0] === 'm') {
-        h += '<div class="ln me"><div class="bub">' + esc(m[2]) + '</div><span class="tm">' + esc(m[1]) + '</span></div>';
-      } else {
-        var cont = prev === 't';
-        if (!cont) h += '<div class="cname">' + esc(c.name) + '</div>';
-        h += '<div class="ln them' + (cont ? ' cont' : '') + '"><span class="sav">' + esc(c.av) + '</span><div class="bub">' + esc(m[2]) + '</div><span class="tm">' + esc(m[1]) + '</span></div>';
+    var arr = c.msgs, h = '<div class="msgs">';
+    for (var i = 0; i < arr.length; i++) {
+      var m = arr[i];
+      if (m[0] === 'd') {
+        if (m[2] === undefined) h += '<div class="dv">' + esc(m[1]) + '</div>';
+        else h += '<div class="dv">' + (m[1] ? '<b>' + esc(m[1]) + '</b> ' : '') + esc(m[2]) + '</div>';
+        continue;
       }
-      prev = m[0];
-    });
+      var nx = arr[i + 1];
+      var last = !nx || nx[0] !== m[0];
+      h += '<div class="ln ' + (m[0] === 'm' ? 'me' : 'them') + (last ? ' last' : '') + '"><div class="bw"><div class="bub">' + esc(m[2]) + '</div></div></div>';
+    }
     body('scr-chat').innerHTML = h + '</div>';
   }
   function sendMsg() {
@@ -1177,7 +1157,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* ================= build all screens ================= */
   mk('scr-messenger', 'K-Messenger', { right: '<button class="tap" data-act="toast" data-msg="알림 배지 0 · 모두 읽음">⋯</button>' });
-  mk('scr-chat', '', { foot: '<div class="inbar"><input id="chat-in" placeholder="메시지 입력" autocomplete="off"><button class="tap" data-act="send" aria-label="보내기">' + SEND_SVG + '</button></div>' });
+  mk('scr-chat', '', { foot: '<div class="inbar"><button class="plus tap" data-act="toast" data-msg="첨부는 사용할 수 없어요" aria-label="첨부">+</button><div class="pill"><input id="chat-in" placeholder="메시지" autocomplete="off"><button class="sendb tap" data-act="send" aria-label="보내기"><i>' + SEND_SVG + '</i></button></div></div>' });
   mk('scr-sms', '메시지');
   mk('scr-phone', '전화', { right: '<button class="tap" data-act="contact" data-c="minjung">★</button>' });
   mk('scr-contact', '연락처');
